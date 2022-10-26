@@ -2,7 +2,7 @@ package edu.spring.project.domain;
 
 public class MemberVO {
 
-	private int mmbId;
+	private String mmbId;
 	private String mmbPassword;
 	private String mmbEmail;
 	private String mmbPhone;
@@ -13,7 +13,7 @@ public class MemberVO {
 	public MemberVO() {
 	}
 
-	public MemberVO(int mmbId, String mmbPassword, String mmbEmail, String mmbPhone, String mmbBirthday,
+	public MemberVO(String mmbId, String mmbPassword, String mmbEmail, String mmbPhone, String mmbBirthday,
 			int mmbAdminCheck, int brcId) {
 
 		this.mmbId = mmbId;
@@ -25,11 +25,11 @@ public class MemberVO {
 		this.brcId = brcId;
 	}
 
-	public int getMmbId() {
+	public String getMmbId() {
 		return mmbId;
 	}
 
-	public void setMmbId(int mmbId) {
+	public void setMmbId(String mmbId) {
 		this.mmbId = mmbId;
 	}
 

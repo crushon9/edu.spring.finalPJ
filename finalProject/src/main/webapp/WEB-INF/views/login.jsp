@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>로그인 페이지</h1>
-	<form action="login.go" method="POST">
+	<form action="login" method="POST">
 		<input type="text" name="memberId" placeholder="아이디" required autofocus>
 		<br>
 		<input type="password" name="memberPw" placeholder="비밀번호" required>

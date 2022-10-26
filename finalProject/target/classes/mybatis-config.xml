@@ -4,48 +4,70 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-<!-- 	DB 테이블과 컬럼들을 mapper 매핑을 위한 변수 선언
 	<properties>
-		* property-name : mapper.xml에서 사용될 이름 - value : DB 테이블 및 컬럼 이름
-		SPRING_BOARD
-		<property name="SPRING_BOARD" value="SPRING_BOARD" />
-		<property name="boardId" value="BOARD_ID" />
-		<property name="boardTitle" value="BOARD_TITLE" />
-		<property name="boardContent" value="BOARD_CONTENT" />
-		<property name="memberId" value="MEMBER_ID" />
-		<property name="boardDateCreated" value="BOARD_DATE_CREATED" />
-		<property name="replyCnt" value="REPLY_CNT" />
-		SPRING_REPLY
-		<property name="SPRING_REPLY" value="SPRING_REPLY" />
-		<property name="replyId" value="REPLY_ID" />
-		<property name="boardId" value="BOARD_ID" />
-		<property name="memberId" value="MEMBER_ID" />
-		<property name="replyContent" value="REPLY_CONTENT" />
-		<property name="replyDateCreated" value="REPLY_DATE_CREATED" />
+		<!-- * property-name : mapper.xml에서 사용될 이름 - value : DB 테이블 및 컬럼 이름 -->
+		<property name="PJ_MEMBER" value="PJ_MEMBER" />
+		<property name="mmbId" value="MMB_ID" />
+		<property name="mmbPassword" value="MMB_PASSWORD" />
+		<property name="mmbEmail" value="MMB_EMAIL" />
+		<property name="mmbPhone" value="MMB_PHONE" />
+		<property name="mmbBirthday" value="MMB_BIRTHDAY" />
+		<property name="mmbAdminCheck" value="MMB_ADMIN_CHECK" />
+		<property name="brcId" value="BRC_ID" />
+
+		<property name="PJ_MOVIE" value="PJ_MOVIE" />
+		<property name="mvId" value="MV_ID" />
+		<property name="mvTitle" value="MV_TITLE" />
+		<property name="mvDateStarted" value="MV_DATE_STARTED" />
+		<property name="mvDateEnded" value="MV_DATE_ENDED" />
+		<property name="mvGenre" value="MV_GENRE" />
+		<property name="mvRating" value="MV_RATING" />
+		<property name="mvTicketSales" value="MV_TICKET_SALES" />
+
+		<property name="PJ_BRANCH" value="PJ_BRANCH" />
+		<property name="brcId" value="BRC_ID" />
+		<property name="brcArea" value="BRC_AREA" />
+		<property name="brcName" value="BRC_NAME" />
+		<property name="brcTheaterNumbers" value="BRC_THEATER_NUMBERS" />
+		<property name="brcTheaterSeats" value="BRC_THEATER_SEATS" />
+
+		<property name="PJ_SCHEDULE" value="PJ_SCHEDULE" />
+		<property name="scdId" value="SCD_ID" />
+		<property name="mvId" value="MV_ID" />
+		<property name="brcId" value="BRC_ID" />
+		<property name="scdDate" value="SCD_DATE" />
+		<property name="scdTime" value="SCD_TIME" />
+		<property name="scdTheater" value="SCD_THEATER" />
+		<property name="scdSeatTotal" value="SCD_SEAT_TOTAL" />
+		<property name="scdSeatBookedCnt" value="SCD_SEAT_BOOKED_CNT" />
+		<property name="scdPrice" value="SCD_PRICE" />
+
+		<property name="PJ_TICKET" value="PJ_TICKET" />
+		<property name="tkId" value="TK_ID" />
+		<property name="mvId" value="MV_ID" />
+		<property name="mmbId" value="MMB_ID" />
+		<property name="scdId" value="SCD_ID" />
+		<property name="scdSeatTotal" value="SCD_SEAT_TOTAL" />
+		<property name="scdPrice" value="SCD_PRICE" />
+		<property name="tkPeopleInfo" value="TK_PEOPLE_INFO" />
+		<property name="tkSeat" value="TK_SEAT" />
+		<property name="tkPriceTotal" value="TK_PRICE_TOTAL" />
+		<property name="tkCancelCheck" value="TK_CANCEL_CHECK" />
+
+		<property name="PJ_REVIEW" value="PJ_REVIEW" />
+		<property name="rvId" value="RV_ID" />
+		<property name="mvId" value="MV_ID" />
+		<property name="mmbId" value="MMB_ID" />
+		<property name="rvContent" value="RV_CONTENT" />
+		<property name="rvRating" value="RV_RATING" />
+		<property name="rvDateCreated" value="RV_DATE_CREATED" />
 	</properties>
 
-	mybatis의 name은 원래 모두 소문자로 인식됨 따라서 mapUnderscoreToCamelCase 세팅을 추가해야함 
-		name은 mapper의 ${}랑 같기만 하면됨
-		mapper의 #{}은 sqlSession메소드에서 파라미터로 전송받은 인스턴스(VO등)의 getter 이름과 같게해야함
-	underscore 명명법을 camel 명명법으로 변환이 가능하도록 세팅
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 
-	mybatis의 사용자 정의 typeAliases 비교 정책은 아래와 같습니다.
-		* 소문자로 일괄 변환 후, 상호 비교를 통해 매칭한다.
-		1. 패키지 단위로 typeAliases를 일괄 등록하면 해당 패키지 예하 클래스는 클래스명을 일괄 소문자로 바뀐 형태로 typeAliases에 등록됩니다. 
-			예) MemberVo -> membervo 
-		2. 사용자가 개별적으로 타입 알리아스를 등록해도 일괄 소문자 형태로 변환하여 typeAliases에 등록됩니다. 
-			예) MemberVo -> memberVo(사용자 지정) -> membervo(마이바티스 내부)
-			
-		위와 같은 정책에 따라 아래와 같은 사용이 가능합니다. 
-		MemberVo 클래스가 mybatis에는 실제  membervo 라는 typeAliases로 등록되고
-		실제 사용하는 쿼리 정의 파일에서 어떠한 형태로 정의를 하든 철자만 맞으면 소문자로 
-		일괄 변환하여 비교한 후 해당 typeAliases 객체를 찾아 오기 때문에 사용자는 매우 편리합니다.
-		그럼 왜 굳이 낙타 표기법이니 뭐니 하면서 typeAliases 명을 주나요? 정답은 코드의 가독성 때문입니다.
-	typeAliases : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정
 	<typeAliases>
 		<package name="edu.spring.project.domain" />
-	</typeAliases> -->
+	</typeAliases>
 </configuration>

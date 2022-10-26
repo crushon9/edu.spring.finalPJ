@@ -11,41 +11,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		매핑된 데이터(입력받은 데이터) resultType : 검색 관련 SQL 구문이 실행되면 ResultSet이 리턴되며, ResultSet에 
 		저장된 검색 결과를 어떤 자바 객체에 매핑할지 지정할 때 사용하는 속성 -->
 
-	<insert id="insert">
-		insert into ${SPRING_BOARD} (${boardTitle},
-		${boardContent}, ${memberId})
-		values (#{boardTitle}, #{boardContent},
-		#{memberId})
-		#{boardTitle} : 변수명이 아니라 getBoardTitle 의 리턴값을 들고오는 거임
+	 <insert id="insert">
+		insert into ${PJ_MEMBER} 
+		(${mmbId}, ${mmbPassword}, ${mmbEmail}, ${mmbPhone}, ${mmbBirthday}, ${brcId})
+		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId})
 	</insert>
 
-	<select id="select_all_memberid" resultType="BoardVO">
-		BoardVO 한줄씩 가져와서 sqlSession.selectList의 메소드에서 List를 뱉어내나?
+	<select id="select_all_member_id" resultType="MemberVO">		
 		select * from
-		${SPRING_BOARD}
-		order by ${boardId} DESC
-	</select>
-
-	<select id="select_by_memberid" resultType="BoardVO">
-		select * from
-		${SPRING_BOARD}
-		where ${memberId} like #{memberId}
+		${PJ_MEMBER}
+		order by ${mmbId} DESC
 	</select>
 	
-	<update id="update"> update시 날짜는 트리거로 자동변경
-		update ${SPRING_BOARD}
-		set
-		${boardTitle} = #{boardTitle}, ${boardContent} = #{boardContent}
-		where
-		${boardId} = #{boardId}
+	<select id="select_by_member_id" resultType="MemberVO">
+		select * from
+		${PJ_MEMBER}
+		where ${mmbId} like #{mmbId}
+	</select>
+		
+	<update id="update">
+		update ${PJ_MEMBER}
+		set ${mmbPassword} = #{mmbPassword}, ${mmbEmail} = #{mmbEmail},
+		${mmbPhone} = #{mmbPhone}, ${mmbBirthday} = #{mmbBirthday}, 
+		${brcId} = #{brcId}, 
+		where ${mmbId} = #{mmbId}
 	</update>
 
-	<delete id="delete"> <!-- 있지만 안씀 -->
-		delete from ${SPRING_BOARD}
-		where ${boardId} =
-		#{boardId}
+	<delete id="delete"> 
+		delete from ${PJ_MEMBER}
+		where ${mmbId} = #{mmbId}
 	</delete>
 
-
+	<select id="login" resultType="MemberVO">
+		select * from
+		${PJ_MEMBER}
+		where ${mmbId} like #{mmbId} and ${mmbPassword} like #{mmbPassword}
+	</select>
 
 </mapper>
