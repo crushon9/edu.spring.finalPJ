@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Service, Repository, DB 등 비즈니스 로직과 관련된 bean 객체를 설정 -->
+	<!-- Spring 프레임워크에서 관리할 bean 객체들을 선언 → DI(Dependency Injection: 의존성 주입)에 사용되는 객체들
+	서버가 시작될때 bean 인스턴스가 먼저 만들어짐, 여기도 자바언어로 컴파일됨 -->
+	<!-- Spring 프레임워크에서 관리할 Controller(Servlet) 빈(Bean)을 설정
+	→ 스프링 프레임워크가 Servlet Life Cycle을 관리하고, 의존성을 주입함 
+	특정 패키지를 스캔해서 Controller 클래스들을 설정할 수도 있음 -->
+	
+	<!-- **Spring-MyBatis 연동을 위한 Bean 객체들 선언 -->
+	<!-- DataSource :Oracle DBCP(DataSource Connection Pool) 빈(bean) 객체	-->
+ 	<bean id="ds" class="oracle.jdbc.pool.OracleDataSource">
+		<property name="dataSourceName" value="ds"/>
+		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="user" value="scott"/>
+		<property name="password" value="tiger"/>
+	</bean>
+
+	<!-- SqlSessionFactory :SqlSession 객체를 생성하기 위해 필요한 빈(bean) 객체 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"/>
+		<property name="configLocation"	value="classpath:/mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:mappers/*.xml"/>
+		<!-- classpath == src/main/resources -->
+	</bean>
+
+	<!-- SqlSession :데이터베이스 트랜잭션을 담당하는 빈(bean) 객체 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"	destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+
+
+	<!-- **Transaction Manager
+	Spring에서 제공하는 DB Transaction Manager를 bean으로 등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"></property>
+	</bean>
+	
+	<!-- 트랜잭션 관리를 수행하는 Aspect를 annotaion 기반으로 사용 -->
+	<tx:annotation-driven/>
+	
+</beans>
