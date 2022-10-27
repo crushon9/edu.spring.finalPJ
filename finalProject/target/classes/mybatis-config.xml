@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="mvGenre" value="MV_GENRE" />
 		<property name="mvRating" value="MV_RATING" />
 		<property name="mvTicketSales" value="MV_TICKET_SALES" />
+		<property name="mvImage" value="MV_IMAGE" />
 
 		<property name="PJ_BRANCH" value="PJ_BRANCH" />
 		<property name="brcId" value="BRC_ID" />

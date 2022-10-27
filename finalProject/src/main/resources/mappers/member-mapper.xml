@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	 <insert id="insert">
 		insert into ${PJ_MEMBER} 
-		(${mmbId}, ${mmbPassword}, ${mmbEmail}, ${mmbPhone}, ${mmbBirthday}, ${brcId})
-		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId})
+		(${mmbId}, ${mmbPassword}, ${mmbEmail}, ${mmbPhone}, ${mmbBirthday}, ${brcId}, ${mmbImage})
+		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId}, #{mmbImage})
 	</insert>
 
 	<select id="select_all_member_id" resultType="MemberVO">		
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update ${PJ_MEMBER}
 		set ${mmbPassword} = #{mmbPassword}, ${mmbEmail} = #{mmbEmail},
 		${mmbPhone} = #{mmbPhone}, ${mmbBirthday} = #{mmbBirthday}, 
-		${brcId} = #{brcId}, 
+		${brcId} = #{brcId}, ${mmbImage} = #{mmbImage}
 		where ${mmbId} = #{mmbId}
 	</update>
 
