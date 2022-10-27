@@ -25,19 +25,20 @@
 		<p>생년월일</p>
 	    <input type="date" name="mmbBirthday" value="1990-07-16">
 		<!-- 관리자 여부 : DB에서 권한요청으로 set 1 -->
-		<p>선호지점</p>
+		<p>선호지점(임시!!!!!)</p>
+		<input type="number" name="brcId" value="1">
 		<%// TODO : 반복문으로 지점 추가된 값을 db에서 가져와서 비동기방식으로 보여줘야함..%>
-		<select name="brcId" >
-				<option value="1">서울</option>
-				<option value="2">경기/강원</option>
-				<option value="3">부산/경상</option>
-				<option value="4">대전/충청</option>
-				<option value="5">광주/전라</option>
-				<option value="6">제주</option>
+		<%--<select name="brcArea" >
+			<option>서울</option>
+			<option>경기/강원</option>
+			<option>부산/경상</option>
+			<option>대전/충청</option>
+			<option>광주/전라</option>
+			<option>제주</option>
 		</select>
-	<%--<select name="brcId" >
+		<select name="brcId" >
 			<c:forEach var="vo" items="${list }">
-				<option value="${brcId }">강남</option>
+				<option value="${brcId }">${brcName }</option>
 			</c:forEach>
 		</select> --%>
 		<br><br><input type="submit" value="회원가입">
