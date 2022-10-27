@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,java,eclipse
 
 ### target ###
+/target
 pom.properties
 
 ### Eclipse ###
