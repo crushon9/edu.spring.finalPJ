@@ -11,7 +11,7 @@ import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
 
 @Controller
-@RequestMapping(value = "/movie") // url: /project/movie
+@RequestMapping(value = "/admin/movie") // url: /project/admin/movie
 public class MovieController {
 	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 

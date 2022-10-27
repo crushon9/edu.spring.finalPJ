@@ -12,7 +12,7 @@ import edu.spring.project.domain.BranchVO;
 import edu.spring.project.service.BranchService;
 
 @Controller
-@RequestMapping(value = "/branch") // url: /project/branch
+@RequestMapping(value = "/admin/branch") // url: /project/admin/branch
 public class BranchController {
 	private static final Logger logger = LoggerFactory.getLogger(BranchController.class);
 
