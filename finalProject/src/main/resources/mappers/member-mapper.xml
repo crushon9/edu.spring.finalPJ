@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_by_member_id" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
-		where ${mmbId} like #{mmbId}
+		where ${mmbId} = #{mmbId}
 	</select>
 		
 	<update id="update">
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
-		where ${mmbId} like #{mmbId} and ${mmbPassword} like #{mmbPassword}
+		where ${mmbId} = #{mmbId} and ${mmbPassword} = #{mmbPassword}
 	</select>
 
 </mapper>
