@@ -35,11 +35,11 @@
 				<option value="5">광주/전라</option>
 				<option value="6">제주</option>
 		</select>
-	<%-- 	<c:forEach var="vo" items="${list }">
-			<select name="brcId" >
+	<%--<select name="brcId" >
+			<c:forEach var="vo" items="${list }">
 				<option value="${brcId }">강남</option>
-			</select>
-		</c:forEach> --%>
+			</c:forEach>
+		</select> --%>
 		<br><br><input type="submit" value="회원가입">
 	  </form>
 	
