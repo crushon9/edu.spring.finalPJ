@@ -27,7 +27,7 @@
 		<!-- 관리자 여부 : DB에서 권한요청으로 set 1 -->
 		<p>선호지점</p>
 		<%// TODO : 반복문으로 지점 추가된 값을 db에서 가져와서 비동기방식으로 보여줘야함..%>
-		<select name="brcArea" >
+		<select name="brcId" >
 				<option value="1">서울</option>
 				<option value="2">경기/강원</option>
 				<option value="3">부산/경상</option>
