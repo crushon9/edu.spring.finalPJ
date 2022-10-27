@@ -17,13 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId}, #{mmbImage})
 	</insert>
 
-	<select id="select_all_member_id" resultType="MemberVO">		
+	<select id="select_all_mmb_id" resultType="MemberVO">		
 		select * from
 		${PJ_MEMBER}
 		order by ${mmbId} DESC
 	</select>
 	
-	<select id="select_by_member_id" resultType="MemberVO">
+	<select id="select_by_mmb_id" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		where ${mmbId} = #{mmbId}

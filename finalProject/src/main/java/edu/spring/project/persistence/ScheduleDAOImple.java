@@ -7,45 +7,45 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import edu.spring.project.domain.MemberVO;
+import edu.spring.project.domain.ScheduleVO;
 
 @Repository
-public class MemberDAOImple implements MemberDAO{
-	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.project.memberMapper"; // member-mapper.xml
+public class ScheduleDAOImple implements ScheduleDAO{
+	private static final Logger logger = LoggerFactory.getLogger(ScheduleDAOImple.class);
+	private static final String NAMESPACE = "edu.spring.project.scheduleMapper"; // scd-mapper.xml
 	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	@Override
-	public int insert(MemberVO vo) {
+	public int insert(ScheduleVO vo) {
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 		// NAMESPACE가 동일한 mapper를 찾아가서 id="insert"인 insert 태그에 vo 데이터를 전송
 	}
 
 	@Override
-	public List<MemberVO> select() {
+	public List<ScheduleVO> select() {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_all_mmb_id");
+		return sqlSession.selectList(NAMESPACE + ".select_all_scd_id");
 	}
 
 	@Override
-	public MemberVO select(String mmbId) {
-		logger.info("select() 호출 : boardId = " + mmbId);
-		return sqlSession.selectOne(NAMESPACE + ".select_by_mmb_id", mmbId);
+	public ScheduleVO select(String scdId) {
+		logger.info("select() 호출 : scdId = " + scdId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_scd_id", scdId);
 	}
 
 	@Override
-	public int update(MemberVO vo) {
+	public int update(ScheduleVO vo) {
 		logger.info("update() 호출");
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
-	public int delete(String mmbId) {
+	public int delete(String scdId) {
 		logger.info("delete() 호출");
-		return sqlSession.delete(NAMESPACE + ".delete", mmbId);
+		return sqlSession.delete(NAMESPACE + ".delete", scdId);
 	}
 
 }

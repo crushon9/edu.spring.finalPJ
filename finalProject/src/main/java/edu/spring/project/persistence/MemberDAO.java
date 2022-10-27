@@ -9,10 +9,10 @@ public interface MemberDAO {
 
 	List<MemberVO> select();
 
-	MemberVO select(String memberId);
+	MemberVO select(String mmbId);
 
 	int update(MemberVO vo);
 
-	int delete(String memberId);
+	int delete(String mmbId);
 
 }
