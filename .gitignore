@@ -2,8 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,java,eclipse
 
 ### target ###
-/target
-pom.properties
+finalProject/target/m2e-wtp/web-resources/META-INF/maven/edu.spring/project/pom.properties
 
 ### Eclipse ###
 .metadata
