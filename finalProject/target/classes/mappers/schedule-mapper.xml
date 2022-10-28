@@ -17,50 +17,80 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(${mvId}, ${brcId}, ${scdDate}, ${scdTime}, ${scdTheater}, ${scdSeatTotal}, ${scdPrice})
 		values (#{mvId}, #{brcId}, #{scdDate}, #{scdTime}, #{scdTheater}, #{scdSeatTotal}, #{scdPrice})
 	</insert>
-
+	
+	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
 	<select id="select_list_all" resultType="ScheduleVO">		
 		select * from
 		${PJ_SCHEDULE}
-		order by ${scdId} DESC
 	</select>
 	
-	<select id="select_one_by_mv_id" resultType="ScheduleVO">
+	<select id="select_list_by_m" resultType="ScheduleVO">
 		select * from
 		${PJ_SCHEDULE}
 		where ${mvId} = #{mvId}
 	</select>
 	
-	<select id="select_one_by_brc_id" resultType="ScheduleVO">
+	<select id="select_list_by_b" resultType="ScheduleVO">
 		select * from
 		${PJ_SCHEDULE}
 		where ${brcId} = #{brcId}
 	</select>
 	
-	<select id="select_one_by_scd_date" resultType="ScheduleVO">
+	<select id="select_list_by_d" resultType="ScheduleVO">
 		select * from
 		${PJ_SCHEDULE}
 		where ${scdDate} = #{scdDate}
 	</select>
 	
-	<select id="select_list_by_scd_date" resultType="ScheduleVO">
+	<select id="select_list_by_mb" resultType="ScheduleVO">
+		select * from
+		${PJ_SCHEDULE}
+		where ${mvId} = #{mvId} and ${brcId} = #{brcId}
+	</select>
+	
+	<select id="select_list_by_md" resultType="ScheduleVO">
+		select * from
+		${PJ_SCHEDULE}
+		where ${mvId} = #{mvId} and ${scdDate} = #{scdDate}
+	</select>
+	
+	<select id="select_list_by_bd" resultType="ScheduleVO">
+		select * from
+		${PJ_SCHEDULE}
+		where ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
+	</select>
+	
+	<select id="select_list_by_mbd" resultType="ScheduleVO">
+		select * from
+		${PJ_SCHEDULE}
+		where ${mvId} = #{mvId} and ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
+	</select>
+	
+	<!-- 관리자 기간 조회용 -->
+	<select id="select_list_between_scd_date" resultType="ScheduleVO">
 		select * from
 		${PJ_SCHEDULE}
 		where ${scdDate} between #{scdDateStart} and #{scdDateEnd}
 	</select>
 	
-	<!-- // TODO : select -->
-		
+	<!-- //TODO : 수정삭제 쿼리 다시짜기 -->
+	<delete id="delete_by_mv_id">
+		delete from ${PJ_SCHEDULE}
+		where ${mvId} = #{mvId}
+	</delete>
+	
 	<update id="update">
 		update ${PJ_SCHEDULE}
-		set ${mmbPassword} = #{mmbPassword}, ${mmbEmail} = #{mmbEmail},
-		${mmbPhone} = #{mmbPhone}, ${mmbBirthday} = #{mmbBirthday}, 
-		${brcId} = #{brcId}, ${mmbImage} = #{mmbImage}
-		where ${mmbId} = #{mmbId}
+		set ${mvId} = #{mvId}, ${brcId} = #{brcId},
+		${scdDate} = #{scdDate}, ${scdTime} = #{scdTime}, 
+		${scdTheater} = #{scdTheater}, ${scdSeatTotal} = #{scdSeatTotal},
+		${scdSeatBookedCnt} = #{scdSeatBookedCnt}, ${scdPrice} = #{scdPrice}
+		where ${scdId} = #{scdId}
 	</update>
-
-	<delete id="delete"> 
+	
+	<delete id="delete_by_scd_id">
 		delete from ${PJ_SCHEDULE}
-		where ${mmbId} = #{mmbId}
+		where ${scdId} = #{scdId}
 	</delete>
 
 </mapper>

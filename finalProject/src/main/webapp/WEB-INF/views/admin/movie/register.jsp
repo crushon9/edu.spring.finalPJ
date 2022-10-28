@@ -28,11 +28,13 @@
 			<option>드라마</option>
 			<option>공포</option>
 			<option>애니메이션</option>
-			<option>코미디</option>
 		</select>
 		<p>영화 이미지</p>
-		
-		<!-- //TODO : 운종이가 여기에 이미지파일 넣기를 할것임 !!-->
+		<!-- 폼을 하나로 합쳐야하는지? 아니면 새창으로 빼야하는건지? -->
+		<!-- <form action="upload" method="post" enctype="multipart/form-data">
+		<input type="file" name="file">
+		<input type="submit" value="업로드">
+		</form> -->
 		<br><br><input type="submit" value="등록">
 	  </form>
 	

@@ -9,9 +9,9 @@ public class ScheduleVO {
 	private Date scdDate;
 	private int scdTime;
 	private int scdTheater;
-	private int scdSeatTotal;
-	private int scdSeatBookedCnt;
-	private int scdPrice;
+	private int scdSeatTotal; // scdTheater에 종속된 값
+	private int scdSeatBookedCnt; // 생성시 0
+	private int scdPrice; // scdDate와 scdTime에 영향받는 값??????????
 
 	public ScheduleVO() {
 	}
