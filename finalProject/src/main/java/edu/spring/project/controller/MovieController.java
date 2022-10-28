@@ -34,4 +34,13 @@ public class MovieController {
 		
 		return "¾ßÈ£2";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

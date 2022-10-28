@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.project.movieMapper">
+
+	<insert id="insert">
+		insert into ${PJ_MOVIE} 
+		(${mvId}, ${mvTitle}, ${mvDateStarted}, ${mvDateEnded}, ${mvGenre}, ${mvRating}, ${mvTicketSales}, ${mvImage})
+		values (#{mvId}, #{mvTitle}, #{mvDateStarted}, #{mvDateEnded}, #{mvGenre}, #{mvRating}, #{mvTicketSales}, #{mvImage})
+	</insert>
+
+	<select id="select_list_all" resultType="MovieVO">		
+		select * from
+		${PJ_MOVIE}
+		order by ${mvId} DESC
+	</select>
+	
+	<select id="select_one_by_mv_id" resultType="MovieVO">
+		select * from
+		${PJ_MOVIE}
+		where ${mvId} = #{mvId}
+	</select>		
+	
+	<select id="select_list_by_mv_date" resultType="MovieVO">
+		select * from
+		${PJ_MOVIE}
+		where ${mvDateStarted} <![CDATA[<=]]> #{inputDateStarted} and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
+
+	</select>
+	
+	
+	<!-- update all -->
+	<update id="update">
+		update ${PJ_MOVIE}
+		set ${mvTitle} = #{mvTitle}, ${mvDateStarted} = #{mvDateStarted},
+		${mvDateEnded} = #{mvDateEnded}, ${mvGenre} = #{mvGenre}, 
+		${mvRating} = #{mvRating}, ${mvTicketSales} = #{mvTicketSales},
+		${mvImage} = #{mvImage}
+		where ${mvId} = #{mvId}
+	</update>
+	
+	<!-- rating -->
+	<update id="update_rating_by_mv_id">
+		update ${PJ_MOVIE}
+		set  
+		${mvRating} = #{mvRating}
+		where ${mvId} = #{mvId}
+	</update>
+	
+	<!-- ticketSales -->
+	<update id="update_ticketSales_by_mv_id">
+		update ${PJ_MOVIE}
+		set  
+		${mvTicketSales} = #{mvTicketSales}
+		where ${mvId} = #{mvId}
+	</update>
+		
+
+	<delete id="delete"> 
+		delete from ${PJ_MOVIE}
+		where ${mvId} = #{mvId}
+	</delete>
+
+</mapper>

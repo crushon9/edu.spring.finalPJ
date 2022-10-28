@@ -35,4 +35,37 @@ public class MemberController {
 		
 		return "야호";
 	}
+	
+	// 멤버 정보 보여주자.
+	@GetMapping("/detail")
+	public void detail(String memberId) {
+		logger.info("detail call : memberId = " + memberId);
+		MemberVO vo = memberService.read(memberId);
+	}
+	
+	// get만 해오자
+	@GetMapping("/update")
+	public void updateGet(String memberId) {
+		logger.info("updateGet() call");
+		MemberVO vo = memberService.read(memberId);
+		
+	}
+	
+	// 진짜 기능 ㄱ
+	@PostMapping("update")
+	public void updatePost(MemberVO vo) {
+		logger.info("updatePost call : vo = " + vo.toString()); 
+		int result = memberService.update(vo);		
+		
+	}
+	
+	// 기능만 구현, 탈퇴하면 손모가지.
+	@PostMapping("/delete")
+	public void delete(String memberId) {
+		logger.info("delete call : memberId = " + memberId);
+		int result = memberService.delete(memberId);
+		
+	}
+		
+	
 }

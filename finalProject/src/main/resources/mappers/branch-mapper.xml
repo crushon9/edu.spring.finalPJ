@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.project.branchMapper">
+
+	<insert id="insert">
+		insert into ${PJ_BRANCH} 
+		(${brcId}, ${brcArea}, ${brcName}, ${brcTheaterNumbers}, ${brcTheaterSeats})
+		values (#{brcId}, #{brcArea}, #{brcName}, #{brcTheaterNumbers}, #{brcTheaterSeats})
+	</insert>
+
+	<!-- //TODO : 예매 페이지 로딩 시 전체 데이터를 다 끌고온다. -->
+	<select id="select_list_all_brc_id" resultType="BranchVO">		
+		select * from
+		${PJ_BRANCH}
+		order by ${brcId} DESC
+	</select>
+	
+	<select id="select_one_by_brc_id" resultType="BranchVO">
+		select * from
+		${PJ_BRANCH}
+		where ${brcId} = #{brcId}
+	</select>
+		
+	<update id="update">
+		update ${PJ_BRANCH}
+		set ${brcArea} = #{brcArea}, ${brcName} = #{brcName},
+		${brcTheaterNumbers} = #{brcTheaterNumbers}, ${brcTheaterSeats} = #{brcTheaterSeats}		
+		where ${brcId} = #{brcId}
+	</update>
+
+	<delete id="delete"> 
+		delete from ${PJ_BRANCH}
+		where ${brcId} = #{brcId}
+	</delete>
+
+</mapper>
