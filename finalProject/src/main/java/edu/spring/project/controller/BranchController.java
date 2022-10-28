@@ -1,9 +1,12 @@
 package edu.spring.project.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,4 +38,82 @@ public class BranchController {
 		
 		return "야호3";
 	}
+	
+	@GetMapping("/list") 
+	public void list(Model model) {
+		logger.info("list() call");
+				
+		List<BranchVO> list = branchService.read();
+		model.addAttribute("list", list);
+			
+		for(BranchVO vo : list) {
+			logger.info(vo.toString());
+		}		
+		
+	}//end list 
+		
+	@PostMapping("/register") // redirectAttributes ㄱㄱ
+	public void registerPost(BranchVO vo) {
+		// RedirectAttributes
+		
+		logger.info("registerPost() call");
+		logger.info(vo.toString());
+		
+		int result = branchService.create(vo);
+		logger.info(result + "행 삽입");
+//		if(result == 1) {
+//			// sending key value 
+//			reAttr.addFlashAttribute("insert_result", "success");
+//			return "redirect:/board/list"; // 
+//		} else {
+//			reAttr.addFlashAttribute("insert_result", "fail");
+//			return "redirect:/board/register"; // 
+//		}
+		
+	}//end registerPost()
+	
+	@GetMapping("/detail")
+	public void detail(Model model, String brcId) {
+		logger.info("detail call : mvId = " + brcId);
+		BranchVO vo = branchService.read(brcId);
+		model.addAttribute("vo", vo);
+				
+	}//end detailGet
+	
+	@GetMapping("/update")
+	public void updateGET(Model model, String brcId) {
+		logger.info("updateGET() call : brcId = " + brcId);
+		BranchVO vo = branchService.read(brcId);
+		// page로 전송한다
+		model.addAttribute("vo", vo);
+				
+	}//end updateGET
+	
+	@PostMapping("/update") // void 에서 String으로 바꿈
+	public void updatePOST(BranchVO vo, String brcId) {
+		logger.info("updatePOST call : vo = " + vo.toString());
+		int result = branchService.update(vo);
+//		if(result == 1) {
+//			// list + ?page=
+//			return "redirect:/board/list?page=" + page;
+//			// else 부분 return 빠지면 오류 쫘르르를
+//		} else {
+//			return "redirect:/board/update?boardOd=" + vo.getBoardId();		
+//		}
+				
+	}//end updatePOST
+	
+	@PostMapping("/delete")
+	public void delete(String brcId) {
+		logger.info("delete call : brcId = " + brcId);
+		int result = branchService.delete(brcId);
+//		if(result == 1) {			
+//			return "redirect:/board/list";
+//		} else {
+//			return "redirect:/board/list";
+//		}
+		
+	}//end delete
+		
+	
 }
