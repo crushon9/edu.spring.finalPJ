@@ -6,14 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_MOVIE} 
-		(${mvId}, ${mvTitle}, ${mvDateStarted}, ${mvDateEnded}, ${mvGenre}, ${mvRating}, ${mvTicketSales}, ${mvImage})
-		values (#{mvId}, #{mvTitle}, #{mvDateStarted}, #{mvDateEnded}, #{mvGenre}, #{mvRating}, #{mvTicketSales}, #{mvImage})
+		(${mvTitle}, ${mvImage}, ${mvDateStarted}, ${mvDateEnded}, ${mvRuningTime}, ${mvGenre})
+		values (#{mvTitle}, #{mvImage}, #{mvDateStarted}, #{mvDateEnded}, #{mvRuningTime}, #{mvGenre})
 	</insert>
-
+	
 	<select id="select_list_all" resultType="MovieVO">		
 		select * from
-		${PJ_MOVIE}
-		order by ${mvId} DESC
+		#{PJ_MOVIE}
+		order by ${mvTicketSales}
 	</select>
 	
 	<select id="select_one_by_mv_id" resultType="MovieVO">
@@ -26,37 +26,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from
 		${PJ_MOVIE}
 		where ${mvDateStarted} <![CDATA[<=]]> #{inputDateStarted} and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
-
 	</select>
-	
 	
 	<!-- update all -->
 	<update id="update">
 		update ${PJ_MOVIE}
-		set ${mvTitle} = #{mvTitle}, ${mvDateStarted} = #{mvDateStarted},
-		${mvDateEnded} = #{mvDateEnded}, ${mvGenre} = #{mvGenre}, 
-		${mvRating} = #{mvRating}, ${mvTicketSales} = #{mvTicketSales},
-		${mvImage} = #{mvImage}
+		set ${mvTitle} = #{mvTitle}, ${mvImage} = #{mvImage},
+		${mvDateStarted} = #{mvDateStarted}, ${mvDateEnded} = #{mvDateEnded},
+		${mvRuningTime} = #{mvRuningTime}, ${mvGenre} = #{mvGenre}
 		where ${mvId} = #{mvId}
 	</update>
 	
-	<!-- rating -->
-	<update id="update_rating_by_mv_id">
+	<!-- mvRatingAvg // TODO : score , amount : 취소되면 -1, 결제하면 +1-->
+	<update id="update_mv_ratings_by_mv_id">
 		update ${PJ_MOVIE}
-		set  
-		${mvRating} = #{mvRating}
+		set ${mvRatingTotal} = ${mvRatingTotal} + #{score},
+		${mvRatingCnt} = ${mvRatingCnt} + #{amount},
+		${mvRatingAvg} = ${mvRatingTotal} / ${mvRatingCnt}
 		where ${mvId} = #{mvId}
 	</update>
 	
-	<!-- ticketSales -->
-	<update id="update_ticketSales_by_mv_id">
+	<!-- ticketSales // TODO : amount : 취소되면 -1, 결제하면 +1 -->
+	<update id="update_mv_ticketsales_by_mv_id">
 		update ${PJ_MOVIE}
-		set  
-		${mvTicketSales} = #{mvTicketSales}
+		set ${mvTicketSales} = ${mvTicketSales} + #{amount}
 		where ${mvId} = #{mvId}
 	</update>
 		
-
 	<delete id="delete"> 
 		delete from ${PJ_MOVIE}
 		where ${mvId} = #{mvId}

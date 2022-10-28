@@ -6,26 +6,32 @@ public class MovieVO {
 
 	private int mvId;
 	private String mvTitle;
+	private String mvImage;
 	private Date mvDateStarted;
 	private Date mvDateEnded;
+	private int mvRuningTime;
 	private String mvGenre;
-	private float mvRating;
 	private int mvTicketSales;
-	private String mvImage;
+	private int mvRatingTotal;
+	private int mvRatingCnt;
+	private float mvRatingAvg;
 
 	public MovieVO() {
 	}
 
-	public MovieVO(int mvId, String mvTitle, Date mvDateStarted, Date mvDateEnded, String mvGenre, float mvRating,
-			int mvTicketSales, String mvImage) {
+	public MovieVO(int mvId, String mvTitle, String mvImage, Date mvDateStarted, Date mvDateEnded, int mvRuningTime,
+			String mvGenre, int mvTicketSales, int mvRatingTotal, int mvRatingCnt, float mvRatingAvg) {
 		this.mvId = mvId;
 		this.mvTitle = mvTitle;
+		this.mvImage = mvImage;
 		this.mvDateStarted = mvDateStarted;
 		this.mvDateEnded = mvDateEnded;
+		this.mvRuningTime = mvRuningTime;
 		this.mvGenre = mvGenre;
-		this.mvRating = mvRating;
 		this.mvTicketSales = mvTicketSales;
-		this.mvImage = mvImage;
+		this.mvRatingTotal = mvRatingTotal;
+		this.mvRatingCnt = mvRatingCnt;
+		this.mvRatingAvg = mvRatingAvg;
 	}
 
 	public int getMvId() {
@@ -44,6 +50,14 @@ public class MovieVO {
 		this.mvTitle = mvTitle;
 	}
 
+	public String getMvImage() {
+		return mvImage;
+	}
+
+	public void setMvImage(String mvImage) {
+		this.mvImage = mvImage;
+	}
+
 	public Date getMvDateStarted() {
 		return mvDateStarted;
 	}
@@ -60,20 +74,20 @@ public class MovieVO {
 		this.mvDateEnded = mvDateEnded;
 	}
 
+	public int getMvRuningTime() {
+		return mvRuningTime;
+	}
+
+	public void setMvRuningTime(int mvRuningTime) {
+		this.mvRuningTime = mvRuningTime;
+	}
+
 	public String getMvGenre() {
 		return mvGenre;
 	}
 
 	public void setMvGenre(String mvGenre) {
 		this.mvGenre = mvGenre;
-	}
-
-	public float getMvRating() {
-		return mvRating;
-	}
-
-	public void setMvRating(float mvRating) {
-		this.mvRating = mvRating;
 	}
 
 	public int getMvTicketSales() {
@@ -84,19 +98,36 @@ public class MovieVO {
 		this.mvTicketSales = mvTicketSales;
 	}
 
-	public String getMvImage() {
-		return mvImage;
+	public int getMvRatingTotal() {
+		return mvRatingTotal;
 	}
 
-	public void setMvImage(String mvImage) {
-		this.mvImage = mvImage;
+	public void setMvRatingTotal(int mvRatingTotal) {
+		this.mvRatingTotal = mvRatingTotal;
+	}
+
+	public int getMvRatingCnt() {
+		return mvRatingCnt;
+	}
+
+	public void setMvRatingCnt(int mvRatingCnt) {
+		this.mvRatingCnt = mvRatingCnt;
+	}
+
+	public float getMvRatingAvg() {
+		return mvRatingAvg;
+	}
+
+	public void setMvRatingAvg(float mvRatingAvg) {
+		this.mvRatingAvg = mvRatingAvg;
 	}
 
 	@Override
 	public String toString() {
-		return "MovieVO [mvId=" + mvId + ", mvTitle=" + mvTitle + ", mvDateStarted=" + mvDateStarted + ", mvDateEnded="
-				+ mvDateEnded + ", mvGenre=" + mvGenre + ", mvRating=" + mvRating + ", mvTicketSales=" + mvTicketSales
-				+ ", mvImage=" + mvImage + "]";
+		return "MovieVO [mvId=" + mvId + ", mvTitle=" + mvTitle + ", mvImage=" + mvImage + ", mvDateStarted="
+				+ mvDateStarted + ", mvDateEnded=" + mvDateEnded + ", mvRuningTime=" + mvRuningTime + ", mvGenre="
+				+ mvGenre + ", mvTicketSales=" + mvTicketSales + ", mvRatingTotal=" + mvRatingTotal + ", mvRatingCnt="
+				+ mvRatingCnt + ", mvRatingAvg=" + mvRatingAvg + "]";
 	}
 
 }
