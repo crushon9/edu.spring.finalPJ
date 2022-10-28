@@ -3,27 +3,28 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.spring.project.memberMapper">
-	<!-- namespace : dao클래스의 sqlSession과 연결하기 위한 키로 사용. 내가 정의하기 나름이고 양쪽이 서로 
-		매칭되어서 같기만 하면됨 mapper 태그 <insert>, <select>, <update>, <delete> dao - sqlSession의 
-		함수(insert, selectOne, selectList update, delete)와 매핑되어 쿼리를 수행 id : 식별자로 구분하여 
-		dao 클래스의 sqlSession 특정 함수와 연결하기 위해 사용 ${key 이름} : mybatis-config.xml의 property-name과 
-		매칭. DB 테이블의 컬럼 #{key 이름} : dao 클래스의 sqlSession에서 파라미터로 전송받은 인스턴스(VO등) getter로 
-		매핑된 데이터(입력받은 데이터) resultType : 검색 관련 SQL 구문이 실행되면 ResultSet이 리턴되며, ResultSet에 
-		저장된 검색 결과를 어떤 자바 객체에 매핑할지 지정할 때 사용하는 속성 -->
+	<!-- namespace : dao클래스의 sqlSession과 연결하기 위한 키로 사용. 내가 정의하기 나름이고 양쪽이 서로 매칭되어서 같기만 하면됨
+	mapper 태그 <insert>, <select>, <update>, <delete> / dao - sqlSession의  함수(insert, selectOne, selectList update, delete)와 매핑되어 쿼리를 수행
+	id : 식별자로 구분하여 dao 클래스의 sqlSession 특정 함수와 연결하기 위해 사용
+	** DAO에서 호출시 sqlSession.insert("edu.spring.project.scheduleMapper.insert", 파라미터);
+	${key 이름} : mybatis-config.xml의 property-name과 매칭. DB 테이블의 컬럼
+	#{key 이름} : dao 클래스의 sqlSession객체를 통해 호출되면서 인자로 전송받은 인스턴스(VO등)의 getter이름으로 매핑된 데이터
+	resultType : select 관련 SQL 구문이 실행되면 ResultSet이 리턴되며, ResultSet에 저장된 select 결과를 어떤 자바 객체에 매핑할지 지정할 때 사용하는 속성
+	이 자바 객체는 mybatis-config.xml에서 typeAliases로 패키지(edu.spring.project.domain)를 지정해줬기 때문에 resultType에서 클래스명(MemberVO)만 써도 생성가능함-->
 
-	 <insert id="insert">
+	<insert id="insert">
 		insert into ${PJ_MEMBER} 
-		(${mmbId}, ${mmbPassword}, ${mmbEmail}, ${mmbPhone}, ${mmbBirthday}, ${brcId}, ${mmbImage})
-		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId}, #{mmbImage})
+		(${mmbId}, ${mmbPassword}, ${mmbEmail}, ${mmbPhone}, ${mmbBirthday}, ${brcId})
+		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId})
 	</insert>
 
-	<select id="select_all_mmb_id" resultType="MemberVO">		
+	<select id="select_list_mmb_id" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		order by ${mmbId} DESC
 	</select>
 	
-	<select id="select_by_mmb_id" resultType="MemberVO">
+	<select id="select_one_by_mmb_id" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		where ${mmbId} = #{mmbId}
@@ -33,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update ${PJ_MEMBER}
 		set ${mmbPassword} = #{mmbPassword}, ${mmbEmail} = #{mmbEmail},
 		${mmbPhone} = #{mmbPhone}, ${mmbBirthday} = #{mmbBirthday}, 
-		${brcId} = #{brcId}, ${mmbImage} = #{mmbImage}
+		${brcId} = #{brcId}}
 		where ${mmbId} = #{mmbId}
 	</update>
 
