@@ -28,7 +28,7 @@ public class MovieServiceImple implements MovieService {
 	}
 
 	@Override
-	public MovieVO read(String mvId) {
+	public MovieVO read(int mvId) {
 		logger.info("read() 호출 : mvId = " + mvId);
 		return dao.select(mvId);
 	}
@@ -40,7 +40,7 @@ public class MovieServiceImple implements MovieService {
 	}
 
 	@Override
-	public int delete(String mvId) {
+	public int delete(int mvId) {
 		logger.info("delete() 호출 : mvId = " + mvId);
 		return dao.delete(mvId);
 	}

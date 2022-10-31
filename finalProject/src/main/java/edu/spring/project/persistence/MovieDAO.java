@@ -9,10 +9,10 @@ public interface MovieDAO {
 
 	List<MovieVO> select();
 
-	MovieVO select(String mvId);
+	MovieVO select(int mvId);
 
 	int update(MovieVO vo);
 
-	int delete(String mvId);
+	int delete(int mvId);
 
 }

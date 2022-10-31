@@ -10,10 +10,10 @@ public interface MovieService {
 
 	List<MovieVO> read();
 
-	MovieVO read(String mvId);
+	MovieVO read(int mvId);
 
 	int update(MovieVO vo);
 
-	int delete(String mvId);
+	int delete(int mvId);
 
 }

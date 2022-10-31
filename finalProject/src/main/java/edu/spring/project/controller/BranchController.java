@@ -73,7 +73,7 @@ public class BranchController {
 	}//end registerPost()
 	
 	@GetMapping("/detail")
-	public void detail(Model model, String brcId) {
+	public void detail(Model model, int brcId) {
 		logger.info("detail call : mvId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		model.addAttribute("vo", vo);
@@ -81,7 +81,7 @@ public class BranchController {
 	}//end detailGet
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, String brcId) {
+	public void updateGET(Model model, int brcId) {
 		logger.info("updateGET() call : brcId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		// page로 전송한다
@@ -90,7 +90,7 @@ public class BranchController {
 	}//end updateGET
 	
 	@PostMapping("/update") // void 에서 String으로 바꿈
-	public void updatePOST(BranchVO vo, String brcId) {
+	public void updatePOST(BranchVO vo, int brcId) {
 		logger.info("updatePOST call : vo = " + vo.toString());
 		int result = branchService.update(vo);
 //		if(result == 1) {
@@ -104,7 +104,7 @@ public class BranchController {
 	}//end updatePOST
 	
 	@PostMapping("/delete")
-	public void delete(String brcId) {
+	public void delete(int brcId) {
 		logger.info("delete call : brcId = " + brcId);
 		int result = branchService.delete(brcId);
 //		if(result == 1) {			

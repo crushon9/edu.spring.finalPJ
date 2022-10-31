@@ -10,10 +10,10 @@ public interface MemberService {
 
 	List<MemberVO> read();
 
-	MemberVO read(String memberId);
+	MemberVO read(String mmbId);
 
 	int update(MemberVO vo);
 
-	int delete(String memberId);
+	int delete(String mmbId);
 
 }

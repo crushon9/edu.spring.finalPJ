@@ -31,7 +31,7 @@ public class MovieDAOImple implements MovieDAO{
 	}
 
 	@Override
-	public MovieVO select(String mvId) {
+	public MovieVO select(int mvId) {
 		logger.info("select() 호출 : mvId = " + mvId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_mv_id", mvId);
 	}
@@ -43,7 +43,7 @@ public class MovieDAOImple implements MovieDAO{
 	}
 
 	@Override
-	public int delete(String mvId) {
+	public int delete(int mvId) {
 		logger.info("delete() 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}

@@ -51,14 +51,14 @@ public class MovieController {
 	}
 	
 	@GetMapping("/detail") // String mvId로 변경 EU
-	public void detail(Model model, String mvId) {
+	public void detail(Model model, int mvId) {
 		logger.info("detail call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
 	}
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, String mvId) {
+	public void updateGET(Model model, int mvId) {
 		logger.info("updateGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		// page로 전송한다
@@ -80,7 +80,7 @@ public class MovieController {
 	}//end updatePOST
 	
 	@PostMapping("/delete")
-	public void delete(String mvId) {
+	public void delete(int mvId) {
 		logger.info("delete call : boardId = " + mvId);
 		int result = movieService.delete(mvId);
 //		if(result == 1) {			

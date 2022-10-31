@@ -10,10 +10,10 @@ public interface BranchDAO {
 
 	List<BranchVO> select();
 
-	BranchVO select(String brcId);
+	BranchVO select(int brcId);
 
 	int update(BranchVO vo);
 
-	int delete(String brcId);
+	int delete(int brcId);
 
 }

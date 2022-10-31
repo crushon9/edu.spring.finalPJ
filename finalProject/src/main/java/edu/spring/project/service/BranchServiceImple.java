@@ -29,7 +29,7 @@ public class BranchServiceImple implements BranchService {
 	}
 
 	@Override
-	public BranchVO read(String brcId) {
+	public BranchVO read(int brcId) {
 		logger.info("read() 호출 : memberId = " + brcId);
 		return dao.select(brcId);
 	}
@@ -41,7 +41,7 @@ public class BranchServiceImple implements BranchService {
 	}
 
 	@Override
-	public int delete(String brcId) {
+	public int delete(int brcId) {
 		logger.info("delete() 호출 : memberId = " + brcId);
 		return dao.delete(brcId);
 	}

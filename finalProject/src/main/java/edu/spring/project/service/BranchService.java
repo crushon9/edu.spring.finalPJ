@@ -11,10 +11,10 @@ public interface BranchService {
 
 	List<BranchVO> read();
 
-	BranchVO read(String brcId);
+	BranchVO read(int brcId);
 
 	int update(BranchVO vo);
 
-	int delete(String brcId);
+	int delete(int brcId);
 
 }

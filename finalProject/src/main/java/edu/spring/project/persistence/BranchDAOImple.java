@@ -32,7 +32,7 @@ public class BranchDAOImple implements BranchDAO{
 	}
 
 	@Override
-	public BranchVO select(String brcId) {
+	public BranchVO select(int brcId) {
 		logger.info("select() 호출 : boardId = " + brcId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_brc_id", brcId);
 	}
@@ -44,7 +44,7 @@ public class BranchDAOImple implements BranchDAO{
 	}
 
 	@Override
-	public int delete(String brcId) {
+	public int delete(int brcId) {
 		logger.info("delete() 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", brcId);
 	}

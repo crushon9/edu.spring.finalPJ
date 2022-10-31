@@ -38,16 +38,16 @@ public class MemberController {
 	
 	// 멤버 정보 보여주자.
 	@GetMapping("/detail")
-	public void detail(String memberId) {
-		logger.info("detail call : memberId = " + memberId);
-		MemberVO vo = memberService.read(memberId);
+	public void detail(String mmbId) {
+		logger.info("detail call : memberId = " + mmbId);
+		MemberVO vo = memberService.read(mmbId);
 	}
 	
 	// get만 해오자
 	@GetMapping("/update")
-	public void updateGet(String memberId) {
+	public void updateGet(String mmbId) {
 		logger.info("updateGet() call");
-		MemberVO vo = memberService.read(memberId);
+		MemberVO vo = memberService.read(mmbId);
 		
 	}
 	
@@ -61,9 +61,9 @@ public class MemberController {
 	
 	// 기능만 구현, 탈퇴하면 손모가지.
 	@PostMapping("/delete")
-	public void delete(String memberId) {
-		logger.info("delete call : memberId = " + memberId);
-		int result = memberService.delete(memberId);
+	public void delete(String mmbId) {
+		logger.info("delete call : memberId = " + mmbId);
+		int result = memberService.delete(mmbId);
 		
 	}
 		
