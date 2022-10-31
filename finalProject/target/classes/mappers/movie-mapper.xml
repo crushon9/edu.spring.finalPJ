@@ -22,10 +22,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</select>		
 	
-	<select id="select_list_by_mv_date" resultType="MovieVO">
+	<select id="select_list_by_period" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
 		where ${mvDateStarted} <![CDATA[<=]]> #{inputDateStarted} and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
+	</select>
+	
+	<select id="select_list_by_date" resultType="MovieVO">
+		select * from
+		${PJ_MOVIE}
+		where ${mvDateStarted} <![CDATA[<=]]> #{inputDate} and #{inputDate} <![CDATA[<=]]> ${mvDateEnded}
 	</select>
 	
 	<!-- update all -->
