@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,45 +22,32 @@ public class BranchController {
 
 	@Autowired
 	private BranchService branchService;
-			
-	@GetMapping("/list") 
+
+	@GetMapping("/list")
 	public void list(Model model) {
 		logger.info("list() call");
-		
 		List<BranchVO> list = branchService.read();
 		model.addAttribute("list", list);
-		
-		for(BranchVO vo : list) {
-			logger.info(vo.toString());
-		}		
-	}//end list 
-	
-	@GetMapping("/areaList") 
-	public void areaList(Model model) {
+	}// end list
+
+	@GetMapping("/areaList/{brcArea}")
+	public void areaList(Model model, @PathVariable("brcArea") int brcArea) {
 		logger.info("areaList()");
-		
-		List<BranchVO> list = branchService.read();
+		List<BranchVO> list = branchService.areaList(brcArea);
 		model.addAttribute("list", list);
-		
-		for(BranchVO vo : list) {
-			logger.info(vo.toString());
-		}	
-		
 	}
-	
-	
-	
+
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
-	}//end registerGet()
-	// brcTheaterSeats는 배열 S 붙여라 알긋나?
-	
+	}// end registerGet()
+		// brcTheaterSeats는 배열 S 붙여라 알긋나?
+
 	@PostMapping("/register") // redirectAttributes ㄱㄱ
 	public void registerPost(BranchVO vo) {
-		// RedirectAttributes		
+		// RedirectAttributes
 		logger.info("registerPost() call");
-		logger.info(vo.toString());		
+		logger.info(vo.toString());
 		int result = branchService.create(vo);
 		logger.info(result + "행 삽입");
 //		if(result == 1) {
@@ -70,23 +58,23 @@ public class BranchController {
 //			reAttr.addFlashAttribute("insert_result", "fail");
 //			return "redirect:/board/register"; // 
 //		}		
-	}//end registerPost()
-	
-	@GetMapping("/detail") //branchSer read
+	}// end registerPost()
+
+	@GetMapping("/detail") // branchSer read
 	public void detail(Model model, int brcId) {
 		logger.info("detail call : mvId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
-		model.addAttribute("vo", vo);				
-	}//end detailGet
-	
+		model.addAttribute("vo", vo);
+	}// end detailGet
+
 	@GetMapping("/update") // branchSer read
 	public void updateGET(Model model, int brcId) {
 		logger.info("updateGET() call : brcId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		// page로 전송한다
-		model.addAttribute("vo", vo);				
-	}//end updateGET
-	
+		model.addAttribute("vo", vo);
+	}// end updateGET
+
 	@PostMapping("/update") // branchSer update
 	public void updatePOST(BranchVO vo, int brcId) {
 		logger.info("updatePOST call : vo = " + vo.toString());
@@ -98,8 +86,8 @@ public class BranchController {
 //		} else {
 //			return "redirect:/board/update?boardOd=" + vo.getBoardId();		
 //		}				
-	}//end updatePOST
-	
+	}// end updatePOST
+
 	@PostMapping("/delete") // branchSer delete
 	public void delete(int brcId) {
 		logger.info("delete call : brcId = " + brcId);
@@ -109,6 +97,6 @@ public class BranchController {
 //		} else {
 //			return "redirect:/board/list";
 //		}		
-	}//end delete
-			
+	}// end delete
+
 }

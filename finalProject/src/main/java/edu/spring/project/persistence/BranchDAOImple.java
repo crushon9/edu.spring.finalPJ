@@ -9,15 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import edu.spring.project.domain.BranchVO;
 
-
 @Repository
-public class BranchDAOImple implements BranchDAO{
+public class BranchDAOImple implements BranchDAO {
 	private static final Logger logger = LoggerFactory.getLogger(BranchDAOImple.class);
 	private static final String NAMESPACE = "edu.spring.project.branchMapper"; // branch-mapper.xml
-	
+
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Override
 	public int insert(BranchVO vo) {
 		logger.info("insert() 호출");
@@ -51,7 +50,7 @@ public class BranchDAOImple implements BranchDAO{
 
 	@Override
 	public List<BranchVO> areaList(int brcArea) {
-		logger.info("areaList() 호출");
+		logger.info("areaList() 호출 : brcArea = " + brcArea);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area");
 	}
 }

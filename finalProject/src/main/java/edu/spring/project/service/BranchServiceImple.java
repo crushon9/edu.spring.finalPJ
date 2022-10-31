@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import edu.spring.project.domain.BranchVO;
 import edu.spring.project.persistence.BranchDAO;
 
-
 @Service
 public class BranchServiceImple implements BranchService {
 	private static final Logger logger = LoggerFactory.getLogger(BranchServiceImple.class);
@@ -22,16 +21,15 @@ public class BranchServiceImple implements BranchService {
 		return dao.insert(vo);
 	}
 
-	@Override 
+	@Override
 	public List<BranchVO> read() {
 		logger.info("read() 호출");
 		return dao.select();
 	}
-	
 
 	@Override
 	public BranchVO read(int brcId) {
-		logger.info("read() 호출 : memberId = " + brcId);
+		logger.info("read() 호출 : brcId = " + brcId);
 		return dao.select(brcId);
 	}
 
@@ -43,11 +41,11 @@ public class BranchServiceImple implements BranchService {
 
 	@Override
 	public int delete(int brcId) {
-		logger.info("delete() 호출 : memberId = " + brcId);
+		logger.info("delete() 호출 : brcId = " + brcId);
 		return dao.delete(brcId);
 	}
 
-	@Override 
+	@Override
 	public List<BranchVO> areaList(int brcArea) {
 		logger.info("areaList() 호출");
 		return dao.areaList(brcArea);

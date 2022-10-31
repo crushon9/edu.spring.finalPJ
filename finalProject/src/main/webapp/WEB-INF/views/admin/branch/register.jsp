@@ -15,12 +15,12 @@
 	  <form action="register" method="post">
 	    <p>지역 설정</p>
 	    <select name="brcArea" >
-			<option>서울</option>
-			<option>경기/강원</option>
-			<option>부산/경상</option>
-			<option>대전/충청</option>
-			<option>광주/전라</option>
-			<option>제주</option>
+			<option value="1">서울</option>
+			<option value="2">경기/강원</option>
+			<option value="3">부산/경상</option>
+			<option value="4">대전/충청</option>
+			<option value="5">광주/전라</option>
+			<option value="6">제주</option>
 		</select>
 	    <p>지점 이름</p>
 	    <input type="text" name="brcName" placeholder="지점 이름 입력" required="required">
