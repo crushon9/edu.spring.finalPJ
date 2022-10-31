@@ -45,4 +45,10 @@ public class MemberServiceImple implements MemberService {
 		return dao.delete(mmbId);
 	}
 
+	@Override
+	public MemberVO login(String mmbId, String mmbPassword) {
+		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
+		return dao.login(mmbId, mmbPassword);
+	}
+
 }

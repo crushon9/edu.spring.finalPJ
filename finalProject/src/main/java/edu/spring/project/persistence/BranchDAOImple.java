@@ -28,13 +28,13 @@ public class BranchDAOImple implements BranchDAO{
 	@Override
 	public List<BranchVO> select() {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_all_brc_id");
+		return sqlSession.selectList(NAMESPACE + ".select_list_all");
 	}
 
 	@Override
 	public BranchVO select(int brcId) {
 		logger.info("select() 호출 : boardId = " + brcId);
-		return sqlSession.selectOne(NAMESPACE + ".select_by_brc_id", brcId);
+		return sqlSession.selectOne(NAMESPACE + ".select_one_by_brc_id", brcId);
 	}
 
 	@Override
@@ -49,4 +49,9 @@ public class BranchDAOImple implements BranchDAO{
 		return sqlSession.delete(NAMESPACE + ".delete", brcId);
 	}
 
+	@Override
+	public List<BranchVO> areaList(int brcArea) {
+		logger.info("areaList() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area");
+	}
 }

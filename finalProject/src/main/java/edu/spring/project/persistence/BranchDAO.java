@@ -15,5 +15,7 @@ public interface BranchDAO {
 	int update(BranchVO vo);
 
 	int delete(int brcId);
-
+	
+	List<BranchVO> areaList(int brcArea);
+	
 }

@@ -22,11 +22,12 @@ public class BranchServiceImple implements BranchService {
 		return dao.insert(vo);
 	}
 
-	@Override
+	@Override 
 	public List<BranchVO> read() {
 		logger.info("read() 호출");
 		return dao.select();
 	}
+	
 
 	@Override
 	public BranchVO read(int brcId) {
@@ -46,4 +47,9 @@ public class BranchServiceImple implements BranchService {
 		return dao.delete(brcId);
 	}
 
+	@Override 
+	public List<BranchVO> areaList(int brcArea) {
+		logger.info("areaList() 호출");
+		return dao.areaList(brcArea);
+	}
 }

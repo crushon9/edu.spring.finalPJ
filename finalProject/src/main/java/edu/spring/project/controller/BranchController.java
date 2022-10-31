@@ -21,44 +21,45 @@ public class BranchController {
 
 	@Autowired
 	private BranchService branchService;
-
-	@GetMapping("/register")
-	public void registerGET() {
-		logger.info("registerGET() 호출");
-	}
-	// brcTheaterSeats는 배열 S 붙여라 알긋나?
-	@PostMapping("/register")
-	public String registerPOST(BranchVO vo) {
-		// RedirectAttributes
-		// - 재경로 위치에 속성값을 전송하는 객체
-		logger.info("registerPOST() 호출");
-		logger.info(vo.toString());
-		int result = branchService.create(vo);
-		logger.info(result + "행 삽입");
-		
-		return "야호3";
-	}
-	
+			
 	@GetMapping("/list") 
 	public void list(Model model) {
 		logger.info("list() call");
-				
+		
 		List<BranchVO> list = branchService.read();
 		model.addAttribute("list", list);
-			
+		
 		for(BranchVO vo : list) {
 			logger.info(vo.toString());
 		}		
-		
 	}//end list 
+	
+	@GetMapping("/areaList") 
+	public void areaList(Model model) {
+		logger.info("areaList()");
 		
+		List<BranchVO> list = branchService.read();
+		model.addAttribute("list", list);
+		
+		for(BranchVO vo : list) {
+			logger.info(vo.toString());
+		}	
+		
+	}
+	
+	
+	
+	@GetMapping("/register")
+	public void registerGET() {
+		logger.info("registerGET() 호출");
+	}//end registerGet()
+	// brcTheaterSeats는 배열 S 붙여라 알긋나?
+	
 	@PostMapping("/register") // redirectAttributes ㄱㄱ
 	public void registerPost(BranchVO vo) {
-		// RedirectAttributes
-		
+		// RedirectAttributes		
 		logger.info("registerPost() call");
-		logger.info(vo.toString());
-		
+		logger.info(vo.toString());		
 		int result = branchService.create(vo);
 		logger.info(result + "행 삽입");
 //		if(result == 1) {
@@ -68,28 +69,25 @@ public class BranchController {
 //		} else {
 //			reAttr.addFlashAttribute("insert_result", "fail");
 //			return "redirect:/board/register"; // 
-//		}
-		
+//		}		
 	}//end registerPost()
 	
-	@GetMapping("/detail")
+	@GetMapping("/detail") //branchSer read
 	public void detail(Model model, int brcId) {
 		logger.info("detail call : mvId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
-		model.addAttribute("vo", vo);
-				
+		model.addAttribute("vo", vo);				
 	}//end detailGet
 	
-	@GetMapping("/update")
+	@GetMapping("/update") // branchSer read
 	public void updateGET(Model model, int brcId) {
 		logger.info("updateGET() call : brcId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		// page로 전송한다
-		model.addAttribute("vo", vo);
-				
+		model.addAttribute("vo", vo);				
 	}//end updateGET
 	
-	@PostMapping("/update") // void 에서 String으로 바꿈
+	@PostMapping("/update") // branchSer update
 	public void updatePOST(BranchVO vo, int brcId) {
 		logger.info("updatePOST call : vo = " + vo.toString());
 		int result = branchService.update(vo);
@@ -99,11 +97,10 @@ public class BranchController {
 //			// else 부분 return 빠지면 오류 쫘르르를
 //		} else {
 //			return "redirect:/board/update?boardOd=" + vo.getBoardId();		
-//		}
-				
+//		}				
 	}//end updatePOST
 	
-	@PostMapping("/delete")
+	@PostMapping("/delete") // branchSer delete
 	public void delete(int brcId) {
 		logger.info("delete call : brcId = " + brcId);
 		int result = branchService.delete(brcId);
@@ -111,9 +108,7 @@ public class BranchController {
 //			return "redirect:/board/list";
 //		} else {
 //			return "redirect:/board/list";
-//		}
-		
+//		}		
 	}//end delete
-		
-	
+			
 }

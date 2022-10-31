@@ -15,4 +15,6 @@ public interface MemberDAO {
 
 	int delete(String mmbId);
 
+	MemberVO login(String mmbId, String mmbPassword);
+	
 }

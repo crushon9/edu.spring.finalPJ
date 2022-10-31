@@ -16,4 +16,5 @@ public interface MemberService {
 
 	int delete(String mmbId);
 
+	MemberVO login(String mmbId, String mmbPassword);
 }

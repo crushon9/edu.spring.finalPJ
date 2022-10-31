@@ -30,14 +30,13 @@ public class MovieController {
 		
 		for(MovieVO vo : list) {			
 			logger.info(vo.toString());
-		}
-						
-	}
+		}						
+	}//end list()
 		
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
-	}
+	}//end registerGet()
 
 	@PostMapping("/register")
 	public String registerPOST(MovieVO vo) {
@@ -48,14 +47,14 @@ public class MovieController {
 		int result = movieService.create(vo);
 		logger.info(result + "행 삽입");		
 		return "야호2";
-	}
+	}//end registerPost()
 	
 	@GetMapping("/detail") // String mvId로 변경 EU
 	public void detail(Model model, int mvId) {
 		logger.info("detail call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
-	}
+	}//end detail
 	
 	@GetMapping("/update")
 	public void updateGET(Model model, int mvId) {
@@ -64,8 +63,7 @@ public class MovieController {
 		// page로 전송한다
 		model.addAttribute("vo", vo);				
 	}//end updateGET
-	
-	
+		
 	@PostMapping("/update") // void 에서 String으로 바꿈
 	public void updatePOST(MovieVO vo) {
 		logger.info("updatePOST call : vo = " + vo.toString());

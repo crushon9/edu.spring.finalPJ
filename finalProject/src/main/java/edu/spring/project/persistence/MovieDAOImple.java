@@ -1,6 +1,10 @@
 package edu.spring.project.persistence;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,5 +51,17 @@ public class MovieDAOImple implements MovieDAO{
 		logger.info("delete() 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}
+
+	// select period
+	@Override
+	public MovieVO select(Date inputDateStarted, Date inputDateEnded) {
+		logger.info("select() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		Map<String, Date> args = new HashMap<String, Date>();				
+		args.put("inputDateStarted", inputDateStarted);	
+		args.put("inputDateEnded", inputDateEnded);		
+		return sqlSession.selectOne(NAMESPACE + ".select_list_by_period", args);
+	}
+	
+	// select date
 
 }

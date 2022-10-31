@@ -21,7 +21,7 @@ public class MemberController {
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
-	}
+	}//end registerGet
 
 	// 아니 register.jsp 에서 POST로 전송하면 자동으로 파라미터값이 vo에 담겨서 여기까지 오는거임? ㅇㅇ
 	@PostMapping("/register")
@@ -31,41 +31,42 @@ public class MemberController {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = memberService.create(vo);
-		logger.info(result + "행 삽입");
-		
+		logger.info(result + "행 삽입");		
 		return "야호";
-	}
+	}//end registerPost()
 	
 	// 멤버 정보 보여주자.
 	@GetMapping("/detail")
 	public void detail(String mmbId) {
 		logger.info("detail call : memberId = " + mmbId);
 		MemberVO vo = memberService.read(mmbId);
-	}
+	}//end detail
 	
 	// get만 해오자
 	@GetMapping("/update")
 	public void updateGet(String mmbId) {
 		logger.info("updateGet() call");
-		MemberVO vo = memberService.read(mmbId);
-		
-	}
+		MemberVO vo = memberService.read(mmbId);		
+	}//end updateGet()
 	
 	// 진짜 기능 ㄱ
 	@PostMapping("update")
 	public void updatePost(MemberVO vo) {
 		logger.info("updatePost call : vo = " + vo.toString()); 
 		int result = memberService.update(vo);		
-		
-	}
+	}//end updatePost()
 	
 	// 기능만 구현, 탈퇴하면 손모가지.
 	@PostMapping("/delete")
 	public void delete(String mmbId) {
 		logger.info("delete call : memberId = " + mmbId);
-		int result = memberService.delete(mmbId);
+		int result = memberService.delete(mmbId);		
+	}//end delete()
 		
-	}
-		
+	@PostMapping("/login")
+	public void login(String mmbId, String mmbPassword) {
+		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
+		MemberVO vo = memberService.login(mmbId, mmbPassword);
+	}//end login()
 	
 }

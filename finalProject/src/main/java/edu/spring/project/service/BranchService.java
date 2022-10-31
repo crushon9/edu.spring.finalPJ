@@ -17,4 +17,6 @@ public interface BranchService {
 
 	int delete(int brcId);
 
+	List<BranchVO> areaList(int brcArea);
+
 }
