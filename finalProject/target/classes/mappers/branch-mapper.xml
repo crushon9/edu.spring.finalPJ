@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update">
 		update ${PJ_BRANCH}
 		set ${brcArea} = #{brcArea}, ${brcName} = #{brcName},
-		${brcTheaterNumbers} = #{brcTheaterNumbers}, ${brcTheaterSeats} = #{brcTheaterSeats}		
+		${brcTheaterNumbers} = #{brcTheaterNumbers}, ${brcTheaterSeats} = #{brcTheaterSeats}
 		where ${brcId} = #{brcId}
 	</update>
 

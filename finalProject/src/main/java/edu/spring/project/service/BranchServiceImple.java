@@ -47,7 +47,7 @@ public class BranchServiceImple implements BranchService {
 
 	@Override
 	public List<BranchVO> areaList(int brcArea) {
-		logger.info("areaList() 호출");
+		logger.info("areaList() 호출 : brcArea = " + brcArea);
 		return dao.areaList(brcArea);
 	}
 }

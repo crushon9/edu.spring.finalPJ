@@ -13,8 +13,9 @@
 	<h2>스케줄 등록</h2>
 	 
 	  <form action="register" method="post">
-	  	<p>상영 지점 선택</p>
+	  	<p>상영 지점</p>
 	  	<select id="brcArea" name="brcArea" >
+	  		<option>지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
 			<option value="3">부산/경상</option>
@@ -22,41 +23,90 @@
 			<option value="5">광주/전라</option>
 			<option value="6">제주</option>
 		</select>
-		<div id="brcIdOutput">
-		</div>
+		<div id="brcIdOutput"></div>
 	  	
-	    <p>상영 요일 선택</p>
-	    <p>상영 시간 선택</p>
+	    <p>상영 날짜</p>
+	    <input type="date" name="inputDate" value="2022-11-01">
+	    
 	    <p>상영 가격</p>
-	    <input type="number" name="scdPrice" placeholder="기준가격 입력" required="required">
+	    <input type="number" name="scdPrice" placeholder="기준가격 입력" required>
+	    
+	    <p>상영 영화</p>
+	    <div id="mvIdOutput"></div>
 	 	
 		<br><br><input type="submit" value="등록">
 	  </form>
 	  
+	  <div id="ScheduleTable"></div>
+	  
+	  
+	  
 	<script type="text/javascript">
-		  $(document).ready(function() {
-				$('#brcArea').change(function() {
-					getAreaBrcId();
-				});
-		   });
-			// 선택 지역의 지점 가져오기
-			function getAreaBrcId() {
-				var brcArea = $('#brcArea').val();
-				var url = '/project/admin/branch/areaList/' + brcArea; // REST API 방식 적용
-				// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
-				$.getJSON(
-						url,
-					function(data) {// 서버에서 온 data가 저장되어있음
-						var brcIdList = '<select name="brcId" >';
-						$(data).each(function() {
-							brcIdList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
-						});
-						brcIdList += '</select>';
-						$('#brcIdOutput').html(brcIdList); // 반복문으로 생성된 html태그 출력
+	  $(document).ready(function() {
+			$('#brcArea').change(function() {
+				getAreaBrcId();
+			});
+			$('#brcId').change(function() {
+				getBrcVO();
+			});
+	   });
+	  
+		// 선택 지역의 지점 가져오기
+		function getAreaBrcId() {
+			var brcArea = $('#brcArea').val();
+			var url = '/project/admin/branch/areaList/' + brcArea; // REST API 방식 적용
+			// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
+			$.getJSON(
+				url,
+				function(data) {
+					var brcIdList = '<select id="brcId" name="brcId" >';
+					$(data).each(function() {
+						brcIdList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
+					});
+					brcIdList += '</select>'
+					$('#brcIdOutput').html(brcIdList);
+				}
+			); // end getJSON
+		}
+		
+		function getBrcVO() {
+			var brcId = $('#brcId').val();
+			var url = '/project/admin/branch/detail/' + brcId;
+			$.getJSON(
+				url,
+				function(data) {
+					var brcTheaterNumbers = this.brcTheaterNumbers;
+					setScheduleTable(brcTheaterNumbers);
+				}
+			); // end getJSON
+		}
+		
+		function setScheduleTable(brcTheaterNumbers) {
+			var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30",
+				"05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+				"11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+				"17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"];
+			var ScheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
+			for (var i = 1; i <= brcTheaterNumbers; i++) {
+				ScheduleTable +=
+					'<th style="width: 200px">' + i + "관" + '</th>';
+			}
+			ScheduleTable += '</tr></thead><tbody>';
+			for (var i = 0; i <= brcTheaterNumbers; i++) {
+				ScheduleTable += '<tr>';
+				for (var j = 0; j < 48; j++) {
+					if (i == 0) {
+						ScheduleTable += '<td>' + timeArray[j] + '</td>';
 					}
-				); // end getJSON
-			} // end getAllReplies
-	  </script>
+					ScheduleTable += '<td></td>';
+				}
+				ScheduleTable += '</tr>';
+			}
+			ScheduleTable += '</tbody></table>';
+			$('#ScheduleTable').html(ScheduleTable);
+		}
+		
+	</script>
 	
 </body>
 </html>

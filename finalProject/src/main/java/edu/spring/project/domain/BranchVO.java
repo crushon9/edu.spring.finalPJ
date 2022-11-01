@@ -8,12 +8,13 @@ public class BranchVO {
 	private int brcArea;
 	private String brcName;
 	private int brcTheaterNumbers;
-	private int[] brcTheaterSeats;
+	private String brcTheaterSeats;
+	private int[] arrBrcTheaterSeats;
 
 	public BranchVO() {
 	}
 
-	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, int[] brcTheaterSeats) {
+	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, String brcTheaterSeats) {
 		this.brcId = brcId;
 		this.brcArea = brcArea;
 		this.brcName = brcName;
@@ -53,18 +54,36 @@ public class BranchVO {
 		this.brcTheaterNumbers = brcTheaterNumbers;
 	}
 
-	public int[] getBrcTheaterSeats() {
-		return brcTheaterSeats;
+	// 배열을 문자열로 변환
+	public String getBrcTheaterSeats() {
+		return Arrays.toString(arrBrcTheaterSeats);
 	}
 
-	public void setBrcTheaterSeats(int[] brcTheaterSeats) {
+	public void setBrcTheaterSeats(String brcTheaterSeats) {
 		this.brcTheaterSeats = brcTheaterSeats;
+		// String을 Array에 담기
+		String temp = brcTheaterSeats.replaceAll("[", "");
+		temp = brcTheaterSeats.replaceAll("]", "");
+		String tempArr[] = temp.split(", ");
+		int[] intArr = new int[tempArr.length];
+		for (int i = 0; i < tempArr.length; i++) {
+			intArr[i] = Integer.parseInt(tempArr[i]);
+		}
+		this.arrBrcTheaterSeats = intArr;
+	}
+
+	public int[] getArrBrcTheaterSeats() {
+		return arrBrcTheaterSeats;
+	}
+
+	public void setArrBrcTheaterSeats(int[] arrBrcTheaterSeats) {
+		this.arrBrcTheaterSeats = arrBrcTheaterSeats;
 	}
 
 	@Override
 	public String toString() {
 		return "BranchVO [brcId=" + brcId + ", brcArea=" + brcArea + ", brcName=" + brcName + ", brcTheaterNumbers="
-				+ brcTheaterNumbers + ", brcTheaterSeats=" + Arrays.toString(brcTheaterSeats) + "]";
+				+ brcTheaterNumbers + ", brcTheaterSeats=" + brcTheaterSeats + ", arrBrcTheaterSeats="
+				+ Arrays.toString(arrBrcTheaterSeats) + "]";
 	}
-
 }

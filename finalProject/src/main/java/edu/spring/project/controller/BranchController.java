@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +33,15 @@ public class BranchController {
 	}// end list
 
 	@GetMapping("/areaList/{brcArea}")
-	public void areaList(Model model, @PathVariable("brcArea") int brcArea) {
-		logger.info("areaList()");
+	public ResponseEntity<List<BranchVO>> areaList(@PathVariable("brcArea") int brcArea) {
+		logger.info("areaList() 호출 : brcArea = " + brcArea);
 		List<BranchVO> list = branchService.areaList(brcArea);
-		model.addAttribute("list", list);
+		for (BranchVO x : list) {
+			System.out.println(x);
+		}
+		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}
-
+	
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
@@ -60,8 +65,8 @@ public class BranchController {
 //		}		
 	}// end registerPost()
 
-	@GetMapping("/detail") // branchSer read
-	public void detail(Model model, int brcId) {
+	@GetMapping("/detail/{brcId}") // branchSer read
+	public void detail(Model model, @PathVariable("brcId") int brcId) {
 		logger.info("detail call : mvId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		model.addAttribute("vo", vo);
