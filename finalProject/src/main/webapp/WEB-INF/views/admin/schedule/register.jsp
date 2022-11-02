@@ -37,7 +37,7 @@
 		<br><br><input type="submit" value="등록">
 	  </form>
 	  
-	  <div id="ScheduleTable"></div>
+	  <br><br><div id="ScheduleTable"></div>
 	  
 	  
 	  
@@ -46,11 +46,7 @@
 			$('#brcArea').change(function() {
 				getAreaBrcId();
 			});
-			$('#brcId').change(function() {
-				getBrcVO();
-			});
 	   });
-	  
 		// 선택 지역의 지점 가져오기
 		function getAreaBrcId() {
 			var brcArea = $('#brcArea').val();
@@ -59,12 +55,13 @@
 			$.getJSON(
 				url,
 				function(data) {
-					var brcIdList = '<select id="brcId" name="brcId" >';
+					var brcIdList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
 					$(data).each(function() {
-						brcIdList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
-					});
-					brcIdList += '</select>'
+
 					$('#brcIdOutput').html(brcIdList);
+					$('#brcId').change(function() {
+						getBrcVO();
+					});
 				}
 			); // end getJSON
 		}
@@ -75,8 +72,10 @@
 			$.getJSON(
 				url,
 				function(data) {
-					var brcTheaterNumbers = this.brcTheaterNumbers;
-					setScheduleTable(brcTheaterNumbers);
+					$(data).each(function() {
+						var brcTheaterNumbers = this.brcTheaterNumbers;
+						setScheduleTable(brcTheaterNumbers);
+					});
 				}
 			); // end getJSON
 		}
@@ -86,19 +85,19 @@
 				"05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
 				"11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
 				"17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"];
-			var ScheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
+			var ScheduleTable = '<table border="1"><thead><tr><th style="width: 50px">시간</th>';
 			for (var i = 1; i <= brcTheaterNumbers; i++) {
 				ScheduleTable +=
 					'<th style="width: 200px">' + i + "관" + '</th>';
 			}
 			ScheduleTable += '</tr></thead><tbody>';
-			for (var i = 0; i <= brcTheaterNumbers; i++) {
+			for (var i = 0; i < 48; i++) {
 				ScheduleTable += '<tr>';
-				for (var j = 0; j < 48; j++) {
-					if (i == 0) {
-						ScheduleTable += '<td>' + timeArray[j] + '</td>';
+				for (var j = 0; j < brcTheaterNumbers; j++) {
+					if (j == 0) {
+						ScheduleTable += '<td>' + timeArray[i] + '</td>';
 					}
-					ScheduleTable += '<td></td>';
+					ScheduleTable += '<td>빈칸</td>';
 				}
 				ScheduleTable += '</tr>';
 			}

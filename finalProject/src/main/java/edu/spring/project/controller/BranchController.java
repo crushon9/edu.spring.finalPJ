@@ -36,12 +36,9 @@ public class BranchController {
 	public ResponseEntity<List<BranchVO>> areaList(@PathVariable("brcArea") int brcArea) {
 		logger.info("areaList() 호출 : brcArea = " + brcArea);
 		List<BranchVO> list = branchService.areaList(brcArea);
-		for (BranchVO x : list) {
-			System.out.println(x);
-		}
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}
-	
+
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
@@ -65,12 +62,20 @@ public class BranchController {
 //		}		
 	}// end registerPost()
 
-	@GetMapping("/detail/{brcId}") // branchSer read
-	public void detail(Model model, @PathVariable("brcId") int brcId) {
+	@GetMapping("/detail") // branchSer read
+	public void detail(Model model, int brcId) {
 		logger.info("detail call : mvId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		model.addAttribute("vo", vo);
 	}// end detailGet
+
+	@GetMapping("/detail/{brcId}")
+	public ResponseEntity<BranchVO> detailREST(@PathVariable("brcId") int brcId) {
+		logger.info("detailREST 호출 : brcId = " + brcId);
+		BranchVO vo = branchService.read(brcId);
+		System.out.println(vo);
+		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
+	}
 
 	@GetMapping("/update") // branchSer read
 	public void updateGET(Model model, int brcId) {

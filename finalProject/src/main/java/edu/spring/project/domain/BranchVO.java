@@ -54,7 +54,7 @@ public class BranchVO {
 		this.brcTheaterNumbers = brcTheaterNumbers;
 	}
 
-	// 배열을 문자열로 변환
+	// int[] arrBrcTheaterSeats 배열을 문자열로 변환
 	public String getBrcTheaterSeats() {
 		return Arrays.toString(arrBrcTheaterSeats);
 	}
@@ -62,8 +62,7 @@ public class BranchVO {
 	public void setBrcTheaterSeats(String brcTheaterSeats) {
 		this.brcTheaterSeats = brcTheaterSeats;
 		// String을 Array에 담기
-		String temp = brcTheaterSeats.replaceAll("[", "");
-		temp = brcTheaterSeats.replaceAll("]", "");
+		String temp = brcTheaterSeats.replace("[", "").replace("]", "");
 		String tempArr[] = temp.split(", ");
 		int[] intArr = new int[tempArr.length];
 		for (int i = 0; i < tempArr.length; i++) {

@@ -51,6 +51,6 @@ public class BranchDAOImple implements BranchDAO {
 	@Override
 	public List<BranchVO> areaList(int brcArea) {
 		logger.info("areaList() »£√‚ : brcArea = " + brcArea);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area", brcArea);
 	}
 }
