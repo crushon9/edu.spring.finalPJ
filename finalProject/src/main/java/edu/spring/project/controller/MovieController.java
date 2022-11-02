@@ -5,12 +5,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.spring.project.domain.BranchVO;
 import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
 
@@ -21,22 +25,18 @@ public class MovieController {
 
 	@Autowired
 	private MovieService movieService;
-	
+
 	@GetMapping("/list")
 	public void list(Model model) {
 		logger.info("list call");
 		List<MovieVO> list = movieService.read();
 		model.addAttribute("list", list);
-		
-		for(MovieVO vo : list) {			
-			logger.info(vo.toString());
-		}						
-	}//end list()
-		
+	}// end list()
+
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
-	}//end registerGet()
+	}// end registerGet()
 
 	@PostMapping("/register")
 	public void registerPOST(MovieVO vo) {
@@ -45,24 +45,24 @@ public class MovieController {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = movieService.create(vo);
-		logger.info(result + "행 삽입");		
-	}//end registerPost()
-	
+		logger.info(result + "행 삽입");
+	}// end registerPost()
+
 	@GetMapping("/detail") // String mvId로 변경 EU
 	public void detail(Model model, int mvId) {
 		logger.info("detail call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
-	}//end detail
-	
+	}// end detail
+
 	@GetMapping("/update")
 	public void updateGET(Model model, int mvId) {
 		logger.info("updateGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		// page로 전송한다
-		model.addAttribute("vo", vo);				
-	}//end updateGET
-		
+		model.addAttribute("vo", vo);
+	}// end updateGET
+
 	@PostMapping("/update") // void 에서 String으로 바꿈
 	public void updatePOST(MovieVO vo) {
 		logger.info("updatePOST call : vo = " + vo.toString());
@@ -74,8 +74,8 @@ public class MovieController {
 //		} else {
 //			return "redirect:/board/update?boardOd=" + vo.getBoardId();		
 //		}				
-	}//end updatePOST
-	
+	}// end updatePOST
+
 	@PostMapping("/delete")
 	public void delete(int mvId) {
 		logger.info("delete call : boardId = " + mvId);
@@ -85,9 +85,22 @@ public class MovieController {
 //		} else {
 //			return "redirect:/board/list";
 //		}
-		
-	}//end delete
-	
-	
-	
+
+	}// end delete
+
+	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
+	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
+			@PathVariable("inputDateEnded") String inputDateEnded) {
+		logger.info("listREST() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		List<MovieVO> list = movieService.select(inputDateStarted, inputDateEnded);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
+	}
+
+	@GetMapping("/list/{inputDate}")
+	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
+		logger.info("listREST() 호출 : inputDate = " + inputDate);
+		List<MovieVO> list = movieService.select(inputDate);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
+	}
+
 }

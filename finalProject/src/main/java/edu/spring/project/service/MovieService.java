@@ -15,5 +15,9 @@ public interface MovieService {
 	int update(MovieVO vo);
 
 	int delete(int mvId);
+	
+	List<MovieVO> select(String inputDateStarted, String inputDateEnded);
+
+	List<MovieVO> select(String inputDate);
 
 }

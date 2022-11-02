@@ -6,17 +6,17 @@ public class ScheduleVO {
 	private int scdId;
 	private int mvId;
 	private int brcId;
-	private Date scdDate;
+	private String scdDate;
 	private int scdTime;
 	private int scdTheater;
-	private int scdSeatTotal; // scdTheater에 종속된 값
-	private int scdSeatBookedCnt; // 생성시 0
-	private int scdPrice; // scdDate와 scdTime에 영향받는 값??????????
+	private int scdSeatTotal;
+	private int scdSeatBookedCnt;
+	private int scdPrice;
 
 	public ScheduleVO() {
 	}
 
-	public ScheduleVO(int scdId, int mvId, int brcId, Date scdDate, int scdTime, int scdTheater, int scdSeatTotal,
+	public ScheduleVO(int scdId, int mvId, int brcId, String scdDate, int scdTime, int scdTheater, int scdSeatTotal,
 			int scdSeatBookedCnt, int scdPrice) {
 		this.scdId = scdId;
 		this.mvId = mvId;
@@ -53,11 +53,11 @@ public class ScheduleVO {
 		this.brcId = brcId;
 	}
 
-	public Date getScdDate() {
+	public String getScdDate() {
 		return scdDate;
 	}
 
-	public void setScdDate(Date scdDate) {
+	public void setScdDate(String scdDate) {
 		this.scdDate = scdDate;
 	}
 

@@ -45,4 +45,16 @@ public class MovieServiceImple implements MovieService {
 		return dao.delete(mvId);
 	}
 
+	@Override
+	public List<MovieVO> select(String inputDateStarted, String inputDateEnded) {
+		logger.info("select() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		return dao.select(inputDateStarted, inputDateEnded);
+	}
+
+	@Override
+	public List<MovieVO> select(String inputDate) {
+		logger.info("select() 호출 : inputDate = " + inputDate);
+		return dao.select(inputDate);
+	}
+
 }

@@ -1,16 +1,13 @@
 package edu.spring.project.persistence;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import edu.spring.project.domain.MovieVO;
 
 
@@ -54,14 +51,19 @@ public class MovieDAOImple implements MovieDAO{
 
 	// select period
 	@Override
-	public MovieVO select(Date inputDateStarted, Date inputDateEnded) {
+	public List<MovieVO> select(String inputDateStarted, String inputDateEnded) {
 		logger.info("select() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
-		Map<String, Date> args = new HashMap<String, Date>();				
+		Map<String, String> args = new HashMap<String, String>();				
 		args.put("inputDateStarted", inputDateStarted);	
 		args.put("inputDateEnded", inputDateEnded);		
-		return sqlSession.selectOne(NAMESPACE + ".select_list_by_period", args);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_period", args);
 	}
-	
-	// select date
+
+	// select date spot
+	@Override
+	public List<MovieVO> select(String inputDate) {
+		logger.info("select() 호출 : inputDate = " + inputDate);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_date", inputDate);
+	}
 
 }

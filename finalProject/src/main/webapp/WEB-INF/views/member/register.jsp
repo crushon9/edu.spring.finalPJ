@@ -62,7 +62,6 @@
 			); // end getJSON
 		}
 		</script>
-	
 
 </body>
 </html>

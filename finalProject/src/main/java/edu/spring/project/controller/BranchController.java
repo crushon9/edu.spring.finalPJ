@@ -33,8 +33,8 @@ public class BranchController {
 	}// end list
 
 	@GetMapping("/areaList/{brcArea}")
-	public ResponseEntity<List<BranchVO>> areaList(@PathVariable("brcArea") int brcArea) {
-		logger.info("areaList() 호출 : brcArea = " + brcArea);
+	public ResponseEntity<List<BranchVO>> areaListREST(@PathVariable("brcArea") int brcArea) {
+		logger.info("areaListREST() 호출 : brcArea = " + brcArea);
 		List<BranchVO> list = branchService.areaList(brcArea);
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}

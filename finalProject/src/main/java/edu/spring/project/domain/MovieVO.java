@@ -1,14 +1,12 @@
 package edu.spring.project.domain;
 
-import java.util.Date;
-
 public class MovieVO {
 
 	private int mvId;
 	private String mvTitle;
 	private String mvImage;
-	private Date mvDateStarted;
-	private Date mvDateEnded;
+	private String mvDateStarted;
+	private String mvDateEnded;
 	private int mvRuningTime;
 	private String mvGenre;
 	private int mvTicketSales;
@@ -19,7 +17,7 @@ public class MovieVO {
 	public MovieVO() {
 	}
 
-	public MovieVO(int mvId, String mvTitle, String mvImage, Date mvDateStarted, Date mvDateEnded, int mvRuningTime,
+	public MovieVO(int mvId, String mvTitle, String mvImage, String mvDateStarted, String mvDateEnded, int mvRuningTime,
 			String mvGenre, int mvTicketSales, int mvRatingTotal, int mvRatingCnt, float mvRatingAvg) {
 		this.mvId = mvId;
 		this.mvTitle = mvTitle;
@@ -58,19 +56,19 @@ public class MovieVO {
 		this.mvImage = mvImage;
 	}
 
-	public Date getMvDateStarted() {
+	public String getMvDateStarted() {
 		return mvDateStarted;
 	}
 
-	public void setMvDateStarted(Date mvDateStarted) {
+	public void setMvDateStarted(String mvDateStarted) {
 		this.mvDateStarted = mvDateStarted;
 	}
 
-	public Date getMvDateEnded() {
+	public String getMvDateEnded() {
 		return mvDateEnded;
 	}
 
-	public void setMvDateEnded(Date mvDateEnded) {
+	public void setMvDateEnded(String mvDateEnded) {
 		this.mvDateEnded = mvDateEnded;
 	}
 

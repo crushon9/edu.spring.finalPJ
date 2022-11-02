@@ -14,8 +14,9 @@
 	 
 	  <form action="register" method="post">
 	    <p>영화 제목</p>
-	    <input type="text" name="mvTitle" placeholder="영화 제목 입력" required="required">
+	    <input type="text" name="mvTitle" placeholder="영화 제목 입력" required>
 		<p>영화 이미지</p>
+		<input type="text" name="mvImage" placeholder="임시 파일명" required>
 		<!-- 폼을 하나로 합쳐야하는지? 아니면 새창으로 빼야하는건지? -->
 		<!-- <form action="upload" method="post" enctype="multipart/form-data">
 		<input type="file" name="file">
@@ -30,15 +31,15 @@
 		<input type="number" name="mvRuningTime" placeholder="상영시간 입력" required>
 	    <p>영화 장르</p>
 	    <select name="mvGenre" >
-			<option>SF</option>
-			<option>스릴러</option>
-			<option>로맨스</option>
-			<option>에로</option>
-			<option>드라마</option>
-			<option>공포</option>
-			<option>애니메이션</option>
+			<option value="SF">SF</option>
+			<option value="스릴러">스릴러</option>
+			<option value="로맨스">로맨스</option>
+			<option value="에로">에로</option>
+			<option value="드라마">드라마</option>
+			<option value="공포">공포</option>
+			<option value="애니메이션">애니메이션</option>
 		</select>
-		<br><input type="submit" value="등록">
+		<br><br><input type="submit" value="등록">
 	  </form>
 	
 </body>

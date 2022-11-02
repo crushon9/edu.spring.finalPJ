@@ -1,6 +1,5 @@
 package edu.spring.project.persistence;
 
-import java.util.Date;
 import java.util.List;
 import edu.spring.project.domain.MovieVO;
 
@@ -16,9 +15,7 @@ public interface MovieDAO {
 
 	int delete(int mvId);
 
-	// select_list_by_period
-	MovieVO select(Date inputDateStarted, Date inputDateEnded);
-	
-	// select_list_by_date
-	
+	List<MovieVO> select(String inputDateStarted, String inputDateEnded);
+
+	List<MovieVO> select(String inputDate);
 }
