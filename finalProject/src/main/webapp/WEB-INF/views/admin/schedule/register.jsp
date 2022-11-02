@@ -57,7 +57,9 @@
 				function(data) {
 					var brcIdList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
 					$(data).each(function() {
-
+						brcIdList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
+					});
+					brcIdList += '</select>'
 					$('#brcIdOutput').html(brcIdList);
 					$('#brcId').change(function() {
 						getBrcVO();
