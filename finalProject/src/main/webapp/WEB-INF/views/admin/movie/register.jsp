@@ -15,10 +15,19 @@
 	  <form action="register" method="post">
 	    <p>영화 제목</p>
 	    <input type="text" name="mvTitle" placeholder="영화 제목 입력" required="required">
+		<p>영화 이미지</p>
+		<!-- 폼을 하나로 합쳐야하는지? 아니면 새창으로 빼야하는건지? -->
+		<!-- <form action="upload" method="post" enctype="multipart/form-data">
+		<input type="file" name="file">
+		<input type="submit" value="업로드">
+		</form> -->
 	    <p>영화 개봉일</p>
 	    <input type="date" name="mvDateStarted" value="2020-01-01">
 	    <p>영화 종료일</p>
 	    <input type="date" name="mvDateEnded" value="2023-12-31">
+	    <p>영화 러닝타임</p>
+	    <!-- 여기 30분으로 나누어서 반올림한 int를 넘겨줘야함 -->
+		<input type="number" name="mvRuningTime" placeholder="상영시간 입력" required>
 	    <p>영화 장르</p>
 	    <select name="mvGenre" >
 			<option>SF</option>
@@ -29,13 +38,7 @@
 			<option>공포</option>
 			<option>애니메이션</option>
 		</select>
-		<p>영화 이미지</p>
-		<!-- 폼을 하나로 합쳐야하는지? 아니면 새창으로 빼야하는건지? -->
-		<!-- <form action="upload" method="post" enctype="multipart/form-data">
-		<input type="file" name="file">
-		<input type="submit" value="업로드">
-		</form> -->
-		<br><br><input type="submit" value="등록">
+		<br><input type="submit" value="등록">
 	  </form>
 	
 </body>
