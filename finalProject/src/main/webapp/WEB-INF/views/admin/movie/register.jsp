@@ -10,7 +10,7 @@
 </head>
 <body>
 	
-	<h2>영화 등록</h2>
+	<h2>관리자 영화 등록</h2>
 	 
 	  <form action="register" method="post">
 	    <p>영화 제목</p>

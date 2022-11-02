@@ -31,13 +31,13 @@ public class MovieDAOImple implements MovieDAO{
 	@Override
 	public List<MovieVO> select() {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_all_mv_id");
+		return sqlSession.selectList(NAMESPACE + ".select_list_all");
 	}
 
 	@Override
 	public MovieVO select(int mvId) {
 		logger.info("select() 호출 : mvId = " + mvId);
-		return sqlSession.selectOne(NAMESPACE + ".select_by_mv_id", mvId);
+		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mv_id", mvId);
 	}
 
 	@Override

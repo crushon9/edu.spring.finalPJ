@@ -10,7 +10,7 @@
 </head>
 <body>
 	
-	<h2>스케줄 등록</h2>
+	<h2>관리자 스케줄 등록</h2>
 	 
 	  <form action="register" method="post">
 	  	<p>상영 지점</p>

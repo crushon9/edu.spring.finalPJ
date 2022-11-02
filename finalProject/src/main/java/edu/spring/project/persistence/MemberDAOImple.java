@@ -30,13 +30,13 @@ public class MemberDAOImple implements MemberDAO{
 	@Override
 	public List<MemberVO> select() {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_all_mmb_id");
+		return sqlSession.selectList(NAMESPACE + ".select_list_all");
 	}
 
 	@Override
 	public MemberVO select(String mmbId) {
 		logger.info("select() 호출 : boardId = " + mmbId);
-		return sqlSession.selectOne(NAMESPACE + ".select_by_mmb_id", mmbId);
+		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mmb_id", mmbId);
 	}
 
 	@Override

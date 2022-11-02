@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId})
 	</insert>
 
-	<select id="select_list_mmb_id" resultType="MemberVO">
+	<select id="select_list_all" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		order by ${mmbId} DESC
