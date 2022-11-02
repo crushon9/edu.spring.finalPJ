@@ -11,10 +11,10 @@ public interface ScheduleService {
 
 	List<ScheduleVO> read();
 
-	ScheduleVO read(String scdId);
+	ScheduleVO read(int scdId);
 
 	int update(ScheduleVO vo);
 
-	int delete(String scdId);
+	int delete(int scdId);
 
 }

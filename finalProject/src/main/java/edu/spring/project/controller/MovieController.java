@@ -39,14 +39,13 @@ public class MovieController {
 	}//end registerGet()
 
 	@PostMapping("/register")
-	public String registerPOST(MovieVO vo) {
+	public void registerPOST(MovieVO vo) {
 		// RedirectAttributes
 		// - 재경로 위치에 속성값을 전송하는 객체
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = movieService.create(vo);
 		logger.info(result + "행 삽입");		
-		return "야호2";
 	}//end registerPost()
 	
 	@GetMapping("/detail") // String mvId로 변경 EU

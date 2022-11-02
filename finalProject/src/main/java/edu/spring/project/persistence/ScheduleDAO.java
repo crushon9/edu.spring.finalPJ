@@ -9,10 +9,10 @@ public interface ScheduleDAO {
 
 	List<ScheduleVO> select();
 
-	ScheduleVO select(String scdId);
+	ScheduleVO select(int scdId);
 
 	int update(ScheduleVO vo);
 
-	int delete(String scdId);
+	int delete(int scdId);
 
 }

@@ -31,7 +31,7 @@ public class ScheduleDAOImple implements ScheduleDAO{
 	}
 
 	@Override
-	public ScheduleVO select(String scdId) {
+	public ScheduleVO select(int scdId) {
 		logger.info("select() 호출 : scdId = " + scdId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_scd_id", scdId);
 	}
@@ -43,7 +43,7 @@ public class ScheduleDAOImple implements ScheduleDAO{
 	}
 
 	@Override
-	public int delete(String scdId) {
+	public int delete(int scdId) {
 		logger.info("delete() 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", scdId);
 	}

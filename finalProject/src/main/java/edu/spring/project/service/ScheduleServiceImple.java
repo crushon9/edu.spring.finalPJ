@@ -29,7 +29,7 @@ public class ScheduleServiceImple implements ScheduleService {
 	}
 
 	@Override
-	public ScheduleVO read(String scdId) {
+	public ScheduleVO read(int scdId) {
 		logger.info("read() 호출 : scdId = " + scdId);
 		return dao.select(scdId);
 	}
@@ -41,7 +41,7 @@ public class ScheduleServiceImple implements ScheduleService {
 	}
 
 	@Override
-	public int delete(String scdId) {
+	public int delete(int scdId) {
 		logger.info("delete() 호출 : scdId = " + scdId);
 		return dao.delete(scdId);
 	}
