@@ -11,19 +11,17 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <style type="text/css">
-
-.mvContent{
-   padding : 100px 200px 100px 200px;
-   margin-right : 100px;
-   margin-left : 300px;
+.mvContent {
+	padding: 100px 200px 100px 200px;
+	margin-right: 100px;
+	margin-left: 300px;
 }
 
-.mvImage{
-   margin-right : 80px;
-   width : 300px; 
-   height : 300px; 
+.mvImage {
+	margin-right: 80px;
+	width: 300px;
+	height: 300px;
 }
-
 </style>
 
 <title>${vo.mvTitle}</title>
@@ -32,66 +30,60 @@
 </head>
 <body>
 	<h2>movie detail</h2>
-	
-	
-      <div class="mvContent">
-         <div class="mvImage">
-               <img class="image" src="display?fileName=/${vo.mvImage}"/> 
-            </div>
-			</div>
-		
-	<!-- 여여여여 바꿔봐라 -->
-	<form action="register" method="post" enctype="multipart/form-data">
-		<input type="file" name="files" id="mvImage"> <br>
-		<br>
-		
-  	 <div class="mvInfo">
-        <input type="hidden" id="mvId" value="${vo.mvId}">
-        <h2>${vo.mvTitle}</h2>
 
-		<p>영화 제목</p>
-		<input type="text" name="mvTitle" value=" ${vo.mvTitle}" readonly>
-		<p>영화 개봉일</p>
-		<input type="date" name="mvDateStarted" value="${vo.mvDateStrated}">
-		<p>영화 종료일</p>
-		<input type="date" name="mvDateEnded" value="${vo.mvDateEnded}">
-		<p>영화 러닝타임</p>
-		<input type="number" name="mvRuningTime" value="${vo.mvRuningTime}">
-		<p>영화 장르</p>
-		<input type="text" name="mvGenre" value="${vo.mvGenre}">
-		<br>
-		<br>
-		
-	</form>
-	
-	<a href="main?page=${criteria.page }&numsPerPage=${criteria.numsPerPage }"><input type="button" value="보기"></a>
-	<a href="update?boardId=${vo.boardId }&page=${criteria.page }&numsPerPage=${criteria.numsPerPage }"><input type="button" value="글 수정"></a>
-	<form action="delete" method="post" style="display: inline;">
-		<input type="hidden" name="boardId" value="${vo.boardId }">
-		<input type="hidden" name="page" value="${criteria.page }">
-		<input type="hidden" name="numsPerPage" value="${criteria.numsPerPage }">
-		<input type="submit" value="글 삭제">
-	</form>
+	<img class="mvImage" src="display?fileName=/${vo.mvImage}" />
+
+	<input type="file" name="files" id="mvImage">
+	<br>
+	<br>
+
+	<input type="hidden" id="mvId" value="${vo.mvId}">
+	<h2>${vo.mvTitle}</h2>
+
+	<p>영화 제목</p>
+	<input type="text" name="mvTitle" value=" ${vo.mvTitle}" readonly>
+	<p>영화 개봉일</p>
+	<input type="date" name="mvDateStarted" value="${vo.mvDateStrated}" readonly>
+	<p>영화 종료일</p>
+	<input type="date" name="mvDateEnded" value="${vo.mvDateEnded}" readonly>
+	<p>영화 장르</p>
+	<input type="text" name="mvGenre" value="${vo.mvGenre}" readonly>
+	<p>영화 소개</p>
+	<input type="text" name="mvInfo" value="${vo.mvInfo}" readonly>
+
 	<hr>
-	
+
 	<!-- 댓글 입력 -->
 	<div style="text-align: center;">
-			<input type="hidden" id="boardId" value="${vo.boardId }">
-			<input type="text" id="memberId">
-			<input type="text" id="replyContent">
-			<button id="btn_add">작성</button>
+		<input type="hidden" id="boardId" value="${vo.boardId }"> <input
+			type="text" id="memberId"> <input type="text"
+			id="replyContent">
+		<button id="btn_add">작성</button>
 	</div>
-		
+
 	<hr>
 	<!-- 출력할 div공간 마련 -->
 	<div style="margin-left: 40px">
 		<div id="rvInfo"></div>
 	</div>
 	<div>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 	</div>
-	
-	
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			getMvInfo();
@@ -255,6 +247,6 @@
 			
 		}); // end document
 	</script>
-	
+
 </body>
 </html>
