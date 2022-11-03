@@ -1,7 +1,5 @@
 package edu.spring.project.domain;
 
-import java.util.Date;
-
 public class ScheduleVO {
 	private int scdId;
 	private int mvId;
