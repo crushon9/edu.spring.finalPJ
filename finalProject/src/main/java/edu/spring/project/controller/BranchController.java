@@ -26,29 +26,29 @@ public class BranchController {
 	private BranchService branchService;
 
 	@GetMapping("/list")
-	public void list(Model model) {
-		logger.info("list() call");
+	public void listGET(Model model) {
+		logger.info("listGET() call");
 		List<BranchVO> list = branchService.read();
 		model.addAttribute("list", list);
 	}// end list
 
 	@GetMapping("/areaList/{brcArea}")
 	public ResponseEntity<List<BranchVO>> areaListREST(@PathVariable("brcArea") int brcArea) {
-		logger.info("areaListREST() 호출 : brcArea = " + brcArea);
+		logger.info("areaListREST() call : brcArea = " + brcArea);
 		List<BranchVO> list = branchService.areaList(brcArea);
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}
 
 	@GetMapping("/register")
 	public void registerGET() {
-		logger.info("registerGET() 호출");
+		logger.info("registerGET() call");
 	}// end registerGet()
 		// brcTheaterSeats는 배열 S 붙여라 알긋나?
 
 	@PostMapping("/register") // redirectAttributes ㄱㄱ
-	public void registerPost(BranchVO vo) {
+	public void registerPOST(BranchVO vo) {
 		// RedirectAttributes
-		logger.info("registerPost() call");
+		logger.info("registerPOST() call");
 		logger.info(vo.toString());
 		int result = branchService.create(vo);
 		logger.info(result + "행 삽입");
@@ -63,15 +63,15 @@ public class BranchController {
 	}// end registerPost()
 
 	@GetMapping("/detail") // branchSer read
-	public void detail(Model model, int brcId) {
-		logger.info("detail call : mvId = " + brcId);
+	public void detailGET(Model model, int brcId) {
+		logger.info("detailGET() call : mvId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		model.addAttribute("vo", vo);
 	}// end detailGet
 
 	@GetMapping("/detail/{brcId}")
 	public ResponseEntity<BranchVO> detailREST(@PathVariable("brcId") int brcId) {
-		logger.info("detailREST 호출 : brcId = " + brcId);
+		logger.info("detailREST() call : brcId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
 		System.out.println(vo);
 		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
@@ -87,7 +87,7 @@ public class BranchController {
 
 	@PostMapping("/update") // branchSer update
 	public void updatePOST(BranchVO vo, int brcId) {
-		logger.info("updatePOST call : vo = " + vo.toString());
+		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = branchService.update(vo);
 //		if(result == 1) {
 //			// list + ?page=
@@ -99,8 +99,8 @@ public class BranchController {
 	}// end updatePOST
 
 	@PostMapping("/delete") // branchSer delete
-	public void delete(int brcId) {
-		logger.info("delete call : brcId = " + brcId);
+	public void deletePOST(int brcId) {
+		logger.info("deletePOST() call : brcId = " + brcId);
 		int result = branchService.delete(brcId);
 //		if(result == 1) {			
 //			return "redirect:/board/list";

@@ -12,9 +12,7 @@
 	
 	<h2>관리자 스케줄 등록</h2>
 	 
-	  <form action="register" method="post">
 	  	<p>상영 지점</p>
-	  	
 	  	<select id="brcArea" name="brcArea" >
 	  		<option>지역선택</option>
 			<option value="1">서울</option>
@@ -34,9 +32,6 @@
 	    
 	    <p>상영 영화</p>
 	    <div id="mvIdOutput"></div>
-	 	
-		<br><br><input type="submit" value="등록">
-	  </form>
 	  
 	  <br><br><div id="ScheduleTable"></div>
 	  
@@ -67,6 +62,44 @@
 				$('#mvIdOutput').html(mvList);
 			}
 		); // end getJSON
+		
+		// 등록 버튼을 클릭하면 영화 등록
+		$('#ScheduleTable').on('click', '.scdItem .scdBtnInsert', function() {
+			var movieTitle = $('#mvId').val();
+			
+			
+			var isReadOnly = $(this).prevAll('.scdContent').prop('readonly');
+			if (isReadOnly == true) { // readonly가 true면
+				// readonly 속성제거 후 버튼 변경
+				$(this).prevAll('.scdContent').removeAttr('readonly');
+				$(this).prevAll('.scdContent').css({"border-color":"red"});
+				$(this).text("수정확인");
+				$(this).nextAll('.btn_delete').hide();
+			} else { // 아니라면 댓글 수정
+				// 선택된 댓글의 replyId, replyContent 값을 저장
+				// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
+				var replyId = $(this).prevAll('.replyId').val();
+				var replyContent = $(this).prevAll('.replyContent').val();
+				console.log("수정 replyId : " + replyId + ", replyContent : " + replyContent);
+				// ajax로 서버로 수정 데이터 전송
+				$.ajax({
+					type : 'PUT',
+					url : '/ex03/replies/' + replyId,
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-HTTP-Method-Override' : 'PUT'
+					},
+					data : JSON.stringify({ // ****JSON으로 파싱해서 보내야 오류가 안남!
+						'replyId' : replyId,
+						'replyContent' : replyContent
+					}),
+					success : function(result) {
+						console.log("댓글수정결과 : " + result);
+						getAllReplies();
+					}
+				});
+			}
+		}); // end replies.on.btn_update
 	  }
 	  
 	  // 선택 지역의 지점 가져오기
@@ -121,13 +154,14 @@
 				if (j == 0) {
 					ScheduleTable += '<td>' + timeArray[i] + '</td>';
 				}
-				ScheduleTable += '<td><button>등록</button></td>';
+				ScheduleTable += '<div class="scdItem"><td><button class="scdBtnInsert">등록</button><button class="scdBtnDelete">삭제</button><input type="text" class="scdContent"/></td></div>';
 			}
 			ScheduleTable += '</tr>';
 		}
 		ScheduleTable += '</tbody></table>';
 		$('#ScheduleTable').html(ScheduleTable);
 	  }
+	  
 	</script>
 	
 </body>
