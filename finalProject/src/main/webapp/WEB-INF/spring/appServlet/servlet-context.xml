@@ -25,19 +25,13 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
-	
-	
-	
+		
 	<!-- 문자열 리소스를 bean으로 추가, 파일업로드와 일치 필수 -->
 	<!-- String uploadPath = new String("경로"); -->
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:\Study\FileUploadTest">
 		</beans:constructor-arg>		
 	</beans:bean>
-	
-	
-	
 	
 	
 	<beans:bean id="multipartResolver"
@@ -47,5 +41,5 @@
 	</beans:bean>
 		
 	<context:component-scan base-package="edu.spring.project" />
-		
+	
 </beans:beans>

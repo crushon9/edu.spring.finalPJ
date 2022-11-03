@@ -20,15 +20,15 @@ public class MemberController {
 
 	@GetMapping("/register")
 	public void registerGET() {
-		logger.info("registerGET() 호출");
-	}//end registerGet
+		logger.info("registerGET() call");
+	}//end registerGet()
 
 	// 아니 register.jsp 에서 POST로 전송하면 자동으로 파라미터값이 vo에 담겨서 여기까지 오는거임? ㅇㅇ
 	@PostMapping("/register")
 	public void registerPOST(MemberVO vo) {
 		// RedirectAttributes
 		// - 재경로 위치에 속성값을 전송하는 객체
-		logger.info("registerPOST() 호출");
+		logger.info("registerPOST() call");
 		logger.info(vo.toString());
 		int result = memberService.create(vo);
 		logger.info(result + "행 삽입");		
@@ -36,36 +36,36 @@ public class MemberController {
 	
 	// 멤버 정보 보여주자.
 	@GetMapping("/detail")
-	public void detail(String mmbId) {
-		logger.info("detail call : memberId = " + mmbId);
+	public void detailGET(String mmbId) {
+		logger.info("detailGET() call : memberId = " + mmbId);
 		MemberVO vo = memberService.read(mmbId);
-	}//end detail
+	}//end detailGet()
 	
 	// get만 해오자
 	@GetMapping("/update")
-	public void updateGet(String mmbId) {
-		logger.info("updateGet() call");
+	public void updateGET(String mmbId) {
+		logger.info("updateGET() call");
 		MemberVO vo = memberService.read(mmbId);		
 	}//end updateGet()
 	
 	// 진짜 기능 ㄱ
 	@PostMapping("update")
-	public void updatePost(MemberVO vo) {
-		logger.info("updatePost call : vo = " + vo.toString()); 
+	public void updatePOST(MemberVO vo) {
+		logger.info("updatePOST() call : vo = " + vo.toString()); 
 		int result = memberService.update(vo);		
 	}//end updatePost()
 	
 	// 기능만 구현, 탈퇴하면 손모가지.
 	@PostMapping("/delete")
-	public void delete(String mmbId) {
-		logger.info("delete call : memberId = " + mmbId);
+	public void deletePOST(String mmbId) {
+		logger.info("deletePOST() call : mmbId = " + mmbId);
 		int result = memberService.delete(mmbId);		
-	}//end delete()
+	}//end deletePost()
 		
 	@PostMapping("/login")
-	public void login(String mmbId, String mmbPassword) {
-		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
+	public void loginPOST(String mmbId, String mmbPassword) {
+		logger.info("loginPOST() call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
-	}//end login()
+	}//end loginPost()
 	
 }

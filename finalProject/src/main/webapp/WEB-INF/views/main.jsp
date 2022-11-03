@@ -7,7 +7,7 @@
 <title>Main</title>
 </head>
 <body>
-<h1>메인 페이지</h1>
+<h1>list.jsp 무비 차트</h1>
 
 </body>
 </html>
