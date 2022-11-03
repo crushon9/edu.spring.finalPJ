@@ -38,13 +38,13 @@ public class FileUploadController {
 	
 	@GetMapping("/upload")
 	public void uploadGET() {
-		logger.info("uploadGET call : " + uploadPath);			
+		logger.info("uploadGET() call : " + uploadPath);			
 	}//end uploadget
 	
 	// singlefile handler
 	@PostMapping("/upload")
 	public void uploadPOST(MultipartFile file, Model model) {
-		logger.info("uploadPOST call");
+		logger.info("uploadPOST() call");
 		logger.info("filename : " + file.getOriginalFilename());
 		logger.info("filesize(byte) : " + file.getSize());			
 		String savedFile = saveUploadFile(file);	
@@ -60,7 +60,7 @@ public class FileUploadController {
 		}		
 		logger.info("savedFiles = " + savedFiles);
 		return "upload";
-	}//end uploadP2
+	}//end uploadPost2
 		
 	@GetMapping("/upload-ajax")
 	public void uploadAjaxGET() {
@@ -77,9 +77,9 @@ public class FileUploadController {
 		result = FileUploadUtil.saveUploadedFile(uploadPath, 
 				files[0].getOriginalFilename(), files[0].getBytes());		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
+	}//end uploadAjaxPost()
 	
-	// display funcion call : can take the images from the server 
+	// display function call : can take the images from the server 
 	// sh be sent file path 
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> display(String fileName) throws Exception {
@@ -103,8 +103,8 @@ public class FileUploadController {
 		entity = new ResponseEntity<byte[]>	(IOUtils.toByteArray(in),
 			httpHeaders, HttpStatus.OK);
 		return entity;
-		// localhost:8080/ex05/display?fileName=/unnamed.jpg (unnamed 앞 /가 중요)
-	}//end Res 
+		// http://localhost:8080/project/display?fileName=/ds.JPG
+	}//end display 
 		
 	private String saveUploadFile(MultipartFile file) {		
 		// UUID : 업로드 파일명 중복 방지
@@ -123,6 +123,6 @@ public class FileUploadController {
 			return null;
 		}		
 		
-	}//end saveUF
+	}//end saveUploadFile
 			
 }//end File UC

@@ -24,114 +24,47 @@
    height : 300px; 
 }
 
-
 </style>
-
-
 
 <title>${vo.mvTitle}</title>
 
 
-
-
-
 </head>
 <body>
-	<h2>글 보기</h2>
+	<h2>movie detail</h2>
 	
 	
-	 <div class="detail">
       <div class="mvContent">
          <div class="mvImage">
-            <div class="imageArea">
                <img class="image" src="display?fileName=/${vo.mvImage}"/> 
             </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+			</div>
+		
 	<!-- 여여여여 바꿔봐라 -->
 	<form action="register" method="post" enctype="multipart/form-data">
 		<input type="file" name="files" id="mvImage"> <br>
 		<br>
 		
-   <div class="mvInfo">
-               <input type="hidden" id="mvId" value="${vo.mvId}">
-               <h2>${vo.mvTitle}</h2>
-
+  	 <div class="mvInfo">
+        <input type="hidden" id="mvId" value="${vo.mvId}">
+        <h2>${vo.mvTitle}</h2>
 
 		<p>영화 제목</p>
-		<input type="text" name="mvTitle" placeholder="영화 제목 입력" required>
-		<p>영화 이미지</p>
-		<input type="text" name="mvImage" placeholder="파일명" required>
-		<!-- 폼을 하나로 합쳐야하는지? 아니면 새창으로 빼야하는건지? -->
-		<!-- <form action="upload" method="post" enctype="multipart/form-data">
-		<input type="file" name="file">
-		<input type="submit" value="업로드">
-		</form> -->
+		<input type="text" name="mvTitle" value=" ${vo.mvTitle}" readonly>
 		<p>영화 개봉일</p>
-		<input type="date" name="mvDateStarted" value="2020-01-01">
+		<input type="date" name="mvDateStarted" value="${vo.mvDateStrated}">
 		<p>영화 종료일</p>
-		<input type="date" name="mvDateEnded" value="2023-12-31">
+		<input type="date" name="mvDateEnded" value="${vo.mvDateEnded}">
 		<p>영화 러닝타임</p>
-		<!-- 여기 30분으로 나누어서 반올림한 int를 넘겨줘야함 -->
-		<input type="number" name="mvRuningTime" placeholder="상영시간 입력"
-			required>
+		<input type="number" name="mvRuningTime" value="${vo.mvRuningTime}">
 		<p>영화 장르</p>
-		<select name="mvGenre" required>
-			<option value="SF">SF</option>
-			<option value="스릴러">스릴러</option>
-			<option value="로맨스">로맨스</option>
-			<option value="에로">에로</option>
-			<option value="드라마">드라마</option>
-			<option value="공포">공포</option>
-			<option value="애니메이션">애니메이션</option>
-		</select> <br>
+		<input type="text" name="mvGenre" value="${vo.mvGenre}">
 		<br>
-		<input type="submit" value="등록">
+		<br>
+		
 	</form>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div>
-		<p>글번호 : ${vo.boardId }</p>
-	</div>
-	<div>
-		<p>제목 : 
-		<input type="text" name="boardTitle" value=" ${vo.boardTitle}" readonly></p>
-	</div>
-	<div>
-		<p>작성자 : ${vo.memberId }</p>
-		<fmt:formatDate value="${vo.boardDateCreated}" pattern="yyyy-MM-dd HH:mm:ss" var="fmtBoardDateCreated"/>
-		<p>작성일 : ${fmtBoardDateCreated }</p>
-	</div>
-	<div>
-		<textarea rows="20" cols="120" readonly>${vo.boardContent }</textarea>
-	</div>
-	<!-- ${criteria.page } : BoardController의 detail()에서 model에 담겨온 attribute	-->
-	<a href="list?page=${criteria.page }&numsPerPage=${criteria.numsPerPage }"><input type="button" value="글 목록"></a>
+	<a href="main?page=${criteria.page }&numsPerPage=${criteria.numsPerPage }"><input type="button" value="보기"></a>
 	<a href="update?boardId=${vo.boardId }&page=${criteria.page }&numsPerPage=${criteria.numsPerPage }"><input type="button" value="글 수정"></a>
 	<form action="delete" method="post" style="display: inline;">
 		<input type="hidden" name="boardId" value="${vo.boardId }">
@@ -150,9 +83,9 @@
 	</div>
 		
 	<hr>
-	<!-- 댓글을 출력할 div공간 마련 -->
+	<!-- 출력할 div공간 마련 -->
 	<div style="margin-left: 40px">
-		<div id="replies"></div>
+		<div id="rvInfo"></div>
 	</div>
 	<div>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -161,98 +94,130 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			getAllReplies();
-			// 버튼 클릭시 댓글 추가
+			getMvInfo();
+			
+			// 버튼 클릭시 후기등록 가자			
 			$('#btn_add').click(function() {
-				var boardId = $('#boardId').val();
-				var memberId = $('#memberId').val();
-				var replyContent = $('#replyContent').val();
-				// $.ajax로 댓글 입력
+				var mvId = $('#mvId').val();
+				var mmbId = $('#mmbId').val();
+				var rvContent = $('#rvContent').val();
+				var rvRating = $('#rvRating').val();
+				
+				var obj = {
+						'mvId' : mvId,
+						'mmbId' : mmbId,
+						'rvContent' : rvContent,
+						'rvRating' : rvRating	
+				};
+				console.log(obj);				
+				
+				// $.ajax로 후기, 평점 등록
 				$.ajax({
 					type : 'POST',
-					url : '/ex03/replies',
+					url : '../project/rvInfo', // rvInfo.jsp 만들어야하나
 					headers : { // 정보를 전송할때는 (GET방식을 빼고는) headers 넣어야함
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'
 					},
-					data : JSON.stringify({
-						'boardId' : boardId,
-						'memberId' : memberId,
-						'replyContent' : replyContent
-					}), // JSON으로 변환
+					data : JSON.stringify(obj), // JSON으로 
 					success : function(result, status) {
-						console.log('댓글입력결과 : ' + result);
+						console.log('result : ' + result);
 						console.log('HttpStatus : ' + status);
 						if (result == 1) {
-							getAllReplies();
+							alert('후기, 평점 작성 굳굳');
+							getMvInfo();
 						}
 					} // end ajax.success.function
 				}); // end ajax
 			}); // end btn_add.click
-			// 게시판 댓글 전체 가져오기 
-			function getAllReplies() {
-				console.log('getAllReplies() 호출');
-				var boardId = $('#boardId').val();;
-				var memberId = $('#memberId').val();
-				var url = '/ex03/replies/all/' + boardId; // REST API 방식 적용
+			
+			// 영화 후기 전체 ㄱ
+			function getRvInfo() {
+				console.log('getRvInfo() call');
+				var mvId = $('#mvId').val();
+				var mmbId = $('#mmbId').val();
+				var url = '../project/mvInfo/all/' + mvId; // REST API 방식 적용
 				// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 				$.getJSON(			
-						url,
+					url,
 					function(data) {// 서버에서 온 data가 저장되어있음
-						var replyList = '';
+						var rvList = '';
 						$(data).each(function() {
-							var replyDateCreated = new Date(this.replyDateCreated); // string 날짜를 다시 Date로 변환
+							var rvDateCreated = new Date(this.replyDateCreated); // string 날짜를 다시 Date로 변환
+							var mvRvContent = this.mvRvContent;
+							var mvRvRating = this.mvRvRating;
 							var btn_disabled = 'disabled';
-							if (memberId == this.memberId) { // this : data 컬렉션의 한줄 데이터를 의미
+							var readonly = '';
+							
+							if (mmbId == this.mmbId) { // this : data 컬렉션의 한줄 데이터를 의미
 								btn_disabled = '';
 							}
-							replyList += '<div class="reply_item">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
+							replyList += '<div class="rvInfo">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
 								+ '<pre>'
-								+ '<input type="hidden" class="replyId" value="' + this.replyId + '"/>'
-								+ '<input type="hidden" class="memberId" value="' + this.memberId + '"/>'
-								+ this.memberId // getJSON으로 받아온 data에 저장된 memberId 의미
+								+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
+								+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
+								+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
+								+ this.mmbId // getJSON으로 받아온 data에 저장된 memberId 의미
+								+ '&nbsp;&nbsp;' // space
+								+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
 								+ '&nbsp;&nbsp;'
-								+ '<input type="text" class="replyContent" value="' + this.replyContent + '" readonly/>'
-								+ '&nbsp;&nbsp;'
-								+ replyDateCreated
+								+ '<select id = "rvRating"' + disabled + '>'                                
+	                            + '<option value = "1">1<option>'
+	                            + '<option value = "2">2<option>'
+	                            + '<option value = "3">3<option>'
+	                            + '<option value = "4">4<option>'
+	                            + '<option value = "5">5<option>'
+	                            + '</select>'
+								+ rvDateCreated
 								+ '&nbsp;&nbsp;'
 								+ '<button class="btn_update" ' + btn_disabled + '>수정</button>'
 								+ '<button class="btn_delete" ' + btn_disabled + '>삭제</button>'
 								+ '</pre>'
 								+ '</div>';
 						}); // end data.each
-						$('#replies').html(replyList); // 반복문으로 생성된 html태그 출력
+						$('#rvInfo').html(rvList); // 반복문으로 생성된 html태그 출력
 					}
 				); // end getJSON
-			} // end getAllReplies
+			} // end getAll
 			
 			// 수정 버튼을 클릭하면 댓글 수정
-			$('#replies').on('click', '.reply_item .btn_update', function(){
-				var isReadOnly = $(this).prevAll('.replyContent').prop('readonly');
+			$('#rvInfo').on('click', '.rvInfo .btn_update', function(){
+				var isReadOnly = $(this).prevAll('.rvContent')&&prevAll('.rvRating').prop('readonly');
+				
+				var rvId = $(this).prevAll('#rvId').val();
+				var rvContent = $(this).prevAll('#rvContent').val();
+				var rvRating = $(this).prevAll('#rvRating').val();
 				if (isReadOnly == true) { // readonly가 true면
 					// readonly 속성제거 후 버튼 변경
-					$(this).prevAll('.replyContent').removeAttr('readonly');
-					$(this).prevAll('.replyContent').css({"border-color":"red"});
+					$(this).prevAll('.rvId').removeAttr('readonly');
+					$(this).prevAll('.rvContent').removeAttr('readonly');
+					$(this).prevAll('.rvContent').css({"border-color":"red"});
+					$(this).prevAll('.rvRating').removeAttr('readonly');
+					$(this).prevAll('.rvRating').css({"border-color":"green"});
 					$(this).text("수정확인");
 					$(this).nextAll('.btn_delete').hide();
 				} else { // 아니라면 댓글 수정
-					// 선택된 댓글의 replyId, replyContent 값을 저장
+					// 선택된 댓글의 rvId, rvContent 값을 저장
 					// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
-					var replyId = $(this).prevAll('.replyId').val();
-					var replyContent = $(this).prevAll('.replyContent').val();
-					console.log("수정 replyId : " + replyId + ", replyContent : " + replyContent);
+					var rvId = $(this).prevAll('.rvId').val();
+					var rvContent = $(this).prevAll('.rvContent').val();
+					var rvRating = $(this).prevAll('.rvRating').val();
+					var obj = {
+							'rvContent' : rvContent,
+							'rvRating' : rvRating							
+					};
+										
+					console.log("수정 rvId : " + rvId + ", rvContent : " + rvContent + ", rvRating : " + rvRating);
+										
 					// ajax로 서버로 수정 데이터 전송
 					$.ajax({
 						type : 'PUT',
-						url : '/ex03/replies/' + replyId,
+						url : '../project/rvInfo/' + rvId,
 						headers : {
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'PUT'
 						},
-						data : JSON.stringify({ // ****JSON으로 파싱해서 보내야 오류가 안남!
-							'replyId' : replyId,
-							'replyContent' : replyContent
-						}),
+						data : JSON.stringify(obj),
 						success : function(result) {
 							console.log("댓글수정결과 : " + result);
 							getAllReplies();
@@ -262,23 +227,28 @@
 			}); // end replies.on.btn_update
 			
 			// 삭제 버튼을 클릭하면 선택된 댓글 삭제
-			$('#movies').on('click', '.movie .btn_delete', function(){
-				var mvId = $('#mvId').val();;
-				var replyId = $(this).prevAll('.replyId').val();
+			$('#rvInfo').on('click', '.rvInfo .btn_delete', function(){
+				var mvId = $('#mvId').val();
+				var rvId = $('#rvId').val();
+				var mvId = $(this).prevAll('.mvId').val();
+				var rvId = $(this).prevAll('.rvId').val();
 				console.log("삭제 replyId : " + replyId + " , boardId : " + boardId);
 				$.ajax({
 					type : 'DELETE',
-					url : '/ex03/replies/' + replyId, // 이 데이터는 담기지 않네?
+					url : '../project/rvInfo/' + rvId, // 이 데이터는 담기지 않네?
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'DELETE'
 					},
 					data : JSON.stringify({
-						'boardId' : boardId
+						'mvId' : mvId
 					}), // 여기 데이터는 vo에 자동으로 담기는데
 					success : function(result) {
 						console.log("댓글삭제결과 : " + result);
-						getAllReplies();
+						if(result == 1){
+							alert('delete success');
+						getRvInfo();							
+						}
 					}
 				});
 			}); // end replies.on.btn_delete
