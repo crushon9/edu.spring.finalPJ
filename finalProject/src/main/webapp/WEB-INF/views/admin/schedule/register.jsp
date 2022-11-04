@@ -22,7 +22,7 @@
 			<option value="5">광주/전라</option>
 			<option value="6">제주</option>
 		</select>
-		<div id="brcIdOutput"></div>
+		<div id="brcListOutput"></div>
 	  	
 	    <p>상영 날짜</p>
 	    <input type="date" id="inputDate" name="inputDate" value="2022-11-01">
@@ -75,7 +75,7 @@
 					brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
 				});
 				brcList += '</select>'
-				$('#brcIdOutput').html(brcList);
+				$('#brcListOutput').html(brcList);
 				$('#brcId').change(function() {
 					getBrcVO();
 				});
