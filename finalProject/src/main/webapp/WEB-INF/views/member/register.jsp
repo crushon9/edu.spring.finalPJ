@@ -27,7 +27,7 @@
 		<!-- 관리자 여부 : DB에서 권한요청으로 set 1 -->
 		<p>선호지점</p>
 	  	<select id="brcArea" name="brcArea" >
-	  		<option>지역선택</option>
+	  		<option value="1">지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
 			<option value="3">부산/경상</option>
@@ -35,29 +35,29 @@
 			<option value="5">광주/전라</option>
 			<option value="6">제주</option>
 		</select>
-		<div id="brcIdOutput"></div>
+		<div id="brcListOutput"></div>
 		<br><br><input type="submit" value="회원가입">
 	  </form>
 	  
 	  <script type="text/javascript">
 	  $(document).ready(function() {
 			$('#brcArea').change(function() {
-				getAreaBrcId();
+				getBrcList();
 			});
 	   });
 		// 선택 지역의 지점 가져오기
-		function getAreaBrcId() {
+		function getBrcList() {
 			var brcArea = $('#brcArea').val();
 			var url = '/project/admin/branch/areaList/' + brcArea; // REST API 방식 적용
 			$.getJSON(
 				url,
 				function(data) {
-					var brcIdList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
+					var brcList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
 					$(data).each(function() {
-						brcIdList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
+						brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
 					});
-					brcIdList += '</select>'
-					$('#brcIdOutput').html(brcIdList);
+					brcList += '</select>'
+					$('#brcListOutput').html(brcList);
 				}
 			); // end getJSON
 		}
