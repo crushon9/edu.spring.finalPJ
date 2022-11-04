@@ -7,34 +7,32 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>Movie Register</title>
-
-
 <style type="text/css">
-	.register {
-		width: 300px;
-		height: 3400px;
-		border: 2px solid green;
-	}
+.file-drop {
+	width: 50%;
+	height: 200px;
+	border: 1px solid gray;
+}
 </style>
-
 </head>
-
 <body>
 
 	<h2>관리자 영화 등록</h2>
+	<p>영화 이미지</p>
+	<div class="file-drop"></div>
+	<div class="upload-list"></div>
+		
 	<form action="register" method="post" enctype="multipart/form-data">
+		<input type="hidden" id="mvImage" name="mvImage">
 		<p>영화 제목</p>
-		<input type="text" name="mvTitle" placeholder="영화 제목 입력" required>
-		<p>영화 이미지</p>
-		<input type="file" name="mvImage">
+		<input type="text" name="mvTitle" placeholder="영화제목 입력" required>
 		<p>영화 개봉일</p>
 		<input type="date" name="mvDateStarted" value="2020-01-01">
 		<p>영화 종료일</p>
 		<input type="date" name="mvDateEnded" value="2023-12-31">
 		<p>영화 러닝타임</p>
 		<!-- 여기 30분으로 나누어서 반올림한 int를 넘겨줘야함 -->
-		<input type="number" name="mvRuningTime" placeholder="상영시간 입력"
-			required>
+		<input type="number" name="mvRuningTime" placeholder="상영시간 입력" required>
 		<p>영화 장르</p>
 		<select name="mvGenre" required>
 			<option value="SF">SF</option>
@@ -47,24 +45,49 @@
 		</select>
 		<p>영화 소개</p>
 		<textarea rows="4" cols="30" name="mvInfo" placeholder="영화정보" required></textarea>
-		
 		<br><br><input type="submit" value="등록">
 	</form>
 
 	<script type="text/javascript">
-		$('#mvImage').change(function() {
-			setImageFromFile(this, '#preview');
-		});
-
-		function setImageFromFile(input, expression) {
-			if (input.files && input.files[0]) {
-				var re = new FileReader();
-				re.onload = function(e) {
-					$(expression).attr('src', e.target.result);
+		$(document).ready(function(){
+			// 기본으로 내장되어있는 브라우저 기능제거 (파일을 끌어다 놓으면 drag&drop 브라우저가 파일을 자동으로 열어줌)
+			$('.file-drop').on('dragenter dragover', function(event) {
+				event.preventDefault();
+			});
+			$('.file-drop').on('drop', function(event) {
+				event.preventDefault();
+				// Ajax를 이용하여 서버로 파일을 업로드
+				// multipart/form-data 타입으로 파일을 업로드 하는 객체
+				var formData = new FormData();
+				
+				// 드래그한 파일 정보를 갖고 있는 객체
+				var files = event.originalEvent.dataTransfer.files;
+				var i = 0;
+				for (i = 0; i < files.length; i++) {
+					console.log(files[i]);
+					formData.append("files", files[i]);
 				}
-				re.readAsDataURL(input.files[0]);
-			}
-		}
+				
+				$.ajax({
+					type : 'post',
+					url : '/project/admin/movie/register/upload-ajax',
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(data) {
+						console.log(data);
+						
+						var str = '';
+						str += '<div>'
+							+ '<img src="display?fileName='
+							+ data
+							+ '"/>'
+							+ '</div>';
+						$('.upload-list').html(str);
+					}
+				}); // .ajax()
+			}); // .file-drop.on()
+		}); // document.ready()
 	</script>
 
 </body>
