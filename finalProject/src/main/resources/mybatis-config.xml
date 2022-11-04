@@ -23,16 +23,19 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="mvDateEnded" value="MV_DATE_ENDED" />
 		<property name="mvRuningTime" value="MV_RUNING_TIME" />
 		<property name="mvGenre" value="MV_GENRE" />
+		<property name="mvInfo" value="MV_INFO" />
 		<property name="mvTicketSales" value="MV_TICKET_SALES" />
 		<property name="mvRatingTotal" value="MV_RATING_TOTAL" />
 		<property name="mvRatingCnt" value="MV_RATING_CNT" />
 		<property name="mvRatingAvg" value="MV_RATING_AVG" />
 
+
 		<property name="PJ_BRANCH" value="PJ_BRANCH" />
 		<property name="brcId" value="BRC_ID" />
 		<property name="brcArea" value="BRC_AREA" />
 		<property name="brcName" value="BRC_NAME" />
-		<property name="brcTheaterNumbers" value="BRC_THEATER_NUMBERS" />
+		<property name="brcTheaterNumbers"
+			value="BRC_THEATER_NUMBERS" />
 		<property name="brcTheaterSeats" value="BRC_THEATER_SEATS" />
 
 		<property name="PJ_SCHEDULE" value="PJ_SCHEDULE" />
