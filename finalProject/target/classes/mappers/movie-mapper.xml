@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_MOVIE} 
-		(${mvTitle}, ${mvImage}, ${mvDateStarted}, ${mvDateEnded}, ${mvRuningTime}, ${mvGenre})
-		values (#{mvTitle}, #{mvImage}, #{mvDateStarted}, #{mvDateEnded}, #{mvRuningTime}, #{mvGenre})
+		(${mvTitle}, ${mvImage}, ${mvDateStarted}, ${mvDateEnded}, ${mvRuningTime}, ${mvGenre}, ${mvInfo} )
+		values (#{mvTitle}, #{mvImage}, #{mvDateStarted}, #{mvDateEnded}, #{mvRuningTime}, #{mvGenre}, #{mvInfo})
 	</insert>
 	
 	<select id="select_list_all" resultType="MovieVO">		
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update ${PJ_MOVIE}
 		set ${mvTitle} = #{mvTitle}, ${mvImage} = #{mvImage},
 		${mvDateStarted} = #{mvDateStarted}, ${mvDateEnded} = #{mvDateEnded},
-		${mvRuningTime} = #{mvRuningTime}, ${mvGenre} = #{mvGenre}
+		${mvRuningTime} = #{mvRuningTime}, ${mvGenre} = #{mvGenre}, ${mvInfo} = #{mvInfo}
 		where ${mvId} = #{mvId}
 	</update>
 	

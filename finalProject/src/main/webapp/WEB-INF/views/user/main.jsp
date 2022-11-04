@@ -9,5 +9,12 @@
 <body>
 <h1>list.jsp 무비 차트</h1>
 
+
+
+
+
+
+
+
 </body>
 </html>
