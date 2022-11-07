@@ -34,8 +34,8 @@ public class FileUploadController {
 	}// end uploadAjaxG -> http://localhost:8080/project/upload-ajax
 
 	@PostMapping("/upload-ajax")
-	public ResponseEntity<String> uploadAjaxPost(MultipartFile[] files) throws IOException {
-		logger.info("uploadAjaxPorst call");
+	public ResponseEntity<String> uploadAjaxPOST(MultipartFile[] files) throws IOException {
+		logger.info("uploadAjaxPOST call");
 
 		// single file saving
 		String result = null;

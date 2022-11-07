@@ -9,8 +9,8 @@
 <title>Movie Register</title>
 <style type="text/css">
 .file-drop {
-	width: 50%;
-	height: 200px;
+	width: 200px;
+	height: 300px;
 	border: 1px solid gray;
 }
 </style>
@@ -20,7 +20,6 @@
 	<h2>관리자 영화 등록</h2>
 	<p>영화 이미지</p>
 	<div class="file-drop"></div>
-	<div class="upload-list"></div>
 		
 	<form action="register" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="mvImage" name="mvImage">
@@ -31,8 +30,8 @@
 		<p>영화 종료일</p>
 		<input type="date" name="mvDateEnded" value="2023-12-31">
 		<p>영화 러닝타임</p>
-		<!-- 여기 30분으로 나누어서 반올림한 int를 넘겨줘야함 -->
-		<input type="number" name="mvRuningTime" placeholder="상영시간 입력" required>
+		<input type="number" id="mvRuningTimeTemp" placeholder="상영시간 입력" required>
+		<input type="hidden" id="mvRuningTime" name="mvRuningTime" >
 		<p>영화 장르</p>
 		<select name="mvGenre" required>
 			<option value="SF">SF</option>
@@ -75,18 +74,25 @@
 					processData : false,
 					contentType : false,
 					success : function(data) {
-						console.log(data);
-						
 						var str = '';
 						str += '<div>'
 							+ '<img src="display?fileName='
 							+ data
-							+ '"/>'
+							+ '" width="200px"/>'
 							+ '</div>';
-						$('.upload-list').html(str);
+						$('.file-drop').html(str);
+						$('#mvImage').val(data);
+						console.log($('#mvImage').val());
 					}
 				}); // .ajax()
 			}); // .file-drop.on()
+			
+			$('#mvRuningTimeTemp').change(function() {
+				var originRunTime = $('#mvRuningTimeTemp').val();
+				var resultRunTime = parseInt(originRunTime / 30) + 1;
+				$('#mvRuningTime').val(resultRunTime);
+				console.log($('#mvRuningTime').val());
+			});
 		}); // document.ready()
 	</script>
 

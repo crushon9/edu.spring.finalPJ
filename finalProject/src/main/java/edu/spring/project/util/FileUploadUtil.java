@@ -21,13 +21,12 @@ public class FileUploadUtil {
 		File target = new File(uploadPath, saveName);
 		FileCopyUtils.copy(data, target);
 		String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-		String result = null;
 		if (MediaUtil.geMediaType(extension) != null) {
-			result = createThumbnail(uploadPath, saveName);
+			createThumbnail(uploadPath, saveName);
 		} else {
-			result = createIcon(uploadPath, saveName);
+			createIcon(uploadPath, saveName);
 		}
-		return result;
+		return "/" + saveName;
 	}
 
 	private static void makeDir(String uploadPath) {
@@ -44,7 +43,7 @@ public class FileUploadUtil {
 
 		BufferedImage source = ImageIO.read(new File(uploadPath, fileName));
 		BufferedImage destination = Scalr.resize(source, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
-		String thumbnailName = uploadPath + File.separator + "s_" + fileName;
+		String thumbnailName = uploadPath + File.separator + "thumbnail_" + fileName;
 		File thumbnail = new File(thumbnailName);
 		String formatName = fileName.substring(fileName.lastIndexOf('.') + 1);
 

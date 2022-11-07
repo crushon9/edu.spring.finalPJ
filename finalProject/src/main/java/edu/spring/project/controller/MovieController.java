@@ -55,25 +55,20 @@ public class MovieController {
 	}// end registerGet()
 
 	@PostMapping("/register")
-	public void registerPOST(@RequestParam("files") MultipartFile file, Model model, MovieVO vo) {
+	public void registerPOST(Model model, MovieVO vo) {
 		// RedirectAttributes
 		// - 재경로 위치에 속성값을 전송하는 객체
 		logger.info("registerPOST() 호출");
-		logger.info("파일 이름 : " + file.getOriginalFilename());
-		logger.info("파일 크기 : " + file.getSize());
 		logger.info(vo.toString());
-		String savedFile = saveUploadFile(file);
-		logger.info(savedFile);
-
-		vo.setMvImage(savedFile);
 
 		int result = movieService.create(vo);
-		logger.info("vo = " + vo);
+		logger.info("result = " + result);
+		model.addAttribute("vo", vo);
 	} // end registerPost()
 
 	@GetMapping("/display") 
 	public ResponseEntity<byte[]> display(String fileName) throws Exception {
-		logger.info("display() 호출");
+		logger.info("display() 호출 : fileName = " + fileName);
 
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
