@@ -59,6 +59,9 @@
 				});
 				mvList += '</select>'
 				$('#mvIdOutput').html(mvList);
+				$('#brcId').change(function() {
+					getBrcVO();
+				});
 			}
 		);
 	  } // end getMvList
@@ -116,7 +119,9 @@
 				if (j == 0) {
 					scheduleTable += '<td class="0">' + timeArray[i] + '</td>';
 				}
-				scheduleTable += '<td class="' + (j + 1) + '"><div class="scdItem"><button class="scdBtnInsert">등록</button><button class="scdBtnDelete" disabled>삭제</button><input type="text" class="scdContent"/></div></td>';
+				scheduleTable += '<td class="' + (j + 1) + '"><button style="border-color:blue" class="scdBtnInsert">등록</button>'
+				+ '<button style="border-color:lightgray" class="scdBtnDelete" disabled>삭제</button>'
+				+ '<input type="text" name="scdContent" style="border-color:lightgray" value=""/></td>';
 			}
 			scheduleTable += '</tr>';
 		}
@@ -125,24 +130,83 @@
 		scheduleBtn();
 	  } // end setScheduleTable
 	  
-	  // 등록 버튼을 클릭하면 영화 등록
+	  // 버튼을 클릭하면 영화 등록 혹은 삭제
 	  function scheduleBtn() {
-	    $('#scheduleTable').on('click', 'table tbody tr td .scdItem .scdBtnInsert', function() {
+	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnInsert', function() {
 			var mvSelected = $('#mvId option:selected').text();
-			var scdTheater = $(this).parents().parents().attr('class');
 			var mvRuningTime = mvSelected.split('_')[1];
-			var scdTime = $(this).parents().parents().parents().attr('class');
-			console.log('scdTheater : ' + scdTheater);
+			var scdTheater = $(this).parents().attr('class');
+			var scdTime = $(this).parents().parents().attr('class');
+			console.log('scdBtnInsert 클릭');
+			console.log('mvSelected : ' + mvSelected);
 			console.log('mvRuningTime : ' + mvRuningTime);
+			console.log('scdTheater : ' + scdTheater);
 			console.log('scdTime : ' + scdTime);
 			console.log("---------");
 			
-			// 상영영화를 input 칸에 등록함
-			$(this).nextAll('.scdContent').val(mvSelected);
-			for (var i = 0; i < mvRuningTime; i++) {
-				var trIndex = Number(scdTime) + Number(i);
-				$(this).parents().parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children().children('.scdContent').val(mvSelected);
+			if (mvSelected == '') {
+				alert('상영 영화를 선택 해주세요');
+			} else {
+				// input.scdContent에 넣으며 저장
+				var startScdContent = $(this).nextAll('input[name=scdContent]').val();
+				if (startScdContent == '') {
+					var overlapFlag = 0;
+					for (var i = 0; i < mvRuningTime; i++) {
+						var trIndex = Number(scdTime) + Number(i) + Number(1);
+						var loopScdContent = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').val();
+						if (loopScdContent != '') {
+							alert('상영 스케줄이 중복 됩니다!');
+							overlapFlag = 1;
+							break;
+						}
+					}
+					if (overlapFlag == 0) {
+						$(this).nextAll('input[name=scdContent]').val(mvSelected);
+						$(this).nextAll('input[name=scdContent]').css({"border-color":"red"});
+						$(this).prop('disabled', true);
+						$(this).css({"border-color":"lightgray"});
+						$(this).nextAll('.scdBtnDelete').prop('disabled', false);
+						$(this).nextAll('.scdBtnDelete').css({"border-color":"red"});
+						for (var i = 0; i < mvRuningTime; i++) {
+							var trIndex = Number(scdTime) + Number(i) + Number(1);
+							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').val(mvSelected);
+							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').css({"border-color":"red"});
+							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').prop('disabled', true);
+							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').css({"border-color":"lightgray"});
+						}
+					}
+				} else {
+					alert('상영 스케줄이 중복 됩니다');
+				}
 			}
+		});
+			
+	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnDelete', function() {
+			var mvSelected = $('#mvId option:selected').text();
+			var mvRuningTime = mvSelected.split('_')[1];
+			var scdTheater = $(this).parents().attr('class');
+			var scdTime = $(this).parents().parents().attr('class');
+			console.log('scdBtnDelete 클릭');
+			console.log('mvSelected : ' + mvSelected);
+			console.log('mvRuningTime : ' + mvRuningTime);
+			console.log('scdTheater : ' + scdTheater);
+			console.log('scdTime : ' + scdTime);
+			console.log("---------");
+			
+			$(this).nextAll('input[name=scdContent]').val('');
+			$(this).nextAll('input[name=scdContent]').css({"border-color":"lightgray"});
+			$(this).prop('disabled', true);
+			$(this).css({"border-color":"lightgray"});
+			$(this).prevAll('.scdBtnInsert').prop('disabled', false);
+			$(this).prevAll('.scdBtnInsert').css({"border-color":"blue"});
+			for (var i = 0; i < mvRuningTime; i++) {
+				var trIndex = Number(scdTime) + Number(i) + Number(1);
+				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').val('');
+				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').css({"border-color":"lightgray"});
+				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').prop('disabled', false);
+				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').css({"border-color":"blue"});
+			}
+	    });
 			
 			
 			/* var insertIsDisabled = $(this).prevAll('.scdBtnInsert').prop('disabled');
@@ -176,7 +240,7 @@
 					}
 				});
 			} */
-		});
+		
 	  }
 	  
 	</script>
