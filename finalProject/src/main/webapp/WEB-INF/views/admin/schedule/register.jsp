@@ -119,9 +119,10 @@
 				if (j == 0) {
 					scheduleTable += '<td class="0">' + timeArray[i] + '</td>';
 				}
-				scheduleTable += '<td class="' + (j + 1) + '"><button style="border-color:blue" class="scdBtnInsert">등록</button>'
-				+ '<button style="border-color:lightgray" class="scdBtnDelete" disabled>삭제</button>'
-				+ '<input type="text" name="scdContent" style="border-color:lightgray" value=""/></td>';
+				scheduleTable += '<td class="' + (j + 1) + '"><button style="border-color: blue;" class="scdBtnInsert">등록</button>'
+				+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
+				+ '<input type="text" name="scdContent" style="border-color: lightgray;" value=""/>'
+				+ '<input type="hidden" name="scdId"/></td>';
 			}
 			scheduleTable += '</tr>';
 		}
@@ -132,11 +133,19 @@
 	  
 	  // 버튼을 클릭하면 영화 등록 혹은 삭제
 	  function scheduleBtn() {
+		 var mvSelected = $('#mvId option:selected').text();
+		 var mvRuningTime = mvSelected.split('_')[1];
+		 var mvId = $('#mvId').val();
+		 var brcId = $('#brcId').val();
+		  
+		 // TODO : 하나를 등록하면, 디비에서 전체를 가져오면서 뿌려야함.
 	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnInsert', function() {
-			var mvSelected = $('#mvId option:selected').text();
-			var mvRuningTime = mvSelected.split('_')[1];
+			var scdDate = $('#scdDate').val();
 			var scdTheater = $(this).parents().attr('class');
 			var scdTime = $(this).parents().parents().attr('class');
+		 	var scdSeatTotal = $('#scdSeatTotal').val();
+		 	var scdPrice = $('#scdPrice').val();
+			
 			console.log('scdBtnInsert 클릭');
 			console.log('mvSelected : ' + mvSelected);
 			console.log('mvRuningTime : ' + mvRuningTime);
@@ -167,13 +176,44 @@
 						$(this).css({"border-color":"lightgray"});
 						$(this).nextAll('.scdBtnDelete').prop('disabled', false);
 						$(this).nextAll('.scdBtnDelete').css({"border-color":"red"});
-						for (var i = 0; i < mvRuningTime; i++) {
-							var trIndex = Number(scdTime) + Number(i) + Number(1);
+						for (var i = 1; i < mvRuningTime; i++) {
+							var trIndex = Number(scdTime) + Number(i);
 							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').val(mvSelected);
 							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').css({"border-color":"red"});
 							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').prop('disabled', true);
 							$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').css({"border-color":"lightgray"});
 						}
+						
+						console.log("---스케줄 등록 정보---");
+						console.log("mvId : " + mvId);
+						console.log("brcId : " + brcId);
+						console.log("scdDate : " + scdDate);
+						console.log("scdTime : " + scdTime);
+						console.log("scdTheater : " + scdTheater);
+						console.log("scdSeatTotal : " + scdSeatTotal);
+						console.log("scdPrice : " + scdPrice);
+						
+						// 중복되지 않았을때 등록
+						$.ajax({
+							type : 'POST',
+							url : '/project/admin/schedule/register',
+							headers : {
+								'Content-Type' : 'application/json',
+								'X-HTTP-Method-Override' : 'POST'
+							},
+							data : JSON.stringify({
+								'mvId' : mvId,
+								'brcId' : brcId,
+								'scdDate' : scdDate,
+								'scdTime' : scdTime,
+								'scdTheater' : scdTheater,
+								'scdSeatTotal' : scdSeatTotal,
+								'scdPrice' : scdPrice
+							}),
+							success : function(result) {
+								console.log("스케줄 등록 결과 : " + result);
+							}
+						});
 					}
 				} else {
 					alert('상영 스케줄이 중복 됩니다');
@@ -182,8 +222,7 @@
 		});
 			
 	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnDelete', function() {
-			var mvSelected = $('#mvId option:selected').text();
-			var mvRuningTime = mvSelected.split('_')[1];
+			
 			var scdTheater = $(this).parents().attr('class');
 			var scdTime = $(this).parents().parents().attr('class');
 			console.log('scdBtnDelete 클릭');
@@ -199,8 +238,8 @@
 			$(this).css({"border-color":"lightgray"});
 			$(this).prevAll('.scdBtnInsert').prop('disabled', false);
 			$(this).prevAll('.scdBtnInsert').css({"border-color":"blue"});
-			for (var i = 0; i < mvRuningTime; i++) {
-				var trIndex = Number(scdTime) + Number(i) + Number(1);
+			for (var i = 1; i < mvRuningTime; i++) {
+				var trIndex = Number(scdTime) + Number(i);
 				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').val('');
 				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=scdContent]').css({"border-color":"lightgray"});
 				$(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('.scdBtnInsert').prop('disabled', false);
@@ -208,39 +247,6 @@
 			}
 	    });
 			
-			
-			/* var insertIsDisabled = $(this).prevAll('.scdBtnInsert').prop('disabled');
-			/* var deleteIsDisabled = $(this).prevAll('.scdBtnDelete').prop('disabled');
-			if (isDisabled == true) {
-				$(this).prevAll('.scdContent').removeAttr('readonly');
-				$(this).prevAll('.scdContent').css({"border-color":"red"});
-				$(this).text("수정확인");
-				$(this).nextAll('.scdBtnDelete').prop('abled');
-			} else { // 아니라면 댓글 수정
-				// 선택된 댓글의 replyId, replyContent 값을 저장
-				// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
-				var replyId = $(this).prevAll('.replyId').val();
-				var replyContent = $(this).prevAll('.replyContent').val();
-				console.log("수정 replyId : " + replyId + ", replyContent : " + replyContent);
-				// ajax로 서버로 수정 데이터 전송
-				$.ajax({
-					type : 'PUT',
-					url : '/ex03/replies/' + replyId,
-					headers : {
-						'Content-Type' : 'application/json',
-						'X-HTTP-Method-Override' : 'PUT'
-					},
-					data : JSON.stringify({ // ****JSON으로 파싱해서 보내야 오류가 안남!
-						'replyId' : replyId,
-						'replyContent' : replyContent
-					}),
-					success : function(result) {
-						console.log("댓글수정결과 : " + result);
-						getAllReplies();
-					}
-				});
-			} */
-		
 	  }
 	  
 	</script>
