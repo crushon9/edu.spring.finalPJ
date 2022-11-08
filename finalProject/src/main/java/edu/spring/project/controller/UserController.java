@@ -113,8 +113,8 @@ public class UserController {
 	@GetMapping("/detail") // String mvId·Î º¯°æ EU
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
-		MovieVO vo = movieService.read(mvId);
-		model.addAttribute("vo", vo);
+	//	MovieVO vo = movieService.read(mvId);
+	//	model.addAttribute("vo", vo);
 	}// end detail()
 
 	@GetMapping("/update")

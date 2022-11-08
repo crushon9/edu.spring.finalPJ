@@ -14,11 +14,11 @@ import edu.spring.project.domain.MovieVO;
 @Repository
 public class MovieDAOImple implements MovieDAO{
 	private static final Logger logger = LoggerFactory.getLogger(MovieDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.project.movieMapper"; // movie-mapper.xml
+	private static final String NAMESPACE = "edu.spring.project.movieMapper"; // movie-mapper.xml와 연결
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
+		
 	@Override
 	public int insert(MovieVO vo) {
 		logger.info("insert() 호출");

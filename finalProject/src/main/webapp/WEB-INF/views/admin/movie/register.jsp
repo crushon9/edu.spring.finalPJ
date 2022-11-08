@@ -76,7 +76,7 @@
 					success : function(data) {
 						var str = '';
 						str += '<div>'
-							+ '<img src="display?fileName='
+							+ '<img src="imgDisplay?fileName='
 							+ data
 							+ '" width="200px"/>'
 							+ '</div>';

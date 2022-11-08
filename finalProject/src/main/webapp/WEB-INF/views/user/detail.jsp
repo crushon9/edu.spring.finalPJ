@@ -50,15 +50,19 @@
 	<input type="text" name="mvGenre" value="${vo.mvGenre}" readonly>
 	<p>영화 소개</p>
 	<input type="text" name="mvInfo" value="${vo.mvInfo}" readonly>
+	<p>영화 평점</p>
+	<input type="text" name="mvRating" value="${vo.mvRating}" readonly>
+	<p>영화 후기</p>
+	<input type="text" name="rvContent" value="${vo.rvContent}" readonly>
 
 	<hr>
 
-	<!-- 댓글 입력 -->
+	<!-- reply 입력 -->
 	<div style="text-align: center;">
-		<input type="hidden" id="boardId" value="${vo.boardId }"> <input
-			type="text" id="memberId"> <input type="text"
-			id="replyContent">
-		<button id="btn_add">작성</button>
+		<input type="hidden" id="mvId" value="${vo.mvId }"> 
+		<input type="text" id="mmbId"> 
+		<input type="text" 	id="rvContent">
+		<button id="btn_add">후기작성</button>
 	</div>
 
 	<hr>
@@ -77,12 +81,7 @@
 		<br>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
 	</div>
-
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -123,7 +122,7 @@
 				}); // end ajax
 			}); // end btn_add.click
 			
-			// 영화 후기 전체 ㄱ
+			// 영화 후기 전체 출력
 			function getRvInfo() {
 				console.log('getRvInfo() call');
 				var mvId = $('#mvId').val();
@@ -136,8 +135,8 @@
 						var rvList = '';
 						$(data).each(function() {
 							var rvDateCreated = new Date(this.replyDateCreated); // string 날짜를 다시 Date로 변환
-							var mvRvContent = this.mvRvContent;
-							var mvRvRating = this.mvRvRating;
+							var rvContent = this.rvContent;
+							var rvRating = this.rvRating;
 							var btn_disabled = 'disabled';
 							var readonly = '';
 							
@@ -234,7 +233,7 @@
 					},
 					data : JSON.stringify({
 						'mvId' : mvId
-					}), // 여기 데이터는 vo에 자동으로 담기는데
+					}), // 여기 데이터는 vo에 자동으로 담기는데, rvId가 노필요?
 					success : function(result) {
 						console.log("댓글삭제결과 : " + result);
 						if(result == 1){

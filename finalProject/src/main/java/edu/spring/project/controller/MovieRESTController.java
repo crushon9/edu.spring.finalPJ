@@ -1,7 +1,5 @@
 package edu.spring.project.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import edu.spring.project.service.MovieService;
 // /replies/숫자(PUT) : 해당 댓글 번호(replyId)의 내용을 수정(update)
 // /replies/숫자(DELETE) : 해당 댓글 번호(replyId)의 댓글을 삭제(delete)
 
-@RestController // http://localhost:8080/ex03/replies
+@RestController // http://localhost:8080/spring/replies
 @RequestMapping(value="/replies")
 
 public class MovieRESTController {

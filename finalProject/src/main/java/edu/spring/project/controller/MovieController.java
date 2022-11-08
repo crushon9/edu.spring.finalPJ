@@ -30,8 +30,8 @@ import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
 import edu.spring.project.util.MediaUtil;
 
-@Controller
-@RequestMapping(value = "/admin/movie") // url: /project/admin/movie
+@Controller // admin, user 둘다 접속 가능
+@RequestMapping(value = {"/admin/movie", "/user"}) // url: /project/admin/movie or /project/user/movie
 public class MovieController {
 	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
@@ -42,12 +42,13 @@ public class MovieController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
-	@GetMapping("/list")
-	public void listGET(Model model) {
-		logger.info("listGET() call");
-		List<MovieVO> list = movieService.read();
-		model.addAttribute("list", list);
-	}// end listGet()
+
+	@GetMapping("/main") // 메인페이지에 리스트 쇼하기
+	public void mainGET(Model model) {
+		logger.info("mainGET() call");
+	//	List<MovieVO> list = movieService.read();
+	//	model.addAttribute("list", list);
+	}// end mainGet()
 
 	@GetMapping("/register")
 	public void registerGET() {
@@ -66,9 +67,9 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	} // end registerPost()
 
-	@GetMapping("/display") 
-	public ResponseEntity<byte[]> display(String fileName) throws Exception {
-		logger.info("display() 호출 : fileName = " + fileName);
+	@GetMapping("/imgDisplay") // 파일 이미지 업로드용
+	public ResponseEntity<byte[]> imgDisplay(String fileName) throws Exception {
+		logger.info("imgDisplay() 호출 : fileName = " + fileName);
 
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
@@ -105,11 +106,11 @@ public class MovieController {
 		}
 	}//end saveUploadFile()
 
-	@GetMapping("/detail") // String mvId로 변경 EU
+	@GetMapping("/detail") 
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
-		MovieVO vo = movieService.read(mvId);
-		model.addAttribute("vo", vo);
+	//	MovieVO vo = movieService.read(mvId);
+	//	model.addAttribute("vo", vo);
 	}// end detail()
 
 	@GetMapping("/update")
