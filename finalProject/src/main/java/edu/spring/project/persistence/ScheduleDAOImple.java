@@ -95,7 +95,7 @@ public class ScheduleDAOImple implements ScheduleDAO {
 
 	@Override
 	public int delete(int scdId) {
-		logger.info("delete() 호출");
+		logger.info("delete() 호출 : scdId = " + scdId);
 		return sqlSession.delete(NAMESPACE + ".delete_by_scd_id", scdId);
 	}
 

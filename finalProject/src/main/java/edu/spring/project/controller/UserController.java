@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
+import edu.spring.project.service.ScheduleService;
 import edu.spring.project.util.MediaUtil;
 
 @Controller
@@ -37,6 +38,13 @@ public class UserController {
 
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private ScheduleService scheduleService;
+	
+	@GetMapping("/schedule")
+	public void scheduleGET() {
+		logger.info("scheduleGET() 호출");
+	}
 
 	// 업로드용 어노따숑
 	@Resource(name = "uploadPath")

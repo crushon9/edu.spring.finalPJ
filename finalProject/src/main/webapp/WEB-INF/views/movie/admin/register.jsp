@@ -68,17 +68,17 @@
 				}
 				
 				$.ajax({
-					type : 'post',
-					url : '/project/admin/movie/register/upload-ajax',
+					type : 'POST',
+					url : '/project/img/upload',
 					data : formData,
 					processData : false,
 					contentType : false,
 					success : function(data) {
 						var str = '';
 						str += '<div>'
-							+ '<img src="imgDisplay?fileName='
+							+ '<img src="/project/img/display?fileName='
 							+ data
-							+ '" width="200px"/>'
+							+ '" width="400px"/>'
 							+ '</div>';
 						$('.file-drop').html(str);
 						$('#mvImage').val(data);

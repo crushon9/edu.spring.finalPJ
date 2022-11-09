@@ -18,7 +18,7 @@ import edu.spring.project.domain.BranchVO;
 import edu.spring.project.service.BranchService;
 
 @Controller
-@RequestMapping(value = "/admin/branch") // url: /project/admin/branch
+@RequestMapping(value = "/branch") // url: /project/branch
 public class BranchController {
 	private static final Logger logger = LoggerFactory.getLogger(BranchController.class);
 
@@ -39,13 +39,13 @@ public class BranchController {
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/admin/register")
 	public void registerGET() {
 		logger.info("registerGET() call");
 	}// end registerGet()
 		// brcTheaterSeats는 배열 S 붙여라 알긋나?
 
-	@PostMapping("/register") // redirectAttributes ㄱㄱ
+	@PostMapping("/admin/register") // redirectAttributes ㄱㄱ
 	public void registerPOST(BranchVO vo) {
 		// RedirectAttributes
 		logger.info("registerPOST() call");

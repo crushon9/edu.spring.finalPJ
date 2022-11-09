@@ -1,7 +1,6 @@
 package edu.spring.project.controller;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +13,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import edu.spring.project.domain.MovieVO;
 import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.service.ScheduleService;
 
 @Controller
-@RequestMapping(value = "/admin/schedule") // url: /project/admin/schedule
+@RequestMapping(value = "/schedule") // url: /project/schedule
 public class ScheduleController {
 	private static final Logger logger = LoggerFactory.getLogger(ScheduleController.class);
 
 	@Autowired
 	private ScheduleService scheduleService;
 
-	@GetMapping("/register")
+	@GetMapping("/admin/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
 	}
 
-	@PostMapping("/register")
+	@PostMapping("/admin/register")
 	public ResponseEntity<Integer> registerREST(@RequestBody ScheduleVO vo) {
 		// @RequestBody : json 데이터를 자바객체로 변환
 		logger.info("registerREST() call : vo = " + vo.toString());
@@ -48,15 +45,7 @@ public class ScheduleController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/list/{brcId}/{scdDate}")
-	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("brcId") int brcId,
-			@PathVariable("scdDate") String scdDate) {
-		logger.info("listREST() 호출 : brcId = " + brcId + ", scdDate = " + scdDate);
-		List<ScheduleVO> list = scheduleService.readBD(brcId, scdDate);
-		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
-	}
-
-	@DeleteMapping("/delete/{scdId}")
+	@DeleteMapping("/admin/delete/{scdId}")
 	public ResponseEntity<Integer> deleteREST(@PathVariable("scdId") int scdId) {
 		logger.info("deleteREST() 호출 : scdId = " + scdId);
 		int result = 0;
@@ -68,4 +57,16 @@ public class ScheduleController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("/list/{brcId}/{scdDate}")
+	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("brcId") int brcId,
+			@PathVariable("scdDate") String scdDate) {
+		logger.info("listREST() 호출 : brcId = " + brcId + ", scdDate = " + scdDate);
+		List<ScheduleVO> list = scheduleService.readBD(brcId, scdDate);
+		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/list")
+	public void listGET() {
+		logger.info("listGET() 호출");
+	}
 }

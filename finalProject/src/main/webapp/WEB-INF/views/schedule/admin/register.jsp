@@ -28,7 +28,7 @@
 	    <input type="date" id="inputDate" name="inputDate" value="2022-11-01">
 	    
 	    <p>상영 영화</p>
-	    <div id="mvIdOutput"></div>
+	    <div id="mvListOutput"></div>
 	    
 	    <p>상영 가격</p>
 	    <input type="number" id="scdPrice" name="scdPrice" placeholder="기준가격 입력" required>
@@ -51,7 +51,7 @@
 	  // 선택 지역의 지점 가져오기
 	  function getBrcList() {
 		var brcArea = $('#brcArea').val();
-		var url = '/project/admin/branch/areaList/' + brcArea;
+		var url = '/project/branch/areaList/' + brcArea;
 		$.getJSON( // $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 			url,
 			function(data) {
@@ -71,7 +71,7 @@
 	  // 선택 날짜에 상영중인 영화 목록 가져오기
 	  function getMvList() {
 		var inputDate = $('#inputDate').val();
-		var url = '/project/admin/movie/list/' + inputDate;
+		var url = '/project/movie/list/' + inputDate;
 		$.getJSON(
 			url,
 			function(data) {
@@ -80,7 +80,7 @@
 					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '_' + this.mvRuningTime + '</option>';
 				});
 				mvList += '</select>'
-				$('#mvIdOutput').html(mvList);
+				$('#mvListOutput').html(mvList);
 			}
 		);
 	  } // end getMvList
@@ -89,7 +89,7 @@
       function getBrcVO() {
     	console.log('getBrcVO() 호출');
 		var brcId = $('#brcId').val();
-		var url = '/project/admin/branch/detail/' + brcId;
+		var url = '/project/branch/detail/' + brcId;
 		$.getJSON(
 			url,
 			function(data) {
@@ -139,7 +139,7 @@
 		console.log('getScheduleList() 호출');
 		var brcId = $('#brcId').val();
 		var scdDate = $('#inputDate').val();
-		var url = '/project/admin/schedule/list/' + brcId + '/' + scdDate
+		var url = '/project/schedule/list/' + brcId + '/' + scdDate
 		// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 		$.getJSON(			
 				url,
@@ -185,8 +185,9 @@
 				var startRow = $(this).nextAll('input[name=mvTitle]').val();
 				if (startRow == '') {
 					var overlapFlag = 0;
-					for (var i = 0; i < mvRuningTime; i++) {
-						var trIndex = Number(scdTime) + Number(i) + Number(1);
+					for (var i = 1; i < mvRuningTime; i++) {
+						var trIndex = Number(scdTime) + Number(i);
+						console.log(trIndex);
 						var loopRow = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=mvTitle]').val();
 						if (loopRow != '') {
 							alert('상영 스케줄이 중복 됩니다!');
@@ -209,7 +210,7 @@
 						
 						$.ajax({
 							type : 'POST',
-							url : '/project/admin/schedule/register',
+							url : '/project/schedule/admin/register',
 							headers : {
 								'Content-Type' : 'application/json',
 								'X-HTTP-Method-Override' : 'POST'
@@ -247,7 +248,7 @@
 			
 			$.ajax({
 				type : 'DELETE',
-				url : '/project/admin/schedule/delete/' + scdId,
+				url : '/project/schedule/admin/delete/' + scdId,
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'DELETE'
