@@ -74,4 +74,9 @@ public class ScheduleServiceImple implements ScheduleService {
 		return dao.selectMBD(mvId, brcId, scdDate);
 	}
 
+	@Override
+	public int delete(int scdId) {
+		logger.info("delete() »£√‚ : scdId = " + scdId);
+		return dao.delete(scdId);
+	}
 }

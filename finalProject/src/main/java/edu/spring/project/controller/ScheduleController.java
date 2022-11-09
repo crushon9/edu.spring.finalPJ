@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,18 @@ public class ScheduleController {
 		logger.info("listREST() 호출 : brcId = " + brcId + ", scdDate = " + scdDate);
 		List<ScheduleVO> list = scheduleService.readBD(brcId, scdDate);
 		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
-	}// end listREST()
+	}
+
+	@DeleteMapping("/delete/{scdId}")
+	public ResponseEntity<Integer> deleteREST(@PathVariable("scdId") int scdId) {
+		logger.info("deleteREST() 호출 : scdId = " + scdId);
+		int result = 0;
+		try {
+			result = scheduleService.delete(scdId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 
 }

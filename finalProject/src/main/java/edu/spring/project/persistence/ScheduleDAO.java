@@ -24,5 +24,7 @@ public interface ScheduleDAO {
 	List<ScheduleVO> selectBD(int brcId, String scdDate);
 
 	List<ScheduleVO> selectMBD(int mvId, int brcId, String scdDate);
+	
+	int delete(int scdId);
 
 }

@@ -72,21 +72,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId} and ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
 	</select>
 	
-	<!-- // TODO : 수정삭제 쿼리 다시짜기 -->
-	<update id="update">
-		update ${PJ_SCHEDULE}
-		set ${mvId} = #{mvId}, ${brcId} = #{brcId},
-		${scdDate} = #{scdDate}, ${scdTime} = #{scdTime}, 
-		${scdTheater} = #{scdTheater}, ${scdSeatTotal} = #{scdSeatTotal},
-		${scdSeatBookedCnt} = #{scdSeatBookedCnt}, ${scdPrice} = #{scdPrice}
-		where ${scdId} = #{scdId}
-	</update>
-	
 	<delete id="delete_by_scd_id">
 		delete from ${PJ_SCHEDULE}
 		where ${scdId} = #{scdId}
 	</delete>
-
+	
+	<!-- 영화, 스케줄 삭제가능한데  scdSeatBookedCnt 0이어야만 삭제가능-->
 	<delete id="delete_by_mv_id">
 		delete from ${PJ_SCHEDULE}
 		where ${mvId} = #{mvId}

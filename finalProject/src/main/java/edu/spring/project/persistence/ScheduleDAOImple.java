@@ -93,4 +93,10 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mbd", args);
 	}
 
+	@Override
+	public int delete(int scdId) {
+		logger.info("delete() »£√‚");
+		return sqlSession.delete(NAMESPACE + ".delete_by_scd_id", scdId);
+	}
+
 }
