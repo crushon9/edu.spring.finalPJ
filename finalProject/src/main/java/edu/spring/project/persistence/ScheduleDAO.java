@@ -7,12 +7,22 @@ public interface ScheduleDAO {
 
 	int insert(ScheduleVO vo);
 
-	List<ScheduleVO> select();
-
 	ScheduleVO select(int scdId);
 
-	int update(ScheduleVO vo);
+	List<ScheduleVO> selectAll();
 
-	int delete(int scdId);
+	List<ScheduleVO> selectM(int mvId);
+
+	List<ScheduleVO> selectB(int brcId);
+
+	List<ScheduleVO> selectD(String scdDate);
+
+	List<ScheduleVO> selectMB(int mvId, int brcId);
+
+	List<ScheduleVO> selectMD(int mvId, String scdDate);
+
+	List<ScheduleVO> selectBD(int brcId, String scdDate);
+
+	List<ScheduleVO> selectMBD(int mvId, int brcId, String scdDate);
 
 }

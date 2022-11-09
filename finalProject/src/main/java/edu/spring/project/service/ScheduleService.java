@@ -6,15 +6,25 @@ import edu.spring.project.domain.ScheduleVO;
 
 //CRUD (Create, Read, Update, Delete)
 public interface ScheduleService {
-
+	
 	int create(ScheduleVO vo);
-
-	List<ScheduleVO> read();
 
 	ScheduleVO read(int scdId);
 
-	int update(ScheduleVO vo);
+	List<ScheduleVO> readAll();
 
-	int delete(int scdId);
+	List<ScheduleVO> readM(int mvId);
+
+	List<ScheduleVO> readB(int brcId);
+
+	List<ScheduleVO> readD(String scdDate);
+
+	List<ScheduleVO> readMB(int mvId, int brcId);
+
+	List<ScheduleVO> readMD(int mvId, String scdDate);
+
+	List<ScheduleVO> readBD(int brcId, String scdDate);
+
+	List<ScheduleVO> readMBD(int mvId, int brcId, String scdDate);
 
 }

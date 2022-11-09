@@ -14,9 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_SCHEDULE} 
-		(${mvId}, ${brcId}, ${scdDate}, ${scdTime}, ${scdTheater}, ${scdSeatTotal}, ${scdPrice})
-		values (#{mvId}, #{brcId}, #{scdDate}, #{scdTime}, #{scdTheater}, #{scdSeatTotal}, #{scdPrice})
+		(${brcId}, ${mvId}, ${mvTitle}, ${mvRuningTime}, ${scdDate}, ${scdTime}, ${scdTheater}, ${scdSeatTotal}, ${scdPrice})
+		values (#{brcId}, #{mvId}, #{mvTitle}, #{mvRuningTime}, #{scdDate}, #{scdTime}, #{scdTheater}, #{scdSeatTotal}, #{scdPrice})
 	</insert>
+	
+	<select id="select_one_by_scd_id" resultType="ScheduleVO">		
+		select * from
+		${PJ_SCHEDULE}
+		where ${scdId} = #{scdId}
+	</select>
 	
 	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
 	<select id="select_list_all" resultType="ScheduleVO">		
@@ -66,19 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId} and ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
 	</select>
 	
-	<!-- 관리자 기간 조회용 -->
-	<select id="select_list_between_scd_date" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
-		where ${scdDate} between #{scdDateStart} and #{scdDateEnd}
-	</select>
-	
-	<!-- //TODO : 수정삭제 쿼리 다시짜기 -->
-	<delete id="delete_by_mv_id">
-		delete from ${PJ_SCHEDULE}
-		where ${mvId} = #{mvId}
-	</delete>
-	
+	<!-- // TODO : 수정삭제 쿼리 다시짜기 -->
 	<update id="update">
 		update ${PJ_SCHEDULE}
 		set ${mvId} = #{mvId}, ${brcId} = #{brcId},
@@ -93,4 +87,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${scdId} = #{scdId}
 	</delete>
 
+	<delete id="delete_by_mv_id">
+		delete from ${PJ_SCHEDULE}
+		where ${mvId} = #{mvId}
+	</delete>
+	
 </mapper>

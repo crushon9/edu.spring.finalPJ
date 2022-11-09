@@ -131,6 +131,32 @@
 		scheduleBtn();
 	  } // end setScheduleTable
 	  
+	  function getScheduleList() {
+		console.log('getScheduleList() 호출');
+		var brcId = $('#brcId').val();
+		var scdDate = $('#scdDate').val();
+		var url = '/project/admin/schedule/list/' + brcId + '/' + scdDate
+		// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
+		$.getJSON(			
+				url,
+			function(data) {// 서버에서 온 data가 저장되어있음
+				$(data).each(function() {
+					for (var i = 0; i < this.mvRuningTime; i++) {
+						var trIndex = Number(this.scdTime) + Number(i);
+						$('#scheduleTable').children('.' + trIndex).children('.' + this.scdTheater).children('input[name=scdContent]').val(this.mvTitle);
+						$('#scheduleTable').children('.' + trIndex).children('.' + this.scdTheater).children('input[name=scdContent]').css({"border-color":"red"});
+						$('#scheduleTable').children('.' + trIndex).children('.' + this.scdTheater).children('.scdBtnInsert').prop('disabled', true);
+						$('#scheduleTable').children('.' + trIndex).children('.' + this.scdTheater).children('.scdBtnInsert').css({"border-color":"lightgray"});
+						if (i == 0) {
+							$('#scheduleTable').children('.' + trIndex).children('.' + this.scdTheater).children('.scdBtnDelete').prop('disabled', false);
+							$('#scheduleTable').children('.' + trIndex).children('.' + this.scdTheater).children('.scdBtnDelete').css({"border-color":"red"});
+						}
+					}
+				}); // end data.each
+			}
+		); // end getJSON
+	  }
+	  
 	  // 버튼을 클릭하면 영화 등록 혹은 삭제
 	  function scheduleBtn() {
 		 var mvSelected = $('#mvId option:selected').text();
@@ -138,8 +164,7 @@
 		 var mvId = $('#mvId').val();
 		 var brcId = $('#brcId').val();
 		  
-		 // TODO : 하나를 등록하면, 디비에서 전체를 가져오면서 뿌려야함.
-	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnInsert', function() {
+	     $('#scheduleTable').on('click', 'table tbody tr td .scdBtnInsert', function() {
 			var scdDate = $('#scdDate').val();
 			var scdTheater = $(this).parents().attr('class');
 			var scdTime = $(this).parents().parents().attr('class');
@@ -169,7 +194,7 @@
 							break;
 						}
 					}
-					if (overlapFlag == 0) {
+					if (overlapFlag == 0) { // TODO : 데이터만 보내고 getScheduleList 호출할것
 						$(this).nextAll('input[name=scdContent]').val(mvSelected);
 						$(this).nextAll('input[name=scdContent]').css({"border-color":"red"});
 						$(this).prop('disabled', true);
@@ -222,6 +247,7 @@
 		});
 			
 	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnDelete', function() {
+	    	// TODO : 데이터만 삭제하고 getScheduleList 호출
 			
 			var scdTheater = $(this).parents().attr('class');
 			var scdTime = $(this).parents().parents().attr('class');

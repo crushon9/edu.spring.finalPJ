@@ -2,8 +2,10 @@ package edu.spring.project.domain;
 
 public class ScheduleVO {
 	private int scdId;
-	private int mvId;
 	private int brcId;
+	private int mvId;
+	private String mvTitle;
+	private int mvRuningTime;
 	private String scdDate;
 	private int scdTime;
 	private int scdTheater;
@@ -14,11 +16,13 @@ public class ScheduleVO {
 	public ScheduleVO() {
 	}
 
-	public ScheduleVO(int scdId, int mvId, int brcId, String scdDate, int scdTime, int scdTheater, int scdSeatTotal,
-			int scdSeatBookedCnt, int scdPrice) {
+	public ScheduleVO(int scdId, int brcId, int mvId, String mvTitle, int mvRuningTime, String scdDate, int scdTime,
+			int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
 		this.scdId = scdId;
-		this.mvId = mvId;
 		this.brcId = brcId;
+		this.mvId = mvId;
+		this.mvTitle = mvTitle;
+		this.mvRuningTime = mvRuningTime;
 		this.scdDate = scdDate;
 		this.scdTime = scdTime;
 		this.scdTheater = scdTheater;
@@ -35,6 +39,14 @@ public class ScheduleVO {
 		this.scdId = scdId;
 	}
 
+	public int getBrcId() {
+		return brcId;
+	}
+
+	public void setBrcId(int brcId) {
+		this.brcId = brcId;
+	}
+
 	public int getMvId() {
 		return mvId;
 	}
@@ -43,12 +55,20 @@ public class ScheduleVO {
 		this.mvId = mvId;
 	}
 
-	public int getBrcId() {
-		return brcId;
+	public String getMvTitle() {
+		return mvTitle;
 	}
 
-	public void setBrcId(int brcId) {
-		this.brcId = brcId;
+	public void setMvTitle(String mvTitle) {
+		this.mvTitle = mvTitle;
+	}
+
+	public int getMvRuningTime() {
+		return mvRuningTime;
+	}
+
+	public void setMvRuningTime(int mvRuningTime) {
+		this.mvRuningTime = mvRuningTime;
 	}
 
 	public String getScdDate() {
@@ -101,9 +121,10 @@ public class ScheduleVO {
 
 	@Override
 	public String toString() {
-		return "ScheduleVO [scdId=" + scdId + ", mvId=" + mvId + ", brcId=" + brcId + ", scdDate=" + scdDate
-				+ ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal=" + scdSeatTotal
-				+ ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + "]";
+		return "ScheduleVO [scdId=" + scdId + ", brcId=" + brcId + ", mvId=" + mvId + ", mvTitle=" + mvTitle
+				+ ", mvRuningTime=" + mvRuningTime + ", scdDate=" + scdDate + ", scdTime=" + scdTime + ", scdTheater="
+				+ scdTheater + ", scdSeatTotal=" + scdSeatTotal + ", scdSeatBookedCnt=" + scdSeatBookedCnt
+				+ ", scdPrice=" + scdPrice + "]";
 	}
 
 }
