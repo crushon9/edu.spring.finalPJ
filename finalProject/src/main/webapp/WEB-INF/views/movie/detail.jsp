@@ -25,25 +25,18 @@
 }
 .mvImage {
 	margin-right: 150px;
-	width: 200px;
-	height: 200px;
+	width: 300px;
+	height: 450px;
 }
 </style>
 
 <title>${vo.mvTitle}</title>
 
-
 </head>
 <body>
 	<h2>movie detail</h2>
 
-	<!--  movie controller에 detail로 접근하자. -->
-	<div class="detail"></div>
-	<img class="mvImage" src="display?fileName=/${vo.mvImage}" />
-
-	<input type="file" name="files" id="mvImage">
-	<br>
-	<br>
+	<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
 
 	<input type="hidden" id="mvId" value="${vo.mvId}">
 	<h2>${vo.mvTitle}</h2>
@@ -51,20 +44,16 @@
 	<p>영화 제목</p>
 	<input type="text" name="mvTitle" value=" ${vo.mvTitle}" readonly>
 	<p>영화 개봉일</p>
-	<input type="date" name="mvDateStarted" value="${vo.mvDateStrated}" readonly>
+	<input type="date" name="mvDateStarted" value="${vo.mvDateStarted}" readonly>
 	<p>영화 종료일</p>
 	<input type="date" name="mvDateEnded" value="${vo.mvDateEnded}" readonly>
 	<p>영화 장르</p>
 	<input type="text" name="mvGenre" value="${vo.mvGenre}" readonly>
 	<p>영화 소개</p>
 	<input type="text" name="mvInfo" value="${vo.mvInfo}" readonly>
-	
-	<!-- 안나와 -->
 	<p>영화 평점</p>
 	<input type="text" name="mvRating" value="${vo.mvRating}" readonly>
-	<p>영화 후기</p>
-	<input type="text" name="rvContent" value="${vo.rvContent}" readonly>
-
+	
 	<hr>
 
 	<!-- reply 입력 -->
@@ -76,9 +65,9 @@
 	</div>
 
 	<hr>
-	<!-- 출력할 div공간 마련 -->
+	<!-- 출력할 div공간 마련 reply처럼 끌고와-->
 	<div style="margin-left: 40px">
-		<div id="rvInfo"></div>
+		<div id="rvList"></div>
 	</div>
 	<div>
 		<br>
