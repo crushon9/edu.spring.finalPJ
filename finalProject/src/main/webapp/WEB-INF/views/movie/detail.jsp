@@ -35,25 +35,14 @@
 </head>
 <body>
 	<h2>movie detail</h2>
-
 	<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
-
-	<input type="hidden" id="mvId" value="${vo.mvId}">
 	<h2>${vo.mvTitle}</h2>
-
-	<p>영화 제목</p>
-	<input type="text" name="mvTitle" value=" ${vo.mvTitle}" readonly>
-	<p>영화 개봉일</p>
-	<input type="date" name="mvDateStarted" value="${vo.mvDateStarted}" readonly>
-	<p>영화 종료일</p>
-	<input type="date" name="mvDateEnded" value="${vo.mvDateEnded}" readonly>
-	<p>영화 장르</p>
-	<input type="text" name="mvGenre" value="${vo.mvGenre}" readonly>
-	<p>영화 소개</p>
-	<input type="text" name="mvInfo" value="${vo.mvInfo}" readonly>
-	<p>영화 평점</p>
-	<input type="text" name="mvRating" value="${vo.mvRating}" readonly>
-	
+	<p>영화 개봉일 : ${vo.mvDateStarted}</p>
+	<p>영화 종료일 : ${vo.mvDateEnded}</p>
+	<p>영화 장르 : ${vo.mvGenre}</p>
+	<p>영화 소개 </p>
+	<p>${vo.mvInfo}</p>
+	<p>영화 평점 : ${vo.mvRatingAvg}</p>
 	<hr>
 
 	<!-- reply 입력 -->
