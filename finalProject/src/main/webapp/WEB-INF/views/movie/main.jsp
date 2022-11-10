@@ -49,7 +49,7 @@
 							<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
 						</div>
 						<a href="/project/schedule/list"><input type="button" value="예매하기"></a>							
-						<a href="'/project/movie/detail/' + ${vo.mvId}"><input type="button" value="영화상세정보"></a>	
+						<a href="detail?mvId=${vo.mvId}"><input type="button" value="영화상세정보"></a>	
 					</li>				
 				</ol>											
 			</c:forEach>
