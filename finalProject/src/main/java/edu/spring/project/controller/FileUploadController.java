@@ -88,7 +88,6 @@ public class FileUploadController {
 			logger.info("vo = " + vo);
 		} // end registerPost()
 
-		
 	
 	@GetMapping("/display") // 파일 이미지 업로드용
 	public ResponseEntity<byte[]> display(String fileName) throws Exception {

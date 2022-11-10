@@ -6,8 +6,8 @@ import edu.spring.project.domain.MovieVO;
 public interface MovieDAO {
 
 	int insert(MovieVO vo);
-	// MovieVO vo 
-	List<MovieVO> select(MovieVO vo);
+
+	List<MovieVO> select();
 
 	MovieVO select(int mvId);
 

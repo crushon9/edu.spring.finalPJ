@@ -29,10 +29,10 @@ public class MovieController {
 	private String uploadPath;
 
 	@GetMapping("/main") // 메인페이지에 리스트 쇼하기
-	public void mainGET(Model model, MovieVO vo) {
+	public void mainGET(Model model) {
 		logger.info("mainGET() call");
-		List<MovieVO> list = movieService.read(vo);
-		model.addAttribute("list", list);
+		List<MovieVO> mvList = movieService.read();
+		model.addAttribute("mvList", mvList);
 	}// end mainGet()
 
 	@GetMapping("/admin/register")
@@ -54,14 +54,19 @@ public class MovieController {
 
 	
 	
-	
+	// mvId로 전체 내용
 	@GetMapping("/detail")
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
-		// MovieVO vo = movieService.read(mvId);
-		// model.addAttribute("vo", vo);
+		MovieVO vo = movieService.read(mvId);
+		model.addAttribute("vo", vo);
 	}// end detail()
 
+	
+	
+	
+	
+	
 	@GetMapping("/update")
 	public void updateGET(Model model, int mvId) {
 		logger.info("updateGET() call : mvId = " + mvId);

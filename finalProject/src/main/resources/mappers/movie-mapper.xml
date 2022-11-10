@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="select_list_all" resultType="MovieVO">		
 		select * from
-		#{PJ_MOVIE}
+		${PJ_MOVIE}
 		order by ${mvTicketSales}
 	</select>
 	

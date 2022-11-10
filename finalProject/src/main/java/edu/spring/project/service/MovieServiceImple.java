@@ -22,9 +22,9 @@ public class MovieServiceImple implements MovieService {
 	}
 
 	@Override
-	public List<MovieVO> read(MovieVO vo) {
+	public List<MovieVO> read() {
 		logger.info("read() »£√‚");
-		return dao.select(vo);
+		return dao.select();
 	}
 
 	@Override

@@ -11,16 +11,22 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <style type="text/css">
+
+.detail {
+	display : inline-flex;
+	width : 200px;
+	height : 200px;
+	border : 1px solid grey;
+}
 .mvContent {
 	padding: 100px 200px 100px 200px;
-	margin-right: 100px;
-	margin-left: 300px;
+	margin-right: 200px;
+	margin-left: 200px;
 }
-
 .mvImage {
-	margin-right: 80px;
-	width: 300px;
-	height: 300px;
+	margin-right: 150px;
+	width: 200px;
+	height: 200px;
 }
 </style>
 
@@ -31,6 +37,8 @@
 <body>
 	<h2>movie detail</h2>
 
+	<!--  movie controller에 detail로 접근하자. -->
+	<div class="detail"></div>
 	<img class="mvImage" src="display?fileName=/${vo.mvImage}" />
 
 	<input type="file" name="files" id="mvImage">
@@ -50,6 +58,8 @@
 	<input type="text" name="mvGenre" value="${vo.mvGenre}" readonly>
 	<p>영화 소개</p>
 	<input type="text" name="mvInfo" value="${vo.mvInfo}" readonly>
+	
+	<!-- 안나와 -->
 	<p>영화 평점</p>
 	<input type="text" name="mvRating" value="${vo.mvRating}" readonly>
 	<p>영화 후기</p>
@@ -73,11 +83,7 @@
 	<div>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		<br>		
 		<br>
 		<br>
 		<br>
@@ -219,8 +225,7 @@
 			
 			// 삭제 버튼을 클릭하면 선택된 댓글 삭제
 			$('#rvInfo').on('click', '.rvInfo .btn_delete', function(){
-				var mvId = $('#mvId').val();
-				var rvId = $('#rvId').val();
+	
 				var mvId = $(this).prevAll('.mvId').val();
 				var rvId = $(this).prevAll('.rvId').val();
 				console.log("삭제 replyId : " + replyId + " , boardId : " + boardId);

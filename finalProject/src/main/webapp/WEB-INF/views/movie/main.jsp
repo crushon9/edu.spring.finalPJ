@@ -8,70 +8,14 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style type="text/css">
-table, th, td {
-	border-style: solid;
-	border-width: 1px;
-	text-align: center;
-}
-ul {
-	list-style-type: none;
-}
-li {
-	display: inline-block;
-}
+
+
 .main{
 	padding : 100px 100px 200px 200px;
 	margin-right : 100px;
 	margin-left : 100px;	
 }
 
-.chart-rank{
-	display : inline-flex;
-	justify-content : right; 
-}
-
-.rank{
-	margin-right : 20px;
-	margin-left : 20px;
-	margin-bottom : 5px;
-	background-color : red;
-	width : 204px;
-	height : 20px;
-	text-align : center;
-}
-
-.imagespace{
-	margin-right : 20px;
-	margin-left : 20px;
-	width : 204px; 
-	height : 300px; 
-}
-
-.box-content{
-	margin-right : 20px;
-	margin-left : 20px;
-	width : 200px;
-	height : 65px;	
-}
-
-.movieTitle2{	
-	font-size : 12px;
-}
-
-.common{
-	margin-top : 1px;
-	margin-left : 20px;
-	line-height : 20px;
-	width:80px; 
-	height:20px; 
-	color:white; 
-	background-color:red; 
-	border:none;
-	border-radius: 5px; 
-	cursor:pointer;
-	text-align:center;
-	font-size: 14px;
-}
 
 </style>
 
@@ -90,31 +34,30 @@ li {
 		<br><br><br>
 		<h1>무비 차트</h1>
 		<hr style="width : 85%; margin-left : 0;"><br>
-			<div id="standardArea" style=" float: right; margin-right: 255px;">
+			<div id="chart" style=" float: right; margin-right: 255px;"><!--  접근 -->
 				<select id="viewStandard">
-					<option>예매순</option>
+					<option>기본</option>
 					<option>개봉일순</option>			
 				</select>
 				<input type="button" id="execute" onclick="execute()" value="go!">
 			</div>
 			<br><br>
 			<div>
-			<c:forEach var="vo" items="${movieList }" varStatus="status">
-				<ol class="chart-rank">						
+			<c:forEach var="vo" items="${mvList }" varStatus="status">
+				<ol class="mvItem">						
 					<li style="list-style-type: none">
 						<div class="rank">
 							<Strong style="color : white">NO.<c:out value="${status.count}"/></Strong>
 						</div>
 						<div>
-							<a href="movieDetail?movieNumber=${vo.movieNumber}"><img class="imagespace" src="display?fileName=/${vo.movieImage}"/></a>
+							<a href="movieDetail?mvId=${vo.mvId}"><img class="imagespace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
 						</div>
-						<div class="box-content">
-							<Strong class="movieTitle" >${vo.movieName }</Strong><br>
-							<Strong class="movieTitle2">예매수 : ${vo.movieCount }<br></Strong>
-							<Strong class="movieTitle2">개봉일 : ${vo.movieOpenDate }</Strong>
+						<div class="mvTitle">
+							<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
+					
 						</div>
 						<div >
-							<a href="../movieSchedule/reserve1"><input type="button" value="예매하기" class="common"></a>							
+							<a href="/project/schedule/list"><input type="button" value="예매하기"></a>							
 						</div>
 					</li>				
 				</ol>											
