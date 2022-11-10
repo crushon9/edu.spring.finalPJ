@@ -31,11 +31,11 @@
 		
 		<hr style="width : 85%; margin-left : 0;"><br>
 			<div id="chart" style=" float: right; margin-right: 255px;"><!--  접근 -->
-				<select id="viewStandard">
-					<option>기본</option>
+				<select id="show">
+					<option>내림차순</option><!-- 조건절로 바꾸기 -->
 					<option>개봉일순</option>			
 				</select>
-				<input type="button" id="execute" onclick="execute()" value="go!">
+				<input type="button" id="choice" onclick="choice()" value="go!">
 			</div>
 			<br><br>
 			<div>
@@ -58,13 +58,13 @@
 	
 	<script type="text/javascript">
 			
-			var st = document.getElementById('viewStandard');
+			var pick = document.getElementById('show');
 	
-		function execute() {
-			var standard = st.value;
+		function choice() {
+			var usual = pick.value;
 			
-			location.href = "chart?movieClosing=Y&standard=" + standard;
-			console.log("a");
+			location.href = "chart?=usual=" + usual;
+			console.log("pick");
 		}
 	
 	</script>

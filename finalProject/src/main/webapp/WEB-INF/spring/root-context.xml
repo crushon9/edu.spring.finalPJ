@@ -25,7 +25,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 	<!-- DataSource :Oracle DBCP(DataSource Connection Pool) 빈(bean) 객체	-->
  	<bean id="ds" class="oracle.jdbc.pool.OracleDataSource">
 		<property name="dataSourceName" value="ds"/>
-		<property name="URL" value="jdbc:oracle:thin:@172.16.7.50:1521:xe"/>
+		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe"/>
 		<property name="user" value="scott"/>
 		<property name="password" value="tiger"/>
 	</bean>
@@ -42,7 +42,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"	destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
-
 
 	<!-- **Transaction Manager
 	Spring에서 제공하는 DB Transaction Manager를 bean으로 등록 -->
