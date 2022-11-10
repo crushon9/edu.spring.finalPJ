@@ -10,15 +10,21 @@ import javax.annotation.Resource;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import edu.spring.project.domain.MovieVO;
+import edu.spring.project.service.MovieService;
 import edu.spring.project.util.FileUploadUtil;
 import edu.spring.project.util.MediaUtil;
 
@@ -31,6 +37,9 @@ public class FileUploadController {
 	// servlet-context.xml 파일 설정된 문자열 리소스 주입
 	@Resource(name = "uploadPath")
 	private String uploadPath;
+	
+	@Autowired
+	private MovieService movieService;	
 
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadREST(MultipartFile[] files) throws IOException {
@@ -42,6 +51,44 @@ public class FileUploadController {
 		result = FileUploadUtil.saveUploadedFile(uploadPath, files[0].getOriginalFilename(), files[0].getBytes());
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}// end uploadAjaxPost()
+	
+	// 추가
+	private String saveUploadFile(MultipartFile file) {
+		// UUID : 업로드하는 파일 이름이 중복되지 않도록
+		UUID uuid = UUID.randomUUID();
+		String savedName = uuid + "_" + file.getOriginalFilename();
+		File target = new File(uploadPath, savedName);
+
+		try {
+			FileCopyUtils.copy(file.getBytes(), target);
+			logger.info("파일 저장 성공");
+			return savedName;
+		} catch (IOException e) {
+			logger.info("파일 저장 실패");
+			e.printStackTrace();
+			return null;
+		}
+	}//end saveUploadFile()
+	
+	// 추후 정리...
+		@PostMapping("/register") // 이게필요없다고???
+		public void registerPOST(@RequestParam("files") MultipartFile file, Model model, MovieVO vo) {
+			// RedirectAttributes
+			// - 재경로 위치에 속성값을 전송하는 객체
+			logger.info("registerPOST() 호출");
+			logger.info("파일 이름 : " + file.getOriginalFilename());
+			logger.info("파일 크기 : " + file.getSize());
+			logger.info(vo.toString());
+			String savedFile = saveUploadFile(file);
+			logger.info(savedFile);
+
+			vo.setMvImage(savedFile);
+
+			int result = movieService.create(vo);
+			logger.info("vo = " + vo);
+		} // end registerPost()
+
+		
 	
 	@GetMapping("/display") // 파일 이미지 업로드용
 	public ResponseEntity<byte[]> display(String fileName) throws Exception {

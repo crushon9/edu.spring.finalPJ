@@ -7,8 +7,8 @@ import edu.spring.project.domain.MovieVO;
 public interface MovieService {
 
 	int create(MovieVO vo);
-
-	List<MovieVO> read();
+	// MovieVO vo 넣고 콜 가능?
+	List<MovieVO> read(MovieVO vo);
 
 	MovieVO read(int mvId);
 

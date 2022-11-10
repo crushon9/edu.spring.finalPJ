@@ -24,11 +24,11 @@ public class MovieDAOImple implements MovieDAO{
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
-
+	//MovieVO 변경
 	@Override
-	public List<MovieVO> select() {
+	public List<MovieVO> select(MovieVO vo) {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_list_all");
+		return sqlSession.selectList(NAMESPACE + ".select_list_all", vo);
 	}
 
 	@Override

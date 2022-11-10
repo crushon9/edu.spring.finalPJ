@@ -105,7 +105,7 @@
 				// $.ajax로 후기, 평점 등록
 				$.ajax({
 					type : 'POST',
-					url : '../project/rvInfo', // rvInfo.jsp 만들어야하나
+					url : '../project/rvInfo', // controller 경로 생성
 					headers : { // 정보를 전송할때는 (GET방식을 빼고는) headers 넣어야함
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'

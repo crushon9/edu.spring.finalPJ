@@ -1,30 +1,20 @@
 package edu.spring.project.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.Resource;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
-import edu.spring.project.util.MediaUtil;
 
 @Controller
 @RequestMapping(value = "/movie") // url: /project/movie
@@ -39,10 +29,10 @@ public class MovieController {
 	private String uploadPath;
 
 	@GetMapping("/main") // 메인페이지에 리스트 쇼하기
-	public void mainGET(Model model) {
+	public void mainGET(Model model, MovieVO vo) {
 		logger.info("mainGET() call");
-		// List<MovieVO> list = movieService.read();
-		// model.addAttribute("list", list);
+		List<MovieVO> list = movieService.read(vo);
+		model.addAttribute("list", list);
 	}// end mainGet()
 
 	@GetMapping("/admin/register")
@@ -62,6 +52,9 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	} // end registerPost()
 
+	
+	
+	
 	@GetMapping("/detail")
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
