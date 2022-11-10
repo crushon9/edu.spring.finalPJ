@@ -57,7 +57,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_list_by_md" resultType="ScheduleVO">
 		select * from
 		${PJ_SCHEDULE}
-		where ${mvId} = #{mvId} and ${scdDate} = #{scdDate}
+		where 
+		
+		${mvId} = #{mvId} 
+		<if test="scdDate != null">
+		and ${scdDate} = #{scdDate}
+		</if>
+		<if test="scdDate != null">
+		and ${scdDate} = #{scdDate}
+		</if>
+		<if test="scdDate != null">
+		and ${scdDate} = #{scdDate}
+		</if>
 	</select>
 	
 	<select id="select_list_by_bd" resultType="ScheduleVO">

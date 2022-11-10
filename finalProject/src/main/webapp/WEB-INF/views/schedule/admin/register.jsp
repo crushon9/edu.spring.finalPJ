@@ -139,7 +139,7 @@
 		console.log('getScheduleList() 호출');
 		var brcId = $('#brcId').val();
 		var scdDate = $('#inputDate').val();
-		var url = '/project/schedule/list/' + brcId + '/' + scdDate
+		var url = '/project/schedule/list/' + brcId + '/' + scdDate;
 		// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 		$.getJSON(			
 				url,
