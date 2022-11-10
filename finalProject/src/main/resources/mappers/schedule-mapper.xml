@@ -25,62 +25,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
-	<select id="select_list_all" resultType="ScheduleVO">		
+	<select id="select_list_if" resultType="ScheduleVO">
 		select * from
 		${PJ_SCHEDULE}
-	</select>
-	
-	<select id="select_list_by_m" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		<if test="mvId == 0 and brcId == 0 and scdDate == null">
+		</if>
+		<if test="mvId != 0 and brcId == 0 and scdDate == null">
 		where ${mvId} = #{mvId}
-	</select>
-	
-	<select id="select_list_by_b" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		</if>
+		<if test="mvId == 0 and brcId != 0 and scdDate == null">
 		where ${brcId} = #{brcId}
-	</select>
-	
-	<select id="select_list_by_d" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		</if>
+		<if test="mvId == 0 and brcId == 0 and scdDate != null">
 		where ${scdDate} = #{scdDate}
-	</select>
-	
-	<select id="select_list_by_mb" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		</if>
+		<if test="mvId != 0 and brcId != 0 and scdDate == null">
 		where ${mvId} = #{mvId} and ${brcId} = #{brcId}
-	</select>
-	
-	<select id="select_list_by_md" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
-		where 
-		
-		${mvId} = #{mvId} 
-		<if test="scdDate != null">
-		and ${scdDate} = #{scdDate}
 		</if>
-		<if test="scdDate != null">
-		and ${scdDate} = #{scdDate}
+		<if test="mvId != 0 and brcId == 0 and scdDate != null">
+		where ${mvId} = #{mvId} and ${scdDate} = #{scdDate}
 		</if>
-		<if test="scdDate != null">
-		and ${scdDate} = #{scdDate}
-		</if>
-	</select>
-	
-	<select id="select_list_by_bd" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		<if test="mvId == 0 and brcId != 0 and scdDate != null">
 		where ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
-	</select>
-	
-	<select id="select_list_by_mbd" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		</if>
+		<if test="mvId != 0 and brcId != 0 and scdDate != null">
 		where ${mvId} = #{mvId} and ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
+		</if>
 	</select>
 	
 	<delete id="delete_by_scd_id">

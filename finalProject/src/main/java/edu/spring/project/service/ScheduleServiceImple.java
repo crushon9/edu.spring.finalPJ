@@ -27,51 +27,9 @@ public class ScheduleServiceImple implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleVO> readAll() {
-		logger.info("readAll() 호출");
-		return dao.selectAll();
-	}
-
-	@Override
-	public List<ScheduleVO> readM(int mvId) {
-		logger.info("readM() 호출 : mvId = " + mvId);
-		return dao.selectM(mvId);
-	}
-
-	@Override
-	public List<ScheduleVO> readB(int brcId) {
-		logger.info("readB() 호출 : brcId = " + brcId);
-		return dao.selectB(brcId);
-	}
-
-	@Override
-	public List<ScheduleVO> readD(String scdDate) {
-		logger.info("readD() 호출 : scdDate = " + scdDate);
-		return dao.selectD(scdDate);
-	}
-
-	@Override
-	public List<ScheduleVO> readMB(int mvId, int brcId) {
-		logger.info("readMB() 호출 : mvId = " + mvId + ", brcId = " + brcId);
-		return dao.selectMB(mvId, brcId);
-	}
-
-	@Override
-	public List<ScheduleVO> readMD(int mvId, String scdDate) {
-		logger.info("readMD() 호출 : mvId = " + mvId + ", scdDate = " + scdDate);
-		return dao.selectMD(mvId, scdDate);
-	}
-
-	@Override
-	public List<ScheduleVO> readBD(int brcId, String scdDate) {
-		logger.info("readBD() 호출 : brcId = " + brcId + ", scdDate = " + scdDate);
-		return dao.selectBD(brcId, scdDate);
-	}
-
-	@Override
-	public List<ScheduleVO> readMBD(int mvId, int brcId, String scdDate) {
+	public List<ScheduleVO> read(int mvId, int brcId, String scdDate) {
 		logger.info("readMBD() 호출 : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
-		return dao.selectMBD(mvId, brcId, scdDate);
+		return dao.select(mvId, brcId, scdDate);
 	}
 
 	@Override

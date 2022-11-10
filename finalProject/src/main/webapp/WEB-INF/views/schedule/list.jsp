@@ -41,6 +41,7 @@
 			$('#dateSelected').change(function() {
 				getMvList();
 			});
+			getScheduleList();
 	   });
 	  
 	  // 선택 지역의 지점 가져오기
@@ -54,7 +55,7 @@
 				$(data).each(function() {
 					brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
 				});
-				brcList += '</select>'
+				brcList += '</select>';
 				$('#brcListOutput').html(brcList);
 				getScheduleList();
 			}
@@ -72,7 +73,7 @@
 				$(data).each(function() {
 					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '</option>';
 				});
-				mvList += '</select>'
+				mvList += '</select>';
 				$('#mvListOutput').html(mvList);
 				getScheduleList();
 			}
@@ -85,154 +86,30 @@
 			  var mvId = $("#mvId").val();
 	 		  var brcId = $("#brcId").val();
 			  var dateSelected = $("#dateSelected").val();
-			  // 3가지 옵션_flag
-			  var mvIdFlag = 0;
-			  var brcIdFlag = 0;
-			  var dateSelectedFlag = 0;
-			  if (mvId != null) {
-				mvIdFlag = 100;
+			  if (mvId == null) {
+				  mvId = 0;
 			  }
-			  if (brcId != null) {
-			  	brcIdFlag = 10;
+			  if (brcId == null) {
+				  brcId = 0;
 			  }
-			  if (dateSelected != null) {
-				dateSelectedFlag = 1;
-			  }
-			  var caseResult = mvIdFlag + brcIdFlag + dateSelectedFlag;
 			  console.log('mvId : ' + mvId);
 			  console.log('brcId : ' + brcId);
 			  console.log('dateSelected : ' + dateSelected);
-			  console.log('caseResult : ' + caseResult);
-		
-			  switch (caseResult) {
-				  case 000:
-					  console.log('case000 : ___');
-					  var url = '/project/schedule/list?all';
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;
-				
-				  case 100:
-					  console.log('case100 : M__');
-					  var url = '/project/schedule/list?mvId=' + mvId;
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;		
-						
-				  case 010:
-					  console.log('case010 : _B_');
-					  var url = '/project/schedule/list?brcId=' + brcId;
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;
-			
-				  case 001:
-					  console.log('case001 : __D');
-					  var url = '/project/schedule/list?scdDate=' + dateSelected;
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;
-						
-				  case 110:
-					  console.log('case110 : MB_');
-					  var url = '/project/schedule/list?mvId=' + mvId + '&brcId=' + brcId;
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;
-						
-				  case 101:
-					  console.log('case101 : M_D');
-					  var url = '/project/schedule/list?mvId=' + mvId + '&scdDate=' + dateSelected;
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;		
-						
-				  case 011:
-					  console.log('case011 : _BD');
-					  var url = '/project/schedule/list?brcId=' + brcId + '&scdDate=' + dateSelected;
-					  console.log(url);
-						$.getJSON(			
-								url,
-							function(data) {
-								$(data).each(function() {
-									
-									// 어쩌지
-								});
-							}
-						); // end getJSON
-					  break;
-					  
-				  case 111:
-					  console.log('case111 : MBD');
-						$.ajax({
-							type : 'GET',
-							url : '/project/schedule/list/MBD',
-							headers : {
-								'Content-Type' : 'application/json',
-								'X-HTTP-Method-Override' : 'GET'
-							},
-							data : JSON.stringify({
-								'mvId' : mvId,
-								'brcId' : brcId,
-								'scdDate' : dateSelected,
-							}),
-							success : function(result) {
-								console.log("성공");
-							}	
+			  var url = '/project/schedule/list/' + mvId + '&' + brcId + '&' + dateSelected;
+			  console.log(url);
+			  var scheduleList = '<ol>';
+				$.getJSON(			
+						url,
+					function(data) {
+						$(data).each(function() {
+							scheduleList += '<li>';
+							scheduleList += this.scdId + this.brcId + this.mvId + this.mvTitle + this.mvRuningTime + this.scdDate + this.scdTime + this.scdTheater + this.scdSeatTotal + this.scdSeatBookedCnt + this.scdPrice; 
+							scheduleList += '</li>';
 						});
-						
-					  break;
-				  
-				  default:
-			  } 
+						scheduleList += '</ol>';
+						$('#scheduleListOutput').html(scheduleList);
+					}
+				); // end getJSON
 	 	  });
 	  }
   
