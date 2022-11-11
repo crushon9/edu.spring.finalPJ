@@ -40,7 +40,7 @@
 	<p>영화 개봉일 : ${vo.mvDateStarted}</p>
 	<p>영화 종료일 : ${vo.mvDateEnded}</p>
 	<p>영화 장르 : ${vo.mvGenre}</p>
-	<p>영화 소개 </p>
+	<p>영화 소개 : </p>
 	<p>${vo.mvInfo}</p>
 	<p>영화 평점 : ${vo.mvRatingAvg}</p>
 	<hr>

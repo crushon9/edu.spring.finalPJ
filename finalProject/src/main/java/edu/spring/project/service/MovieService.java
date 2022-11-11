@@ -8,8 +8,12 @@ public interface MovieService {
 
 	int create(MovieVO vo);
 	
-	List<MovieVO> read();
+	// 예매율 기준 정렬
+	List<MovieVO> readTs();
 	
+	// 평점기준 정렬
+	
+	List<MovieVO> readRa();
 	MovieVO read(int mvId);
 
 	int update(MovieVO vo);

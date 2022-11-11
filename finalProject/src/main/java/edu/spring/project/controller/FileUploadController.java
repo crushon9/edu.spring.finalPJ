@@ -39,7 +39,7 @@ public class FileUploadController {
 	private String uploadPath;
 	
 	@Autowired
-	private MovieService movieService;	
+	private MovieService movieService;
 
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadREST(MultipartFile[] files) throws IOException {

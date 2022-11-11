@@ -28,18 +28,25 @@ public class MovieController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
-	@GetMapping("/main") // 메인페이지에 리스트 쇼하기
-	public void mainGET(Model model) {
+	@GetMapping("/main") // 메인페이지에 리스트 예매율 기준 쇼하기
+	public void mainGET(Model model, int orderChoice) {
 		logger.info("mainGET() call");
-		List<MovieVO> mvList = movieService.read();
-		model.addAttribute("mvList", mvList);
+		if (orderChoice == 1) {
+			List<MovieVO> mvList = movieService.readTs();
+			model.addAttribute("mvList", mvList);
+		} else if (orderChoice == 2) {
+			List<MovieVO> mvList = movieService.readRa();
+			model.addAttribute("mvList", mvList);
+		}
 	}// end mainGet()
-
+	
+	// 해당 주소jsp를 호출 기능
 	@GetMapping("/admin/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
 	}// end registerGet()
 
+	// 데이터 전달
 	@PostMapping("/admin/register")
 	public void registerPOST(Model model, MovieVO vo) {
 		// RedirectAttributes
@@ -52,8 +59,6 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	} // end registerPost()
 
-	
-	
 	// mvId로 전체 내용
 	@GetMapping("/detail")
 	public void detailGET(Model model, int mvId) {
@@ -62,11 +67,6 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	}// end detail()
 
-	
-	
-	
-	
-	
 	@GetMapping("/update")
 	public void updateGET(Model model, int mvId) {
 		logger.info("updateGET() call : mvId = " + mvId);

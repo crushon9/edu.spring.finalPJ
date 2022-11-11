@@ -20,13 +20,18 @@ public class MovieServiceImple implements MovieService {
 		logger.info("create() 호출");
 		return dao.insert(vo);
 	}
-
+	// 예매율 기준 정렬
 	@Override
-	public List<MovieVO> read() {
-		logger.info("read() 호출");
-		return dao.select();
+	public List<MovieVO> readTs() {
+		logger.info("readTs() 호출");
+		return dao.selectTs();
 	}
-
+	// 평점기준 정렬
+	@Override
+	public List<MovieVO> readRa() {
+		logger.info("readRa() 호출");
+		return dao.selectRa();
+	}
 	@Override
 	public MovieVO read(int mvId) {
 		logger.info("read() 호출 : mvId = " + mvId);

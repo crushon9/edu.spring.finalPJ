@@ -25,12 +25,20 @@ public class MovieDAOImple implements MovieDAO{
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 	
+	// 예매율 기준 정렬
 	@Override
-	public List<MovieVO> select() {
+	public List<MovieVO> selectTs() {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_list_all");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ts");
 	}
-
+	
+	// 평점기준 정렬
+	@Override
+	public List<MovieVO> selectRa() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ra");
+	}
+		
 	@Override
 	public MovieVO select(int mvId) {
 		logger.info("select() 호출 : mvId = " + mvId);

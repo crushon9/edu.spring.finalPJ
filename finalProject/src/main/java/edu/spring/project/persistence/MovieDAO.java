@@ -7,8 +7,12 @@ public interface MovieDAO {
 
 	int insert(MovieVO vo);
 
-	List<MovieVO> select();
-
+	// 예매율 기준 정렬
+	List<MovieVO> selectTs();
+	
+	// 평점기준 정렬
+	List<MovieVO> selectRa();
+	
 	MovieVO select(int mvId);
 
 	int update(MovieVO vo);

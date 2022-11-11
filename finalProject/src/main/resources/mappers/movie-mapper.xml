@@ -10,11 +10,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{mvTitle}, #{mvImage}, #{mvDateStarted}, #{mvDateEnded}, #{mvRuningTime}, #{mvGenre}, #{mvInfo})
 	</insert>
 	
-	<select id="select_list_all" resultType="MovieVO">		
+	<!--  예매율 기준 정렬 -->
+	<select id="select_list_by_mv_ts" resultType="MovieVO">		
 		select * from
 		${PJ_MOVIE}
 		order by ${mvTicketSales}
 	</select>
+	
+	<!-- 평점기준 정렬 -->
+	<select id="select_list_by_mv_ra" resultType="MovieVO">		
+		select * from
+		${PJ_MOVIE}
+		order by ${mvRatingAvg}
+	</select>
+	
 	
 	<select id="select_one_by_mv_id" resultType="MovieVO">
 		select * from

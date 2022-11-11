@@ -9,9 +9,9 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style type="text/css">
 .main {
-	padding: 100px 100px 200px 200px;
-	margin-right: 100px;
-	margin-left: 100px;
+	padding: 150px 150px 200px 200px;
+	margin-right: 50px;
+	margin-left: 50px;
 }
 
 .imageSpace {
@@ -27,15 +27,18 @@
 <body>
 	<h1>movie chart</h1>
 
-	<div class="main">
-		
+	<div class="main">		
 		<hr style="width : 85%; margin-left : 0;"><br>
-			<div id="chart" style=" float: right; margin-right: 255px;"><!--  접근 -->
-				<select id="show">
-					<option>내림차순</option><!-- 조건절로 바꾸기 -->
-					<option>개봉일순</option>			
+			<div id="chart" style=" float: right; margin-right: 255px;"><!-- 접근 -->
+				<select id="orderChoice">
+					<option value="1">예매율순</option><!-- 조건절로 바꾸기 -->
+					<option value="2">평점순</option>			
 				</select>
-				<input type="button" id="choice" onclick="choice()" value="go!">
+				<a id="orderUrl" href="">
+				<input type="button" value="go!">
+				</a>
+				
+				<!--  go url로 보내기 -->
 			</div>
 			<br><br>
 			<div>
@@ -48,27 +51,25 @@
 						<div class="mvTitle">
 							<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
 						</div>
-						<a href="/project/schedule/list"><input type="button" value="예매하기"></a>							
-						<a href="detail?mvId=${vo.mvId}"><input type="button" value="영화상세정보"></a>	
+						<a href="/project/schedule/list"><input id="mvTicket" type="button" value="예매하기"></a>							
+						<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="영화상세정보"></a>	
 					</li>				
 				</ol>											
 			</c:forEach>
 		</div>
 	</div>
 	
-	<script type="text/javascript">
-			
-			var pick = document.getElementById('show');
+	<script type="text/javascript">			
+		$(document).ready(function() {
+			$('#orderChoice').click(function() {
+				var orderChoice = $('#orderChoice').val();
+				var orderUrl = 'main?orderChoice=' + orderChoice;
+				console.log(orderUrl);
+				$('#orderUrl').prop("href", orderUrl);
+			});
+		});
 	
-		function choice() {
-			var usual = pick.value;
-			
-			location.href = "chart?=usual=" + usual;
-			console.log("pick");
-		}
-	
-	</script>
-	
+	</script>	
 	
 </body>
 </html>
