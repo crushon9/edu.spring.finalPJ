@@ -28,7 +28,7 @@ public class ScheduleServiceImple implements ScheduleService {
 
 	@Override
 	public List<ScheduleVO> read(int mvId, int brcId, String scdDate) {
-		logger.info("readMBD() 호출 : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
+		logger.info("read() 호출 : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		return dao.select(mvId, brcId, scdDate);
 	}
 

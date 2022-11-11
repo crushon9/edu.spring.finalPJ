@@ -25,7 +25,7 @@
 		<div id="brcListOutput"></div>
 	  	
 	    <p>상영 날짜</p>
-	    <input type="date" id="inputDate" name="inputDate" value="2022-11-01">
+	    <input type="date" id="inputDate" name="inputDate">
 	    
 	    <p>상영 영화</p>
 	    <div id="mvListOutput"></div>
@@ -38,6 +38,7 @@
 	  
 	<script type="text/javascript">
 	  $(document).ready(function() {
+			$('#inputDate').val(new Date().toISOString().substring(0, 10));
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
