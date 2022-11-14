@@ -26,12 +26,6 @@ public class MypageController {
 	@Autowired
 	private MypageService mypageService;
 	
-	@Autowired
-	private MemberService memberService;
-	
-//	@Autowired
-//	private TicketService ticketService;
-	
 	@GetMapping("/list")
 	public void listGET() {
 		logger.info("listGET() call");

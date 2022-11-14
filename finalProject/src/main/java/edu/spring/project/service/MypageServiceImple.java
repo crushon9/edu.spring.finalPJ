@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 
 import edu.spring.project.domain.MemberVO;
 import edu.spring.project.persistence.MemberDAO;
-import edu.spring.project.persistence.MypageDAO;
-import edu.spring.project.persistence.ScheduleDAO;
 
 @Service
-public class MypageServiceImple implements MemberService {
+public class MypageServiceImple implements MypageService {
 	private static final Logger logger = LoggerFactory.getLogger(MypageServiceImple.class);
 	@Autowired
 	private MemberDAO memberDao;
