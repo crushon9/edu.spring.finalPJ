@@ -28,7 +28,7 @@ import edu.spring.project.service.MemberService;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	// 등록, 검색, 수정, 삭제, 로그인, 로그아웃
+	// 등록, 로그인, 로그아웃
 	@Autowired
 	private MemberService memberService;
 

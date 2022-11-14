@@ -16,10 +16,10 @@ import edu.spring.project.domain.MemberVO;
 import edu.spring.project.service.MemberService;
 import edu.spring.project.service.MypageService;
 
-// 개인정보변경, 탈퇴, 예매내역 조회, 아이디비번찾기, 회원정보 보기, 쓴후기 보기, 예매하기
-
+// 예매내역 조회, 작성후기보기, 아이디비번찾기(api관련 추후)
+// 멤버 조회, 수정, 삭제
 @Controller
-@RequestMapping(value = "/member/mypage") // url: /project/member/mypage
+@RequestMapping(value = "/mypage") // url: /project/mypage
 public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 

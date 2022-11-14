@@ -16,15 +16,12 @@ public class MypageServiceImple implements MemberService {
 	private static final Logger logger = LoggerFactory.getLogger(MypageServiceImple.class);
 	@Autowired
 	private MemberDAO memberDao;
-
-	@Autowired
-	private MypageDAO mypageDao;
-	
-	@Autowired
-	private ScheduleDAO scheduleDao;
 	
 //	@Autowired
 //	private TicketDAO ticketDao;
+	
+//	@Autowired
+//	private ReviewDAO reviewDao;
 	
 	@Override
 	public int create(MemberVO vo) {
