@@ -40,8 +40,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="scdId" value="SCD_ID" />
 		<property name="brcId" value="BRC_ID" />
 		<property name="mvId" value="MV_ID" />
-		<property name="mvTitle" value="MV_TITLE" />
-		<property name="mvRuningTime" value="MV_RUNING_TIME" />
 		<property name="scdDate" value="SCD_DATE" />
 		<property name="scdTime" value="SCD_TIME" />
 		<property name="scdTheater" value="SCD_THEATER" />

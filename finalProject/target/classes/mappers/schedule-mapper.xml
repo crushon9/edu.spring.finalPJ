@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_SCHEDULE}
-		(${brcId}, ${mvId},	${mvTitle}, ${mvRuningTime}, ${scdDate}, ${scdTime}, ${scdTheater},	${scdSeatTotal}, ${scdPrice})
-		values (#{brcId}, #{mvId}, #{mvTitle}, #{mvRuningTime}, #{scdDate}, #{scdTime}, #{scdTheater},	#{scdSeatTotal}, #{scdPrice})
+		(${brcId}, ${mvId}, ${scdDate}, ${scdTime}, ${scdTheater}, ${scdSeatTotal}, ${scdPrice})
+		values (#{brcId}, #{mvId}, #{scdDate}, #{scdTime}, #{scdTheater}, #{scdSeatTotal}, #{scdPrice})
 	</insert>
 
 	<select id="select_one_by_scd_id" resultType="ScheduleVO">
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
 	<select id="select_list_if" resultType="ScheduleVO">
-		select scd.*, mv.MV_TITLE, mv.MV_RUNING
+		select scd.*, mv.${mvTitle}, mv.${mvRuningTime}
 		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
 		<if test="mvId == 0 and brcId == 0 and scdDate == 'none'">
 		</if>
