@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
 	<select id="select_list_if" resultType="ScheduleVO">
-		select * from
-		${PJ_SCHEDULE}
+		select scd.*, mv.MV_TITLE, mv.MV_RUNING
+		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
 		<if test="mvId == 0 and brcId == 0 and scdDate == 'none'">
 		</if>
 		<if test="mvId != 0 and brcId == 0 and scdDate == 'none'">

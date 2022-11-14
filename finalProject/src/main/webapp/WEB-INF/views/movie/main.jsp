@@ -31,8 +31,8 @@
 		<hr style="width : 85%; margin-left : 0;"><br>
 			<div id="chart" style=" float: right; margin-right: 255px;"><!-- 접근 -->
 				<select id="orderChoice">
-					<option value="1">예매율순</option><!-- 조건절로 바꾸기 -->
-					<option value="2">평점순</option>			
+					<option value="ts">예매율순</option><!-- 조건절로 바꾸기 -->
+					<option value="ra">평점순</option>			
 				</select>
 				<a id="orderUrl" href="">
 				<input type="button" value="go!">

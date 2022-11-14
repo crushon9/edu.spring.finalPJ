@@ -29,13 +29,16 @@ public class MovieController {
 	private String uploadPath;
 
 	@GetMapping("/main") // 메인페이지에 리스트 예매율 기준 쇼하기
-	public void mainGET(Model model, int orderChoice) {
+	public void mainGET(Model model, String orderChoice) {
 		logger.info("mainGET() call");
-		if (orderChoice == 1) {
+		if (orderChoice == "ts") {
 			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
-		} else if (orderChoice == 2) {
+		} else if (orderChoice == "ra") {
 			List<MovieVO> mvList = movieService.readRa();
+			model.addAttribute("mvList", mvList);
+		} else {
+			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
 		}
 	}// end mainGet()
