@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 import edu.spring.project.domain.MemberVO;
 
 @Repository
-public class MemberDAOImple implements MemberDAO{
-	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImple.class);
+public class MypageDAOImple implements MemberDAO{
+	private static final Logger logger = LoggerFactory.getLogger(MypageDAOImple.class);
 	private static final String NAMESPACE = "edu.spring.project.memberMapper"; // member-mapper.xml
 	
 	@Autowired
@@ -25,31 +25,31 @@ public class MemberDAOImple implements MemberDAO{
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 		// NAMESPACE가 동일한 mapper를 찾아가서 id="insert"인 insert 태그에 vo 데이터를 전송
-	}//end insert
+	}
 
 	@Override
 	public List<MemberVO> select() {
 		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_list_all");
-	}//end select List
+	}
 
 	@Override
 	public MemberVO select(String mmbId) {
-		logger.info("select() 호출 : mmbId = " + mmbId);
+		logger.info("select() 호출 : boardId = " + mmbId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mmb_id", mmbId);
-	}//end select
+	}
 
 	@Override
 	public int update(MemberVO vo) {
 		logger.info("update() 호출");
 		return sqlSession.update(NAMESPACE + ".update", vo);
-	}//end update
+	}
 
 	@Override
 	public int delete(String mmbId) {
 		logger.info("delete() 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", mmbId);
-	}//end delete
+	}
 
 	@Override
 	public MemberVO login(String mmbId, String mmbPassword) {

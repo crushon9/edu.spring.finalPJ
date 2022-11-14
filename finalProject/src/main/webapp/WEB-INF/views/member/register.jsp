@@ -61,6 +61,84 @@
 				}
 			); // end getJSON
 		}
+		
+		// test				
+		// 체크항목
+		var idCheck = false;
+		var pwCheck = false;
+		var submitCount = 0;
+		
+		// 아이디 중복검사	
+		$(document).ready(function(){
+			$('#mmbId').blur(function(){
+				var mmbId = $('#mmbId').val(); 
+				var obj = {
+						'mmbId' : mmbId
+				};
+				console.log(obj);
+				var text = '';
+				
+			$.ajax({
+				type : 'POST',
+				url : 'confirmMmbId',
+				headers : {
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'POST'
+				},
+				data : JSON.stringify(obj),
+				success : function(result, status) {
+					console.log(result)
+					
+					if(result == 1) {
+						text += '<div class="confirm_mmb_id">'
+							 + '<span id="idN">중복된 아이디입니다.</span>'
+							 + '</div>';
+						console.log(idCheck);
+						idCheck = false;
+					} else if(result == 0 && mmbId != ''){
+						text += '<div class="confirm_mmb_id">'
+							 + '<span id="idY">사용가능한 아이디입니다.</span>'
+							 + '</div>';
+						idCheck = true;
+						console.log(idCheck);
+					}
+				$('#confirm_mmb_id').html(text);
+				
+				if(result == 1) {
+					document.getElementById("confirm_mmb_id").style.color="blue";
+				} else {
+					document.getElementById("confirm_mmb_id").style.color="#05F05";		
+				}				
+				
+				}
+			})			
+			
+			}); // end mmbId
+			
+			// 패스워드 검사
+			$('#userPasswordConfirm').blur(function(){
+				var mmbPassword = $('#mmbPassword').val(); 
+				var mmbPasswordConfirm = $('#mmbPasswordConfirm').val();
+				var text = '';
+				if(mmbPassword != mmbPasswordConfirm){
+					text += '<div class="confirm_passwordRe">'
+						 + '<span id="pwN">비밀번호가 일치하지 않습니다.</span>'
+						 + '</div>';
+					document.getElementById("confirm_passwordRe").style.color="red";
+				}
+				$('#confirm_passwordRe').html(text);
+			
+			}); // end mmbPasswordComfirm
+			
+			$('#mmbPassword').blur(function(){
+				var mmbPassword = $('#mmbPassword').val();
+				
+				if(mmbPassword != ''){
+					$('#confirm_mmb_passwordRe').html('');
+				}
+			})
+		}); 
+				
 		</script>
 
 </body>
