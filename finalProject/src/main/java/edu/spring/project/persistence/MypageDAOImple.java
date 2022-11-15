@@ -1,8 +1,6 @@
 package edu.spring.project.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -13,19 +11,19 @@ import org.springframework.stereotype.Repository;
 import edu.spring.project.domain.MemberVO;
 
 @Repository
-public class MypageDAOImple implements MemberDAO{
+public class MypageDAOImple implements MypageDAO{
 	private static final Logger logger = LoggerFactory.getLogger(MypageDAOImple.class);
 	private static final String NAMESPACE = "edu.spring.project.memberMapper"; // member-mapper.xml
 	
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Override
-	public int insert(MemberVO vo) {
-		logger.info("insert() 호출");
-		return sqlSession.insert(NAMESPACE + ".insert", vo);
-		// NAMESPACE가 동일한 mapper를 찾아가서 id="insert"인 insert 태그에 vo 데이터를 전송
-	}
+//	@Override
+//	public int insert(MemberVO vo) {
+//		logger.info("insert() 호출");
+//		return sqlSession.insert(NAMESPACE + ".insert", vo);
+//		// NAMESPACE가 동일한 mapper를 찾아가서 id="insert"인 insert 태그에 vo 데이터를 전송
+//	}
 
 	@Override
 	public List<MemberVO> select() {
@@ -51,13 +49,13 @@ public class MypageDAOImple implements MemberDAO{
 		return sqlSession.delete(NAMESPACE + ".delete", mmbId);
 	}
 
-	@Override
-	public MemberVO login(String mmbId, String mmbPassword) {
-		logger.info("login() 호출");		
-		Map<String, String> args = new HashMap<String, String>();
-		args.put("mmbId", mmbId);
-		args.put("mmbPassword", mmbPassword);
-		return sqlSession.selectOne(NAMESPACE + ".login", args);		
-	}//end login()
+//	@Override
+//	public MemberVO login(String mmbId, String mmbPassword) {
+//		logger.info("login() 호출");		
+//		Map<String, String> args = new HashMap<String, String>();
+//		args.put("mmbId", mmbId);
+//		args.put("mmbPassword", mmbPassword);
+//		return sqlSession.selectOne(NAMESPACE + ".login", args);		
+//	}//end login()
 	
 }
