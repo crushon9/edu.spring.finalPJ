@@ -49,13 +49,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 		<property name="PJ_TICKET" value="PJ_TICKET" />
 		<property name="tkId" value="TK_ID" />
-		<property name="mvId" value="MV_ID" />
 		<property name="mmbId" value="MMB_ID" />
 		<property name="scdId" value="SCD_ID" />
-		<property name="scdSeatTotal" value="SCD_SEAT_TOTAL" />
-		<property name="scdPrice" value="SCD_PRICE" />
-		<property name="tkPeopleInfo" value="TK_PEOPLE_INFO" />
-		<property name="tkSeat" value="TK_SEAT" />
+		<property name="mvId" value="MV_ID" />
+		<property name="tkPeopleList" value="TK_PEOPLE_LIST" />
+		<property name="tkSeatList" value="TK_SEAT_LIST" />
 		<property name="tkPriceTotal" value="TK_PRICE_TOTAL" />
 		<property name="tkCancelCheck" value="TK_CANCEL_CHECK" />
 

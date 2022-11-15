@@ -1,34 +1,38 @@
 package edu.spring.project.domain;
 
 public class ScheduleVO {
+	// DB data
 	private int scdId;
 	private int brcId;
 	private int mvId;
-	private String mvTitle;
-	private int mvRunningTime;
 	private String scdDate;
 	private int scdTime;
 	private int scdTheater;
 	private int scdSeatTotal;
 	private int scdSeatBookedCnt;
 	private int scdPrice;
+	// Join data
+	private String mvTitle;
+	private int mvRunningTime;
+	private String brcName;
 
 	public ScheduleVO() {
 	}
 
-	public ScheduleVO(int scdId, int brcId, int mvId, String mvTitle, int mvRunningTime, String scdDate, int scdTime,
-			int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
+	public ScheduleVO(int scdId, int brcId, int mvId, String scdDate, int scdTime, int scdTheater, int scdSeatTotal,
+			int scdSeatBookedCnt, int scdPrice, String mvTitle, int mvRunningTime, String brcName) {
 		this.scdId = scdId;
 		this.brcId = brcId;
 		this.mvId = mvId;
-		this.mvTitle = mvTitle;
-		this.mvRunningTime = mvRunningTime;
 		this.scdDate = scdDate;
 		this.scdTime = scdTime;
 		this.scdTheater = scdTheater;
 		this.scdSeatTotal = scdSeatTotal;
 		this.scdSeatBookedCnt = scdSeatBookedCnt;
 		this.scdPrice = scdPrice;
+		this.mvTitle = mvTitle;
+		this.mvRunningTime = mvRunningTime;
+		this.brcName = brcName;
 	}
 
 	public int getScdId() {
@@ -53,22 +57,6 @@ public class ScheduleVO {
 
 	public void setMvId(int mvId) {
 		this.mvId = mvId;
-	}
-
-	public String getMvTitle() {
-		return mvTitle;
-	}
-
-	public void setMvTitle(String mvTitle) {
-		this.mvTitle = mvTitle;
-	}
-
-	public int getMvRunningTime() {
-		return mvRunningTime;
-	}
-
-	public void setMvRunningTime(int mvRunningTime) {
-		this.mvRunningTime = mvRunningTime;
 	}
 
 	public String getScdDate() {
@@ -119,12 +107,36 @@ public class ScheduleVO {
 		this.scdPrice = scdPrice;
 	}
 
+	public String getMvTitle() {
+		return mvTitle;
+	}
+
+	public void setMvTitle(String mvTitle) {
+		this.mvTitle = mvTitle;
+	}
+
+	public int getMvRunningTime() {
+		return mvRunningTime;
+	}
+
+	public void setMvRunningTime(int mvRunningTime) {
+		this.mvRunningTime = mvRunningTime;
+	}
+
+	public String getBrcName() {
+		return brcName;
+	}
+
+	public void setBrcName(String brcName) {
+		this.brcName = brcName;
+	}
+
 	@Override
 	public String toString() {
-		return "ScheduleVO [scdId=" + scdId + ", brcId=" + brcId + ", mvId=" + mvId + ", mvTitle=" + mvTitle
-				+ ", mvRunningTime=" + mvRunningTime + ", scdDate=" + scdDate + ", scdTime=" + scdTime + ", scdTheater="
-				+ scdTheater + ", scdSeatTotal=" + scdSeatTotal + ", scdSeatBookedCnt=" + scdSeatBookedCnt
-				+ ", scdPrice=" + scdPrice + "]";
+		return "ScheduleVO [scdId=" + scdId + ", brcId=" + brcId + ", mvId=" + mvId + ", scdDate=" + scdDate
+				+ ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal=" + scdSeatTotal
+				+ ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + ", mvTitle=" + mvTitle
+				+ ", mvRunningTime=" + mvRunningTime + ", brcName=" + brcName + "]";
 	}
 
 }

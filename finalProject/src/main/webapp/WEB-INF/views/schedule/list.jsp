@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>상영 스케줄</title>
+<title>Schedule List</title>
 </head>
 <body>
 
@@ -121,7 +121,7 @@
 					$(data).each(function() {
 						scheduleList
 						+= '<li>'
-						+ '지점 : ' + this.brcId
+						+ '지점 : ' + this.brcName
 						+ ', 영화 : ' + this.mvTitle
 						+ ', 상영일 : ' + this.scdDate
 						+ ', 상영시간 : ' + timeArray[this.scdTime]
@@ -129,7 +129,16 @@
 						+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
 						+ ', 예매가격 : ' + this.scdPrice
 						+ '&nbsp;&nbsp;'
-						+ '<a href="/project/ticket?scdId=' + this.scdId + 'mvId=' + this.mvId + 'scdSeatTotal=' + this.scdSeatTotal + 'scdPrice=' + this.scdPrice + '">'
+						+ '<a href="/project/ticket/pay?scdId=' + this.scdId
+						+ '&mvId=' + this.mvId
+						+ '&mvTitle=' + this.mvTitle
+						+ '&brcName=' + this.brcName
+						+ '&scdDate=' + this.scdDate
+						+ '&scdTime=' + this.scdTime 
+						+ '&scdTheater=' + this.scdTheater 
+						+ '&scdSeatTotal=' + this.scdSeatTotal 
+						+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
+						+ '&scdPrice=' + this.scdPrice + '">'
 						+ '<input type="button" value="예매하기"></a></li>';
 					});
 					scheduleList += '</ol>';
