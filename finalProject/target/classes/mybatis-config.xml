@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="mvImage" value="MV_IMAGE" />
 		<property name="mvDateStarted" value="MV_DATE_STARTED" />
 		<property name="mvDateEnded" value="MV_DATE_ENDED" />
-		<property name="mvRuningTime" value="MV_RUNING_TIME" />
+		<property name="mvRunningTime" value="MV_RUNNING_TIME" />
 		<property name="mvGenre" value="MV_GENRE" />
 		<property name="mvInfo" value="MV_INFO" />
 		<property name="mvTicketSales" value="MV_TICKET_SALES" />

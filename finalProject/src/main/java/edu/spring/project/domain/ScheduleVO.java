@@ -5,7 +5,7 @@ public class ScheduleVO {
 	private int brcId;
 	private int mvId;
 	private String mvTitle;
-	private int mvRuningTime;
+	private int mvRunningTime;
 	private String scdDate;
 	private int scdTime;
 	private int scdTheater;
@@ -16,13 +16,13 @@ public class ScheduleVO {
 	public ScheduleVO() {
 	}
 
-	public ScheduleVO(int scdId, int brcId, int mvId, String mvTitle, int mvRuningTime, String scdDate, int scdTime,
+	public ScheduleVO(int scdId, int brcId, int mvId, String mvTitle, int mvRunningTime, String scdDate, int scdTime,
 			int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
 		this.scdId = scdId;
 		this.brcId = brcId;
 		this.mvId = mvId;
 		this.mvTitle = mvTitle;
-		this.mvRuningTime = mvRuningTime;
+		this.mvRunningTime = mvRunningTime;
 		this.scdDate = scdDate;
 		this.scdTime = scdTime;
 		this.scdTheater = scdTheater;
@@ -63,12 +63,12 @@ public class ScheduleVO {
 		this.mvTitle = mvTitle;
 	}
 
-	public int getMvRuningTime() {
-		return mvRuningTime;
+	public int getMvRunningTime() {
+		return mvRunningTime;
 	}
 
-	public void setMvRuningTime(int mvRuningTime) {
-		this.mvRuningTime = mvRuningTime;
+	public void setMvRunningTime(int mvRunningTime) {
+		this.mvRunningTime = mvRunningTime;
 	}
 
 	public String getScdDate() {
@@ -122,7 +122,7 @@ public class ScheduleVO {
 	@Override
 	public String toString() {
 		return "ScheduleVO [scdId=" + scdId + ", brcId=" + brcId + ", mvId=" + mvId + ", mvTitle=" + mvTitle
-				+ ", mvRuningTime=" + mvRuningTime + ", scdDate=" + scdDate + ", scdTime=" + scdTime + ", scdTheater="
+				+ ", mvRunningTime=" + mvRunningTime + ", scdDate=" + scdDate + ", scdTime=" + scdTime + ", scdTheater="
 				+ scdTheater + ", scdSeatTotal=" + scdSeatTotal + ", scdSeatBookedCnt=" + scdSeatBookedCnt
 				+ ", scdPrice=" + scdPrice + "]";
 	}

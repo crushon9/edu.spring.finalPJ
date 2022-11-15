@@ -7,7 +7,7 @@ public class MovieVO {
 	private String mvImage;
 	private String mvDateStarted;
 	private String mvDateEnded;
-	private int mvRuningTime;
+	private int mvRunningTime;
 	private String mvGenre;
 	private String mvInfo;
 	private int mvTicketSales;
@@ -18,14 +18,14 @@ public class MovieVO {
 	public MovieVO() {
 	}
 
-	public MovieVO(int mvId, String mvTitle, String mvImage, String mvDateStarted, String mvDateEnded, int mvRuningTime,
+	public MovieVO(int mvId, String mvTitle, String mvImage, String mvDateStarted, String mvDateEnded, int mvRunningTime,
 			String mvGenre, String mvInfo, int mvTicketSales, int mvRatingTotal, int mvRatingCnt, float mvRatingAvg) {
 		this.mvId = mvId;
 		this.mvTitle = mvTitle;
 		this.mvImage = mvImage;
 		this.mvDateStarted = mvDateStarted;
 		this.mvDateEnded = mvDateEnded;
-		this.mvRuningTime = mvRuningTime;
+		this.mvRunningTime = mvRunningTime;
 		this.mvGenre = mvGenre;
 		this.mvInfo = mvInfo;
 		this.mvTicketSales = mvTicketSales;
@@ -74,12 +74,12 @@ public class MovieVO {
 		this.mvDateEnded = mvDateEnded;
 	}
 
-	public int getMvRuningTime() {
-		return mvRuningTime;
+	public int getMvRunningTime() {
+		return mvRunningTime;
 	}
 
-	public void setMvRuningTime(int mvRuningTime) {
-		this.mvRuningTime = mvRuningTime;
+	public void setMvRunningTime(int mvRunningTime) {
+		this.mvRunningTime = mvRunningTime;
 	}
 
 	public String getMvGenre() {
@@ -133,7 +133,7 @@ public class MovieVO {
 	@Override
 	public String toString() {
 		return "MovieVO [mvId=" + mvId + ", mvTitle=" + mvTitle + ", mvImage=" + mvImage + ", mvDateStarted="
-				+ mvDateStarted + ", mvDateEnded=" + mvDateEnded + ", mvRuningTime=" + mvRuningTime + ", mvGenre="
+				+ mvDateStarted + ", mvDateEnded=" + mvDateEnded + ", mvRunningTime=" + mvRunningTime + ", mvGenre="
 				+ mvGenre + ", mvInfo=" + mvInfo + ", mvTicketSales=" + mvTicketSales + ", mvRatingTotal="
 				+ mvRatingTotal + ", mvRatingCnt=" + mvRatingCnt + ", mvRatingAvg=" + mvRatingAvg + "]";
 	}

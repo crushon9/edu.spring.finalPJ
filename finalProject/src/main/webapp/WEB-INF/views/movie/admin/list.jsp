@@ -30,8 +30,8 @@
 		<p>영화 종료일</p>
 		<input type="date" name="mvDateEnded" value="2023-12-31">
 		<p>영화 러닝타임</p>
-		<input type="number" id="mvRunningTimeTemp" placeholder="상영시간 입력" required>
-		<input type="hidden" id="mvRunningTime" name="mvRunningTime" >
+		<input type="number" id="mvRuningTimeTemp" placeholder="상영시간 입력" required>
+		<input type="hidden" id="mvRuningTime" name="mvRuningTime" >
 		<p>영화 장르</p>
 		<select name="mvGenre" required>
 			<option value="SF">SF</option>
@@ -87,11 +87,11 @@
 				}); // .ajax()
 			}); // .file-drop.on()
 			
-			$('#mvRunningTimeTemp').change(function() {
-				var originRunTime = $('#mvRunningTimeTemp').val();
+			$('#mvRuningTimeTemp').change(function() {
+				var originRunTime = $('#mvRuningTimeTemp').val();
 				var resultRunTime = parseInt(originRunTime / 30) + 1;
-				$('#mvRunningTime').val(resultRunTime);
-				console.log($('#mvRunningTime').val());
+				$('#mvRuningTime').val(resultRunTime);
+				console.log($('#mvRuningTime').val());
 			});
 		}); // document.ready()
 	</script>

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.project.domain.MemberVO;
-import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.service.MemberService;
 
 @Controller
@@ -29,7 +28,7 @@ import edu.spring.project.service.MemberService;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	// 등록, 로그인, 로그아웃, 아이디 찾기?
+	// 등록(create), 로그인, 로그아웃, 아이디 찾기?
 	@Autowired
 	private MemberService memberService;
 
@@ -71,13 +70,14 @@ public class MemberController {
 			result = 0;
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
+	}//end idCheck
 
 	@GetMapping(value = "/login")
 	public void loginGET() {
 		logger.info("loginGET 호출");
-	}
+	}//end loginGET
 
+	// 로그인
 	@PostMapping("/login")
 	public String loginPOST(String mmbId, String mmbPassword, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes reAttr) throws IOException {
@@ -90,7 +90,7 @@ public class MemberController {
 			session.setAttribute("mmbId", vo.getMmbId());
 			return "redirect:/movie/main";
 
-//			// 세션에서 targetURL 가져오기
+//			// 세션에서 targetURL 가져오기, 나중에 타겟유알엘 필요할 떄
 //			String targetURL = (String) session.getAttribute("targetURL");
 //			logger.info("targetURL : " + targetURL);
 //
@@ -100,15 +100,15 @@ public class MemberController {
 //			} else {
 //				return "redirect:/project/movie/main";
 //			}
+			
 			// 로그인 실패
 		} else {
-
 			logger.info("login failed");
 			return "redirect:/member/login";
 		}
-
 	}// end loginPOST
 
+	// 로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		logger.info("logout call");

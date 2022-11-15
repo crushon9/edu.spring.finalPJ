@@ -19,7 +19,7 @@ import edu.spring.project.service.MypageService;
 // 예매내역 조회, 작성후기보기, 아이디비번찾기(api관련 추후)
 // 멤버 조회, 수정, 삭제
 @Controller
-@RequestMapping(value = "/mypage") // url: /project/mypage
+@RequestMapping(value = "/member/mypage") // url: /project/member/mypage
 public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 
@@ -44,17 +44,17 @@ public class MypageController {
 	}// end updateGet()
 
 	// update data 보내기
-	@PostMapping("update")
+	@PostMapping("/update")
 	public void updatePOST(MemberVO vo) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
-		int result = memberService.update(vo);
+		int result = mypageService.update(vo);
 	}// end updatePost()
 
 	// delete
 	@PostMapping("/delete")
 	public void deletePOST(String mmbId) {
 		logger.info("deletePOST() call : mmbId = " + mmbId);
-		int result = memberService.delete(mmbId);
+		int result = mypageService.delete(mmbId);
 	}// end deletePost()
 
 	// 예매 조회
@@ -74,5 +74,7 @@ public class MypageController {
 //		}
 //		model.addAttribute("ticketList", ticketList);
 	}
+
+	// reply 조회
 
 }

@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Member Register</title>
+<title>Member Update</title>
 </head>
 <body>
 	
-	<h2>회원 가입하기</h2>
+	<h2>회원 정보 업데이트</h2>
 	 
 	  <form action="register" method="post">
 	    <p>아이디</p>

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import edu.spring.project.domain.MemberVO;
 import edu.spring.project.persistence.MemberDAO;
-
+// 예매내역 조회, 작성후기보기, 아이디비번찾기(api관련 추후)
+// 멤버 조회, 수정, 삭제
 @Service
 public class MypageServiceImple implements MypageService {
 	private static final Logger logger = LoggerFactory.getLogger(MypageServiceImple.class);
@@ -21,11 +22,11 @@ public class MypageServiceImple implements MypageService {
 //	@Autowired
 //	private ReviewDAO reviewDao;
 	
-	@Override
-	public int create(MemberVO vo) {
-		logger.info("create() 호출");
-		return memberDao.insert(vo);
-	}
+//	@Override
+//	public int create(MemberVO vo) {
+//		logger.info("create() 호출");
+//		return memberDao.insert(vo);
+//	}
 
 	@Override
 	public List<MemberVO> read() {
@@ -51,10 +52,10 @@ public class MypageServiceImple implements MypageService {
 		return memberDao.delete(mmbId);
 	}
 
-	@Override
-	public MemberVO login(String mmbId, String mmbPassword) {
-		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
-		return memberDao.login(mmbId, mmbPassword);
-	}
+//	@Override
+//	public MemberVO login(String mmbId, String mmbPassword) {
+//		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
+//		return memberDao.login(mmbId, mmbPassword);
+//	}
 
 }
