@@ -48,5 +48,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${PJ_MEMBER}
 		where ${mmbId} = #{mmbId} and ${mmbPassword} = #{mmbPassword}
 	</select>
-
+		
 </mapper>

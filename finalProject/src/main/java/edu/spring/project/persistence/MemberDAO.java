@@ -17,4 +17,5 @@ public interface MemberDAO {
 
 	MemberVO login(String mmbId, String mmbPassword);
 	
+	
 }

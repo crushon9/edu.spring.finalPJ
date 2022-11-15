@@ -9,9 +9,9 @@
 <body>
 	<h1>로그인 페이지</h1><!-- contoroller 보낼 주소... -->
 	<form action="login" method="POST">
-		<input type="text" name="memberId" placeholder="아이디" required autofocus>
+		<input type="text" name="mmbId" placeholder="아이디" required autofocus>
 		<br>
-		<input type="password" name="memberPw" placeholder="비밀번호" required>
+		<input type="password" name="mmbPassword" placeholder="비밀번호" required>
 		<br>
 		<input type="submit" value="로그인">
 	</form>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.project.domain.MemberVO;
+import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.service.MemberService;
 
 @Controller
@@ -47,60 +48,72 @@ public class MemberController {
 		logger.info(vo.toString());
 		int result = memberService.create(vo);
 		logger.info(result + "행 삽입");
-		
+
 		if (result == 1) {
 			return "redirect:/member/login";
 		} else {
 			return "redirect:/member/register";
 		}
 	}// end registerPost()
-	
+
+	@PostMapping("/idCheck")
+	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
+		// @RequestBody : json 데이터를 자바객체로 변환
+		logger.info("idCheckREST() call : mmbId = " + mmbId);
+		// ResponseEntity<T> : REST 방식에서 데이터를 리턴할 때 쓰이는 객체
+		// - 데이터와 HttpStatus를 전송
+		// - <T> : 보내고자 하는 데이터 타입
+		MemberVO vo = memberService.read(mmbId);
+		int result = 0;
+		if (vo == null) {
+			result = 1;
+		} else {
+			result = 0;
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/login")
+	public void loginGET() {
+		logger.info("loginGET 호출");
+	}
+
 	@PostMapping("/login")
 	public String loginPOST(String mmbId, String mmbPassword, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes reAttr) throws IOException {
 		logger.info("loginPOST call");
-		
-		List<MemberVO> list = memberService.read();
-		List<String> mmbIdList = new ArrayList<String>();
-		for (MemberVO vo : list) {
-			mmbIdList.add(vo.getMmbId());
-		}
-		
-		if (mmbIdList.contains(mmbId)) {
-			MemberVO vo = memberService.read(mmbId);
-			// DB에서 MemberVO 형태로 받아온 VO vs 사용자입력 id,pw 비교, DB에 ID&&PW가 있다면 세션
-			
-			if (vo.getMmbId().equals(mmbId) && vo.getMmbPassword().equals(mmbPassword)) {
-				HttpSession session = request.getSession();
-				session.setAttribute("MemberVO", vo);
-				
-				// 세션에서 targetURL 가져오기
-				String targetURL = (String) session.getAttribute("targetURL");
-				logger.info("targetURL : " + targetURL);
-				
-				if (targetURL != null) {
-					session.removeAttribute("targetURL");
-					return "redirect:" + targetURL;
-				} else {
-					return "redirect:/project/movie/main";
-				}
-				// 로그인 실패
-			} else {
-				// reAttr.addFlashAttribute("alert","LoginFailed");
-				logger.info("login failed");
-				return "redirect:/member/login";
-			}
+
+		MemberVO vo = memberService.login(mmbId, mmbPassword);
+
+		if (vo != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("mmbId", vo.getMmbId());
+			return "redirect:/movie/main";
+
+//			// 세션에서 targetURL 가져오기
+//			String targetURL = (String) session.getAttribute("targetURL");
+//			logger.info("targetURL : " + targetURL);
+//
+//			if (targetURL != null) {
+//				session.removeAttribute("targetURL");
+//				return "redirect:" + targetURL;
+//			} else {
+//				return "redirect:/project/movie/main";
+//			}
+			// 로그인 실패
 		} else {
-			reAttr.addFlashAttribute("alert","LoginFailed");
-			return "redirect:/member/login";			
-		} // end contains
+
+			logger.info("login failed");
+			return "redirect:/member/login";
+		}
+
 	}// end loginPOST
-	
+
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		logger.info("logout call");
 		HttpSession session = request.getSession();
-		
+
 		if (session.getAttribute("MemberVO") != null) {
 			session.removeAttribute("memberId");
 		}
@@ -109,23 +122,23 @@ public class MemberController {
 
 	// mmbId confirm 아이디확인
 	@PostMapping(value = "/confirmMmbId")
-	public ResponseEntity<Integer> confirmMmbId(@RequestBody MemberVO vo){
+	public ResponseEntity<Integer> confirmMmbId(@RequestBody MemberVO vo) {
 		logger.info("confirmMmbId 호출 : mmbId = " + vo.getMmbId());
-		
+
 		ArrayList<String> mmbIdList = new ArrayList<String>();
 		int result = 0;
 		String mmbId = vo.getMmbId();
 		List<MemberVO> memberVOList = memberService.read();
-		for(MemberVO memberVO : memberVOList) {
+		for (MemberVO memberVO : memberVOList) {
 			mmbIdList.add(memberVO.getMmbId());
 		}
-		
-		if(mmbIdList.contains(mmbId)) {
+
+		if (mmbIdList.contains(mmbId)) {
 			result = 1;
 		} else {
 			result = 0;
-		}		
-		return new ResponseEntity<Integer>(result,HttpStatus.OK);
-	}//end confirmMmbId		
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end confirmMmbId
 
 }
