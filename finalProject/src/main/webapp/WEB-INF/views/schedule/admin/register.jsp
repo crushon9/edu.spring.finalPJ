@@ -30,8 +30,8 @@
 	    <p>상영 영화</p>
 	    <div id="mvListOutput"></div>
 	    
-	    <p>상영 가격</p>
-	    <input type="number" id="scdPrice" name="scdPrice" placeholder="기준가격 입력" required>
+	    <p>상영 기준 가격</p>
+	    <input type="number" id="scdPrice" name="scdPrice" readonly>
 	  
 	  	<p>상영 스케줄</p>
 	  	<div id="scheduleTable"></div>
@@ -39,15 +39,31 @@
 	<script type="text/javascript">
 	  $(document).ready(function() {
 			$('#inputDate').val(new Date().toISOString().substring(0, 10));
+			setScdPrice($('#inputDate').val());
+			getMvList();
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
 			$('#inputDate').change(function() {
 				getMvList();
 				getBrcVO();
+				setScdPrice($('#inputDate').val());
 			});
 			scheduleBtn();
 	   });
+	  
+	  // 평일13000 주말15000 
+	  function setScdPrice(date){
+		  console.log('setScdPrice() 호출');
+	    var dayOfWeek = new Date(date).getDay();
+		  console.log(dayOfWeek);
+	  	// 일요일(0), 토요일(6)
+		if (dayOfWeek == 0 || dayOfWeek == 6) {
+			$('#scdPrice').val(15000);
+		} else {
+			$('#scdPrice').val(13000);
+		}
+	  }
 	  
 	  // 선택 지역의 지점 가져오기
 	  function getBrcList() {
@@ -78,7 +94,7 @@
 			function(data) {
 				var mvList = '<select id="mvId" name="mvId">';
 				$(data).each(function() {
-					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '_' + this.mvRuningTime + '</option>';
+					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '_' + this.mvRunningTime + '</option>';
 				});
 				mvList += '</select>'
 				$('#mvListOutput').html(mvList);
@@ -124,9 +140,15 @@
 				}
 				scheduleTable += '<td class="' + (j + 1) + '"><button style="border-color: blue;" class="scdBtnInsert">등록</button>'
 				+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
-				+ '<input type="text" name="mvTitle" style="border-color: lightgray;" value=""/>'
-				+ '<input type="number" name="mvRuningTime" value=""/>'
-				+ '<input type="hidden" name="scdId"/>'
+				+ '<input type="text" name="mvTitle" style="border-color: lightgray;" value="" readonly/>'
+				if (i > 21) { // 조조 3000원 할인(타임인덱스21까지)
+					scheduleTable += '<input type="number" name="scdPrice" value="' + $('#scdPrice').val() + '" readonly style="width:60px; display:inline;"/>';
+				} else {
+					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
+					scheduleTable += '<input type="number" name="scdPrice" value="' + scdPrice + '" readonly style="width:60px; display:inline;"/>';
+				}
+				scheduleTable += '<input type="hidden" name="scdId"/>'
+				+ '<input type="hidden" name="mvRunningTime" value=""/>'
 				+ '<input type="hidden" name="scdSeatTotal" value="' + brcTheaterSeats.split(", ")[j] + '"/></td>';
 			}
 			scheduleTable += '</tr>';
@@ -146,7 +168,7 @@
 				url,
 			function(data) {// 서버에서 온 data가 저장되어있음
 				$(data).each(function() {
-					for (var i = 0; i < this.mvRuningTime; i++) {
+					for (var i = 0; i < this.mvRunningTime; i++) {
 						var trIndex = Number(this.scdTime) + Number(i);
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('.scdBtnInsert').prop('disabled', true);
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('.scdBtnInsert').css({"border-color":"lightgray"});
@@ -156,8 +178,9 @@
 						}
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvTitle]').val(this.mvTitle);
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvTitle]').css({"border-color":"red"});
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvRuningTime]').val(this.mvRuningTime);
+						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvRunningTime]').val(this.mvRunningTime);
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=scdId]').val(this.scdId);
+						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=scdPrice]').val(this.scdPrice);
 					}
 				}); // end data.each
 			}
@@ -173,12 +196,12 @@
 			var brcId = $('#brcId').val();
 			var mvId = $('#mvId').val();
 	    	var mvTitle = mvSelected.split('_')[0];
-			var mvRuningTime = mvSelected.split('_')[1];
+			var mvRunningTime = mvSelected.split('_')[1];
 			var scdDate = $('#inputDate').val();
 			var scdTime = $(this).parents().parents().attr('class');
 			var scdTheater = $(this).parents().attr('class');
 		 	var scdSeatTotal = $(this).nextAll('input[name=scdSeatTotal]').val();
-		 	var scdPrice = $('#scdPrice').val();
+		 	var scdPrice = $(this).nextAll('input[name=scdPrice]').val();
 			
 			if (mvSelected == '') {
 				alert('상영 영화를 선택 해주세요');
@@ -186,7 +209,7 @@
 				var startRow = $(this).nextAll('input[name=mvTitle]').val();
 				if (startRow == '') {
 					var overlapFlag = 0;
-					for (var i = 1; i < mvRuningTime; i++) {
+					for (var i = 1; i < mvRunningTime; i++) {
 						var trIndex = Number(scdTime) + Number(i);
 						console.log(trIndex);
 						var loopRow = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=mvTitle]').val();
@@ -202,7 +225,7 @@
 						console.log("brcId : " + brcId);
 						console.log("mvId : " + mvId);
 						console.log("mvTitle : " + mvTitle);
-						console.log("mvRuningTime : " + mvRuningTime);
+						console.log("mvRunningTime : " + mvRunningTime);
 						console.log("scdDate : " + scdDate);
 						console.log("scdTime : " + scdTime);
 						console.log("scdTheater : " + scdTheater);
@@ -220,7 +243,7 @@
 								'brcId' : brcId,
 								'mvId' : mvId,
 								'mvTitle' : mvTitle,
-								'mvRuningTime' : mvRuningTime,
+								'mvRunningTime' : mvRunningTime,
 								'scdDate' : scdDate,
 								'scdTime' : scdTime,
 								'scdTheater' : scdTheater,
@@ -243,7 +266,7 @@
 			var scdId = $(this).nextAll('input[name=scdId]').val();
 			console.log('scdBtnDelete 클릭 : scdId = ' + scdId);
 			// view를 변경하기 위한 변수
-			var mvRuningTime = $(this).nextAll('input[name=mvRuningTime]').val();
+			var mvRunningTime = $(this).nextAll('input[name=mvRunningTime]').val();
 			var scdTime = $(this).parents().parents().attr('class');
 			var scdTheater = $(this).parents().attr('class');
 			
@@ -260,7 +283,7 @@
 				success : function(result) {
 					console.log("스케줄 삭제 결과 : " + result);
 					// 데이터 삭제 성공후 해당 스케줄만 view에 반영
-					for (var i = 0; i < mvRuningTime; i++) {
+					for (var i = 0; i < mvRunningTime; i++) {
 						var trIndex = Number(scdTime) + Number(i);
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('.scdBtnInsert').prop('disabled', false);
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('.scdBtnInsert').css({"border-color":"blue"});
@@ -270,7 +293,7 @@
 						}
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvTitle]').val('');
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvTitle]').css({"border-color":"lightgray"});
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvRuningTime]').val('');
+						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvRunningTime]').val('');
 						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=scdId]').val('');
 					}
 				}	

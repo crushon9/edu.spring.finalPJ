@@ -28,12 +28,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
 	<select id="select_list_if" resultType="ScheduleVO">
-		select scd.*, mv.${mvTitle}, mv.${mvRuningTime}
+		select scd.*, mv.${mvTitle}, mv.${mvRunningTime}
 		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
 		<if test="mvId == 0 and brcId == 0 and scdDate == 'none'">
 		</if>
 		<if test="mvId != 0 and brcId == 0 and scdDate == 'none'">
-			where ${mvId} = #{mvId}
+			where scd.${mvId} = #{mvId}
 		</if>
 		<if test="mvId == 0 and brcId != 0 and scdDate == 'none'">
 			where ${brcId} = #{brcId}
@@ -42,16 +42,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where ${scdDate} = #{scdDate}
 		</if>
 		<if test="mvId != 0 and brcId != 0 and scdDate == 'none'">
-			where ${mvId} = #{mvId} and ${brcId} = #{brcId}
+			where scd.${mvId} = #{mvId} and ${brcId} = #{brcId}
 		</if>
 		<if test="mvId != 0 and brcId == 0 and scdDate != 'none'">
-			where ${mvId} = #{mvId} and ${scdDate} = #{scdDate}
+			where scd.${mvId} = #{mvId} and ${scdDate} = #{scdDate}
 		</if>
 		<if test="mvId == 0 and brcId != 0 and scdDate != 'none'">
 			where ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
 		</if>
 		<if test="mvId != 0 and brcId != 0 and scdDate != 'none'">
-			where ${mvId} = #{mvId} and ${brcId} = #{brcId} and
+			where scd.${mvId} = #{mvId} and ${brcId} = #{brcId} and
 			${scdDate} = #{scdDate}
 		</if>
 	</select>

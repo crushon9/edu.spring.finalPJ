@@ -37,6 +37,7 @@
 	  $(document).ready(function() {
 			// #dateSelected를 오늘날짜로 기본값 세팅
 			$('#dateSelected').val(new Date().toISOString().substring(0, 10));
+			getScheduleList();
 			// 값 선택시 비동기로 데이터 가져옴
 			$('#brcArea').change(function() {
 				getBrcList();
@@ -121,12 +122,12 @@
 						scheduleList
 						+= '<li>'
 						+ '지점 : ' + this.brcId
-						+ '/ 영화 : ' + this.mvTitle
-						+ '/ 상영일 : ' + this.scdDate
-						+ '/ 상영시간 : ' + timeArray[this.scdTime]
-						+ '/ 상영관 : ' + this.scdTheater + '관'
-						+ '/ 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
-						+ '/ 예매가격 : ' + this.scdPrice
+						+ ', 영화 : ' + this.mvTitle
+						+ ', 상영일 : ' + this.scdDate
+						+ ', 상영시간 : ' + timeArray[this.scdTime]
+						+ ', 상영관 : ' + this.scdTheater + '관'
+						+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
+						+ ', 예매가격 : ' + this.scdPrice
 						+ '&nbsp;&nbsp;'
 						+ '<a href="/project/ticket?scdId=' + this.scdId + 'mvId=' + this.mvId + 'scdSeatTotal=' + this.scdSeatTotal + 'scdPrice=' + this.scdPrice + '">'
 						+ '<input type="button" value="예매하기"></a></li>';
