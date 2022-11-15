@@ -32,7 +32,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	// 회원가입
+	// 회원가입, home의 역할
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() call");

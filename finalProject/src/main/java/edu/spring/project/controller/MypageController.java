@@ -28,19 +28,26 @@ public class MypageController {
 
 	@Autowired
 	private MemberService memberService;
-
+	
+	@GetMapping("/home") //http://localhost:8080/project/member/mypage/home
+	public void homeGET() {
+		logger.info("homeGET() call");
+	}//end home
+	
 	// member 정보 상세
 	@GetMapping("/detail")
-	public void detailGET(String mmbId) {
+	public void detailGET(Model model, String mmbId) {
 		logger.info("detailGET() call : memberId = " + mmbId);
 		MemberVO vo = memberService.read(mmbId);
+		model.addAttribute("vo", vo);
 	}// end detailGet()
 
 	// update call
 	@GetMapping("/update")
-	public void updateGET(String mmbId) {
+	public void updateGET(Model model, String mmbId) {
 		logger.info("updateGET() call");
 		MemberVO vo = memberService.read(mmbId);
+		model.addAttribute("vo", vo);
 	}// end updateGet()
 
 	// update data 보내기

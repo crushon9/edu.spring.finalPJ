@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Movie Register</title>
+<title>Movie update</title>
 <style type="text/css">
 .file-drop {
 	width: 200px;
@@ -17,21 +17,21 @@
 </head>
 <body>
 
-	<h2>관리자 영화 등록</h2>
+	<h2>관리자 영화 정보 수정</h2>
 	<p>영화 이미지</p>
 	<div class="file-drop"></div>
 		
-	<form action="register" method="post" enctype="multipart/form-data">
-		<input type="hidden" id="mvImage" name="mvImage">
+	<form action="update" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="mvId" value="${vo.mvId }">
+		<input type="hidden" name="mvImage"value="${vo.mvImage }">
 		<p>영화 제목</p>
-		<input type="text" name="mvTitle" placeholder="영화제목 입력" required>
+		<input type="text" name="mvTitle" value="${vo.mvTitle }">
 		<p>영화 개봉일</p>
-		<input type="date" name="mvDateStarted" value="2020-01-01">
+		<input type="date" name="mvDateStarted" value="${vo.mvDateStarted }">
 		<p>영화 종료일</p>
-		<input type="date" name="mvDateEnded" value="2023-12-31">
+		<input type="date" name="mvDateEnded" value="${vo.mvDateEnded }">
 		<p>영화 러닝타임</p>
-		<input type="number" id="mvRunningTimeTemp" placeholder="상영시간 입력" required>
-		<input type="hidden" id="mvRunningTime" name="mvRunningTime" >
+		<input type="hidden" id="mvRunningTime" name="mvRunningTime" value="${vo.mvRunningTime }">
 		<p>영화 장르</p>
 		<select name="mvGenre" required>
 			<option value="SF">SF</option>
@@ -42,8 +42,7 @@
 			<option value="공포">공포</option>
 			<option value="애니메이션">애니메이션</option>
 		</select>
-		<p>영화 소개</p>
-		<textarea rows="4" cols="30" name="mvInfo" placeholder="영화정보" required></textarea>
+		
 		<br><br><input type="submit" value="등록">
 	</form>
 

@@ -42,7 +42,15 @@ public class MovieController {
 			model.addAttribute("mvList", mvList);
 		}
 	}// end mainGet()
-	
+
+	@GetMapping("/admin/list") // 리스트 쇼하기
+	public void listGET(Model model) {
+		logger.info("listGET() call");
+		List<MovieVO> mvList = movieService.readTs();
+		model.addAttribute("mvList", mvList);
+
+	}// end listGET()
+
 	// 해당 주소jsp를 호출 기능
 	@GetMapping("/admin/register")
 	public void registerGET() {
@@ -70,25 +78,25 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	}// end detail()
 
-	@GetMapping("/update")
+	@GetMapping("/admin/update")
 	public void updateGET(Model model, int mvId) {
-		logger.info("updateGET() call : mvId = " + mvId);
+		logger.info("updateGET() call : mvId = " + mvId);		
 		MovieVO vo = movieService.read(mvId);
 		// page로 전송한다
-		model.addAttribute("vo", vo);
+		model.addAttribute("vo", vo);		
 	}// end updateGET()
 
-	@PostMapping("/update") // void 에서 String으로 바꿈
-	public void updatePOST(MovieVO vo) {
+	@PostMapping("/admin/update") // void 에서 String으로 바꿈
+	public String updatePOST(MovieVO vo) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = movieService.update(vo);
-//		if(result == 1) {
-//			// list + ?page=
-//			return "redirect:/board/list?page=" + page;
-//			// else 부분 return 빠지면 오류 쫘르르를
-//		} else {
-//			return "redirect:/board/update?boardOd=" + vo.getBoardId();		
-//		}				
+		if (result == 1) {
+			// "list?page=" + page
+			return "redirect:/movie/update?mvId=" + vo.getMvId();
+			// else 부분 return 빠지면 오류 쫘르르를
+		} else {
+			return "redirect:/movie/update?mvId=" + vo.getMvId();
+		}
 	}// end updatePost()
 
 	@PostMapping("/delete")
