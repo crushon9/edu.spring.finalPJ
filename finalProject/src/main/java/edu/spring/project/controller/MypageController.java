@@ -25,42 +25,37 @@ public class MypageController {
 
 	@Autowired
 	private MypageService mypageService;
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	// member 정보 상세
-		@GetMapping("/detail")
-		public void detailGET(String mmbId) {
-			logger.info("detailGET() call : memberId = " + mmbId);
-			MemberVO vo = memberService.read(mmbId);
-		}// end detailGet()
+	@GetMapping("/detail")
+	public void detailGET(String mmbId) {
+		logger.info("detailGET() call : memberId = " + mmbId);
+		MemberVO vo = memberService.read(mmbId);
+	}// end detailGet()
 
-		// update call
-		@GetMapping("/update")
-		public void updateGET(String mmbId) {
-			logger.info("updateGET() call");
-			MemberVO vo = memberService.read(mmbId);
-		}// end updateGet()
+	// update call
+	@GetMapping("/update")
+	public void updateGET(String mmbId) {
+		logger.info("updateGET() call");
+		MemberVO vo = memberService.read(mmbId);
+	}// end updateGet()
 
-		// update data 보내기
-		@PostMapping("update")
-		public void updatePOST(MemberVO vo) {
-			logger.info("updatePOST() call : vo = " + vo.toString());
-			int result = memberService.update(vo);
-		}// end updatePost()
+	// update data 보내기
+	@PostMapping("update")
+	public void updatePOST(MemberVO vo) {
+		logger.info("updatePOST() call : vo = " + vo.toString());
+		int result = memberService.update(vo);
+	}// end updatePost()
 
-		// delete 
-		@PostMapping("/delete")
-		public void deletePOST(String mmbId) {
-			logger.info("deletePOST() call : mmbId = " + mmbId);
-			int result = memberService.delete(mmbId);
-		}// end deletePost()
-	
-	@PostMapping("/update")
-	public void updatePOST() {
-
-	}
+	// delete
+	@PostMapping("/delete")
+	public void deletePOST(String mmbId) {
+		logger.info("deletePOST() call : mmbId = " + mmbId);
+		int result = memberService.delete(mmbId);
+	}// end deletePost()
 
 	// 예매 조회
 	@GetMapping(value = "/ticket")
