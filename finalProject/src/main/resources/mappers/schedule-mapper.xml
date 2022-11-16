@@ -37,23 +37,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where scd.${mvId} = #{mvId}
 		</if>
 		<if test="mvId == 0 and brcId != 0 and scdDate == 'none'">
-			where ${brcId} = #{brcId}
+			where scd.${brcId} = #{brcId}
 		</if>
 		<if test="mvId == 0 and brcId == 0 and scdDate != 'none'">
-			where ${scdDate} = #{scdDate}
+			where scd.${scdDate} = #{scdDate}
 		</if>
 		<if test="mvId != 0 and brcId != 0 and scdDate == 'none'">
-			where scd.${mvId} = #{mvId} and ${brcId} = #{brcId}
+			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId}
 		</if>
 		<if test="mvId != 0 and brcId == 0 and scdDate != 'none'">
-			where scd.${mvId} = #{mvId} and ${scdDate} = #{scdDate}
+			where scd.${mvId} = #{mvId} and scd.${scdDate} = #{scdDate}
 		</if>
 		<if test="mvId == 0 and brcId != 0 and scdDate != 'none'">
-			where ${brcId} = #{brcId} and ${scdDate} = #{scdDate}
+			where scd.${brcId} = #{brcId} and scd.${scdDate} = #{scdDate}
 		</if>
 		<if test="mvId != 0 and brcId != 0 and scdDate != 'none'">
-			where scd.${mvId} = #{mvId} and ${brcId} = #{brcId} and
-			${scdDate} = #{scdDate}
+			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId} and
+			scd.${scdDate} = #{scdDate}
 		</if>
 	</select>
 

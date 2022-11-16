@@ -122,10 +122,12 @@
 	  // 스케줄 테이블 기본 형태 출력
 	  function setScheduleTable(brcTheaterNumbers, brcTheaterSeats) {
 		console.log('setScheduleTable() 호출');
-		var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30",
-			"05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
-			"11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
-			"17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"];
+		var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30",
+		 	"04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00",
+		 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
+		 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
+		 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
+		 	"22:00", "22:30", "23:00", "23:30"];
 		var scheduleTable = '<table border="1"><thead><tr><th style="width: 50px">시간</th>';
 		for (var i = 1; i <= brcTheaterNumbers; i++) {
 			scheduleTable +=
@@ -170,17 +172,18 @@
 				$(data).each(function() {
 					for (var i = 0; i < this.mvRunningTime; i++) {
 						var trIndex = Number(this.scdTime) + Number(i);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('.scdBtnInsert').prop('disabled', true);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('.scdBtnInsert').css({"border-color":"lightgray"});
+						var thisParentTd = $('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater);
+						thisParentTd.children('.scdBtnInsert').prop('disabled', true);
+						thisParentTd.children('.scdBtnInsert').css({"border-color":"lightgray"});
 						if (i == 0) {
-							$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('.scdBtnDelete').prop('disabled', false);
-							$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('.scdBtnDelete').css({"border-color":"red"});
+							thisParentTd.children('.scdBtnDelete').prop('disabled', false);
+							thisParentTd.children('.scdBtnDelete').css({"border-color":"red"});
 						}
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvTitle]').val(this.mvTitle);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvTitle]').css({"border-color":"red"});
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=mvRunningTime]').val(this.mvRunningTime);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=scdId]').val(this.scdId);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater).children('input[name=scdPrice]').val(this.scdPrice);
+						thisParentTd.children('input[name=mvTitle]').val(this.mvTitle);
+						thisParentTd.children('input[name=mvTitle]').css({"border-color":"red"});
+						thisParentTd.children('input[name=mvRunningTime]').val(this.mvRunningTime);
+						thisParentTd.children('input[name=scdId]').val(this.scdId);
+						thisParentTd.children('input[name=scdPrice]').val(this.scdPrice);
 					}
 				}); // end data.each
 			}
@@ -285,16 +288,17 @@
 					// 데이터 삭제 성공후 해당 스케줄만 view에 반영
 					for (var i = 0; i < mvRunningTime; i++) {
 						var trIndex = Number(scdTime) + Number(i);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('.scdBtnInsert').prop('disabled', false);
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('.scdBtnInsert').css({"border-color":"blue"});
+						var parentTd = $('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater);
+						parentTd.children('.scdBtnInsert').prop('disabled', false);
+						parentTd.children('.scdBtnInsert').css({"border-color":"blue"});
 						if (i == 0) {
-							$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('.scdBtnDelete').prop('disabled', true);
-							$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('.scdBtnDelete').css({"border-color":"lightgray"});
+							parentTd.children('.scdBtnDelete').prop('disabled', true);
+							parentTd.children('.scdBtnDelete').css({"border-color":"lightgray"});
 						}
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvTitle]').val('');
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvTitle]').css({"border-color":"lightgray"});
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=mvRunningTime]').val('');
-						$('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater).children('input[name=scdId]').val('');
+						parentTd.children('input[name=mvTitle]').val('');
+						parentTd.children('input[name=mvTitle]').css({"border-color":"lightgray"});
+						parentTd.children('input[name=mvRunningTime]').val('');
+						parentTd.children('input[name=scdId]').val('');
 					}
 				}	
 			});
