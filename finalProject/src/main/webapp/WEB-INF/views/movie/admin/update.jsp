@@ -45,8 +45,7 @@
 		<p>영화 소개</p>
 		<textarea rows="4" cols="30" name="mvInfo">${vo.mvInfo }</textarea>
 		
-		
-		<br><br><input type="submit" value="등록">
+		<br><br><input type="submit" value="수정">
 	</form>
 
 	<script type="text/javascript">
@@ -88,7 +87,6 @@
 					}
 				}); // .ajax()
 			}); // .file-drop.on()
-			
 			
 		}); // document.ready()
 	</script>

@@ -8,7 +8,10 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>Movie list</title>
 <style type="text/css">
-
+.imageSpace {
+	width: 200px;
+	height: 300px;
+}
 </style>
 </head>
 <body>
@@ -17,9 +20,11 @@
 	<c:forEach var="vo" items="${mvList }">
 		<ol class="mvItem">						
 			<li style="list-style-type: none">						
-				<a href="movieDetail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
+				<img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/>
+				<br>
 				<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
-				<a href="update?mvId=${vo.mvId}"><input type="button" value="영화정보수정"></a>	
+				<a href="update?mvId=${vo.mvId}"><input type="button" value="정보수정"></a>	
+				<a href="delete?mvId=${vo.mvId}"><input type="button" value="정보삭제"></a>	
 			</li>				
 		</ol>											
 	</c:forEach>

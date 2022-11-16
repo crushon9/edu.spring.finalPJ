@@ -48,7 +48,6 @@ public class MovieController {
 		logger.info("listGET() call");
 		List<MovieVO> mvList = movieService.readTs();
 		model.addAttribute("mvList", mvList);
-
 	}// end listGET()
 
 	// 해당 주소jsp를 호출 기능
@@ -93,24 +92,23 @@ public class MovieController {
 		int result = movieService.update(vo);
 		if (result == 1) {
 			// "list?page=" + page
-			return "redirect:/movie/update?mvId=" + vo.getMvId();
 			// else 부분 return 빠지면 오류 쫘르르를
+			return "redirect:/movie/admin/list";
 		} else {
-			return "redirect:/movie/update?mvId=" + vo.getMvId();
+			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();			
 		}
 	}// end updatePost()
 
-	@PostMapping("/delete")
-	public void deletePOST(int mvId) {
-		logger.info("deletePOST() call : boardId = " + mvId);
+	@GetMapping("/admin/delete")
+	public String deleteGET(int mvId) {
+		logger.info("deleteGET() call : boardId = " + mvId);
 		int result = movieService.delete(mvId);
-//		if(result == 1) {			
-//			return "redirect:/board/list";
-//		} else {
-//			return "redirect:/board/list";
-//		}
-
-	}// end deletePost()
+		if(result == 1) {			
+			return "redirect:/movie/admin/list";
+		} else {
+			return "redirect:/movie/admin/update?mvId=" + mvId;
+		}
+	}// end deleteGET()
 
 	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
@@ -133,6 +131,6 @@ public class MovieController {
 		logger.info("detailGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
-	}
+	}// end reviewRegister
 	
 }
