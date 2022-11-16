@@ -70,7 +70,7 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	} // end registerPost()
 
-	// mvId로 전체 내용
+	// mvId로 전체 내용 show, -> detail.jsp
 	@GetMapping("/detail")
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
@@ -82,6 +82,7 @@ public class MovieController {
 	public void updateGET(Model model, int mvId) {
 		logger.info("updateGET() call : mvId = " + mvId);		
 		MovieVO vo = movieService.read(mvId);
+		logger.info(vo.toString());
 		// page로 전송한다
 		model.addAttribute("vo", vo);		
 	}// end updateGET()
@@ -126,4 +127,12 @@ public class MovieController {
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
 
+	// 다시보자
+	@GetMapping("/review/register")
+	public void reviewRegister(Model model, int mvId) {
+		logger.info("detailGET() call : mvId = " + mvId);
+		MovieVO vo = movieService.read(mvId);
+		model.addAttribute("vo", vo);
+	}
+	
 }

@@ -31,7 +31,7 @@
 		<p>영화 종료일</p>
 		<input type="date" name="mvDateEnded" value="${vo.mvDateEnded }">
 		<p>영화 러닝타임</p>
-		<input type="hidden" id="mvRunningTime" name="mvRunningTime" value="${vo.mvRunningTime }">
+		<input type="number" name="mvRunningTime" value="${vo.mvRunningTime }" readonly>
 		<p>영화 장르</p>
 		<select name="mvGenre" required>
 			<option value="SF">SF</option>
@@ -42,6 +42,9 @@
 			<option value="공포">공포</option>
 			<option value="애니메이션">애니메이션</option>
 		</select>
+		<p>영화 소개</p>
+		<textarea rows="4" cols="30" name="mvInfo">${vo.mvInfo }</textarea>
+		
 		
 		<br><br><input type="submit" value="등록">
 	</form>
@@ -86,12 +89,7 @@
 				}); // .ajax()
 			}); // .file-drop.on()
 			
-			$('#mvRunningTimeTemp').change(function() {
-				var originRunTime = $('#mvRunningTimeTemp').val();
-				var resultRunTime = parseInt(originRunTime / 30) + 1;
-				$('#mvRunningTime').val(resultRunTime);
-				console.log($('#mvRunningTime').val());
-			});
+			
 		}); // document.ready()
 	</script>
 

@@ -27,6 +27,9 @@
 <body>
 	<h1>movie chart</h1>
 
+	<a href="register"><input type="button" value="로그인"></a>
+
+
 	<div class="main">		
 		<hr style="width : 85%; margin-left : 0;"><br>
 			<div id="chart" style=" float: right; margin-right: 255px;"><!-- 접근 -->

@@ -50,7 +50,7 @@
 		<input type="hidden" id="mvId" value="${vo.mvId }"> 
 		<input type="text" id="mmbId"> 
 		<input type="text" 	id="rvContent">
-		<button id="btn_add">후기작성</button>
+		<button id="btn_rv_add">후기작성</button>
 	</div>
 
 	<hr>
@@ -72,7 +72,7 @@
 			getMvInfo();
 			
 			// 버튼 클릭시 후기등록 가자			
-			$('#btn_add').click(function() {
+			$('#btn_rv_add').click(function() {
 				var mvId = $('#mvId').val();
 				var mmbId = $('#mmbId').val();
 				var rvContent = $('#rvContent').val();
@@ -86,15 +86,15 @@
 				};
 				console.log(obj);				
 				
-				// $.ajax로 후기, 평점 등록
+				// $.ajax로 후기, 평점 등록, 미구현
 				$.ajax({
 					type : 'POST',
-					url : '../project/rvInfo', // controller 경로 생성
+					url : '/project/movie/review/register', // controller 경로 생성
 					headers : { // 정보를 전송할때는 (GET방식을 빼고는) headers 넣어야함
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'
 					},
-					data : JSON.stringify(obj), // JSON으로 
+					data : JSON.stringify(obj), // JSON으로 변환
 					success : function(result, status) {
 						console.log('result : ' + result);
 						console.log('HttpStatus : ' + status);
@@ -118,7 +118,7 @@
 					function(data) {// 서버에서 온 data가 저장되어있음
 						var rvList = '';
 						$(data).each(function() {
-							var rvDateCreated = new Date(this.replyDateCreated); // string 날짜를 다시 Date로 변환
+							var rvDateCreated = new Date(this.rvDateCreated); // string 날짜를 다시 Date로 변환
 							var rvContent = this.rvContent;
 							var rvRating = this.rvRating;
 							var btn_disabled = 'disabled';
@@ -187,7 +187,7 @@
 					// ajax로 서버로 수정 데이터 전송
 					$.ajax({
 						type : 'PUT',
-						url : '../project/rvInfo/' + rvId,
+						url : '/project/movie/review/update=' + rvId,
 						headers : {
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'PUT'
@@ -206,10 +206,10 @@
 	
 				var mvId = $(this).prevAll('.mvId').val();
 				var rvId = $(this).prevAll('.rvId').val();
-				console.log("삭제 replyId : " + replyId + " , boardId : " + boardId);
+				console.log("삭제 rvId : " + rvId + " , mvId : " + mvId);
 				$.ajax({
 					type : 'DELETE',
-					url : '../project/rvInfo/' + rvId, // 이 데이터는 담기지 않네?
+					url : '/project/movie/review/delete' + rvId, // 이 데이터는 담기지 않네?
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'DELETE'
