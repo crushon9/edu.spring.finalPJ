@@ -24,16 +24,16 @@ public class TicketController {
 	@Autowired
 	private TicketService ticketService;
 
-	@GetMapping("/pay")
-	public void payGET(Model model, TicketVO vo) {
-		logger.info("payGET() 호출");
+	@GetMapping("/buy")
+	public void buyGET(Model model, TicketVO vo) {
+		logger.info("buyGET() 호출");
 		logger.info(vo.toString());
 		model.addAttribute("vo", vo);
 	}
 
-	@PostMapping("/pay")
-	public String payPOST(TicketVO vo) {
-		logger.info("payPOST() 호출");
+	@PostMapping("/buy")
+	public String buyPOST(TicketVO vo) {
+		logger.info("buyPOST() 호출");
 		logger.info(vo.toString());
 		int result = ticketService.create(vo);
 		logger.info(result + "행 삽입");

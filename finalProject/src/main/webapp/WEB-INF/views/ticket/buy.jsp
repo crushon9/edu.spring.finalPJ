@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Ticket Pay</title>
+<title>Ticket Buy</title>
 
 <style>
 #tkPeopleDiv {
@@ -69,10 +69,11 @@
 	<input type="hidden" id="scdSeatBookedCnt" value="${vo.scdSeatBookedCnt }">
 	<input type="hidden" id="scdPrice" value="${vo.scdPrice }">
 	
+	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
+	
 	<!-- TicketVO로 넘길 데이터 -->
-	<form action="pay" method="post">
-		mmbId 세션으로 넣어야해
-		<input type="text" name="mmbId">
+	<form action="buy" method="post">
+		<input type="text" name="mmbId" value="<%=mmbId %>">
 		<hr>
 		<input type="hidden" name="scdId" value="${vo.scdId }">
 		<input type="hidden" name="mvId" value="${vo.mvId }">
@@ -152,11 +153,25 @@
 	 function seatBtnPrint() {
 		 console.log('seatBtnPrint() 호출');
 		 var scdSeatTotal = $('#scdSeatTotal').val();
-		 var seatArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'k', 'L', 'M', 'N'];
+		 var seatArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+			 			  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+			 			  'U', 'V', 'W', 'X', 'Y', 'Z'];
+		 // 최대좌석수에 따라 반복출력 패턴 조정
+		 var iMax = 10;
+		 var jMax = scdSeatTotal / 10;
+		 if (scdSeatTotal / 10 > 20 && scdSeatTotal % 20 == 0) {
+			 jMax = 20;
+			 iMax = scdSeatTotal / 20;
+		 }
+		 else if (scdSeatTotal / 10 > 25 && scdSeatTotal % 25 == 0) {
+			 jMax = 25;
+			 iMax = scdSeatTotal / 25;
+		 }
+		 // 반복으로 버튼생성
 		 var seatBtns = '<br>';
-		 for (var i = 0; i < 10; i++) {
-			 for (var j = 1; j <= scdSeatTotal/10; j++) {
-				 if (j == 3 || j == 8 || j == 16) {
+		 for (var i = 0; i < iMax; i++) {
+			 for (var j = 1; j <= jMax; j++) {
+				 if (j == 4 || j == 11 || j == 17 || j == 23) {
 					 seatBtns += '&emsp;';
 				 }
 				 var seatBtnId = seatArray[i] + j;

@@ -26,7 +26,7 @@ public class TicketServiceImple implements TicketService {
 	@Transactional
 	public int create(TicketVO vo) {
 		logger.info("create() 호출");
-		// 티켓이 예매되면(insert) scdSeatBookedCnt가 1증가(update)
+		// 티켓이 예매되면(insert) scdSeatBookedCnt가 예약인원만큼 증가(update)
 		tkDao.insert(vo);
 		logger.info("ticket insert 성공");
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);

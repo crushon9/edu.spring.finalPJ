@@ -131,7 +131,7 @@
 						+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
 						+ ', 예매가격 : ' + this.scdPrice
 						+ '&nbsp;&nbsp;'
-						+ '<a href="/project/ticket/pay?scdId=' + this.scdId
+						+ '<a href="/project/ticket/buy?scdId=' + this.scdId
 						+ '&mvId=' + this.mvId
 						+ '&mvTitle=' + this.mvTitle
 						+ '&brcName=' + this.brcName
