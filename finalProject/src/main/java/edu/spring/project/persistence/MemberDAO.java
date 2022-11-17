@@ -17,5 +17,6 @@ public interface MemberDAO {
 
 	MemberVO login(String mmbId, String mmbPassword);
 	
-	
+	// 예매내역 조회
+	// 후기보기
 }

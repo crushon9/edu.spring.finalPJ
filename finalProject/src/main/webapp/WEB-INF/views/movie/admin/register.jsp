@@ -18,7 +18,7 @@
 <body>
 
 	<h2>관리자 영화 등록</h2>
-	<p>영화 이미지</p>
+	<p>영화 이미지 : </p>
 	<div class="file-drop"></div>
 		
 	<form action="register" method="post" enctype="multipart/form-data">

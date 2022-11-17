@@ -15,5 +15,7 @@
 		<br>
 		<input type="submit" value="로그인">
 	</form>
+	
+	<a href="register"><input type="button" value="회원가입"></a>
 </body>
 </html>

@@ -17,8 +17,8 @@
 </head>
 <body>
 
-	<h2>관리자 영화 정보 수정</h2>
-	<p>영화 이미지</p>
+	<h2>관리자 영화정보 수정</h2>
+	<p>영화 이미지 : </p>
 	<div class="file-drop"></div>
 		
 	<form action="update" method="post" enctype="multipart/form-data">
@@ -44,7 +44,6 @@
 		</select>
 		<p>영화 소개</p>
 		<textarea rows="4" cols="30" name="mvInfo">${vo.mvInfo }</textarea>
-		
 		<br><br><input type="submit" value="수정">
 	</form>
 

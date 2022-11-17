@@ -8,10 +8,9 @@ public class MemberVO {
 	private String mmbPhone;
 	private String mmbBirthday;
 	private int mmbAdminCheck;
-	private int brcId;
+	private int brcId; // 선호지점선택 시 활용
 
-	public MemberVO() {
-	}
+	public MemberVO() {}
 
 	public MemberVO(String mmbId, String mmbPassword, String mmbEmail, String mmbPhone, String mmbBirthday,
 			int mmbAdminCheck, int brcId) {

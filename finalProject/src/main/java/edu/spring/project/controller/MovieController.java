@@ -27,8 +27,9 @@ public class MovieController {
 	// 업로드용 어노따숑
 	@Resource(name = "uploadPath")
 	private String uploadPath;
-
-	@GetMapping("/main") // 메인페이지에 리스트 예매율 기준 쇼하기
+	
+	// 메인페이지에 리스트 예매율or평점 기준 쇼하기
+	@GetMapping("/main") 
 	public void mainGET(Model model, String orderChoice) {
 		logger.info("mainGET() call");
 		if (orderChoice == "ts") {
@@ -37,7 +38,7 @@ public class MovieController {
 		} else if (orderChoice == "ra") {
 			List<MovieVO> mvList = movieService.readRa();
 			model.addAttribute("mvList", mvList);
-		} else {
+		} else { // 기본값
 			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
 		}
@@ -50,7 +51,7 @@ public class MovieController {
 		model.addAttribute("mvList", mvList);
 	}// end listGET()
 
-	// 해당 주소jsp를 호출 기능
+	// 해당 주소jsp 호출
 	@GetMapping("/admin/register")
 	public void registerGET() {
 		logger.info("registerGET() 호출");
@@ -59,8 +60,7 @@ public class MovieController {
 	// 데이터 전달
 	@PostMapping("/admin/register")
 	public void registerPOST(Model model, MovieVO vo) {
-		// RedirectAttributes
-		// - 재경로 위치에 속성값을 전송하는 객체
+		// RedirectAttributes 경로 위치에 속성값을 전송하는 객체
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 

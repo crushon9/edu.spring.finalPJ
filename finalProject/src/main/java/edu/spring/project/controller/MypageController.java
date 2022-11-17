@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import edu.spring.project.domain.MemberVO;
 import edu.spring.project.service.MemberService;
 import edu.spring.project.service.MypageService;
@@ -34,27 +33,30 @@ public class MypageController {
 		logger.info("homeGET() call");
 	}//end home
 	
-	// member 정보 상세
-	@GetMapping("/detail")
-	public void detailGET(Model model, String mmbId) {
-		logger.info("detailGET() call : memberId = " + mmbId);
-		MemberVO vo = memberService.read(mmbId);
-		model.addAttribute("vo", vo);
-	}// end detailGet()
-
 	// update call
 	@GetMapping("/update")
 	public void updateGET(Model model, String mmbId) {
 		logger.info("updateGET() call");
-		MemberVO vo = memberService.read(mmbId);
+		MemberVO vo = mypageService.read(mmbId);
 		model.addAttribute("vo", vo);
 	}// end updateGet()
 
 	// update data 보내기
 	@PostMapping("/update")
-	public void updatePOST(MemberVO vo) {
+	public String updatePOST(MemberVO vo) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = mypageService.update(vo);
+		
+		if(result == 1) {
+			//reAttr.addFlashAttribute("update_result", "success");
+			return "redirect:/member/mypage/update";
+		
+		} else {
+			//reAttr.addFlashAttribute("update_result", "fail");
+			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
+		}
+				
+		
 	}// end updatePost()
 
 	// delete
@@ -65,7 +67,7 @@ public class MypageController {
 	}// end deletePost()
 
 	// 예매 조회
-	@GetMapping(value = "/ticket")
+	@GetMapping("/ticket")
 	public void myplabGET(Model model, HttpServletRequest request) {
 		logger.info("myplabGET 호출");
 		logger.info("myplab(신청 내역) 호출");

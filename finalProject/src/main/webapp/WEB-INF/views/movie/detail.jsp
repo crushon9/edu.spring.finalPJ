@@ -9,9 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
+<title>${vo.mvTitle}</title>
 <style type="text/css">
-
 .detail {
 	display : inline-flex;
 	width : 200px;
@@ -30,10 +29,9 @@
 }
 </style>
 
-<title>${vo.mvTitle}</title>
-
 </head>
 <body>
+
 	<h2>movie detail</h2>
 	<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
 	<h2>${vo.mvTitle}</h2>
@@ -71,7 +69,7 @@
 		$(document).ready(function() {
 			getMvInfo();
 			
-			// 버튼 클릭시 후기등록 가자			
+			// 버튼 클릭, 후기등록		
 			$('#btn_rv_add').click(function() {
 				var mvId = $('#mvId').val();
 				var mmbId = $('#mmbId').val();

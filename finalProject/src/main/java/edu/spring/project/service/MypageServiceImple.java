@@ -36,7 +36,7 @@ public class MypageServiceImple implements MypageService {
 
 	@Override
 	public MemberVO read(String mmbId) {
-		logger.info("read() 호출 : memberId = " + mmbId);
+		logger.info("read() 호출 : mmbId = " + mmbId);
 		return memberDao.select(mmbId);
 	}
 

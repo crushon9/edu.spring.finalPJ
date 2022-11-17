@@ -26,10 +26,20 @@
 
 <body>
 	<h1>movie chart</h1>
-
-	<a href="register"><input type="button" value="로그인"></a>
-
-
+	<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
+	
+	<!-- <a href="/project/member/login"><input type="button" value="로그인"></a> -->
+	
+	<c:if test="${empty mmbIdSession }">
+		<button type="button" id="btn_login">login</button>
+	</c:if>
+	
+	<c:if test="${not empty mmbIdSession }">
+		<%=mmbIdSession %>님 환영!
+		<button type="button" id="btn_logout">logout</button>
+		<button type="button" id="btn_mypage">mypage</button>
+	</c:if>
+	
 	<div class="main">		
 		<hr style="width : 85%; margin-left : 0;"><br>
 			<div id="chart" style=" float: right; margin-right: 255px;"><!-- 접근 -->
@@ -69,10 +79,25 @@
 				var orderUrl = 'main?orderChoice=' + orderChoice;
 				console.log(orderUrl);
 				$('#orderUrl').prop("href", orderUrl);
-			});
-		});
-	
-	</script>	
+			});//end orderChoice_click();
+		
+			$('#btn_login').click(function(){
+				var target = encodeURI('/project/member/login');
+				location = target;	
+			});//end btn_login_click();
+			
+			$('#btn_logout').click(function() {
+				var target = encodeURI('/project/member/logout');
+				location = target;	
+			});//end btn_logout_click();	
+			
+			$('#btn_mypage').click(function() {
+				var target = encodeURI('/project/member/mypage/home');
+				location = target;							
+			});//end btn_mypage_click();
+			
+		});	
+	</script>
 	
 </body>
 </html>

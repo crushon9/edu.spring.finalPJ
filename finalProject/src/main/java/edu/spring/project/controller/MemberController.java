@@ -70,37 +70,31 @@ public class MemberController {
 			result = 0;
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}//end idCheck
+	}// end idCheck
 
-	@GetMapping(value = "/login")
+	@GetMapping("/login")
 	public void loginGET() {
 		logger.info("loginGET 호출");
-	}//end loginGET
+	}// end loginGET
 
 	// 로그인
 	@PostMapping("/login")
 	public String loginPOST(String mmbId, String mmbPassword, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes reAttr) throws IOException {
 		logger.info("loginPOST call");
-
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
-
 		if (vo != null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("mmbId", vo.getMmbId());
-			return "redirect:/movie/main";
-
-//			// 세션에서 targetURL 가져오기, 나중에 타겟유알엘 필요할 떄
-//			String targetURL = (String) session.getAttribute("targetURL");
-//			logger.info("targetURL : " + targetURL);
-//
-//			if (targetURL != null) {
-//				session.removeAttribute("targetURL");
-//				return "redirect:" + targetURL;
-//			} else {
-//				return "redirect:/project/movie/main";
-//			}
-			
+			session.setAttribute("mmbIdSession", vo.getMmbId());
+			// TODO : targetURL login 확인필요
+			String targetURL = (String) session.getAttribute("targetURL");
+			logger.info("targetURL : " + targetURL);
+			if (targetURL != null) { // targetURL이 있다면
+				session.removeAttribute("targetURL");
+				return "redirect:" + targetURL;
+			} else {// targetURL이 없다면
+				return "redirect:/movie/main";
+			}
 			// 로그인 실패
 		} else {
 			logger.info("login failed");
@@ -113,11 +107,8 @@ public class MemberController {
 	public String logout(HttpServletRequest request) {
 		logger.info("logout call");
 		HttpSession session = request.getSession();
-
-		if (session.getAttribute("MemberVO") != null) {
-			session.removeAttribute("memberId");
-		}
-		return "redirect:/project/movie/main";
+		session.removeAttribute("mmbIdSession");
+		return "redirect:/movie/main";
 	}// end logout
 
 	// mmbId confirm 아이디확인

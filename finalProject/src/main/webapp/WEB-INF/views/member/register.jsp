@@ -36,7 +36,7 @@
 			<option value="6">제주</option>
 		</select>
 		<div id="brcListOutput"></div>
-		<br><br><input type="submit" value="회원가입">
+		<br><br><input type="submit" value="가입하기">
 	  </form>
 	  
 	  <script type="text/javascript">
