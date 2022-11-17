@@ -28,7 +28,7 @@
 		<option value="5">광주/전라</option>
 		<option value="6">제주</option>
 	</select>
-	<div id="brcListOutput"></div>
+	<div id="brcListDiv"></div>
 
 	<p>상영 스케줄</p>
 	<div id="scheduleListOutput"></div>
@@ -61,7 +61,7 @@
 					brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
 				});
 				brcList += '</select>';
-				$('#brcListOutput').html(brcList);
+				$('#brcListDiv').html(brcList);
 				$('#brcId').change(function() {
 					console.log("#brcId.click");
 					getScheduleList();

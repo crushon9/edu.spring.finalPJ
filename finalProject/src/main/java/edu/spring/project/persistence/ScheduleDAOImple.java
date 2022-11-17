@@ -48,4 +48,13 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		return sqlSession.delete(NAMESPACE + ".delete_by_scd_id", scdId);
 	}
 
+	@Override
+	public int updateScdSeatBookedCnt(int amount, int scdId) {
+		logger.info("updateScdSeatBookedCnt() »£√‚ : scdId = " + scdId);
+		Map<String, Integer> args = new HashMap<String, Integer>();
+		args.put("amount", amount);
+		args.put("scdId", scdId);
+		return sqlSession.update(NAMESPACE + ".update_scdSeatBookedCnt", args);
+	}
+
 }

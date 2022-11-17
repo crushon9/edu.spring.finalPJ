@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			scd.${scdDate} = #{scdDate}
 		</if>
 	</select>
-
+	
 	<delete id="delete_by_scd_id">
 		delete from ${PJ_SCHEDULE}
 		where ${scdId} = #{scdId}
@@ -67,5 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${PJ_SCHEDULE}
 		where ${mvId} = #{mvId}
 	</delete>
+	
+	<update id="update_scdSeatBookedCnt">
+		update ${PJ_SCHEDULE}
+		set ${scdSeatBookedCnt} = ${scdSeatBookedCnt} + #{amount}
+		where ${scdId} = #{scdId}
+	</update>
 
 </mapper>

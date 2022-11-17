@@ -28,7 +28,7 @@
 	    <input type="date" id="inputDate" name="inputDate">
 	    
 	    <p>상영 영화</p>
-	    <div id="mvListOutput"></div>
+	    <div id="mvListDiv"></div>
 	    
 	    <p>상영 기준 가격</p>
 	    <input type="number" id="scdPrice" name="scdPrice" readonly>
@@ -97,7 +97,7 @@
 					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '_' + this.mvRunningTime + '</option>';
 				});
 				mvList += '</select>'
-				$('#mvListOutput').html(mvList);
+				$('#mvListDiv').html(mvList);
 			}
 		);
 	  } // end getMvList

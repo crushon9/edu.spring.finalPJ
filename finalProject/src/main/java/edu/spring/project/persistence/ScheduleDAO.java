@@ -12,5 +12,7 @@ public interface ScheduleDAO {
 	List<ScheduleVO> select(int mvId, int brcId, String scdDate);
 	
 	int delete(int scdId);
+	
+	int updateScdSeatBookedCnt(int amount, int scdId);
 
 }

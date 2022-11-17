@@ -7,8 +7,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insert">
 		insert into ${PJ_TICKET}
 		(${mmbId}, ${scdId}, ${mvId},
-		${tkPeopleList}, ${tkSeatList}, ${tkPriceTotal}, ${tkCancelCheck})
+		${tkPeopleList}, ${tkSeatList}, ${tkPriceTotal})
 		values (#{mmbId}, #{scdId}, #{mvId}, #{tkPeopleList}, #{tkSeatList},
-		#{tkPriceTotal}, #{tkCancelCheck})
+		#{tkPriceTotal})
 	</insert>
+	
+	<select id="select_list_by_scd_id" resultType="TicketVO">
+		select * from ${PJ_TICKET}
+		where ${scdId} = #{scdId}
+	</select>
 </mapper>

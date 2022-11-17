@@ -9,95 +9,133 @@
 <title>Ticket Pay</title>
 
 <style>
-#tkPeople {
+#tkPeopleDiv {
 	border: 1px solid gray;
 	display: inline-block;
-	width: 300px;
-	margin: 5px;
+	width: auto;
 	padding: 5px;
+	margin-left: 20px;
 }
 
-#tkInfo {
+#tkInfoDiv {
 	border: 1px solid gray;
 	display: inline-block;
-	width: 400px;
-	margin: 5px;
+	width: auto;
 	padding: 5px;
+	margin-bottom: 40px;
 }
 
 #screen {
 	border: 1px solid gray;
-	width: 600px;
-	margin-left: 120px;
+	width: 50%;
+	margin: auto;
 	text-align: center;
 }
-</style>
 
+#seatBtnsDiv {
+	margin: auto;
+	text-align: center;
+}
+
+.seatBtnUnselected {
+	width: 40px;
+	background-color: lightgray;
+	margin: 3px;
+}
+
+.seatBtnSelected {
+	width: 40px;
+	background-color: red;
+	color: white;
+	margin: 3px;
+}
+
+.seatBtnBooked {
+	width: 40px;
+	margin: 3px;
+}
+</style>
 </head>
 <body>
 
 	<h2>티켓 예매</h2>
-	<form action="pay" method="post">
-		mmbId<input type="text" name="mmbId" value="${vo.mmbId }" readonly>
-		scdId<input type="number" name="scdId" value="${vo.scdId }" readonly>
-		mvId<input type="number" name="mvId" value="${vo.mvId }" readonly>
-		mvTitle<input type="text" name="mvTitle" value="${vo.mvTitle }" readonly>
-		brcName<input type="text" name="brcName" value="${vo.brcName }" readonly>
-		scdDate<input type="text" name="scdDate" value="${vo.scdDate }" readonly>
-		scdTime<input type="number" name="scdTime" value="${vo.scdTime }" readonly>
-		scdTheater<input type="number" name="scdTheater" value="${vo.scdTheater }" readonly>
-		scdSeatTotal<input type="number" name="scdSeatTotal" value="${vo.scdSeatTotal }" readonly>
-		scdSeatBookedCnt<input type="number" name="scdSeatBookedCnt" value="${vo.scdSeatBookedCnt }" readonly>
-		scdPrice<input type="number" name="scdPrice" value="${vo.scdPrice }" readonly>
-	</form>
-	<hr>
-	<div id="tkPeople" >
-		일반&emsp;
-		<input type="radio" name="adult" value="0" checked>0
-		<input type="radio" name="adult" value="1">1
-		<input type="radio" name="adult" value="2">2
-		<input type="radio" name="adult" value="3">3
-		<input type="radio" name="adult" value="4">4
-		<input type="radio" name="adult" value="5">5
-		<input type="radio" name="adult" value="6">6
-		<br>
-		청소년
-		<input type="radio" name="adolescent" value="0" checked>0
-		<input type="radio" name="adolescent" value="1">1
-		<input type="radio" name="adolescent" value="2">2
-		<input type="radio" name="adolescent" value="3">3
-		<input type="radio" name="adolescent" value="4">4
-		<input type="radio" name="adolescent" value="5">5
-		<input type="radio" name="adolescent" value="6">6
-		<input type="text" name="tkPeopleList" readonly>
-		<br>
-		좌석&emsp;
-		<input type="text" name="tkSeatList" readonly>
-		<br>
-		합계&emsp;
-		<input type="text" name="tkPriceTotal" readonly>
-		
-	</div>
-	<div id="tkInfo" >
-	${vo.mvTitle } <br>
-	${vo.brcName } ${vo.scdTheater }관 <br>
-	${vo.scdDate } | <div id="scdTimeOutput" style="display: inline-block;"></div> <br>
-	남은좌석 ${vo.scdSeatTotal - vo.scdSeatBookedCnt } / ${vo.scdSeatTotal }
-	</div>
-	<br><br>
+	<!-- ScheduleVO에서 넘어온 데이터 -->
+	<input type="hidden" id="mvTitle" value="${vo.mvTitle }">
+	<input type="hidden" id="brcName" value="${vo.brcName }">
+	<input type="hidden" id="scdDate" value="${vo.scdDate }">
+	<input type="hidden" id="scdTime" value="${vo.scdTime }">
+	<input type="hidden" id="scdTheater" value="${vo.scdTheater }">
+	<input type="hidden" id="scdSeatTotal" value="${vo.scdSeatTotal }">
+	<input type="hidden" id="scdSeatBookedCnt" value="${vo.scdSeatBookedCnt }">
+	<input type="hidden" id="scdPrice" value="${vo.scdPrice }">
 	
-	<div id="screen" >SCREEN</div>
-	<div id="seatBtn"></div>
+	<!-- TicketVO로 넘길 데이터 -->
+	<form action="pay" method="post">
+		mmbId 세션으로 넣어야해
+		<input type="text" name="mmbId">
+		<hr>
+		<input type="hidden" name="scdId" value="${vo.scdId }">
+		<input type="hidden" name="mvId" value="${vo.mvId }">
+		<div id="tkPeopleDiv" >
+			일반&emsp;
+			<input type="radio" name="adult" value="0" checked>0
+			<input type="radio" name="adult" value="1">1
+			<input type="radio" name="adult" value="2">2
+			<input type="radio" name="adult" value="3">3
+			<input type="radio" name="adult" value="4">4
+			<input type="radio" name="adult" value="5">5
+			<input type="radio" name="adult" value="6">6
+			<input type="radio" name="adult" value="7">7
+			<input type="radio" name="adult" value="8">8
+			<br>
+			청소년
+			<input type="radio" name="adolescent" value="0" checked>0
+			<input type="radio" name="adolescent" value="1">1
+			<input type="radio" name="adolescent" value="2">2
+			<input type="radio" name="adolescent" value="3">3
+			<input type="radio" name="adolescent" value="4">4
+			<input type="radio" name="adolescent" value="5">5
+			<input type="radio" name="adolescent" value="6">6
+			<input type="radio" name="adolescent" value="7">7
+			<input type="radio" name="adolescent" value="8">8
+			<br>
+			<input type="hidden" name="tkPeopleList" readonly>
+			좌석&emsp;
+			<input type="text" name="tkSeatList" readonly>
+			<br>
+			합계&emsp;
+			<input type="text" name="tkPriceTotal" readonly>
+			<input type="submit" value="결제하기">
+		</div>
+		<div id="tkInfoDiv" >
+			${vo.mvTitle } <br>
+			${vo.brcName } ${vo.scdTheater }관 <br>
+			${vo.scdDate } | <div id="scdTimeOutput" style="display: inline-block;"></div> <br>
+			남은좌석 ${vo.scdSeatTotal - vo.scdSeatBookedCnt } / ${vo.scdSeatTotal }
+		</div>
+	</form>
+		<div id="screen" >SCREEN</div>
+		<div id="seatBtnsDiv"></div>
 	
 	<script>
 	 $(document).ready(function() {
 		 scdTimePrint();
 		 seatBtnPrint();
+		 $('#seatBtnsDiv').children('button').click(function (){
+			 alert('인원을 선택해주세요');
+		 });
 		 $('input[name=adult],input[name=adolescent]').change(function() {
 			 setTkPeopleList();
+			 setTkPriceTotal();
+			 // 인원 변경되면 좌석버튼 초기화
+			 seatBtnPrint();
+			 $('#seatBtnsDiv').children('button').click(function (){
+				 setTkSeatList(this);
+			 });
 		 });
 	 });
 	 
+	 // 상영 시간 인덱스를 시간 문자열로 변환
 	 function scdTimePrint() {
 		 var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30",
 			 	"04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00",
@@ -105,39 +143,99 @@
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 			 	"22:00", "22:30", "23:00", "23:30"];
-		 var scdTime = $('input[name=scdTime]').val();
+		 var scdTime = $('#scdTime').val();
 		 var realTime = timeArray[scdTime];
 		 $('#scdTimeOutput').html(realTime);
 	 }
 	 
+	 // 좌석 버튼 반복문 출력
 	 function seatBtnPrint() {
-		 var scdSeatTotal = $('input[name=scdSeatTotal]').val();
-		 
-		 var seatBtnItems = '';
-		 for (var i = 1; i <= scdSeatTotal/10; i++) {
-			 seatBtnItems += i;
-			 if (i != scdSeatTotal/10) {
-				 seatBtnItems += ','
+		 console.log('seatBtnPrint() 호출');
+		 var scdSeatTotal = $('#scdSeatTotal').val();
+		 var seatArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'k', 'L', 'M', 'N'];
+		 var seatBtns = '<br>';
+		 for (var i = 0; i < 10; i++) {
+			 for (var j = 1; j <= scdSeatTotal/10; j++) {
+				 if (j == 3 || j == 8 || j == 16) {
+					 seatBtns += '&emsp;';
+				 }
+				 var seatBtnId = seatArray[i] + j;
+				 seatBtns += '<button class="seatBtnUnselected" id="' + seatBtnId + '">' + seatBtnId + '</button>';
 			 }
+			 seatBtns += '<br>';
 		 }
-		 
-		 var seatBtn = '<br>'
-		 + '<c:forTokens items="A,B,C,D,E,F,G,H,I,J" delims="," var="itemO">'
-		 + '<c:forTokens items="' + seatBtnItems + '" delims="," var="itemI">'
-		 + '<button class="seatBtn" style="width :40px">${itemO}${itemI}</button>'
-		 + '</c:forTokens>'
-		 + '<br>'
-		 + '</c:forTokens>';
-		 console.log(seatBtn);
-		 $('#seatBtn').html(seatBtn);
+		 $('#seatBtnsDiv').html(seatBtns);
+		 $('input[name=tkSeatList]').val('');
+		 getBookedList();
 	 }
 	 
+	 
+	 // DB에서 ajax로 예매된 좌석 불러오기
+	 function getBookedList() {
+		console.log('getBookedList() 호출');
+		var scdId = $('input[name=scdId]').val();
+		var url = '/project/ticket/list/' + scdId;
+		$.getJSON(			
+				url,
+			function(data) {// 서버에서 온 data가 저장되어있음
+				$(data).each(function() {
+					var temp = this.tkSeatList;
+					var tempSplit = temp.split('&');
+					for (var i = 0; i < tempSplit.length; i++) {
+						$('#seatBtnsDiv').children('#' + tempSplit[i]).prop('class', 'seatBtnBooked');
+						$('#seatBtnsDiv').children('#' + tempSplit[i]).prop('disabled', true);
+					}
+				}); // end data.each
+			}
+		); // end getJSON
+	 } // end getBookedList
+	 
+	 // 선택한 인원정보 String 정보로 변환
 	 function setTkPeopleList() {
-		 var adult = $('input[type=radio][name=adult]:checked').val();
-		 var adolescent = $('input[type=radio][name=adolescent]:checked').val();
-		 $('input[name=tkPeopleList]').val('adult='+ adult + '&adolescent='+ adolescent);
+		 var theNumOfAdt = $('input[type=radio][name=adult]:checked').val();
+		 var theNumOfAdsc = $('input[type=radio][name=adolescent]:checked').val();
+		 $('input[name=tkPeopleList]').val('adult='+ theNumOfAdt + '&adolescent='+ theNumOfAdsc);
 	 }
 	 
+	 // 선택한 인원정보에 맞추어  tkPriceTotal 계산
+	 function setTkPriceTotal() {
+		 var theNumOfAdt = $('input[type=radio][name=adult]:checked').val();
+		 var theNumOfAdsc = $('input[type=radio][name=adolescent]:checked').val();
+		 var scdPrice = $('#scdPrice').val();
+		 var tkPriceTotal = scdPrice * theNumOfAdt + (scdPrice - 3000) * theNumOfAdsc;
+		 $('input[name=tkPriceTotal]').val(tkPriceTotal);
+	 }
+	 
+	 // 선택한 좌석을 String 정보로 변환
+	 function setTkSeatList(btn) {
+		 console.log('setTkSeatList(btn) 호출');
+		 var isSelected = $(btn).prop('class');
+		 $(btn).prop('class', isSelected == 'seatBtnSelected' ? 'seatBtnUnselected' : 'seatBtnSelected');
+		 // 선택인원 합계
+		 var theNumOfAdt = $('input[type=radio][name=adult]:checked').val();
+		 var theNumOfAdsc = $('input[type=radio][name=adolescent]:checked').val();
+		 var peopleTotal = Number(theNumOfAdt) + Number(theNumOfAdsc);
+		 // 선택좌석 합계
+		 var seatBtnSelected =  $('#seatBtnsDiv').children('.seatBtnSelected');
+		 var theNumOfSelected = seatBtnSelected.length;
+		 // 선택인원과 좌석 비교
+		 console.log('선택버튼수=' + theNumOfSelected + '인원수=' + peopleTotal);
+		 if (theNumOfSelected <= peopleTotal) {
+			 // 선택한 좌석을 String 정보로 변환
+			 var tkSeatList = '';
+			 for (var i = 0; i < theNumOfSelected; i++) {
+			 	tkSeatList += seatBtnSelected.eq(i).text();
+			 	if (i != theNumOfSelected - 1) {
+			 		tkSeatList += '&';
+			 	}
+			 }
+			 console.log('tkSeatList : ' + tkSeatList);
+			 $('input[name=tkSeatList]').val(tkSeatList);
+		 } else {
+			 $(btn).prop('class', 'seatBtnUnselected');
+			 alert('선택 인원을 초과하였습니다');
+		 }
+	 }
 	</script>
 
 </body>
