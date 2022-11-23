@@ -12,10 +12,6 @@
 	width: 200px;
 	height: 300px;
 }
-.mvItem {
-	width: 80000px;
-	height: 900px;
-}
 
 </style>
 </head>
@@ -23,7 +19,7 @@
 
 	<h2>관리자 영화 목록보기</h2>
 	<c:forEach var="vo" items="${mvList }">
-		<ol class="mvItem">						
+		<ol>						
 			<li style="list-style-type: none">						
 				<img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/>
 				<br>

@@ -27,12 +27,15 @@ public class MovieController {
 	// 업로드용 어노따숑
 	@Resource(name = "uploadPath")
 	private String uploadPath;
-	
-	// 메인페이지에 리스트 예매율or평점 기준 쇼하기
-	@GetMapping("/main") 
-	public void mainGET(Model model, String orderChoice) {
+
+	// 메인페이지에 리스트 예매율or평점 기준 쇼하기 (+문자열검색)
+	@GetMapping("/main")
+	public void mainGET(Model model, String orderChoice, String searchText) {
 		logger.info("mainGET() call");
-		if (orderChoice == "ts") {
+		if (searchText != null) {
+			List<MovieVO> mvList = movieService.readSearch(searchText);
+			model.addAttribute("mvList", mvList);
+		} else if (orderChoice == "ts") {
 			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
 		} else if (orderChoice == "ra") {
@@ -44,7 +47,24 @@ public class MovieController {
 		}
 	}// end mainGet()
 
-	@GetMapping("/admin/list") // 리스트 쇼하기
+	// mvId로 전체 내용 show, -> detail.jsp
+	@GetMapping("/detail")
+	public void detailGET(Model model, int mvId) {
+		logger.info("detailGET() call : mvId = " + mvId);
+		MovieVO vo = movieService.read(mvId);
+		model.addAttribute("vo", vo);
+	}// end detail()
+
+	// 다시보자?????
+	@GetMapping("/review/register")
+	public void reviewRegister(Model model, int mvId) {
+		logger.info("detailGET() call : mvId = " + mvId);
+		MovieVO vo = movieService.read(mvId);
+		model.addAttribute("vo", vo);
+	}// end reviewRegister
+
+// ----------------------------------- admin ---------------------------------------
+	@GetMapping("/admin/list") // 어드민 리스트 쇼하기
 	public void listGET(Model model) {
 		logger.info("listGET() call");
 		List<MovieVO> mvList = movieService.readTs();
@@ -69,21 +89,13 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	} // end registerPost()
 
-	// mvId로 전체 내용 show, -> detail.jsp
-	@GetMapping("/detail")
-	public void detailGET(Model model, int mvId) {
-		logger.info("detailGET() call : mvId = " + mvId);
-		MovieVO vo = movieService.read(mvId);
-		model.addAttribute("vo", vo);
-	}// end detail()
-
 	@GetMapping("/admin/update")
 	public void updateGET(Model model, int mvId) {
-		logger.info("updateGET() call : mvId = " + mvId);		
+		logger.info("updateGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		logger.info(vo.toString());
 		// page로 전송한다
-		model.addAttribute("vo", vo);		
+		model.addAttribute("vo", vo);
 	}// end updateGET()
 
 	@PostMapping("/admin/update") // void 에서 String으로 바꿈
@@ -95,7 +107,7 @@ public class MovieController {
 			// else 부분 return 빠지면 오류 쫘르르를
 			return "redirect:/movie/admin/list";
 		} else {
-			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();			
+			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();
 		}
 	}// end updatePost()
 
@@ -103,34 +115,11 @@ public class MovieController {
 	public String deleteGET(int mvId) {
 		logger.info("deleteGET() call : boardId = " + mvId);
 		int result = movieService.delete(mvId);
-		if(result == 1) {			
+		if (result == 1) {
 			return "redirect:/movie/admin/list";
 		} else {
 			return "redirect:/movie/admin/update?mvId=" + mvId;
 		}
 	}// end deleteGET()
 
-	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
-	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
-			@PathVariable("inputDateEnded") String inputDateEnded) {
-		logger.info("listREST() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
-		List<MovieVO> list = movieService.select(inputDateStarted, inputDateEnded);
-		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
-	}// end listREST()
-
-	@GetMapping("/list/{inputDate}")
-	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
-		logger.info("listREST() 호출 : inputDate = " + inputDate);
-		List<MovieVO> list = movieService.select(inputDate);
-		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
-	}// end listREST()
-
-	// 다시보자
-	@GetMapping("/review/register")
-	public void reviewRegister(Model model, int mvId) {
-		logger.info("detailGET() call : mvId = " + mvId);
-		MovieVO vo = movieService.read(mvId);
-		model.addAttribute("vo", vo);
-	}// end reviewRegister
-	
 }

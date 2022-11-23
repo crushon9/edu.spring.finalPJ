@@ -20,22 +20,43 @@ public class MovieServiceImple implements MovieService {
 		logger.info("create() 호출");
 		return dao.insert(vo);
 	}
+
+	@Override
+	public MovieVO read(int mvId) {
+		logger.info("read() 호출 : mvId = " + mvId);
+		return dao.select(mvId);
+	}
+
 	// 예매율 기준 정렬
 	@Override
 	public List<MovieVO> readTs() {
 		logger.info("readTs() 호출");
 		return dao.selectTs();
 	}
+
 	// 평점기준 정렬
 	@Override
 	public List<MovieVO> readRa() {
 		logger.info("readRa() 호출");
 		return dao.selectRa();
 	}
+
 	@Override
-	public MovieVO read(int mvId) {
-		logger.info("read() 호출 : mvId = " + mvId);
-		return dao.select(mvId);
+	public List<MovieVO> read(String inputDateStarted, String inputDateEnded) {
+		logger.info("select() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		return dao.select(inputDateStarted, inputDateEnded);
+	}
+
+	@Override
+	public List<MovieVO> read(String inputDate) {
+		logger.info("select() 호출 : inputDate = " + inputDate);
+		return dao.select(inputDate);
+	}
+
+	@Override
+	public List<MovieVO> readSearch(String search) {
+		logger.info("readSearch() 호출 : search = " + search);
+		return dao.selectSearch(search);
 	}
 
 	@Override
@@ -48,18 +69,6 @@ public class MovieServiceImple implements MovieService {
 	public int delete(int mvId) {
 		logger.info("delete() 호출 : mvId = " + mvId);
 		return dao.delete(mvId);
-	}
-
-	@Override
-	public List<MovieVO> select(String inputDateStarted, String inputDateEnded) {
-		logger.info("select() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
-		return dao.select(inputDateStarted, inputDateEnded);
-	}
-
-	@Override
-	public List<MovieVO> select(String inputDate) {
-		logger.info("select() 호출 : inputDate = " + inputDate);
-		return dao.select(inputDate);
 	}
 
 }

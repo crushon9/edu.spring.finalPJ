@@ -7,20 +7,26 @@ import edu.spring.project.domain.MovieVO;
 public interface MovieService {
 
 	int create(MovieVO vo);
-	
-	// 예매율기준 정렬
-	List<MovieVO> readTs();	
-	// 평점기준 정렬	
-	List<MovieVO> readRa();
-	
+
 	MovieVO read(int mvId);
+
+	// 예매율기준 정렬
+	List<MovieVO> readTs();
+
+	// 평점기준 정렬
+	List<MovieVO> readRa();
+
+	// 기간 검색
+	List<MovieVO> read(String inputDateStarted, String inputDateEnded);
+
+	// 날짜 검색
+	List<MovieVO> read(String inputDate);
+
+	// 문자열 검색
+	List<MovieVO> readSearch(String search);
 
 	int update(MovieVO vo);
 
 	int delete(int mvId);
-	
-	List<MovieVO> select(String inputDateStarted, String inputDateEnded);
-
-	List<MovieVO> select(String inputDate);
 
 }

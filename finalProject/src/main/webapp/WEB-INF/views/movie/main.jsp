@@ -8,11 +8,6 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style type="text/css">
-.main {
-	padding: 150px 150px 200px 200px;
-	margin-right: 50px;
-	margin-left: 50px;
-}
 
 .imageSpace {
 	width: 200px;
@@ -30,6 +25,7 @@
 	
 	<!-- <a href="/project/member/login"><input type="button" value="로그인"></a> -->
 	
+	<!-- 로그인 -->
 	<c:if test="${empty mmbIdSession }">
 		<button type="button" id="btn_login">login</button>
 	</c:if>
@@ -39,48 +35,52 @@
 		<button type="button" id="btn_logout">logout</button>
 		<button type="button" id="btn_mypage">mypage</button>
 	</c:if>
+	<hr>
 	
-	<div class="main">		
-		<hr style="width : 85%; margin-left : 0;"><br>
-			<div id="chart" style=" float: right; margin-right: 255px;"><!-- 접근 -->
-				<select id="orderChoice">
-					<option value="ts">예매율순</option><!-- 조건절로 바꾸기 -->
-					<option value="ra">평점순</option>			
-				</select>
-				<a id="orderUrl" href="">
-				<input type="button" value="go!">
-				</a>
-				
-				<!--  go url로 보내기 -->
-			</div>
-			<br><br>
-			<div>
-			<c:forEach var="vo" items="${mvList }">
-				<ol class="mvItem">						
-					<li style="list-style-type: none">
-						<div>
-							<a href="movieDetail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
-						</div>
-						<div class="mvTitle">
-							<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
-						</div>
-						<a href="/project/schedule/list"><input id="mvTicket" type="button" value="예매하기"></a>							
-						<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="영화상세정보"></a>	
-					</li>				
-				</ol>											
-			</c:forEach>
-		</div>
-	</div>
+	<!-- 영화 정렬 -->
+	<select id="orderChoice">
+		<option value="ts">예매율순</option><!-- 조건절로 바꾸기 -->
+		<option value="ra">평점순</option>			
+	</select>
+	<a id="orderUrl" href=""><input type="button" value="Go"></a>
+	<br><br>
+	
+	<!-- 영화 검색 -->
+	<input id="searchText" type="text"><a id="searchUrl" href=""><input id="searchBtn" type="button" value="검색"></a>
+	
+	<!-- 영화 목록 출력 -->
+	<c:forEach var="vo" items="${mvList }">
+		<ol class="mvItem">						
+			<li style="list-style-type: none">
+				<div>
+					<a href="movieDetail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
+				</div>
+				<div class="mvTitle">
+					<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
+				</div>
+				<a href="/project/schedule/list"><input id="mvTicket" type="button" value="예매하기"></a>							
+				<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="영화상세정보"></a>	
+			</li>				
+		</ol>											
+	</c:forEach>
 	
 	<script type="text/javascript">			
 		$(document).ready(function() {
+			// 정렬
 			$('#orderChoice').click(function() {
 				var orderChoice = $('#orderChoice').val();
 				var orderUrl = 'main?orderChoice=' + orderChoice;
-				console.log(orderUrl);
 				$('#orderUrl').prop("href", orderUrl);
 			});//end orderChoice_click();
+			
+			// 검색
+			$('#searchBtn').click(function() {
+				var searchText = $('#searchText').val();
+				var searchUrl = 'main?searchText=' + searchText;
+				$('#searchUrl').prop("href", searchUrl);
+			});//end orderChoice_click();
 		
+			// 로그인
 			$('#btn_login').click(function(){
 				var target = encodeURI('/project/member/login');
 				location = target;	
