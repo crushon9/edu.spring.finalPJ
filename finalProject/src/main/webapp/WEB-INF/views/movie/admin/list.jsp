@@ -18,6 +18,11 @@
 <body>
 
 	<h2>관리자 영화 목록보기</h2>
+	<!-- 영화 검색 -->
+	제목<input id="searchText" type="text"><a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="검색"></a><br>
+	시작일<input id="inputDateStarted" type="date">종료일<input id="inputDateEnded" type="date"><a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="검색"></a>
+	
+	<!-- 영화 목록 출력 -->
 	<c:forEach var="vo" items="${mvList }">
 		<ol>						
 			<li style="list-style-type: none">						
@@ -29,6 +34,25 @@
 			</li>				
 		</ol>											
 	</c:forEach>
+	
+	<script type="text/javascript">			
+		$(document).ready(function() {
+			// 문자열 검색
+			$('#searchTextBtn').click(function() {
+				var searchText = $('#searchText').val();
+				var searchTextUrl = 'list?searchText=' + searchText;
+				$('#searchTextUrl').prop("href", searchTextUrl);
+			});
+			// 기간 검색
+			$('#searchPeriodBtn').click(function() {
+				var inputDateStarted = $('#inputDateStarted').val();
+				var inputDateEnded = $('#inputDateEnded').val();
+				var searchPeriodUrl = 'list?inputDateStarted=' + inputDateStarted + '&inputDateEnded=' + inputDateEnded;
+				$('#searchPeriodUrl').prop("href", searchPeriodUrl);
+			});
+			
+		});	
+	</script>
 	
 </body>
 </html>

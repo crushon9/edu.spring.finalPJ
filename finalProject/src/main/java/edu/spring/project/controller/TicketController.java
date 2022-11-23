@@ -50,4 +50,9 @@ public class TicketController {
 		List<TicketVO> list = ticketService.readScdId(scdId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}
+
+	@GetMapping("/admin/list")
+	public void listGET(Model model) {
+		logger.info("listGET() »£√‚");
+	}
 }

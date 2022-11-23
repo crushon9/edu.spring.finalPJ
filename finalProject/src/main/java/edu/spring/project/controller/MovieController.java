@@ -65,10 +65,18 @@ public class MovieController {
 
 // ----------------------------------- admin ---------------------------------------
 	@GetMapping("/admin/list") // 어드민 리스트 쇼하기
-	public void listGET(Model model) {
+	public void listGET(Model model, String searchText, String inputDateStarted, String inputDateEnded) {
 		logger.info("listGET() call");
-		List<MovieVO> mvList = movieService.readTs();
-		model.addAttribute("mvList", mvList);
+		if (searchText != null) {
+			List<MovieVO> mvList = movieService.readSearch(searchText);
+			model.addAttribute("mvList", mvList);
+		} else if (inputDateStarted != null && inputDateEnded != null) {
+			List<MovieVO> mvList = movieService.read(inputDateStarted, inputDateEnded);
+			model.addAttribute("mvList", mvList);
+		} else { // 기본값
+			List<MovieVO> mvList = movieService.readTs();
+			model.addAttribute("mvList", mvList);
+		}
 	}// end listGET()
 
 	// 해당 주소jsp 호출

@@ -84,6 +84,9 @@ public class MemberController {
 		logger.info("loginPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
 		if (vo != null) {
+			if (vo.getMmbId().equals("admin")) {
+				return "redirect:/admin/main";
+			}
 			HttpSession session = request.getSession();
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			// TODO : targetURL login 확인필요

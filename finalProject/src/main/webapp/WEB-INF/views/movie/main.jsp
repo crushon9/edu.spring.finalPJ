@@ -78,7 +78,7 @@
 				var searchText = $('#searchText').val();
 				var searchUrl = 'main?searchText=' + searchText;
 				$('#searchUrl').prop("href", searchUrl);
-			});//end orderChoice_click();
+			});//end searchBtn_click();
 		
 			// 로그인
 			$('#btn_login').click(function(){
