@@ -7,19 +7,17 @@ import edu.spring.project.domain.ReviewVO;
 public interface ReviewDAO {
 
 	int insert(ReviewVO vo);
-
-
-	// 평점기준 정렬
-	List<ReviewVO> selectRa();
 	
-	ReviewVO select(int mvId);
+	// list all mvId 기준 정렬
+	List<ReviewVO> select(int mvId);
+	
+	// list all mmbId 기준 정렬
+	List<ReviewVO> select(String mmbId);
+	
+	ReviewVO selectOne(int rvId);
 
 	int update(ReviewVO vo);
 
-	int delete(int mvId);
-	/*
-	 * List<MovieVO> select(String inputDateStarted, String inputDateEnded);
-	 * 
-	 * List<MovieVO> select(String inputDate);
-	 */
+	int delete(ReviewVO vo);
+	
 }

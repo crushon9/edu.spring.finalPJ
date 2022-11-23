@@ -9,14 +9,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(${mvId}, ${mmbId}, ${rvContent}, ${rvRating})
 		values (#{mvId}, #{mmbId}, #{rvContent}, #{rvRating})
 	</insert>
-
-	<!-- select list mmbId 가져오기 --> 
-	<select id="select_list_by_mmb_id" resultType="ReviewVO">
-		select * from
-		${PJ_REVIEW}
-		where ${mmbId} = #{mmbId}
-		order by ${rvDateCreated} desc
-	</select>		
 	
 	<!-- select list mvId 가져오기 --> 
 	<select id="select_list_by_mv_id" resultType="ReviewVO">
@@ -26,6 +18,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${rvDateCreated} desc
 	</select>
 	
+	<!-- select list mmbId 가져오기 --> 
+	<select id="select_list_by_mmb_id" resultType="ReviewVO">
+		select * from
+		${PJ_REVIEW}
+		where ${mmbId} = #{mmbId}
+		order by ${rvDateCreated} desc
+	</select>	
+		
 	<!-- selectOne rvId 가져오기 --> 
 	<select id="select_one_by_rv_id" resultType="ReviewVO">
 		select * from

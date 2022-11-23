@@ -27,5 +27,9 @@ public interface MovieDAO {
 	int update(MovieVO vo);
 
 	int delete(int mvId);
-
+	
+	// rv cnt/rv total == rv avg
+	int updateRating(int amount, int rvRating, int mvId);
+	
+	
 }

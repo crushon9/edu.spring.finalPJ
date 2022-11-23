@@ -72,19 +72,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</update>
 
-	<!-- mvRatingAvg // TODO : score , amount : 취소되면 -1, 결제하면 +1 -->
+	<!-- mvRatingAvg // rvRating(리뷰점수) , amount : 리뷰삭제되면 -1, 등록하면 +1 -->
 	<update id="update_mv_ratings_by_mv_id">
 		update ${PJ_MOVIE}
 		set ${mvRatingTotal} =
-		${mvRatingTotal} + #{score},
-		${mvRatingCnt} = ${mvRatingCnt} +
-		#{amount},
+		${mvRatingTotal} + #{rvRating},
+		${mvRatingCnt} = ${mvRatingCnt} + #{amount},
 		${mvRatingAvg} = ${mvRatingTotal} / ${mvRatingCnt}
 		where
 		${mvId} = #{mvId}
 	</update>
 
-	<!-- ticketSales // TODO : amount : 취소되면 -1, 결제하면 +1 -->
+	<!-- ticketSales // amount : 취소되면 -1, 결제하면 +1 -->
 	<update id="update_mv_ticketsales_by_mv_id">
 		update ${PJ_MOVIE}
 		set ${mvTicketSales} =
@@ -96,5 +95,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${PJ_MOVIE}
 		where ${mvId} = #{mvId}
 	</delete>
-
+	
 </mapper>

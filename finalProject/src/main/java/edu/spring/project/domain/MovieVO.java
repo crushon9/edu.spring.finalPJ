@@ -11,9 +11,9 @@ public class MovieVO {
 	private String mvGenre;
 	private String mvInfo;
 	private int mvTicketSales;
-	private int mvRatingTotal;
-	private int mvRatingCnt;
-	private float mvRatingAvg;
+	private int mvRatingTotal; // rvId&&cnt客 楷包
+	private int mvRatingCnt; // rvId&&cnt客 楷包
+	private float mvRatingAvg; // rvId&&cnt客 楷包
 
 	public MovieVO() {
 	}
