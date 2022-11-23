@@ -12,8 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- select list mvId 가져오기 --> 
 	<select id="select_list_by_mv_id" resultType="ReviewVO">
-		select * from
-		${PJ_REVIEW}
+		select * from ${PJ_REVIEW}
 		where ${mvId} = #{mvId}
 		order by ${rvDateCreated} desc
 	</select>

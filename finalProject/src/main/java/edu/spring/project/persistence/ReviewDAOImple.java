@@ -11,7 +11,7 @@ import edu.spring.project.domain.ReviewVO;
 @Repository
 public class ReviewDAOImple implements ReviewDAO {
 	private static final Logger logger = LoggerFactory.getLogger(ReviewDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.project.movieMapper"; // movie-mapper.xml와 연결
+	private static final String NAMESPACE = "edu.spring.project.reviewMapper"; // movie-mapper.xml와 연결
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -24,7 +24,7 @@ public class ReviewDAOImple implements ReviewDAO {
 
 	@Override
 	public List<ReviewVO> select(int mvId) {
-		logger.info("select() 호출");
+		logger.info("select() 호출 mvId = " + mvId);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_id");
 	}
 	

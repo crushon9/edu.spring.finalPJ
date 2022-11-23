@@ -31,9 +31,9 @@ public class ReviewRESTController {
 
 	// **POST는 테스트 할때 URL(=GET방식)로는 할수 없으니 API tester를 사용해야함
 	@PostMapping // POST : 댓글 입력, void 바꿈
-	public ResponseEntity<Integer> createReview(@RequestBody ReviewVO vo) {
+	public ResponseEntity<Integer> registerREST(@RequestBody ReviewVO vo) {
 		// @RequestBOdy - 클라로부터 전송받은 json 데이터를 자바객체로 변환 어노따숑
-		logger.info("createReview call : vo = " + vo.toString());
+		logger.info("registerREST() call : vo = " + vo.toString());
 		// ResponseEntity<T> : REST 방식에서 데이터를 리턴할 때 쓰이는 객체
 		// - 데이터와 HttpStatus를 전송
 		// - <T> : 보내고자 하는 데이터 타입
@@ -48,13 +48,15 @@ public class ReviewRESTController {
 
 	// responseEntity에 list<replyVO> : 댓글 하나아니다... 리턴타입명명
 	@GetMapping("/all/{mvId}") // GET : 댓글선택(all)/숫자
-	public ResponseEntity<List<ReviewVO>> readReview(@PathVariable("mvId") int mvId) {
+	public ResponseEntity<List<ReviewVO>> listREST(@PathVariable("mvId") int mvId) {
+		logger.info("listREST() call : mvId = " + mvId);
 		List<ReviewVO> list = reviewService.read(mvId);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
 	}// end readReplies
 
 	@PutMapping("/{rvId}") // (PUT)/review/숫자
-	public ResponseEntity<Integer> updateReview(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
+	public ResponseEntity<Integer> updateREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
+		logger.info("updateREST() call : rvId = " + rvId);
 		vo.setRvId(rvId);
 		int result = reviewService.update(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -62,7 +64,8 @@ public class ReviewRESTController {
 
 	// replyServiceImple로 boardId를 보내줘야 replyCnt카운트 -1 가능...
 	@DeleteMapping("/{rvId}") // (DELETE)/replies/숫자
-	public ResponseEntity<Integer> deleteReply(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
+	public ResponseEntity<Integer> deleteREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
+		logger.info("deleteREST() call : rvId = " + rvId);
 		// **인자로 받은 vo의 replyId에는 데이터가 안들어가있음
 		// 왜냐면 jsp에서 replyId는 url로 받아왔고, vo는 data로 받아오기 때문에
 		int result = 0;

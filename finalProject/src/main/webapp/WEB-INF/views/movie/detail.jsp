@@ -47,14 +47,14 @@
 	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
 	<div style="text-align: center;">
 		<input type="hidden" id="mvId" value="${vo.mvId }"> 
-		<input type="text" id="mmbId" value="<%=mmbId %>" readonly> 
+		<input type="text" id="mmbId" value="<%=mmbId %>" > 
 		<input type="text" id="rvContent">
 		<select id="rvRating">                               
-			<option value="1">1<option>
-			<option value="2">2<option>
-			<option value="3">3<option>
-			<option value="4">4<option>
-			<option value="5">5<option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
         </select>
 		<button id="btn_rv_add">후기작성</button>
 	</div>
@@ -69,7 +69,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			getMvInfo();
+			getReviewList();
 			
 			// 버튼 클릭, 후기등록		
 			$('#btn_rv_add').click(function() {
@@ -96,21 +96,20 @@
 					},
 					data : JSON.stringify(obj), // JSON으로 변환
 					success : function(result, status) {
-						console.log('result : ' + result);
-						console.log('HttpStatus : ' + status);
 						if (result == 1) {
 							alert('후기, 평점 작성 굳굳');
-							getMvInfo();
+							getReviewList();
 						}
 					} // end ajax.success.function
 				}); // end ajax
 			}); // end btn_add.click
 			
 			// 영화 후기 전체 출력
-			function getRvInfo() {
-				console.log('getRvInfo() call');
+			function getReviewList() {
+				console.log('getReviewList() call');
 				var mvId = $('#mvId').val();
 				var mmbId = $('#mmbId').val();
+				console.log("mvId : " + mvId);
 				var url = '/project/review/all/' + mvId; // REST API 방식 적용
 				// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 				$.getJSON(			
@@ -119,7 +118,6 @@
 						var rvList = '';
 						$(data).each(function() {
 							var rvDateCreated = new Date(this.rvDateCreated); // string 날짜를 다시 Date로 변환
-							var rvContent = this.rvContent;
 							var rvRating = this.rvRating;
 							var btn_disabled = 'disabled';
 							var readonly = '';
@@ -136,11 +134,11 @@
 								+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
 								+ '&nbsp;&nbsp;'
 								+ '<select class="rvRating"' + disabled + '>'                                
-	                            + '<option value="1">1<option>'
-	                            + '<option value="2">2<option>'
-	                            + '<option value="3">3<option>'
-	                            + '<option value="4">4<option>'
-	                            + '<option value="5">5<option>'
+	                            + '<option value="1">1</option>'
+	                            + '<option value="2">2</option>'
+	                            + '<option value="3">3</option>'
+	                            + '<option value="4">4</option>'
+	                            + '<option value="5">5</option>'
 	                            + '</select>'
 								+ rvDateCreated
 								+ '&nbsp;&nbsp;'

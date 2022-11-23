@@ -33,7 +33,7 @@ public class ReviewServiceImple implements ReviewService {
 
 	@Override
 	public List<ReviewVO> read(int mvId) {
-		logger.info("read() 호출");
+		logger.info("read() 호출 : mvId = " + mvId);
 		return reviewDao.select(mvId);
 	}
 
