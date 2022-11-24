@@ -55,7 +55,6 @@ public class MypageController {
 			//reAttr.addFlashAttribute("update_result", "fail");
 			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
-				
 		
 	}// end updatePost()
 

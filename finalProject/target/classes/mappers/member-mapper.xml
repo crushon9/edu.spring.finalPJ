@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update ${PJ_MEMBER}
 		set ${mmbPassword} = #{mmbPassword}, ${mmbEmail} = #{mmbEmail},
 		${mmbPhone} = #{mmbPhone}, ${mmbBirthday} = #{mmbBirthday}, 
-		${brcId} = #{brcId}}
+		${brcId} = #{brcId}
 		where ${mmbId} = #{mmbId}
 	</update>
 

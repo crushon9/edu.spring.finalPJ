@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Member Update</title>
+<title>Member Update 내가 !!! 바로!!! Admin!!!</title>
 </head>
 <body>
 	
-	<h2>회원 정보 수정</h2>
+	<h2>회원 정보 강제 조작</h2>
 	 
 	  <form action="update" method="post">
 	    <p>아이디</p>
@@ -35,12 +35,12 @@
 			<option value="6">제주</option>
 		</select>
 		<div id="brcListOutput"></div>
-		<br><br><input type="submit" value="수정">
+		<br><br><input type="submit" value="강제수정">
 	  </form>
 	  
 	  <form action="delete" method="post">
 		  <input type="hidden" name="mmbId" value="${vo.mmbId }">
-		  <input type="submit" value="삭제">
+		  <input type="submit" value="강제 탈퇴">
 	  </form>
 	  
 	  <script type="text/javascript">
@@ -48,7 +48,7 @@
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
-				// 선택 지역의 지점 가져오기
+			// 선택 지역의 지점 가져오기
 			function getBrcList() {
 				var brcArea = $('#brcArea').val();
 				var url = '/project/branch/admin/areaList/' + brcArea; // REST API 방식 적용

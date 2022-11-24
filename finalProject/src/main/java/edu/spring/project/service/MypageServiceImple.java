@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import edu.spring.project.domain.MemberVO;
 import edu.spring.project.persistence.MemberDAO;
+import edu.spring.project.persistence.ReviewDAO;
+import edu.spring.project.persistence.TicketDAO;
 // 예매내역 조회, 작성후기보기, 아이디비번찾기(api관련 추후)
 // 멤버 조회, 수정, 삭제
 @Service
@@ -16,11 +18,11 @@ public class MypageServiceImple implements MypageService {
 	@Autowired
 	private MemberDAO memberDao;
 	
-//	@Autowired
-//	private TicketDAO ticketDao;
+	@Autowired
+	private TicketDAO ticketDao;
 	
-//	@Autowired
-//	private ReviewDAO reviewDao;
+	@Autowired
+	private ReviewDAO reviewDao;
 	
 //	@Override
 //	public int create(MemberVO vo) {

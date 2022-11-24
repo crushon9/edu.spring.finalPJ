@@ -81,8 +81,7 @@ public class BranchController {
 		logger.info("areaListREST() call : brcArea = " + brcArea);
 		List<BranchVO> list = branchService.areaList(brcArea);
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // ÀÚµ¿À¸·Î JSONÀ¸·Î ÆÄ½ÌµÊ
-	}
-
+	}//end areaListREST
 
 	@GetMapping("/detail") // branchSer read
 	public void detailGET(Model model, int brcId) {

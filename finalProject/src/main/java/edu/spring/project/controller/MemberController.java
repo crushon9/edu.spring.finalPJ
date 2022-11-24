@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.project.domain.MemberVO;
+import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MemberService;
 
 @Controller
@@ -55,6 +57,32 @@ public class MemberController {
 		}
 	}// end registerPost()
 
+	// update call
+		@GetMapping("/update")
+		public void updateGET(Model model, String mmbId) {
+			logger.info("updateGET() call");
+			MemberVO vo = memberService.read(mmbId);
+			model.addAttribute("vo", vo);
+		}// end updateGet()
+
+		// update data 보내기
+		@PostMapping("/update")
+		public String updatePOST(MemberVO vo) {
+			logger.info("updatePOST() call : vo = " + vo.toString());
+			int result = memberService.update(vo);
+			
+			if(result == 1) {
+				//reAttr.addFlashAttribute("update_result", "success");
+				return "redirect:/member/admin/update";
+			
+			} else {
+				//reAttr.addFlashAttribute("update_result", "fail");
+				return "redirect:/member/admin/update?mmbId=" + vo.getMmbId();
+			}
+			
+		}// end updatePost()
+	
+	
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		// @RequestBody : json 데이터를 자바객체로 변환
@@ -89,6 +117,7 @@ public class MemberController {
 			}
 			HttpSession session = request.getSession();
 			session.setAttribute("mmbIdSession", vo.getMmbId());
+			session.setMaxInactiveInterval(300);
 			// TODO : targetURL login 확인필요
 			String targetURL = (String) session.getAttribute("targetURL");
 			logger.info("targetURL : " + targetURL);
@@ -134,5 +163,14 @@ public class MemberController {
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end confirmMmbId
+
+	@GetMapping("/admin/list") // 어드민 리스트 쇼하기
+	public void listGET(Model model) {
+		logger.info("listGET() call");
+
+		List<MemberVO> list = memberService.read();
+		model.addAttribute("list", list);
+
+	}// end listGET()
 
 }

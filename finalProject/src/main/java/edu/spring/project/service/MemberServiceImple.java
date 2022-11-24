@@ -33,17 +33,17 @@ public class MemberServiceImple implements MemberService {
 		return dao.select(mmbId);
 	}
 
-//	@Override
-//	public int update(MemberVO vo) {
-//		logger.info("update() 호출");
-//		return dao.update(vo);
-//	}
-//
-//	@Override
-//	public int delete(String mmbId) {
-//		logger.info("delete() 호출 : memberId = " + mmbId);
-//		return dao.delete(mmbId);
-//	}
+	@Override
+	public int update(MemberVO vo) {
+		logger.info("update() 호출");
+		return dao.update(vo);
+	}
+
+	@Override
+	public int delete(String mmbId) {
+		logger.info("delete() 호출 : memberId = " + mmbId);
+		return dao.delete(mmbId);
+	}
 
 	@Override
 	public MemberVO login(String mmbId, String mmbPassword) {
