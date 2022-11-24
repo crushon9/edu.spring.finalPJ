@@ -71,4 +71,10 @@ public class MovieServiceImple implements MovieService {
 		return dao.delete(mvId);
 	}
 
+	@Override
+	public float readRatingAvg(int mvId) {
+		logger.info("readRatingAvg() »£√‚ : mvId = " + mvId);
+		return dao.selectRatingAvg(mvId);
+	}
+
 }

@@ -3,7 +3,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!-- 포맷형태 바꾸는 taglib 이걸로 서버에서 받아온 날짜포맷변경할거-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +39,7 @@
 	<p>영화 장르 : ${vo.mvGenre}</p>
 	<p>영화 소개 : </p>
 	<p>${vo.mvInfo}</p>
-	<p>영화 평점 : ${vo.mvRatingAvg} / 5.0</p>
+	<div id="mvRatingAvgPrint"></div>
 	<hr>
 
 	<!-- reply 입력 -->
@@ -134,6 +133,7 @@
                             + '<option value="4"' + isSelected4 + '>4</option>'
                             + '<option value="5"' + isSelected5 + '>5</option>'
                             + '</select>'
+                            + '<input type="hidden" class="rvRatingBefore"/>'
                             + '&nbsp;&nbsp;'
 							+ new Date(this.rvDateCreated).toLocaleString()
 							+ '&nbsp;&nbsp;'
@@ -142,6 +142,7 @@
 							+ '</div>';
 					}); // end data.each
 					$('#rvList').html(rvList); // 반복문으로 생성된 html태그 출력
+					mvRatingRefresh();
 				}
 			); // end getJSON
 		} // end getAll
@@ -176,14 +177,13 @@
 		}	
 		
 		// 후기 수정
-		// 원래 등록된 평점을 저장하고, 변경된평점과의 차이를 보내줌
 		function rvUpdate(btn) {
 			console.log('rvUpdate() call');
+			// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
+			// 수정버튼을 처음누르면 readonly 속성제거, 수정확인을 누르면 ajax로 데이터 변경
 			var isReadOnly = $(btn).prevAll('.rvContent').prop('readonly');
-			console.log(isReadOnly);
 			if (isReadOnly == true) { // readonly가 true면
-				// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
-				// readonly 속성제거 후 버튼 변경
+				$(btn).prevAll('.rvRatingBefore').val($(btn).prevAll('.rvRating').val());
 				$(btn).prevAll('.rvContent').removeAttr('readonly');
 				$(btn).prevAll('.rvContent').css({"border-color":"red"});
 				$(btn).prevAll('.rvRating').removeAttr('disabled');
@@ -192,8 +192,10 @@
 				$(btn).nextAll('.btn_rv_delete').hide();
 			} else { // 아니라면 댓글 수정
 				var rvId = $(btn).prevAll('.rvId').val();
+				var mvId = $('#mvId').val();
 				var rvContent = $(btn).prevAll('.rvContent').val();
-				var rvRating = $(btn).prevAll('.rvRating').val();
+				var rvRatingAfter = $(btn).prevAll('.rvRating').val();
+				var rvRatingBefore = $(btn).prevAll('.rvRatingBefore').val();
 				$.ajax({
 					type : 'PUT',
 					url : '/project/review/' + rvId,
@@ -202,8 +204,10 @@
 						'X-HTTP-Method-Override' : 'PUT'
 					},
 					data : JSON.stringify({
+						'mvId' : mvId,
 						'rvContent' : rvContent,
-						'rvRating' : rvRating							
+						'rvRating' : rvRatingAfter,
+						'rvRatingBefore' : rvRatingBefore
 					}),
 					success : function(result) {
 						getReviewList();
@@ -233,7 +237,23 @@
 					getReviewList();							
 				}
 			});
-		}	
+		}
+		
+		function mvRatingRefresh() {
+			console.log('mvRatingRefresh() 호출');
+			var mvId = $('#mvId').val();
+			var url = '/project/movie/mvRatingAvg/' + mvId;
+			$.getJSON(			
+				url,
+				function(data) {
+					console.log(data);
+					var mvRatingAvgText = '영화 평점 : '
+										+ (data).toFixed(2) // 소수점 둘째 반올림
+										+ ' / 5.0';
+					$('#mvRatingAvgPrint').html(mvRatingAvgText); // 반복문으로 생성된 html태그 출력
+				}
+			);
+		}
 			
 	</script>
 

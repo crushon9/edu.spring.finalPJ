@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.spring.project.domain.TicketVO;
+import edu.spring.project.persistence.MovieDAO;
 import edu.spring.project.persistence.ScheduleDAO;
 import edu.spring.project.persistence.TicketDAO;
 
@@ -21,19 +22,25 @@ public class TicketServiceImple implements TicketService {
 	private TicketDAO tkDao;
 	@Autowired
 	private ScheduleDAO scdDao;
-
+	@Autowired
+	private MovieDAO mvDao;
+	
 	@Override
 	@Transactional
 	public int create(TicketVO vo) {
 		logger.info("create() 호출");
-		// 티켓이 예매되면(insert) scdSeatBookedCnt가 예약인원만큼 증가(update)
+		// 티켓이 예매되면(insert)
 		tkDao.insert(vo);
 		logger.info("ticket insert 성공");
+		// 스케줄의 scdSeatBookedCnt가 예약인원만큼 증가(update)
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
 		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
 		int bookedTotal = adult + adolescent;
 		scdDao.updateScdSeatBookedCnt(bookedTotal, vo.getScdId());
-		logger.info("scdSeatBookedCnt update 성공");
+		logger.info("updateScdSeatBookedCnt 성공");
+		// 무비의 mvTicketSales도 증가
+		mvDao.updateTicketSales(bookedTotal, vo.getMvId());
+		logger.info("updateTicketSales 성공");
 		return 1;
 	}
 

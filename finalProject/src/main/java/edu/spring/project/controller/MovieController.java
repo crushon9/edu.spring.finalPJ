@@ -55,13 +55,27 @@ public class MovieController {
 		model.addAttribute("vo", vo);
 	}// end detail()
 
-	// 다시보자?????
-	@GetMapping("/review/register")
-	public void reviewRegister(Model model, int mvId) {
-		logger.info("detailGET() call : mvId = " + mvId);
-		MovieVO vo = movieService.read(mvId);
-		model.addAttribute("vo", vo);
-	}// end reviewRegister
+	@GetMapping("/mvRatingAvg/{mvId}")
+	public ResponseEntity<Float> mvRatingAvgREST(@PathVariable("mvId") int mvId) {
+		logger.info("mvRatingAvgREST() 호출 : mvId = " + mvId);
+		float mvRatingAvg = movieService.readRatingAvg(mvId);
+		return new ResponseEntity<Float>(mvRatingAvg, HttpStatus.OK);
+	}
+
+	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
+	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
+			@PathVariable("inputDateEnded") String inputDateEnded) {
+		logger.info("listREST() 호출 : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		List<MovieVO> list = movieService.read(inputDateStarted, inputDateEnded);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
+	}// end listREST()
+
+	@GetMapping("/list/{inputDate}")
+	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
+		logger.info("listREST() 호출 : inputDate = " + inputDate);
+		List<MovieVO> list = movieService.read(inputDate);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
+	}// end listREST()
 
 // ----------------------------------- admin ---------------------------------------
 	@GetMapping("/admin/list") // 어드민 리스트 쇼하기

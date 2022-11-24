@@ -71,34 +71,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${mvGenre} = #{mvGenre}, ${mvInfo} = #{mvInfo}
 		where ${mvId} = #{mvId}
 	</update>
+	
+	<delete id="delete">
+		delete from ${PJ_MOVIE}
+		where ${mvId} = #{mvId}
+	</delete>
 
-	<!-- mvRatingAvg // rvRating(리뷰점수) , amount : 리뷰삭제되면 -1, 등록하면 +1 -->
-	<update id="update_mv_ratingTC_by_mv_id">
+	<!-- mvRatingAvg // rvRating : 리뷰점수 , amount : 리뷰삭제되면 -1, 등록하면 +1 -->
+	<update id="update_ratingTC_by_mv_id">
 		update ${PJ_MOVIE}
 		set
 		${mvRatingTotal} = ${mvRatingTotal} + #{rvRating},
 		${mvRatingCnt} = ${mvRatingCnt} + #{amount}
 		where ${mvId} = #{mvId}
 	</update>
-	<update id="update_mv_ratingAVG_by_mv_id">
+	<!-- rvAvg = rvCnt / rvTotal -->
+	<update id="update_ratingAVG_by_mv_id">
 		update ${PJ_MOVIE}
 		set
 		${mvRatingAvg} = ${mvRatingTotal} / ${mvRatingCnt}
 		where ${mvId} = #{mvId}
 	</update>
 	
+	<!-- 평균평점 변경시 평점만 가져오는 쿼리 -->
+	<select id="select_ratingAVG_by_mv_id" resultType="Float">
+		select ${mvRatingAvg} from
+		${PJ_MOVIE}
+		where ${mvId} = #{mvId}
+	</select>
 
 	<!-- ticketSales // amount : 취소되면 -1, 결제하면 +1 -->
-	<update id="update_mv_ticketsales_by_mv_id">
+	<update id="update_ticketsales_by_mv_id">
 		update ${PJ_MOVIE}
-		set ${mvTicketSales} =
-		${mvTicketSales} + #{amount}
+		set ${mvTicketSales} = ${mvTicketSales} + #{amount}
 		where ${mvId} = #{mvId}
 	</update>
-
-	<delete id="delete">
-		delete from ${PJ_MOVIE}
-		where ${mvId} = #{mvId}
-	</delete>
 	
 </mapper>

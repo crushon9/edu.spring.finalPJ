@@ -29,4 +29,6 @@ public interface MovieService {
 
 	int delete(int mvId);
 
+	float readRatingAvg(int mvId);
+
 }

@@ -10,18 +10,22 @@ public class ReviewVO {
 	private String rvContent;
 	private int rvRating;
 	private Date rvDateCreated;
+	// rvRating 수정시 movie에 반영하기 위한 임시 멤버변수
+	private int rvRatingBefore;
 
 	public ReviewVO() {
 
 	}
 
-	public ReviewVO(int rvId, int mvId, String mmbId, String rvContent, int rvRating, Date rvDateCreated) {
+	public ReviewVO(int rvId, int mvId, String mmbId, String rvContent, int rvRating, Date rvDateCreated,
+			int rvRatingBefore) {
 		this.rvId = rvId;
 		this.mvId = mvId;
 		this.mmbId = mmbId;
 		this.rvContent = rvContent;
 		this.rvRating = rvRating;
 		this.rvDateCreated = rvDateCreated;
+		this.rvRatingBefore = rvRatingBefore;
 	}
 
 	public int getRvId() {
@@ -72,10 +76,19 @@ public class ReviewVO {
 		this.rvDateCreated = rvDateCreated;
 	}
 
+	public int getRvRatingBefore() {
+		return rvRatingBefore;
+	}
+
+	public void setRvRatingBefore(int rvRatingBefore) {
+		this.rvRatingBefore = rvRatingBefore;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewVO [rvId=" + rvId + ", mvId=" + mvId + ", mmbId=" + mmbId + ", rvContent=" + rvContent
-				+ ", rvRating=" + rvRating + ", rvDateCreated=" + rvDateCreated + "]";
+				+ ", rvRating=" + rvRating + ", rvDateCreated=" + rvDateCreated + ", rvRatingBefore=" + rvRatingBefore
+				+ "]";
 	}
 
 }

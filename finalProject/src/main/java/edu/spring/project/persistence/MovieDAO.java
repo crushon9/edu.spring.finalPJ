@@ -27,9 +27,14 @@ public interface MovieDAO {
 	int update(MovieVO vo);
 
 	int delete(int mvId);
-	
-	// rv cnt/rv total == rv avg
+
+	// 리뷰 결합 _ 영화 평점 변경 
 	int updateRating(int amount, int rvRating, int mvId);
+
+	// 리뷰로 평점이 변경되면, 평점만 가져오기
+	float selectRatingAvg(int mvId);
 	
-	
+	// 티켓 결합 _ 영화 예매수 변경
+	int updateTicketSales(int amount, int mvId);
+
 }

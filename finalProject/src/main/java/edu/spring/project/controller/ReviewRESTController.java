@@ -56,8 +56,8 @@ public class ReviewRESTController {
 
 	@PutMapping("/{rvId}") // (PUT)/review/숫자
 	public ResponseEntity<Integer> updateREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
-		logger.info("updateREST() call : rvId = " + rvId);
 		vo.setRvId(rvId);
+		logger.info("updateREST() call" + vo.toString());
 		int result = reviewService.update(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end put
@@ -65,8 +65,8 @@ public class ReviewRESTController {
 	// replyServiceImple로 boardId를 보내줘야 replyCnt카운트 -1 가능...
 	@DeleteMapping("/{rvId}") // (DELETE)/replies/숫자
 	public ResponseEntity<Integer> deleteREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
-		logger.info("deleteREST() call : rvId = " + rvId);
 		vo.setRvId(rvId);
+		logger.info("deleteREST() call" + vo.toString());
 		// **인자로 받은 vo의 replyId에는 데이터가 안들어가있음
 		// 왜냐면 jsp에서 replyId는 url로 받아왔고, vo는 data로 받아오기 때문에
 		int result = 0;

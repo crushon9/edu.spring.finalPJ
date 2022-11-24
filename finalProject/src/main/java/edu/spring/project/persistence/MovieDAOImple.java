@@ -80,7 +80,7 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}
 
-	@Override // 10.17
+	@Override // 리뷰 결합 _ 영화 평점 변경 
 	public int updateRating(int amount, int rvRating, int mvId) {
 		logger.info("updateRating() : mvId = " + mvId);
 		int result = 0;
@@ -88,11 +88,26 @@ public class MovieDAOImple implements MovieDAO {
 		args.put("amount", amount);
 		args.put("rvRating", rvRating);
 		args.put("mvId", mvId);
-		result = sqlSession.update(NAMESPACE + ".update_mv_ratingTC_by_mv_id", args);
-		if (result != 0) {
-			result = sqlSession.update(NAMESPACE + ".update_mv_ratingAVG_by_mv_id", mvId);
+		result = sqlSession.update(NAMESPACE + ".update_ratingTC_by_mv_id", args);
+		if (result != 0) { // 앞에 변경값 적용이 완료된 후 평균 계산하여 DB 저장
+			result = sqlSession.update(NAMESPACE + ".update_ratingAVG_by_mv_id", mvId);
 		}
 		return result;
-	}// end updateReplyCnt
+	}
+
+	@Override // 리뷰로 평점이 변경되면, 평점만 가져오기
+	public float selectRatingAvg(int mvId) {
+		logger.info("selectRatingAvg() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_ratingAVG_by_mv_id", mvId);
+	}
+
+	@Override
+	public int updateTicketSales(int amount, int mvId) {
+		logger.info("updateTicketSales() 호출 : mvId = " + mvId);
+		Map<String, Integer> args = new HashMap<String, Integer>();
+		args.put("amount", amount);
+		args.put("mvId", mvId);
+		return sqlSession.update(NAMESPACE + ".update_ticketsales_by_mv_id", args);
+	}
 
 }
