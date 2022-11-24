@@ -189,7 +189,7 @@
 	 function getBookedList() {
 		console.log('getBookedList() 호출');
 		var scdId = $('input[name=scdId]').val();
-		var url = '/project/ticket/list/' + scdId;
+		var url = '/project/ticket/listScdId/' + scdId;
 		$.getJSON(			
 				url,
 			function(data) {// 서버에서 온 data가 저장되어있음

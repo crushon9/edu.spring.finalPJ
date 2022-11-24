@@ -45,8 +45,32 @@ public class TicketServiceImple implements TicketService {
 	}
 
 	@Override
-	public List<TicketVO> readScdId(int scdId) {
-		logger.info("readScdId() 호출 : scdId = " + scdId);
-		return tkDao.selectScdId(scdId);
+	public List<TicketVO> read(int scdId) {
+		logger.info("read() 호출 : scdId = " + scdId);
+		return tkDao.select(scdId);
+	}
+
+	@Override
+	public List<TicketVO> read(String mmbId) {
+		logger.info("read() 호출 : mmbId = " + mmbId);
+		return tkDao.select(mmbId);
+	}
+
+	@Transactional
+	@Override
+	public int delete(TicketVO vo) {
+		logger.info("delete() 호출");
+		tkDao.delete(vo.getTkId());
+		logger.info("ticket delete 성공");
+		// 스케줄의 scdSeatBookedCnt가 예약인원만큼 감소
+		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
+		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
+		int bookedTotal = adult + adolescent;
+		scdDao.updateScdSeatBookedCnt(-bookedTotal, vo.getScdId());
+		logger.info("updateScdSeatBookedCnt 성공");
+		// 무비의 mvTicketSales도 감소
+		mvDao.updateTicketSales(-bookedTotal, vo.getMvId());
+		logger.info("updateTicketSales 성공");
+		return 1;
 	}
 }

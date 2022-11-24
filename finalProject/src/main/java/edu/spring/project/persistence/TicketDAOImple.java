@@ -24,9 +24,21 @@ public class TicketDAOImple implements TicketDAO {
 	}
 
 	@Override
-	public List<TicketVO> selectScdId(int scdId) {
-		logger.info("selectScdId() 호출 : scdId = " + scdId);
+	public List<TicketVO> select(int scdId) {
+		logger.info("select() 호출 : scdId = " + scdId);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_scd_id", scdId);
+	}
+
+	@Override
+	public List<TicketVO> select(String mmbId) {
+		logger.info("select() 호출 : mmbId = " + mmbId);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mmb_id", mmbId);
+	}
+
+	@Override
+	public int delete(int tkId) {
+		logger.info("delete() 호출");
+		return sqlSession.insert(NAMESPACE + ".delete", tkId);
 	}
 
 }

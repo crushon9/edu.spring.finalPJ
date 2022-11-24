@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,13 +44,34 @@ public class TicketController {
 			return "redirect:/schedule/list";
 		}
 	}
+	
+	@GetMapping("/list")
+	public void listGET() {
+		logger.info("listGET() 호출");
+	}
 
-	@GetMapping("/list/{scdId}")
-	public ResponseEntity<List<TicketVO>> listREST(@PathVariable("scdId") int scdId) {
-		logger.info("listREST() 호출 : scdId = " + scdId);
-		List<TicketVO> list = ticketService.readScdId(scdId);
+	@GetMapping("/listScdId/{scdId}")
+	public ResponseEntity<List<TicketVO>> listScdIdREST(@PathVariable("scdId") int scdId) {
+		logger.info("listScdIdREST() 호출 : scdId = " + scdId);
+		List<TicketVO> list = ticketService.read(scdId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}
+
+	@GetMapping("/listMmbId/{mmbId}")
+	public ResponseEntity<List<TicketVO>> listMmbIdREST(@PathVariable("mmbId") String mmbId) {
+		logger.info("listMmbIdREST() 호출 : mmbId = " + mmbId);
+		List<TicketVO> list = ticketService.read(mmbId);
+		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
+	}
+// d이거 분리하자
+	@DeleteMapping
+	public ResponseEntity<Integer> deleteREST(TicketVO vo) {
+		logger.info("deleteREST() 호출 " + vo.toString());
+		int result = ticketService.delete(vo);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+
+	// ------------------------오빠 admin 나눠줘
 
 	@GetMapping("/admin/list")
 	public void listGET(Model model) {

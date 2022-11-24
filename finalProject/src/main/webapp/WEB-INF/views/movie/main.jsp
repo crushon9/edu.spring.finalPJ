@@ -33,9 +33,10 @@
 	<c:if test="${not empty mmbIdSession }">
 		<%=mmbIdSession %>님 환영!
 		<button type="button" id="btn_logout">logout</button>
-		<button type="button" id="btn_mypage">mypage</button>
+		<a href="/project/member/mypage/home"><input type="button" value="mypage"></a>
 	</c:if>
 	<hr>
+	
 	
 	<!-- 영화 정렬 -->
 	<select id="orderChoice">

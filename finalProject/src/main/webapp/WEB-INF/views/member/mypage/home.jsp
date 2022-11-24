@@ -15,6 +15,7 @@
 	<br>
 	<br>
 	<a href="update?mmbId=<%=mmbIdSession %>"><input type="button" value="회원정보수정하기"></a>
+	<a href="/project/ticket/list"><input type="button" value="예매티켓 조회"></a>
 	
 </body>
 </html>

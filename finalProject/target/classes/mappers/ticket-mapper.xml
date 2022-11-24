@@ -16,4 +16,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from ${PJ_TICKET}
 		where ${scdId} = #{scdId}
 	</select>
+	
+	<select id="select_list_by_mmb_id" resultType="TicketVO">
+		select * from ${PJ_TICKET}
+		where ${mmbId} = #{mmbId}
+	</select>
+	
+	<!-- 티켓은 수정이 없음 -->
+	
+	<delete id="delete">
+		delete from ${PJ_TICKET}
+		where ${tkId} = #{tkId}
+	</delete>
 </mapper>

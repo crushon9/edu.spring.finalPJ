@@ -7,5 +7,9 @@ public interface TicketService {
 	
 	int create(TicketVO vo);
 	
-	List<TicketVO> readScdId(int scdId);
+	List<TicketVO> read(int scdId);
+	
+	List<TicketVO> read(String mmbId);
+
+	int delete(TicketVO vo);
 }

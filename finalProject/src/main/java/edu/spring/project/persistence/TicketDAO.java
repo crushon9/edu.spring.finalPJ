@@ -7,5 +7,9 @@ public interface TicketDAO {
 
 	int insert(TicketVO vo);
 
-	List<TicketVO> selectScdId(int scdId);
+	List<TicketVO> select(int scdId);
+	
+	List<TicketVO> select(String scdId);
+	
+	int delete(int tkId);
 }

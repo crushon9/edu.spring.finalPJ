@@ -30,51 +30,37 @@ public class ReviewRESTController {
 	private ReviewService reviewService;
 
 	// **POST는 테스트 할때 URL(=GET방식)로는 할수 없으니 API tester를 사용해야함
-	@PostMapping // POST : 댓글 입력, void 바꿈
+	@PostMapping // (POST)/review
 	public ResponseEntity<Integer> registerREST(@RequestBody ReviewVO vo) {
 		// @RequestBOdy - 클라로부터 전송받은 json 데이터를 자바객체로 변환 어노따숑
 		logger.info("registerREST() call : vo = " + vo.toString());
 		// ResponseEntity<T> : REST 방식에서 데이터를 리턴할 때 쓰이는 객체
 		// - 데이터와 HttpStatus를 전송
 		// - <T> : 보내고자 하는 데이터 타입
-		int result = 0;
-		try {
-			result = reviewService.create(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		int result = reviewService.create(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end create
 
 	// responseEntity에 list<replyVO> : 댓글 하나아니다... 리턴타입명명
-	@GetMapping("/all/{mvId}") // GET : 댓글선택(all)/숫자
+	@GetMapping("/{mvId}") // (GET)/review/mvId
 	public ResponseEntity<List<ReviewVO>> listREST(@PathVariable("mvId") int mvId) {
 		logger.info("listREST() call : mvId = " + mvId);
 		List<ReviewVO> list = reviewService.read(mvId);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
 	}// end readReplies
 
-	@PutMapping("/{rvId}") // (PUT)/review/숫자
-	public ResponseEntity<Integer> updateREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
-		vo.setRvId(rvId);
+	@PutMapping // (PUT)/review
+	public ResponseEntity<Integer> updateREST(@RequestBody ReviewVO vo) {
 		logger.info("updateREST() call" + vo.toString());
 		int result = reviewService.update(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end put
 
 	// replyServiceImple로 boardId를 보내줘야 replyCnt카운트 -1 가능...
-	@DeleteMapping("/{rvId}") // (DELETE)/replies/숫자
-	public ResponseEntity<Integer> deleteREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
-		vo.setRvId(rvId);
+	@DeleteMapping // (DELETE)/review
+	public ResponseEntity<Integer> deleteREST(@RequestBody ReviewVO vo) {
 		logger.info("deleteREST() call" + vo.toString());
-		// **인자로 받은 vo의 replyId에는 데이터가 안들어가있음
-		// 왜냐면 jsp에서 replyId는 url로 받아왔고, vo는 data로 받아오기 때문에
-		int result = 0;
-		try {
-			result = reviewService.delete(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		int result = reviewService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end delete
 

@@ -81,7 +81,7 @@
 		function getReviewList() {
 			console.log('getReviewList() call');
 			var mvId = $('#mvId').val();
-			var url = '/project/review/all/' + mvId; // REST API 방식 적용
+			var url = '/project/review/' + mvId; // REST API 방식 적용
 			var mmbId = $('#mmbId').val(); // 수정권한 확인용 세션 검사
 			// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 			$.getJSON(			
@@ -168,10 +168,7 @@
 					'rvRating' : rvRating	
 				}), // JSON으로 파싱
 				success : function(result, status) {
-					if (result == 1) {
-						alert('후기, 평점 작성 굳굳');
-						getReviewList();
-					}
+					getReviewList();
 				} // end ajax.success.function
 			}); // end ajax
 		}	
@@ -198,12 +195,13 @@
 				var rvRatingBefore = $(btn).prevAll('.rvRatingBefore').val();
 				$.ajax({
 					type : 'PUT',
-					url : '/project/review/' + rvId,
+					url : '/project/review',
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'PUT'
 					},
 					data : JSON.stringify({
+						'rvId' : rvId,
 						'mvId' : mvId,
 						'rvContent' : rvContent,
 						'rvRating' : rvRatingAfter,
@@ -224,12 +222,13 @@
 			var rvRating = $(btn).prevAll('.rvRating').val();
 			$.ajax({
 				type : 'DELETE',
-				url : '/project/review/' + rvId, 
+				url : '/project/review',
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'DELETE'
 				},
 				data : JSON.stringify({
+					'rvId' : rvId,
 					'mvId' : mvId,
 					'rvRating' : rvRating	
 				}), // 여기 데이터는 vo에 자동으로 담기는데, rvId가 노필요?
@@ -249,7 +248,7 @@
 					console.log(data);
 					var mvRatingAvgText = '영화 평점 : '
 										+ (data).toFixed(2) // 소수점 둘째 반올림
-										+ ' / 5.0';
+										+ ' / 5.00';
 					$('#mvRatingAvgPrint').html(mvRatingAvgText); // 반복문으로 생성된 html태그 출력
 				}
 			);
