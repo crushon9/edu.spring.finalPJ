@@ -35,8 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- update all -->
 	<update id="update">
 		update ${PJ_REVIEW}
-		set ${rvContent} = #{rvContent}, ${rvRating} = #{rvRating},
-		${rvDateCreated} = #{rvDateCreated}
+		set ${rvContent} = #{rvContent}, ${rvRating} = #{rvRating}
 		where ${rvId} = #{rvId}
 	</update>
 		

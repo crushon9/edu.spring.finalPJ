@@ -25,31 +25,31 @@ public class ReviewDAOImple implements ReviewDAO {
 	@Override
 	public List<ReviewVO> select(int mvId) {
 		logger.info("select() 호출 mvId = " + mvId);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_id");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_id", mvId);
 	}
 	
 	@Override
 	public List<ReviewVO> select(String mmbId) {
-		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mmb_id");
+		logger.info("select() 호출 mmbId = " + mmbId);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mmb_id", mmbId);
 	}
 	
 	@Override
 	public ReviewVO selectOne(int rvId) {
-		logger.info("select() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".select_one_by_rv_id");
+		logger.info("selectOne() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_one_by_rv_id", rvId);
 	}
 
 	@Override
 	public int update(ReviewVO vo) {
-		logger.info("delete() 호출");
-		return sqlSession.delete(NAMESPACE + ".update", vo);
+		logger.info("update() 호출");
+		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
-	public int delete(ReviewVO vo) {
+	public int delete(int rvId) {
 		logger.info("delete() 호출");
-		return sqlSession.delete(NAMESPACE + ".delete", vo);
+		return sqlSession.delete(NAMESPACE + ".delete", rvId);
 	}
 	
 }

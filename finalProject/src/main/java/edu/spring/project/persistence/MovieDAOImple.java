@@ -82,16 +82,17 @@ public class MovieDAOImple implements MovieDAO {
 
 	@Override // 10.17
 	public int updateRating(int amount, int rvRating, int mvId) {
-		logger.info("updateRating() : mvId = " + mvId);		
-		// sqlSession data ¹­±â °Ë»ö ¤¡¤¡
+		logger.info("updateRating() : mvId = " + mvId);
+		int result = 0;
 		Map<String, Integer> args = new HashMap<String, Integer>();
 		args.put("amount", amount);
 		args.put("rvRating", rvRating);
-		args.put("mvId", mvId);		
-		return sqlSession.update(NAMESPACE + ".update_mv_ratings_by_mv_id", args);
-	}//end updateReplyCnt
-	
-	
+		args.put("mvId", mvId);
+		result = sqlSession.update(NAMESPACE + ".update_mv_ratingTC_by_mv_id", args);
+		if (result != 0) {
+			result = sqlSession.update(NAMESPACE + ".update_mv_ratingAVG_by_mv_id", mvId);
+		}
+		return result;
+	}// end updateReplyCnt
+
 }
-
-

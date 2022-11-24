@@ -18,6 +18,6 @@ public interface ReviewDAO {
 
 	int update(ReviewVO vo);
 
-	int delete(ReviewVO vo);
+	int delete(int rvId);
 	
 }

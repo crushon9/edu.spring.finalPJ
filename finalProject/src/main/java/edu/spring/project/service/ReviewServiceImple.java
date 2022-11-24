@@ -27,7 +27,7 @@ public class ReviewServiceImple implements ReviewService {
 		logger.info("create() 호출");
 		reviewDao.insert(vo);
 		movieDao.updateRating(1, vo.getRvRating(), vo.getMvId());
-		logger.info("rvCreate&&rating success");
+		logger.info("리뷰 등록 및 영화 평점 더하기 success");
 		return 1;
 	}
 
@@ -39,29 +39,34 @@ public class ReviewServiceImple implements ReviewService {
 
 	@Override
 	public List<ReviewVO> read(String mmbId) {
-		logger.info("read() 호출");
+		logger.info("read() 호출 : mmbId = " + mmbId);
 		return reviewDao.select(mmbId);
 	}
 		
 	@Override
 	public ReviewVO readOne(int rvId) {
-		logger.info("update() 호출");
+		logger.info("readOne() 호출");
 		return reviewDao.selectOne(rvId);
 	}
-
+	
+	@Transactional
 	@Override
 	public int update(ReviewVO vo) {
-		logger.info("update() 호출");
-		return reviewDao.update(vo);
+		logger.info("update() 호출: rvId=" + vo.getRvId());
+		reviewDao.update(vo);
+		// 리뷰 카운트는 0, 점수는 기존점수와 변경점수의 차를 프론트에서 넘겨줌
+		movieDao.updateRating(0, vo.getRvRating(), vo.getMvId());
+		logger.info("리뷰 삭제 및 영화 평점 수정  success");
+		return 1;
 	}
 	
 	@Transactional // 같이변동 내역
 	@Override
 	public int delete(ReviewVO vo) {
-		logger.info("delete() 호출");
-		reviewDao.delete(vo);
+		logger.info("delete() 호출 : rvId=" + vo.getRvId());
+		reviewDao.delete(vo.getRvId());
 		movieDao.updateRating(-1, -vo.getRvRating(), vo.getMvId());
-		logger.info("rvCreate&&rating success");
+		logger.info("리뷰 삭제 및 영화 평점 빼기  success");
 		return 1;
 	}
 	

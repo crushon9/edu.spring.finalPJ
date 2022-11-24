@@ -66,6 +66,7 @@ public class ReviewRESTController {
 	@DeleteMapping("/{rvId}") // (DELETE)/replies/숫자
 	public ResponseEntity<Integer> deleteREST(@PathVariable("rvId") int rvId, @RequestBody ReviewVO vo) {
 		logger.info("deleteREST() call : rvId = " + rvId);
+		vo.setRvId(rvId);
 		// **인자로 받은 vo의 replyId에는 데이터가 안들어가있음
 		// 왜냐면 jsp에서 replyId는 url로 받아왔고, vo는 data로 받아오기 때문에
 		int result = 0;

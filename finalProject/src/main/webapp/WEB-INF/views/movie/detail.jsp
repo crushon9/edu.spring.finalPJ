@@ -40,188 +40,201 @@
 	<p>영화 장르 : ${vo.mvGenre}</p>
 	<p>영화 소개 : </p>
 	<p>${vo.mvInfo}</p>
-	<p>영화 평점 : ${vo.mvRatingAvg}</p>
+	<p>영화 평점 : ${vo.mvRatingAvg} / 5.0</p>
 	<hr>
 
 	<!-- reply 입력 -->
 	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
-	<div style="text-align: center;">
+	<div style="margin-left: 40px">
 		<input type="hidden" id="mvId" value="${vo.mvId }"> 
-		<input type="text" id="mmbId" value="<%=mmbId %>" > 
-		<input type="text" id="rvContent">
-		<select id="rvRating">                               
+		작성자 <input type="text" id="mmbId" value="1" > 
+		관람평 <input type="text" id="rvContent">
+		평점 <select id="rvRating">                               
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
 			<option value="4">4</option>
 			<option value="5">5</option>
-        </select>
-		<button id="btn_rv_add">후기작성</button>
+	       </select>&emsp;
+		<button id="btn_rv_add">등록</button>
 	</div>
-
 	<hr>
+
 	<!-- 출력할 div공간 마련 reply처럼 끌고와-->
-	<div style="margin-left: 40px">
-		<div id="rvList"></div>
-	</div>
-	<br><br><br>		
+	<div style="margin-left: 40px" id="rvList"></div>		
 		
 
 	<script type="text/javascript">
 		$(document).ready(function() {
 			getReviewList();
-			
-			// 버튼 클릭, 후기등록		
 			$('#btn_rv_add').click(function() {
-				var mvId = $('#mvId').val();
-				var mmbId = $('#mmbId').val();
-				var rvContent = $('#rvContent').val();
-				var rvRating = $('#rvRating').val();
-				
-				var obj = {
-						'mvId' : mvId,
-						'mmbId' : mmbId,
-						'rvContent' : rvContent,
-						'rvRating' : rvRating	
-				};
-				console.log(obj);				
-				
-				// $.ajax로 후기, 평점 등록, 미구현
-				$.ajax({
-					type : 'POST',
-					url : '/project/review', // controller 경로 생성
-					headers : { // 정보를 전송할때는 (GET방식을 빼고는) headers 넣어야함
-						'Content-Type' : 'application/json',
-						'X-HTTP-Method-Override' : 'POST'
-					},
-					data : JSON.stringify(obj), // JSON으로 변환
-					success : function(result, status) {
-						if (result == 1) {
-							alert('후기, 평점 작성 굳굳');
-							getReviewList();
-						}
-					} // end ajax.success.function
-				}); // end ajax
-			}); // end btn_add.click
+				rvAdd();
+			});
+			$('#rvList').on('click', '.rvItem .btn_rv_update', function(){
+				rvUpdate(this);
+			});
+			$('#rvList').on('click', '.rvItem .btn_rv_delete', function(){
+				rvDelete(this);
+			});
+		});
 			
-			// 영화 후기 전체 출력
-			function getReviewList() {
-				console.log('getReviewList() call');
-				var mvId = $('#mvId').val();
-				var mmbId = $('#mmbId').val();
-				console.log("mvId : " + mvId);
-				var url = '/project/review/all/' + mvId; // REST API 방식 적용
-				// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
-				$.getJSON(			
-					url,
-					function(data) {// 서버에서 온 data가 저장되어있음
-						var rvList = '';
-						$(data).each(function() {
-							var rvDateCreated = new Date(this.rvDateCreated); // string 날짜를 다시 Date로 변환
-							var rvRating = this.rvRating;
-							var btn_disabled = 'disabled';
-							var readonly = '';
-							
-							if (mmbId == this.mmbId) { // this : data 컬렉션의 한줄 데이터를 의미
-								btn_disabled = '';
-							}
-							rvList += '<div class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
-								+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
-								+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
-								+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
-								+ this.mmbId // getJSON으로 받아온 data에 저장된 memberId 의미
-								+ '&nbsp;&nbsp;' // space
-								+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
-								+ '&nbsp;&nbsp;'
-								+ '<select class="rvRating"' + disabled + '>'                                
-	                            + '<option value="1">1</option>'
-	                            + '<option value="2">2</option>'
-	                            + '<option value="3">3</option>'
-	                            + '<option value="4">4</option>'
-	                            + '<option value="5">5</option>'
-	                            + '</select>'
-								+ rvDateCreated
-								+ '&nbsp;&nbsp;'
-								+ '<button class="btn_update" ' + btn_disabled + '>수정</button>'
-								+ '<button class="btn_delete" ' + btn_disabled + '>삭제</button>'
-								+ '</div>';
-						}); // end data.each
-						$('#rvList').html(rvList); // 반복문으로 생성된 html태그 출력
-					}
-				); // end getJSON
-			} // end getAll
-			
-			// 수정 버튼을 클릭하면 댓글 수정
-			$('#rvList').on('click', '.rvItem .btn_update', function(){
-				var isReadOnly = $(this).prevAll('.rvContent')&&prevAll('.rvRating').prop('readonly');
-				
-				var rvId = $(this).prevAll('#rvId').val();
-				var rvContent = $(this).prevAll('#rvContent').val();
-				var rvRating = $(this).prevAll('#rvRating').val();
-				if (isReadOnly == true) { // readonly가 true면
-					// readonly 속성제거 후 버튼 변경
-					$(this).prevAll('.rvId').removeAttr('readonly');
-					$(this).prevAll('.rvContent').removeAttr('readonly');
-					$(this).prevAll('.rvContent').css({"border-color":"red"});
-					$(this).prevAll('.rvRating').removeAttr('readonly');
-					$(this).prevAll('.rvRating').css({"border-color":"green"});
-					$(this).text("수정확인");
-					$(this).nextAll('.btn_delete').hide();
-				} else { // 아니라면 댓글 수정
-					// 선택된 댓글의 rvId, rvContent 값을 저장
-					// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
-					var rvId = $(this).prevAll('.rvId').val();
-					var rvContent = $(this).prevAll('.rvContent').val();
-					var rvRating = $(this).prevAll('.rvRating').val();
-					var obj = {
-							'rvContent' : rvContent,
-							'rvRating' : rvRating							
-					};
-										
-					console.log("수정 rvId : " + rvId + ", rvContent : " + rvContent + ", rvRating : " + rvRating);
-										
-					// ajax로 서버로 수정 데이터 전송
-					$.ajax({
-						type : 'PUT',
-						url : '/project/review/' + rvId,
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'PUT'
-						},
-						data : JSON.stringify(obj),
-						success : function(result) {
-							console.log("댓글수정결과 : " + result);
-							getReviewList();
+		// 영화 후기 전체 출력
+		function getReviewList() {
+			console.log('getReviewList() call');
+			var mvId = $('#mvId').val();
+			var url = '/project/review/all/' + mvId; // REST API 방식 적용
+			var mmbId = $('#mmbId').val(); // 수정권한 확인용 세션 검사
+			// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
+			$.getJSON(			
+				url,
+				function(data) {// 서버에서 온 data가 저장되어있음
+					var rvList = '';
+					$(data).each(function() {
+						// DB에 저장된 평점으로 옵션 selected 설정
+						var isSelected1 = '';
+						var isSelected2 = '';
+						var isSelected3 = '';
+						var isSelected4 = '';
+						var isSelected5 = '';
+						switch (this.rvRating) {
+						  case 1:
+							isSelected1 = 'selected';
+						    break;
+						  case 2:
+							isSelected2 = 'selected';
+							break;
+						  case 3:
+							isSelected3 = 'selected';
+						    break;
+						  case 4:
+							isSelected4 = 'selected';
+							break;
+						  case 5:
+							isSelected5 = 'selected';
+							break;
 						}
-					});
+						
+						// 로그인된 세션과 작성자가 일치할때만 수정활성화
+						var isDisabled = 'disabled';
+						if (mmbId == this.mmbId) {
+							isDisabled = '';
+						}
+						rvList += '<div class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
+							+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
+							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
+							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
+							+ this.mmbId // getJSON으로 받아온 data에 저장된 memberId 의미
+							+ '&nbsp;&nbsp;' // space
+							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
+							+ '&nbsp;&nbsp;'
+							+ '<select class="rvRating" disabled>'                               
+                            + '<option value="1"' + isSelected1 + '>1</option>'
+                            + '<option value="2"' + isSelected2 + '>2</option>'
+                            + '<option value="3"' + isSelected3 + '>3</option>'
+                            + '<option value="4"' + isSelected4 + '>4</option>'
+                            + '<option value="5"' + isSelected5 + '>5</option>'
+                            + '</select>'
+                            + '&nbsp;&nbsp;'
+							+ new Date(this.rvDateCreated).toLocaleString()
+							+ '&nbsp;&nbsp;'
+							+ '<button class="btn_rv_update" ' + isDisabled + '>수정</button>'
+							+ '<button class="btn_rv_delete" ' + isDisabled + '>삭제</button>'
+							+ '</div>';
+					}); // end data.each
+					$('#rvList').html(rvList); // 반복문으로 생성된 html태그 출력
 				}
-			}); // end replies.on.btn_update
+			); // end getJSON
+		} // end getAll
 			
-			// 삭제 버튼을 클릭하면 선택된 댓글 삭제
-			$('#rvList').on('click', '.rvItem .btn_delete', function(){
-				var rvId = $(this).prevAll('.rvId').val();
-				console.log("삭제 rvId : " + rvId);
+		// 후기 등록
+		function rvAdd() {
+			console.log('rvAdd() call');
+			var mvId = $('#mvId').val();
+			var mmbId = $('#mmbId').val();
+			var rvContent = $('#rvContent').val();
+			var rvRating = $('#rvRating').val();
+			$.ajax({
+				type : 'POST',
+				url : '/project/review', // controller 경로 생성
+				headers : { // 정보를 전송할때는 (GET방식을 빼고는) headers 넣어야함
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'POST'
+				},
+				data : JSON.stringify({
+					'mvId' : mvId,
+					'mmbId' : mmbId,
+					'rvContent' : rvContent,
+					'rvRating' : rvRating	
+				}), // JSON으로 파싱
+				success : function(result, status) {
+					if (result == 1) {
+						alert('후기, 평점 작성 굳굳');
+						getReviewList();
+					}
+				} // end ajax.success.function
+			}); // end ajax
+		}	
+		
+		// 후기 수정
+		// 원래 등록된 평점을 저장하고, 변경된평점과의 차이를 보내줌
+		function rvUpdate(btn) {
+			console.log('rvUpdate() call');
+			var isReadOnly = $(btn).prevAll('.rvContent').prop('readonly');
+			console.log(isReadOnly);
+			if (isReadOnly == true) { // readonly가 true면
+				// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
+				// readonly 속성제거 후 버튼 변경
+				$(btn).prevAll('.rvContent').removeAttr('readonly');
+				$(btn).prevAll('.rvContent').css({"border-color":"red"});
+				$(btn).prevAll('.rvRating').removeAttr('disabled');
+				$(btn).prevAll('.rvRating').css({"border-color":"red"});
+				$(btn).text("수정확인");
+				$(btn).nextAll('.btn_rv_delete').hide();
+			} else { // 아니라면 댓글 수정
+				var rvId = $(btn).prevAll('.rvId').val();
+				var rvContent = $(btn).prevAll('.rvContent').val();
+				var rvRating = $(btn).prevAll('.rvRating').val();
 				$.ajax({
-					type : 'DELETE',
-					url : '/project/review/' + rvId, 
+					type : 'PUT',
+					url : '/project/review/' + rvId,
 					headers : {
 						'Content-Type' : 'application/json',
-						'X-HTTP-Method-Override' : 'DELETE'
+						'X-HTTP-Method-Override' : 'PUT'
 					},
 					data : JSON.stringify({
-						'rvRating' : rvRating	
-					}), // 여기 데이터는 vo에 자동으로 담기는데, rvId가 노필요?
+						'rvContent' : rvContent,
+						'rvRating' : rvRating							
+					}),
 					success : function(result) {
-						console.log("댓글삭제결과 : " + result);
-						if(result == 1){
-							alert('delete success');
-							getReviewList();							
-						}
+						getReviewList();
 					}
 				});
-			}); // end replies.on.btn_delete
+			}
+		}
+		
+		// 후기 삭제
+		function rvDelete(btn) {
+			console.log('rvDelete() call');
+			var rvId = $(btn).prevAll('.rvId').val();
+			var mvId = $('#mvId').val();
+			var rvRating = $(btn).prevAll('.rvRating').val();
+			$.ajax({
+				type : 'DELETE',
+				url : '/project/review/' + rvId, 
+				headers : {
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'DELETE'
+				},
+				data : JSON.stringify({
+					'mvId' : mvId,
+					'rvRating' : rvRating	
+				}), // 여기 데이터는 vo에 자동으로 담기는데, rvId가 노필요?
+				success : function(result) {
+					getReviewList();							
+				}
+			});
+		}	
 			
-		}); // end document
 	</script>
 
 </body>
