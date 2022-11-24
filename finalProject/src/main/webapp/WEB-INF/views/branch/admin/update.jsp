@@ -6,14 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Branch Register</title>
+<title>Branch update</title>
 </head>
 <body>
 	
-	<h2>관리자 지점 등록</h2>
-	 
-	  <form action="register" method="post">
-	    <p>지역 설정</p>
+	<h2>관리자 지점 수정</h2>
+	  <form action="update" method="post">
+	    <p>지역 수정</p>
 	    <select name="brcArea" >
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
@@ -28,7 +27,7 @@
 	    <input type="number" name="brcTheaterNumbers" id="brcTheaterNumbers" placeholder="지점 극장 수" required="required">
 	 	<p>지점 극장 좌석 수</p>
 		<div id="brcTheaterSeatsOutput"></div>
-		<br><br><input type="submit" value="등록">
+		<br><br><input type="submit" value="수정">
 	  </form>
 	  
 	  <script type="text/javascript">

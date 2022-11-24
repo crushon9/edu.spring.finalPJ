@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Branch Register</title>
+<title>branch list show up</title>
 </head>
 <body>
 	
-	<h2>관리자 지점 등록</h2>
+	<h2>branch list show up</h2>
 	 
 	  <form action="register" method="post">
 	    <p>지역 설정</p>

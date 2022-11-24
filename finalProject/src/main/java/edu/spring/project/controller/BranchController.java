@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.project.domain.BranchVO;
 import edu.spring.project.service.BranchService;
@@ -25,6 +26,38 @@ public class BranchController {
 	@Autowired
 	private BranchService branchService;
 
+	@GetMapping("/admin/register")
+	public void registerGET() {
+		logger.info("registerGET() call");
+	}// end registerGet()
+	// brcTheaterSeats는 배열 S 붙여라 알긋나?
+	
+	@PostMapping("/admin/register") // redirectAttributes ㄱㄱ
+	public void registerPOST(BranchVO vo, RedirectAttributes reAttr) {
+		// RedirectAttributes
+		logger.info("registerPOST() call");
+		logger.info(vo.toString());
+		int result = 0;
+		if(result == 1) {
+			// sending key value 
+			result = branchService.create(vo);
+			
+			logger.info(result + "행 삽입");
+			reAttr.addFlashAttribute("insert_result", "success");
+		//	return "redirect:/board/list";  
+		} else {
+			reAttr.addFlashAttribute("insert_result", "fail");
+		//	return "redirect:/board/register";  
+		}		
+	}// end registerPost()
+	
+	// main page
+	@GetMapping("/list")
+	public void listGET(Model model) {
+		logger.info("list main page call");
+		List<BranchVO> list = branchService.read();
+	}//end list
+	
 	// --admin--
 	@GetMapping("/admin/list")
 	public void listGET(Model model, String searchText, int brcArea) {
@@ -33,11 +66,11 @@ public class BranchController {
 		if (searchText != null) {
 			List<BranchVO> list = branchService.areaList(searchText);
 			model.addAttribute("list", list);
-		} else if (brcArea == 0) {
+		} else if (brcArea == 1) {
 			List<BranchVO> list = branchService.areaList(brcArea);
 			model.addAttribute("list", list);
 		} else {
-			List<BranchVO> list = branchService.areaList(searchText);
+			List<BranchVO> list = branchService.read();
 			model.addAttribute("list", list);
 		}
 		
@@ -50,28 +83,6 @@ public class BranchController {
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}
 
-	@GetMapping("/admin/register")
-	public void registerGET() {
-		logger.info("registerGET() call");
-	}// end registerGet()
-	// brcTheaterSeats는 배열 S 붙여라 알긋나?
-
-	@PostMapping("/admin/register") // redirectAttributes ㄱㄱ
-	public void registerPOST(BranchVO vo) {
-		// RedirectAttributes
-		logger.info("registerPOST() call");
-		logger.info(vo.toString());
-		int result = branchService.create(vo);
-		logger.info(result + "행 삽입");
-//		if(result == 1) {
-//			// sending key value 
-//			reAttr.addFlashAttribute("insert_result", "success");
-//			return "redirect:/board/list"; // 
-//		} else {
-//			reAttr.addFlashAttribute("insert_result", "fail");
-//			return "redirect:/board/register"; // 
-//		}		
-	}// end registerPost()
 
 	@GetMapping("/detail") // branchSer read
 	public void detailGET(Model model, int brcId) {
