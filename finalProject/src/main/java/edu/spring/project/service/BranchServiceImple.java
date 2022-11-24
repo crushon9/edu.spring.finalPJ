@@ -45,9 +45,17 @@ public class BranchServiceImple implements BranchService {
 		return dao.delete(brcId);
 	}
 
+	// 지역번호로 검색
 	@Override
 	public List<BranchVO> areaList(int brcArea) {
 		logger.info("areaList() 호출 : brcArea = " + brcArea);
 		return dao.areaList(brcArea);
+	}
+
+	// 지역명으로 검색
+	@Override
+	public List<BranchVO> areaList(String brcName) {
+		logger.info("areaList() 호출 : brcName = " + brcName);
+		return dao.areaList(brcName);
 	}
 }

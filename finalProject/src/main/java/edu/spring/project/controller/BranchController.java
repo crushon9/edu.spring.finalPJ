@@ -25,11 +25,22 @@ public class BranchController {
 	@Autowired
 	private BranchService branchService;
 
-	@GetMapping("/list")
-	public void listGET(Model model) {
+	// --admin--
+	@GetMapping("/admin/list")
+	public void listGET(Model model, String searchText, int brcArea) {
 		logger.info("listGET() call");
-		List<BranchVO> list = branchService.read();
-		model.addAttribute("list", list);
+		
+		if (searchText != null) {
+			List<BranchVO> list = branchService.areaList(searchText);
+			model.addAttribute("list", list);
+		} else if (brcArea == 0) {
+			List<BranchVO> list = branchService.areaList(brcArea);
+			model.addAttribute("list", list);
+		} else {
+			List<BranchVO> list = branchService.areaList(searchText);
+			model.addAttribute("list", list);
+		}
+		
 	}// end list
 
 	@GetMapping("/areaList/{brcArea}")
@@ -43,7 +54,7 @@ public class BranchController {
 	public void registerGET() {
 		logger.info("registerGET() call");
 	}// end registerGet()
-		// brcTheaterSeats는 배열 S 붙여라 알긋나?
+	// brcTheaterSeats는 배열 S 붙여라 알긋나?
 
 	@PostMapping("/admin/register") // redirectAttributes ㄱㄱ
 	public void registerPOST(BranchVO vo) {
@@ -77,7 +88,7 @@ public class BranchController {
 		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
 	}
 
-	@GetMapping("/update") // branchSer read
+	@GetMapping("/admin/update") // branchSer read
 	public void updateGET(Model model, int brcId) {
 		logger.info("updateGET() call : brcId = " + brcId);
 		BranchVO vo = branchService.read(brcId);
@@ -85,28 +96,27 @@ public class BranchController {
 		model.addAttribute("vo", vo);
 	}// end updateGET
 
-	@PostMapping("/update") // branchSer update
-	public void updatePOST(BranchVO vo, int brcId) {
+	@PostMapping("/admin/update") // branchSer update
+	public String updatePOST(BranchVO vo, int brcId) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = branchService.update(vo);
-//		if(result == 1) {
-//			// list + ?page=
-//			return "redirect:/board/list?page=" + page;
-//			// else 부분 return 빠지면 오류 쫘르르를
-//		} else {
-//			return "redirect:/board/update?boardOd=" + vo.getBoardId();		
-//		}				
+		if(result == 1) {
+			return "redirect:/branch/admin/list";
+			// else 부분 return 빠지면 오류 쫘르르를
+		} else {
+			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();		
+		}				
 	}// end updatePOST
 
-	@PostMapping("/delete") // branchSer delete
-	public void deletePOST(int brcId) {
+	@PostMapping("/admin/delete") // branchSer delete
+	public String deletePOST(int brcId) {
 		logger.info("deletePOST() call : brcId = " + brcId);
 		int result = branchService.delete(brcId);
-//		if(result == 1) {			
-//			return "redirect:/board/list";
-//		} else {
-//			return "redirect:/board/list";
-//		}		
+		if(result == 1) {			
+			return "redirect:/branch/admin/list";
+		} else {
+			return "redirect:/branch/admin/update?brcId=" + brcId;
+		}		
 	}// end delete
 
 }

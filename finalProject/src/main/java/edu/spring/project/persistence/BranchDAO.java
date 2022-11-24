@@ -16,6 +16,9 @@ public interface BranchDAO {
 
 	int delete(int brcId);
 	
+	// 지역번호로 검색
 	List<BranchVO> areaList(int brcArea);
 	
+	// 지역명으로 검색
+	List<BranchVO> areaList(String brcName);
 }

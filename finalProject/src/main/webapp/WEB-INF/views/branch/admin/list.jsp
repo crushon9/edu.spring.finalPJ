@@ -6,11 +6,25 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Branch Register</title>
+<title>Branch list</title>
 </head>
 <body>
 	
-	<h2>관리자 지점 등록</h2>
+	<h2>관리자 지점 목록보기</h2>
+	 
+	<!-- 지점 목록 출력, br con에서 model.addAttribute(list)-->
+	<c:forEach var="vo" items="${list }">
+		<ol>						
+			<li style="list-style-type: none">						
+			
+				<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
+				<a href="update?brcId=${vo.brcId}"><input type="button" value="정보수정"></a>	
+				<a href="delete?brcId=${vo.brcId}"><input type="button" value="정보삭제"></a>	
+			</li>				
+		</ol>											
+	</c:forEach>
+	 
+	 
 	 
 	  <form action="register" method="post">
 	    <p>지역 설정</p>
