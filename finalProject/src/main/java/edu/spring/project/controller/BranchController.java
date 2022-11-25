@@ -1,7 +1,6 @@
 package edu.spring.project.controller;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import edu.spring.project.domain.BranchVO;
 import edu.spring.project.service.BranchService;
 
@@ -32,13 +29,13 @@ public class BranchController {
 		logger.info("registerGET() call");
 	}// end registerGet()
 
-	@PostMapping("/admin/register") 
+	@PostMapping("/admin/register")
 	public void registerPOST(BranchVO vo, RedirectAttributes reAttr) {
 		// RedirectAttributes
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
 		int result = branchService.create(vo);
-		
+
 		if (result == 1) {
 			logger.info(result + "Çà »ðÀÔ");
 			reAttr.addFlashAttribute("insert_result", "success");
@@ -79,7 +76,7 @@ public class BranchController {
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // ÀÚµ¿À¸·Î JSONÀ¸·Î ÆÄ½ÌµÊ
 	}// end areaListREST
 
-	@GetMapping("/detail") 
+	@GetMapping("/detail")
 	public void detailGET(Model model, int brcId) {
 		logger.info("detailGET() call : mvId = " + brcId);
 		BranchVO vo = branchService.readOne(brcId);
@@ -92,7 +89,7 @@ public class BranchController {
 		BranchVO vo = branchService.readOne(brcId);
 		System.out.println(vo);
 		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
-	}//end detailREST
+	}// end detailREST
 
 	@GetMapping("/admin/update")
 	public void updateGET(Model model, int brcId) {
@@ -101,7 +98,7 @@ public class BranchController {
 		model.addAttribute("vo", vo);
 	}// end updateGET
 
-	@PostMapping("/admin/update") 
+	@PostMapping("/admin/update")
 	public String updatePOST(BranchVO vo) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = branchService.update(vo);
@@ -112,7 +109,7 @@ public class BranchController {
 		}
 	}// end updatePOST
 
-	@PostMapping("/admin/delete") 
+	@PostMapping("/admin/delete")
 	public String deletePOST(int brcId) {
 		logger.info("deletePOST() call : brcId = " + brcId);
 		int result = branchService.delete(brcId);

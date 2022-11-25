@@ -14,13 +14,13 @@ import edu.spring.project.domain.MemberVO;
 import edu.spring.project.service.MemberService;
 
 @Controller
-@RequestMapping(value="/admin")
+@RequestMapping(value = "member/admin")
 public class MemberAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberAdminController.class);
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	// admin list show up
 	@GetMapping("/list")
 	public void listGET(Model model) {
@@ -28,5 +28,5 @@ public class MemberAdminController {
 		List<MemberVO> list = memberService.read();
 		model.addAttribute("list", list);
 	}
-	
+
 }

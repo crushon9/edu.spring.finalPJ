@@ -1,13 +1,9 @@
 package edu.spring.project.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import edu.spring.project.domain.MemberVO;
-import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MemberService;
 
 @Controller
@@ -75,7 +69,7 @@ public class MemberController {
 			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
 	}// end updatePost()
-	
+
 	@PostMapping("/delete")
 	public String deletePOST(String mmbId, RedirectAttributes reAttr) {
 		logger.info("deletePOST() call : mmbId = " + mmbId);
@@ -88,7 +82,7 @@ public class MemberController {
 			return "redirect:/member/mypage/update?mmbId=" + mmbId;
 		}
 	}// end deletePost()
-	
+
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		// @RequestBody : json 데이터를 자바객체로 변환
@@ -147,32 +141,5 @@ public class MemberController {
 		session.removeAttribute("mmbIdSession");
 		return "redirect:/movie/main";
 	}// end logout
-
-	// TODO : mmbId confirm 아이디확인, 마지막 단계에서 진행
-	@PostMapping(value = "/confirmMmbId")
-	public ResponseEntity<Integer> confirmMmbId(@RequestBody MemberVO vo) {
-		logger.info("confirmMmbId 호출 : mmbId = " + vo.getMmbId());
-
-		ArrayList<String> mmbIdList = new ArrayList<String>();
-		int result = 0;
-		String mmbId = vo.getMmbId();
-		List<MemberVO> memberVOList = memberService.read();
-		for (MemberVO memberVO : memberVOList) {
-			mmbIdList.add(memberVO.getMmbId());
-		}
-		if (mmbIdList.contains(mmbId)) {
-			result = 1;
-		} else {
-			result = 0;
-		}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end confirmMmbId
-
-	@GetMapping("/admin/list") // 어드민 리스트 쇼하기
-	public void listGET(Model model) {
-		logger.info("listGET() call");
-		List<MemberVO> list = memberService.read();
-		model.addAttribute("list", list);
-	}// end listGET()
 
 }

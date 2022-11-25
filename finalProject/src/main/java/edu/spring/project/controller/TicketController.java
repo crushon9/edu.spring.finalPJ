@@ -45,7 +45,7 @@ public class TicketController {
 			return "redirect:/schedule/list";
 		}
 	}
-	
+
 	@GetMapping("/list")
 	public void listGET() {
 		logger.info("listGET() »£√‚");
