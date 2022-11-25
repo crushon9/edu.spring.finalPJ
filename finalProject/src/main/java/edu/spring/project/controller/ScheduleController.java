@@ -44,6 +44,11 @@ public class ScheduleController {
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("/admin/list")
+	public void adminListGET() {
+		logger.info("adminListGET() »£√‚");
+	}
 
 	@GetMapping("/list")
 	public void listGET() {
