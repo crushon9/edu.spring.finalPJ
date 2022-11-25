@@ -13,7 +13,7 @@
 	<h2>회원 정보 수정</h2>
 	 
 	  <form action="update" method="post">
-	    <p>아이디</p>
+	    <p>아이디</p>0
 	    <input type="text" name="mmbId" value="${vo.mmbId }" readonly>	    
 	    <p>패스워드</p>
 	    <input type="password" name="mmbPassword" value="${vo.mmbPassword }">
@@ -51,7 +51,7 @@
 				// 선택 지역의 지점 가져오기
 			function getBrcList() {
 				var brcArea = $('#brcArea').val();
-				var url = '/project/branch/admin/areaList/' + brcArea; // REST API 방식 적용
+				var url = '/project/branch/areaList/' + brcArea; // REST API 방식 적용
 				$.getJSON(
 					url,
 					function(data) {

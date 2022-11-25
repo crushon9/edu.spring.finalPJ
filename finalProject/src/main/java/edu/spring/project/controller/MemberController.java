@@ -65,7 +65,7 @@ public class MemberController {
 			model.addAttribute("vo", vo);
 		}// end updateGet()
 
-		// update data 보내기
+		// update data 보내기, vo에 담긴 거 확인해보기
 		@PostMapping("/update")
 		public String updatePOST(MemberVO vo) {
 			logger.info("updatePOST() call : vo = " + vo.toString());
