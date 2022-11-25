@@ -55,18 +55,19 @@ public class BranchController {
 	public void listGET(Model model) {
 		logger.info("list main page call");
 		List<BranchVO> list = branchService.read();
+		model.addAttribute("list", list);
 	}// end list
 
 	// --admin--
 	@GetMapping("/admin/list")
-	public void listGET(Model model, String searchText, int brcArea) {
+	public void listGET(Model model, String searchText, Integer brcArea) {
 		logger.info("listGET() call");
 
 		if (searchText != null) {
-			List<BranchVO> list = branchService.areaList(searchText);
+			List<BranchVO> list = branchService.read(searchText);
 			model.addAttribute("list", list);
-		} else if (brcArea == 1) {
-			List<BranchVO> list = branchService.areaList(brcArea);
+		} else if (brcArea != null) {
+			List<BranchVO> list = branchService.read(brcArea);
 			model.addAttribute("list", list);
 		} else {
 			List<BranchVO> list = branchService.read();
@@ -75,24 +76,24 @@ public class BranchController {
 
 	}// end list
 
-	@GetMapping("/areaList/{brcArea}")
-	public ResponseEntity<List<BranchVO>> areaListREST(@PathVariable("brcArea") int brcArea) {
-		logger.info("areaListREST() call : brcArea = " + brcArea);
-		List<BranchVO> list = branchService.areaList(brcArea);
+	@GetMapping("/list/{brcArea}")
+	public ResponseEntity<List<BranchVO>> listREST(@PathVariable("brcArea") int brcArea) {
+		logger.info("listREST() call : brcArea = " + brcArea);
+		List<BranchVO> list = branchService.read(brcArea);
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}// end areaListREST
 
 	@GetMapping("/detail") // branchSer read
 	public void detailGET(Model model, int brcId) {
 		logger.info("detailGET() call : mvId = " + brcId);
-		BranchVO vo = branchService.read(brcId);
+		BranchVO vo = branchService.readOne(brcId);
 		model.addAttribute("vo", vo);
 	}// end detailGet
 
 	@GetMapping("/detail/{brcId}")
 	public ResponseEntity<BranchVO> detailREST(@PathVariable("brcId") int brcId) {
 		logger.info("detailREST() call : brcId = " + brcId);
-		BranchVO vo = branchService.read(brcId);
+		BranchVO vo = branchService.readOne(brcId);
 		System.out.println(vo);
 		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
 	}
@@ -100,7 +101,7 @@ public class BranchController {
 	@GetMapping("/admin/update") // branchSer read
 	public void updateGET(Model model, int brcId) {
 		logger.info("updateGET() call : brcId = " + brcId);
-		BranchVO vo = branchService.read(brcId);
+		BranchVO vo = branchService.readOne(brcId);
 		// page로 전송한다
 		model.addAttribute("vo", vo);
 	}// end updateGET

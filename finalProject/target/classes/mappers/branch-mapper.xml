@@ -23,18 +23,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${PJ_BRANCH}
 		where ${brcId} = #{brcId}
 	</select>
-		
-	<update id="update">
-		update ${PJ_BRANCH}
-		set ${brcArea} = #{brcArea}, ${brcName} = #{brcName},
-		${brcTheaterNumbers} = #{brcTheaterNumbers}, ${brcTheaterSeats} = #{brcTheaterSeats}
-		where ${brcId} = #{brcId}
-	</update>
-
-	<delete id="delete"> 
-		delete from ${PJ_BRANCH}
-		where ${brcId} = #{brcId}
-	</delete>
 
 	<!-- 지역번호로 검색 -->
 	<select id="select_list_by_brc_area" resultType="BranchVO">		
@@ -49,5 +37,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${PJ_BRANCH}
 		where ${brcName} like '%' || #{brcArea} || '%'
 	</select>
+	
+	<update id="update">
+		update ${PJ_BRANCH}
+		set ${brcArea} = #{brcArea}, ${brcName} = #{brcName},
+		${brcTheaterNumbers} = #{brcTheaterNumbers}, ${brcTheaterSeats} = #{brcTheaterSeats}
+		where ${brcId} = #{brcId}
+	</update>
+
+	<delete id="delete"> 
+		delete from ${PJ_BRANCH}
+		where ${brcId} = #{brcId}
+	</delete>
 	
 </mapper>

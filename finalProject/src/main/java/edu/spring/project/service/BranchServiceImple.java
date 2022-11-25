@@ -28,9 +28,23 @@ public class BranchServiceImple implements BranchService {
 	}
 
 	@Override
-	public BranchVO read(int brcId) {
-		logger.info("read() 호출 : brcId = " + brcId);
-		return dao.select(brcId);
+	public BranchVO readOne(int brcId) {
+		logger.info("readOne() 호출 : brcId = " + brcId);
+		return dao.selectOne(brcId);
+	}
+	
+	// 지역번호로 검색
+	@Override
+	public List<BranchVO> read(int brcArea) {
+		logger.info("read() 호출 : brcArea = " + brcArea);
+		return dao.select(brcArea);
+	}
+	
+	// 지역명으로 검색
+	@Override
+	public List<BranchVO> read(String brcName) {
+		logger.info("read() 호출 : brcName = " + brcName);
+		return dao.select(brcName);
 	}
 
 	@Override
@@ -45,17 +59,4 @@ public class BranchServiceImple implements BranchService {
 		return dao.delete(brcId);
 	}
 
-	// 지역번호로 검색
-	@Override
-	public List<BranchVO> areaList(int brcArea) {
-		logger.info("areaList() 호출 : brcArea = " + brcArea);
-		return dao.areaList(brcArea);
-	}
-
-	// 지역명으로 검색
-	@Override
-	public List<BranchVO> areaList(String brcName) {
-		logger.info("areaList() 호출 : brcName = " + brcName);
-		return dao.areaList(brcName);
-	}
 }

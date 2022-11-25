@@ -51,7 +51,7 @@
 		// 선택 지역의 지점 가져오기
 		function getBrcList() {
 			var brcArea = $('#brcArea').val();
-			var url = '/project/branch/areaList/' + brcArea; // REST API 방식 적용
+			var url = '/project/branch/list/' + brcArea; // REST API 방식 적용
 			$.getJSON(
 				url,
 				function(data) {

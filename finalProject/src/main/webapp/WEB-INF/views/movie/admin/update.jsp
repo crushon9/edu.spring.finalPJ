@@ -78,7 +78,7 @@
 						str += '<div>'
 							+ '<img src="/project/img/display?fileName='
 							+ data
-							+ '" width="400px"/>'
+							+ '" width="200px"/>'
 							+ '</div>';
 						$('.file-drop').html(str);
 						$('#mvImage').val(data);

@@ -10,15 +10,16 @@ public interface BranchDAO {
 
 	List<BranchVO> select();
 
-	BranchVO select(int brcId);
+	BranchVO selectOne(int brcId);
 
+	// 지역번호로 검색
+	List<BranchVO> select(int brcArea);
+	
+	// 지역명으로 검색
+	List<BranchVO> select(String brcName);
+	
 	int update(BranchVO vo);
 
 	int delete(int brcId);
 	
-	// 지역번호로 검색
-	List<BranchVO> areaList(int brcArea);
-	
-	// 지역명으로 검색
-	List<BranchVO> areaList(String brcName);
 }

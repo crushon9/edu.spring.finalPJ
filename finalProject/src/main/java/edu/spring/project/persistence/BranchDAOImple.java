@@ -31,9 +31,22 @@ public class BranchDAOImple implements BranchDAO {
 	}
 
 	@Override
-	public BranchVO select(int brcId) {
-		logger.info("select() 호출 : boardId = " + brcId);
+	public BranchVO selectOne(int brcId) {
+		logger.info("selectOne() 호출 : brcId = " + brcId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_brc_id", brcId);
+	}
+	// 지역번호로 검색
+	@Override
+	public List<BranchVO> select(int brcArea) {
+		logger.info("select() 호출 : brcArea = " + brcArea);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area", brcArea);
+	}
+	
+	// 지역명으로 검색
+	@Override
+	public List<BranchVO> select(String brcName) {
+		logger.info("select() 호출 : brcName = " + brcName);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_name", brcName);
 	}
 
 	@Override
@@ -48,17 +61,4 @@ public class BranchDAOImple implements BranchDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", brcId);
 	}
 
-	// 지역번호로 검색
-	@Override
-	public List<BranchVO> areaList(int brcArea) {
-		logger.info("areaList() 호출 : brcArea = " + brcArea);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area", brcArea);
-	}
-
-	// 지역명으로 검색
-	@Override
-	public List<BranchVO> areaList(String brcName) {
-		logger.info("areaList() 호출 : brcName = " + brcName);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_name", brcName);
-	}
 }

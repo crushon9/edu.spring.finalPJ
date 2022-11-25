@@ -68,7 +68,7 @@
 	  // 선택 지역의 지점 가져오기
 	  function getBrcList() {
 		var brcArea = $('#brcArea').val();
-		var url = '/project/branch/areaList/' + brcArea;
+		var url = '/project/branch/list/' + brcArea;
 		$.getJSON( // $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 			url,
 			function(data) {
