@@ -33,10 +33,9 @@
 	<c:if test="${not empty mmbIdSession }">
 		<%=mmbIdSession %>님 환영!
 		<button type="button" id="btn_logout">logout</button>
-		<a href="/project/member/mypage/home"><input type="button" value="mypage"></a>
+		<a href="/project/member/mypage/main"><input type="button" value="mypage"></a>
 	</c:if>
 	<hr>
-	
 	
 	<!-- 영화 정렬 -->
 	<select id="orderChoice">
@@ -93,7 +92,7 @@
 			});//end btn_logout_click();	
 			
 			$('#btn_mypage').click(function() {
-				var target = encodeURI('/project/member/mypage/home');
+				var target = encodeURI('/project/member/mypage/main');
 				location = target;							
 			});//end btn_mypage_click();
 			
