@@ -107,7 +107,7 @@
 						    break;
 						  case 4:
 							isSelected4 = 'selected';
-							break;
+							break
 						  case 5:
 							isSelected5 = 'selected';
 							break;
