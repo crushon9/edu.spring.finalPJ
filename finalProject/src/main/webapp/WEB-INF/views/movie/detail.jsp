@@ -60,7 +60,7 @@
 	<hr>
 
 	<!-- 출력할 div공간 마련 reply처럼 끌고와-->
-	<div style="margin-left: 40px" id="rvList"></div>		
+	<div style="margin-left: 40px" id="reviewListOutput"></div>		
 		
 
 	<script type="text/javascript">
@@ -69,10 +69,10 @@
 			$('#btn_rv_add').click(function() {
 				rvAdd();
 			});
-			$('#rvList').on('click', '.rvItem .btn_rv_update', function(){
+			$('#reviewListOutput').on('click', '.rvItem .btn_rv_update', function(){
 				rvUpdate(this);
 			});
-			$('#rvList').on('click', '.rvItem .btn_rv_delete', function(){
+			$('#reviewListOutput').on('click', '.rvItem .btn_rv_delete', function(){
 				rvDelete(this);
 			});
 		});
@@ -141,7 +141,7 @@
 							+ '<button class="btn_rv_delete" ' + isDisabled + '>삭제</button>'
 							+ '</div>';
 					}); // end data.each
-					$('#rvList').html(rvList); // 반복문으로 생성된 html태그 출력
+					$('#reviewListOutput').html(rvList); // 반복문으로 생성된 html태그 출력
 					mvRatingRefresh();
 				}
 			); // end getJSON

@@ -7,6 +7,8 @@ public interface TicketDAO {
 
 	int insert(TicketVO vo);
 
+	List<TicketVO> select();
+
 	List<TicketVO> select(int scdId);
 	
 	List<TicketVO> select(String scdId);

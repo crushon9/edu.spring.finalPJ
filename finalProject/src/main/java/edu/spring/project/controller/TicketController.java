@@ -51,6 +51,13 @@ public class TicketController {
 		logger.info("listGET() 호출");
 	}
 
+	@GetMapping("/listAll")
+	public ResponseEntity<List<TicketVO>> listAllREST() {
+		logger.info("listAll() 호출");
+		List<TicketVO> list = ticketService.read();
+		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
+	}
+
 	@GetMapping("/listScdId/{scdId}")
 	public ResponseEntity<List<TicketVO>> listScdIdREST(@PathVariable("scdId") int scdId) {
 		logger.info("listScdIdREST() 호출 : scdId = " + scdId);

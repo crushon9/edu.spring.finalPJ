@@ -12,6 +12,7 @@ public class TicketVO {
 	private String tkCancelCheck;
 	// Join data
 	private String mvTitle;
+	private String mvImage;
 	private String brcName;
 	private String scdDate;
 	private int scdTime;
@@ -24,8 +25,8 @@ public class TicketVO {
 	}
 
 	public TicketVO(int tkId, String mmbId, int scdId, int mvId, String tkPeopleList, String tkSeatList,
-			int tkPriceTotal, String tkCancelCheck, String mvTitle, String brcName, String scdDate, int scdTime,
-			int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
+			int tkPriceTotal, String tkCancelCheck, String mvTitle, String mvImage, String brcName, String scdDate,
+			int scdTime, int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
 		this.tkId = tkId;
 		this.mmbId = mmbId;
 		this.scdId = scdId;
@@ -35,6 +36,7 @@ public class TicketVO {
 		this.tkPriceTotal = tkPriceTotal;
 		this.tkCancelCheck = tkCancelCheck;
 		this.mvTitle = mvTitle;
+		this.mvImage = mvImage;
 		this.brcName = brcName;
 		this.scdDate = scdDate;
 		this.scdTime = scdTime;
@@ -116,6 +118,14 @@ public class TicketVO {
 		this.mvTitle = mvTitle;
 	}
 
+	public String getMvImage() {
+		return mvImage;
+	}
+
+	public void setMvImage(String mvImage) {
+		this.mvImage = mvImage;
+	}
+
 	public String getBrcName() {
 		return brcName;
 	}
@@ -180,5 +190,5 @@ public class TicketVO {
 				+ ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal=" + scdSeatTotal
 				+ ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + "]";
 	}
-	
+
 }

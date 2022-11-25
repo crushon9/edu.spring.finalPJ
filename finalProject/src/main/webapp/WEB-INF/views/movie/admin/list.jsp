@@ -8,9 +8,10 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>Movie list</title>
 <style type="text/css">
+
 .imageSpace {
-	width: 200px;
-	height: 300px;
+	width: 100px;
+	height: 150px;
 }
 
 </style>
@@ -20,7 +21,9 @@
 	<h2>관리자 영화 목록보기</h2>
 	<!-- 영화 검색 -->
 	제목<input id="searchText" type="text"><a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="검색"></a><br>
-	시작일<input id="inputDateStarted" type="date">종료일<input id="inputDateEnded" type="date"><a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="검색"></a>
+	시작일<input id="inputDateStarted" type="date">
+	종료일<input id="inputDateEnded" type="date">
+	<a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="검색"></a>
 	
 	<!-- 영화 목록 출력 -->
 	<c:forEach var="vo" items="${mvList }">

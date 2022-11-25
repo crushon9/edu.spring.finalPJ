@@ -22,6 +22,12 @@ public class TicketDAOImple implements TicketDAO {
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
+	
+	@Override
+	public List<TicketVO> select() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_list_all");
+	}
 
 	@Override
 	public List<TicketVO> select(int scdId) {

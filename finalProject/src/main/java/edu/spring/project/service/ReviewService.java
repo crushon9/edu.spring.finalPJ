@@ -8,11 +8,11 @@ import edu.spring.project.domain.ReviewVO;
 public interface ReviewService {
 
 	int create(ReviewVO vo);
-	
-	// list all mmbId 기준 정렬
+
+	// list mvId 기준 정렬
 	List<ReviewVO> read(int mvId);
 
-	// list all mvId 기준 정렬
+	// list mmbId 기준 정렬
 	List<ReviewVO> read(String mmbId);
 
 	ReviewVO readOne(int mvId);

@@ -116,7 +116,7 @@
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 			 	"22:00", "22:30", "23:00", "23:30"];
-		  var scheduleList = '<ol>';
+		  var scheduleList = '<ul>';
 			$.getJSON(			
 					url,
 				function(data) {
@@ -143,7 +143,7 @@
 						+ '&scdPrice=' + this.scdPrice + '">'
 						+ '<input type="button" value="예매하기"></a></li>';
 					});
-					scheduleList += '</ol>';
+					scheduleList += '</ul>';
 					$('#scheduleListOutput').html(scheduleList);
 				}
 			); // end getJSON

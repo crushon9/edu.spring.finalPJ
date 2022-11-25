@@ -43,6 +43,12 @@ public class TicketServiceImple implements TicketService {
 		logger.info("updateTicketSales 성공");
 		return 1;
 	}
+	
+	@Override
+	public List<TicketVO> read() {
+		logger.info("read() 호출");
+		return tkDao.select();
+	}
 
 	@Override
 	public List<TicketVO> read(int scdId) {

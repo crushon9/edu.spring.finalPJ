@@ -27,13 +27,13 @@ public class ReviewDAOImple implements ReviewDAO {
 		logger.info("select() 호출 mvId = " + mvId);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_id", mvId);
 	}
-	
+
 	@Override
 	public List<ReviewVO> select(String mmbId) {
 		logger.info("select() 호출 mmbId = " + mmbId);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mmb_id", mmbId);
 	}
-	
+
 	@Override
 	public ReviewVO selectOne(int rvId) {
 		logger.info("selectOne() 호출");
@@ -51,5 +51,5 @@ public class ReviewDAOImple implements ReviewDAO {
 		logger.info("delete() 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", rvId);
 	}
-	
+
 }
