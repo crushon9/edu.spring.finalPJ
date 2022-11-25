@@ -53,7 +53,7 @@ public class MemberController {
 	@GetMapping("/update")
 	public void updateGET(Model model, String mmbId) {
 		logger.info("updateGET() call");
-		MemberVO vo = memberService.read(mmbId);
+		MemberVO vo = memberService.readOne(mmbId);
 		model.addAttribute("vo", vo);
 	}// end updateGet()
 
@@ -89,7 +89,7 @@ public class MemberController {
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
 		// ResponseEntity<T> : REST 방식에서 데이터를 리턴할 때 쓰이는 객체
 		// - 데이터와 HttpStatus를 전송, - <T> : 보내고자 하는 데이터 타입
-		MemberVO vo = memberService.read(mmbId);
+		MemberVO vo = memberService.readOne(mmbId);
 		int result = 0;
 		if (vo == null) {
 			result = 1;

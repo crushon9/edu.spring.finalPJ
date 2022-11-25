@@ -28,9 +28,9 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public MemberVO read(String mmbId) {
+	public MemberVO readOne(String mmbId) {
 		logger.info("read() 호출 : mmbId = " + mmbId);
-		return dao.select(mmbId);
+		return dao.selectOne(mmbId);
 	}
 
 	@Override
@@ -49,6 +49,13 @@ public class MemberServiceImple implements MemberService {
 	public MemberVO login(String mmbId, String mmbPassword) {
 		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
 		return dao.login(mmbId, mmbPassword);
+	}
+	
+	// mmbId로 검색
+	@Override
+	public List<MemberVO> read(String mmbId) {
+		logger.info("read() 호출");
+		return dao.select(mmbId);
 	}
 
 }

@@ -23,10 +23,18 @@ public class MemberAdminController {
 
 	// admin list show up
 	@GetMapping("/list")
-	public void listGET(Model model) {
-		logger.info("list call");
-		List<MemberVO> list = memberService.read();
-		model.addAttribute("list", list);
+	public void listGET(Model model, String searchMmbId) {
+		logger.info("listGet call");
+		if(searchMmbId != null) {
+			// mmbId로 끌어오기
+			List<MemberVO> list = memberService.read(searchMmbId);
+			model.addAttribute("list", list);
+		} else {
+			// 일반 리스트업
+			List<MemberVO> list = memberService.read();
+			model.addAttribute("list", list);
+		}
+		
 	}
 
 }

@@ -9,7 +9,7 @@ public interface MemberDAO {
 
 	List<MemberVO> select();
 
-	MemberVO select(String mmbId);
+	MemberVO selectOne(String mmbId);
 
 	int update(MemberVO vo);
 
@@ -17,6 +17,6 @@ public interface MemberDAO {
 
 	MemberVO login(String mmbId, String mmbPassword);
 	
-	// 예매내역 조회
-	// 후기보기
+	// mmbId로 검색
+	List<MemberVO> select(String mmbId);
 }

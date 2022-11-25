@@ -10,20 +10,40 @@
 </head>
 <body>
 	<h2>admin member list</h2>
-
-	<!-- 영화 목록 출력 -->
+	
+	<!-- 
+	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
+	<input type = "hidden" id="mmbId" value="<%=mmbId %>">
+	 -->
+	 
+	아이디 : 
+	<input id="searchMmbId" type="text">
+	<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="search"></a>
+	
+	<!-- 회원 목록 출력 -->
+		
 	<c:forEach var="vo" items="${list }">
-		<ol>						
-			<li style="list-style-type: none">						
-				회원 아이디 : <Strong class="mmbId">${vo.mmbId }</Strong><br>
-									
-			</li>	
-			<li style="list-style-type: none">						
-				회원 아이디 : <Strong class="mmbId">${vo.mmbId }</Strong><br>
-									
-			</li>			
-		</ol>											
+		<ul>						
+			<li>
+				<Strong>Member ID : ${vo.mmbId }</Strong><br>
+				<input type="hidden" class="brcId" value="${vo.brcId }">
+			</li>
+		</ul>											
 	</c:forEach>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#searchMmbIdBtn').click(function() {
+				var searchMmbId = $('#searchMmbId').val();
+				var searchMmbIdUrl = 'list?searchMmbId=' + searchMmbId;
+				$('#searchMmbIdUrl').prop("href", searchMmbIdUrl);
+				
+			});			
+			
+		});
+	
+	</script>
 
 </body>
 </html>

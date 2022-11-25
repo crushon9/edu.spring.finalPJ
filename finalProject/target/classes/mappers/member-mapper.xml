@@ -18,10 +18,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId})
 	</insert>
 
+	<!-- 전체리스트 보여주기 -->
 	<select id="select_list_all" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		order by ${mmbId} DESC
+	</select>
+	
+	<!-- searchMmbId로 검색 -->
+	<select id="select_list_by_mmb_id" resultType="MemberVO">
+		select * from
+		${PJ_MEMBER}
+		where ${mmbId} like '%'|| #{mmbId} || '%'
 	</select>
 	
 	<!-- 회원정보조회, 아이중복체크 -->

@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Branch list for admin</title>
+<title>Branch admin list</title>
 </head>
 <body>
 	
-	<h2>Branch list for admin</h2>
+	<h2>Branch admin list</h2>
 	 <!-- 영화 검색 -->
 	지점 : 
 	<input id="searchText" type="text"> 

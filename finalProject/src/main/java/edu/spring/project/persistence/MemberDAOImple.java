@@ -34,7 +34,7 @@ public class MemberDAOImple implements MemberDAO{
 	}//end select List
 
 	@Override
-	public MemberVO select(String mmbId) {
+	public MemberVO selectOne(String mmbId) {
 		logger.info("select() 호출 : mmbId = " + mmbId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mmb_id", mmbId);
 	}//end select
@@ -59,5 +59,12 @@ public class MemberDAOImple implements MemberDAO{
 		args.put("mmbPassword", mmbPassword);
 		return sqlSession.selectOne(NAMESPACE + ".login", args);		
 	}//end login()
+
+	// mmbId로 검색
+	@Override
+	public List<MemberVO> select(String mmbId) {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mmb_id", mmbId);
+	}
 	
 }
