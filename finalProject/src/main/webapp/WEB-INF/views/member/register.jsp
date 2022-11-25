@@ -27,7 +27,7 @@
 		<!-- 관리자 여부 : DB에서 권한요청으로 set 1 -->
 		<p>선호지점</p>
 	  	<select id="brcArea" name="brcArea" >
-	  		<option value="1">지역선택</option>
+	  		<option value="0">지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
 			<option value="3">부산/경상</option>

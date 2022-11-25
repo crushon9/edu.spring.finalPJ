@@ -14,7 +14,7 @@
 	 
 	  	<p>상영 지점</p>
 	  	<select id="brcArea" name="brcArea" >
-	  		<option>지역선택</option>
+	  		<option value="0">지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
 			<option value="3">부산/경상</option>
