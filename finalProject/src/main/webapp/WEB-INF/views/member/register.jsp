@@ -26,7 +26,7 @@
 	    <input type="date" name="mmbBirthday" value="1990-07-16">
 		<!-- 관리자 여부 : DB에서 권한요청으로 set 1 -->
 		<p>선호지점</p>
-	  	<select id="brcArea" name="brcArea" >
+	  	<select id="brcArea">
 	  		<option value="0">지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>

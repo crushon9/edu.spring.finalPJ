@@ -63,19 +63,31 @@ public class MemberController {
 		model.addAttribute("vo", vo);
 	}// end updateGet()
 
-	// TODO : update data 보내기, vo에 담긴 거 확인해보기
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = memberService.update(vo);
-		if(result == 1) {
+		if (result == 1) {
 			reAttr.addFlashAttribute("update_result", "success");
-			return "redirect:/member/admin/update";
+			return "redirect:/member/mypage/main";
 		} else {
 			reAttr.addFlashAttribute("update_result", "fail");
-			return "redirect:/member/admin/update?mmbId=" + vo.getMmbId();
+			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
 	}// end updatePost()
+	
+	@PostMapping("/delete")
+	public String deletePOST(String mmbId, RedirectAttributes reAttr) {
+		logger.info("deletePOST() call : mmbId = " + mmbId);
+		int result = memberService.delete(mmbId);
+		if (result == 1) {
+			reAttr.addFlashAttribute("delete_result", "success");
+			return "redirect:/movie/main";
+		} else {
+			reAttr.addFlashAttribute("delete_result", "fail");
+			return "redirect:/member/mypage/update?mmbId=" + mmbId;
+		}
+	}// end deletePost()
 	
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {

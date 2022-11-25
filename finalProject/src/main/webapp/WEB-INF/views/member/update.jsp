@@ -6,14 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Member Update</title>
+<title>My page Update</title>
 </head>
 <body>
 	
 	<h2>회원 정보 수정</h2>
 	 
 	  <form action="update" method="post">
-	    <p>아이디</p>0
+	    <p>아이디</p>
 	    <input type="text" name="mmbId" value="${vo.mmbId }" readonly>	    
 	    <p>패스워드</p>
 	    <input type="password" name="mmbPassword" value="${vo.mmbPassword }">
@@ -25,7 +25,7 @@
 	    <input type="date" name="mmbBirthday" value="${vo.mmbBirthday }">
 		<!-- 관리자 여부 : DB에서 권한요청으로 set 1 -->
 		<p>선호지점</p>
-	  	<select id="brcArea" name="brcArea" >
+	  	<select id="brcArea">
 	  		<option value="0">지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
@@ -55,15 +55,12 @@
 				$.getJSON(
 					url,
 					function(data) {
-						var brcList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
+						var brcList = '<select name="brcId" ><option>지점선택</option>';
 						$(data).each(function() {
 							brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
 						});
 						brcList += '</select>'
 						$('#brcListOutput').html(brcList);
-						$('#brcId').change(function() {
-							getBrcVO();
-						});
 					}
 				); // end getJSON
 			}

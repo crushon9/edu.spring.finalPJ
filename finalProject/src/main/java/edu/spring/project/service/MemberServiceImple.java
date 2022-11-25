@@ -29,7 +29,7 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public MemberVO read(String mmbId) {
-		logger.info("read() 호출 : memberId = " + mmbId);
+		logger.info("read() 호출 : mmbId = " + mmbId);
 		return dao.select(mmbId);
 	}
 
@@ -41,7 +41,7 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int delete(String mmbId) {
-		logger.info("delete() 호출 : memberId = " + mmbId);
+		logger.info("delete() 호출 : mmbId = " + mmbId);
 		return dao.delete(mmbId);
 	}
 
