@@ -6,15 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>branch list show up</title>
+<title>branch list for user</title>
 </head>
 <body>
 	
-	<h2>branch list show up</h2>
+	<h2>branch list for user</h2>
 	 
 	  <form action="register" method="post">
 	    <p>지역 설정</p>
 	    <select name="brcArea" >
+	    	<option value="0">지역선택</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
 			<option value="3">부산/경상</option>

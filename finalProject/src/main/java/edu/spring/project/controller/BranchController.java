@@ -31,23 +31,19 @@ public class BranchController {
 	public void registerGET() {
 		logger.info("registerGET() call");
 	}// end registerGet()
-		// brcTheaterSeats는 배열 S 붙여라 알긋나?
 
-	@PostMapping("/admin/register") // redirectAttributes ㄱㄱ
+	@PostMapping("/admin/register") 
 	public void registerPOST(BranchVO vo, RedirectAttributes reAttr) {
 		// RedirectAttributes
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
-		int result = 0;
-		result = branchService.create(vo);
+		int result = branchService.create(vo);
+		
 		if (result == 1) {
-			// sending key value
 			logger.info(result + "행 삽입");
 			reAttr.addFlashAttribute("insert_result", "success");
-			// return "redirect:/board/list";
 		} else {
 			reAttr.addFlashAttribute("insert_result", "fail");
-			// return "redirect:/board/register";
 		}
 	}// end registerPost()
 
@@ -60,7 +56,7 @@ public class BranchController {
 	}// end list
 
 	// --admin--
-	@GetMapping("/admin/list")
+	@GetMapping("/admin/list") // null-> Integer brcArea로 변경
 	public void listGET(Model model, String searchText, Integer brcArea) {
 		logger.info("listGET() call");
 
@@ -74,7 +70,6 @@ public class BranchController {
 			List<BranchVO> list = branchService.read();
 			model.addAttribute("list", list);
 		}
-
 	}// end list
 
 	@GetMapping("/list/{brcArea}")
@@ -84,7 +79,7 @@ public class BranchController {
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 자동으로 JSON으로 파싱됨
 	}// end areaListREST
 
-	@GetMapping("/detail") // branchSer read
+	@GetMapping("/detail") 
 	public void detailGET(Model model, int brcId) {
 		logger.info("detailGET() call : mvId = " + brcId);
 		BranchVO vo = branchService.readOne(brcId);
@@ -97,29 +92,27 @@ public class BranchController {
 		BranchVO vo = branchService.readOne(brcId);
 		System.out.println(vo);
 		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
-	}
+	}//end detailREST
 
-	@GetMapping("/admin/update") // branchSer read
+	@GetMapping("/admin/update")
 	public void updateGET(Model model, int brcId) {
 		logger.info("updateGET() call : brcId = " + brcId);
 		BranchVO vo = branchService.readOne(brcId);
-		// page로 전송한다
 		model.addAttribute("vo", vo);
 	}// end updateGET
 
-	@PostMapping("/admin/update") // branchSer update
+	@PostMapping("/admin/update") 
 	public String updatePOST(BranchVO vo) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = branchService.update(vo);
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
-			// else 부분 return 빠지면 오류 쫘르르를
 		} else {
 			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();
 		}
 	}// end updatePOST
 
-	@PostMapping("/admin/delete") // branchSer delete
+	@PostMapping("/admin/delete") 
 	public String deletePOST(int brcId) {
 		logger.info("deletePOST() call : brcId = " + brcId);
 		int result = branchService.delete(brcId);

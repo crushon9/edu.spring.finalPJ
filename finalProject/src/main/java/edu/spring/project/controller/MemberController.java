@@ -30,7 +30,6 @@ import edu.spring.project.service.MemberService;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	// 등록(create), 로그인, 로그아웃, 아이디 찾기?
 	@Autowired
 	private MemberService memberService;
 
@@ -40,56 +39,50 @@ public class MemberController {
 		logger.info("registerGET() call");
 	}// end registerGet()
 
-	// 아니 register.jsp 에서 POST로 전송하면 자동으로 파라미터값이 vo에 담겨서 여기까지 오는거임? ㅇㅇ
 	@PostMapping("/register")
-	public String registerPOST(MemberVO vo) {
-		// RedirectAttributes
-		// - 새로운 경로 위치에 속성값을 전송하는 객체
+	public String registerPOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
 		int result = memberService.create(vo);
-		logger.info(result + "행 삽입");
 
 		if (result == 1) {
+			logger.info(result + "행 삽입");
+			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/member/login";
 		} else {
+			reAttr.addFlashAttribute("insert_result", "fail");
 			return "redirect:/member/register";
 		}
 	}// end registerPost()
 
 	// update call
-		@GetMapping("/update")
-		public void updateGET(Model model, String mmbId) {
-			logger.info("updateGET() call");
-			MemberVO vo = memberService.read(mmbId);
-			model.addAttribute("vo", vo);
-		}// end updateGet()
+	@GetMapping("/update")
+	public void updateGET(Model model, String mmbId) {
+		logger.info("updateGET() call");
+		MemberVO vo = memberService.read(mmbId);
+		model.addAttribute("vo", vo);
+	}// end updateGet()
 
-		// update data 보내기, vo에 담긴 거 확인해보기
-		@PostMapping("/update")
-		public String updatePOST(MemberVO vo) {
-			logger.info("updatePOST() call : vo = " + vo.toString());
-			int result = memberService.update(vo);
-			
-			if(result == 1) {
-				//reAttr.addFlashAttribute("update_result", "success");
-				return "redirect:/member/admin/update";
-			
-			} else {
-				//reAttr.addFlashAttribute("update_result", "fail");
-				return "redirect:/member/admin/update?mmbId=" + vo.getMmbId();
-			}
-			
-		}// end updatePost()
-	
+	// TODO : update data 보내기, vo에 담긴 거 확인해보기
+	@PostMapping("/update")
+	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
+		logger.info("updatePOST() call : vo = " + vo.toString());
+		int result = memberService.update(vo);
+		if(result == 1) {
+			reAttr.addFlashAttribute("update_result", "success");
+			return "redirect:/member/admin/update";
+		} else {
+			reAttr.addFlashAttribute("update_result", "fail");
+			return "redirect:/member/admin/update?mmbId=" + vo.getMmbId();
+		}
+	}// end updatePost()
 	
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		// @RequestBody : json 데이터를 자바객체로 변환
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
 		// ResponseEntity<T> : REST 방식에서 데이터를 리턴할 때 쓰이는 객체
-		// - 데이터와 HttpStatus를 전송
-		// - <T> : 보내고자 하는 데이터 타입
+		// - 데이터와 HttpStatus를 전송, - <T> : 보내고자 하는 데이터 타입
 		MemberVO vo = memberService.read(mmbId);
 		int result = 0;
 		if (vo == null) {
@@ -143,7 +136,7 @@ public class MemberController {
 		return "redirect:/movie/main";
 	}// end logout
 
-	// mmbId confirm 아이디확인
+	// TODO : mmbId confirm 아이디확인, 마지막 단계에서 진행
 	@PostMapping(value = "/confirmMmbId")
 	public ResponseEntity<Integer> confirmMmbId(@RequestBody MemberVO vo) {
 		logger.info("confirmMmbId 호출 : mmbId = " + vo.getMmbId());
@@ -155,7 +148,6 @@ public class MemberController {
 		for (MemberVO memberVO : memberVOList) {
 			mmbIdList.add(memberVO.getMmbId());
 		}
-
 		if (mmbIdList.contains(mmbId)) {
 			result = 1;
 		} else {
@@ -167,10 +159,8 @@ public class MemberController {
 	@GetMapping("/admin/list") // 어드민 리스트 쇼하기
 	public void listGET(Model model) {
 		logger.info("listGET() call");
-
 		List<MemberVO> list = memberService.read();
 		model.addAttribute("list", list);
-
 	}// end listGET()
 
 }
