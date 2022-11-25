@@ -43,7 +43,7 @@
 			<option value="애니메이션">애니메이션</option>
 		</select>
 		<p>영화 소개</p>
-		<textarea rows="4" cols="30" name="mvInfo" placeholder="영화정보" required></textarea>
+		<textarea rows="10" cols="100" name="mvInfo" placeholder="영화정보" required></textarea>
 		<br><br><input type="submit" value="등록">
 	</form>
 
@@ -78,7 +78,7 @@
 						str += '<div>'
 							+ '<img src="/project/img/display?fileName='
 							+ data
-							+ '" width="400px"/>'
+							+ '" width="200px"/>'
 							+ '</div>';
 						$('.file-drop').html(str);
 						$('#mvImage').val(data);
