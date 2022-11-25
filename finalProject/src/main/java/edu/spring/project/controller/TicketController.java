@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import edu.spring.project.domain.TicketVO;
 import edu.spring.project.service.TicketService;
@@ -63,9 +64,9 @@ public class TicketController {
 		List<TicketVO> list = ticketService.read(mmbId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}
-// d이거 분리하자
+
 	@DeleteMapping
-	public ResponseEntity<Integer> deleteREST(TicketVO vo) {
+	public ResponseEntity<Integer> deleteREST(@RequestBody TicketVO vo) {
 		logger.info("deleteREST() 호출 " + vo.toString());
 		int result = ticketService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
