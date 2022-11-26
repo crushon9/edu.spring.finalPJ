@@ -5,15 +5,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>ticket buy list</title>
 </head>
 <body>
-	<h2>유저 티켓 리스트</h2>
-	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
-	<%=mmbId %> 님 환영합니다
-	<input type="hidden" id="mmbId" value="<%=mmbId %>">
-	<div id="ticketListOutput"></div>
+<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
+<h1 id="mainhead">유저 티켓 리스트</h1>
+<div class="grid">
+	<div class="gridleft">
+		<ul>
+			<li><a href="/project/member/update?mmbId=<%=mmbIdSession %>">회원정보 수정</a></li>
+			<li id="active"><a href="/project/ticket/list">예매티켓 조회</a></li>
+			<li><a href="/project/review/list">작성리뷰 조회</a></li>
+		</ul>
+	</div>
+	<div class="gridright">
+		<%=mmbIdSession %> 님 환영합니다
+		<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
+		<div id="ticketListOutput"></div>
+	</div>
+</div>		
 	
 	<script type="text/javascript">
 	  $(document).ready(function() {

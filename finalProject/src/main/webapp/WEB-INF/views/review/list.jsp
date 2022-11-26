@@ -5,16 +5,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>review list</title>
 </head>
 <body>
-	<h2>유저 리뷰 조회</h2>
-	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
-	<%=mmbId %> 님 환영합니다
-	<input type="hidden" id="mmbId" value="<%=mmbId %>">
+<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
+<h1 id="mainhead">유저 리뷰 조회</h1>
+<div class="grid">
+	<div class="gridleft">
+		<ul>
+			<li><a href="/project/member/update?mmbId=<%=mmbIdSession %>">회원정보 수정</a></li>
+			<li><a href="/project/ticket/list">예매티켓 조회</a></li>
+			<li id="active"><a href="/project/review/list">작성리뷰 조회</a></li>
+		</ul>
+	</div>
+	<div class="gridright">
+		<%=mmbIdSession %> 님 환영합니다
+		<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
 	<div id="reviewListOutput"></div>
-	
+	</div>
+</div>	
 	<script type="text/javascript">
 	  $(document).ready(function() {
 		  getUserReviewList();
@@ -69,6 +80,7 @@
 							+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
 							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
+							+ '<img src="/project/img/display?fileName=' + this.mvImage + '" width="50px"/><br>'
 							+ '<strong>' + this.mvTitle + '</strong>'
 							+ '<br>'
 							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'

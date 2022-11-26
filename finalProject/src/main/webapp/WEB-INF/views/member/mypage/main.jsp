@@ -6,17 +6,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>mypage main</title>
 </head>
 <body>
-	<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
-	<%=mmbIdSession %>님 환영!
-	<br>
-	<br>
-	<a href="/project/member/update?mmbId=<%=mmbIdSession %>"><input type="button" value="회원정보 수정"></a><br>
-	<a href="/project/ticket/list"><input type="button" value="예매티켓 조회"></a><br>
-	<a href="/project/review/list"><input type="button" value="작성리뷰 조회"></a>
-	
+<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
+	<h1 id="mainhead">My Page</h1>
+	<div class="grid">
+		<div class="gridleft">
+			<ul>
+				<li><a href="/project/member/update?mmbId=<%=mmbIdSession %>">회원정보 수정</a></li>
+				<li><a href="/project/ticket/list">예매티켓 조회</a></li>
+				<li><a href="/project/review/list">작성리뷰 조회</a></li>
+			</ul>
+		</div>
+		<div class="gridright">
+			<%=mmbIdSession %>님 환영!
+		</div>
+	</div>
 </body>
 </html>

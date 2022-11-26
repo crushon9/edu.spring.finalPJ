@@ -1,0 +1,16 @@
+
+@media(max-width: 600px) {
+  .grid {display: block;}
+  .gridright {border-left: none;}
+}
+@media (min-width: 600px) {
+  .grid {display: grid; grid-template-columns: 160px 1fr;}
+  .gridright {border-left:1px solid gray; padding-left:20px; }
+}
+
+#mainhead {font-size:50px; font-weight: bold; text-align: center; border-bottom:1px solid gray; margin:0px; padding:30px; color: red;}
+#active {color:red; text-decoration:underline; font-weight: bold;}
+.gridleft ul {font-weight: bold; width:110px; padding:30px; margin:0px; font-size: 20px;}
+.gridleft ul li {margin-top: 10px; color: blue; font-size: 25px; list-style-type: square;}
+.gridleft ol {font-weight: bold; width:110px; padding-left: 10px; margin:0px; font-size: 20px;}
+.gridleft ol li {margin: 0px; color: royalblue; font-size: 20px; list-style-type: none;}

@@ -39,8 +39,8 @@
 	
 	<!-- 영화 정렬 -->
 	<select id="orderChoice">
-		<option value="ts">예매율순</option><!-- 조건절로 바꾸기 -->
-		<option value="ra">평점순</option>			
+		<option value="ticketSales">예매율순</option><!-- 조건절로 바꾸기 -->
+		<option value="reviewAvg">평점순</option>			
 	</select>
 	<a id="orderUrl" href=""><input type="button" value="Go"></a>
 	<br><br>
@@ -70,6 +70,8 @@
 			$('#orderChoice').click(function() {
 				var orderChoice = $('#orderChoice').val();
 				var orderUrl = 'main?orderChoice=' + orderChoice;
+				console.log(orderChoice);
+				console.log(orderUrl);
 				$('#orderUrl').prop("href", orderUrl);
 			});//end orderChoice_click();
 			

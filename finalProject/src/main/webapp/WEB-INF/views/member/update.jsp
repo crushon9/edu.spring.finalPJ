@@ -5,13 +5,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>My page Update</title>
 </head>
 <body>
-	
-	<h2>회원 정보 수정</h2>
-	 
+<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
+<h1 id="mainhead">회원 정보 수정</h1>
+<div class="grid">
+	<div class="gridleft">
+		<ul>
+			<li id="active"><a href="/project/member/update?mmbId=<%=mmbIdSession %>">회원정보 수정</a></li>
+			<li><a href="/project/ticket/list">예매티켓 조회</a></li>
+			<li><a href="/project/review/list">작성리뷰 조회</a></li>
+		</ul>
+	</div>
+	<div class="gridright">
 	  <form action="update" method="post">
 	    <p>아이디</p>
 	    <input type="text" name="mmbId" value="${vo.mmbId }" readonly>	    
@@ -42,29 +51,31 @@
 		  <input type="hidden" name="mmbId" value="${vo.mmbId }">
 		  <input type="submit" value="삭제">
 	  </form>
+    </div>
+</div>
 	  
-	  <script type="text/javascript">
-		  $(document).ready(function() {
-			$('#brcArea').change(function() {
-				getBrcList();
-			});
-				// 선택 지역의 지점 가져오기
-			function getBrcList() {
-				var brcArea = $('#brcArea').val();
-				var url = '/project/branch/list/' + brcArea; // REST API 방식 적용
-				$.getJSON(
-					url,
-					function(data) {
-						var brcList = '<select name="brcId" ><option>지점선택</option>';
-						$(data).each(function() {
-							brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
-						});
-						brcList += '</select>'
-						$('#brcListOutput').html(brcList);
-					}
-				); // end getJSON
+ <script type="text/javascript">
+  $(document).ready(function() {
+	$('#brcArea').change(function() {
+		getBrcList();
+	});
+		// 선택 지역의 지점 가져오기
+	function getBrcList() {
+		var brcArea = $('#brcArea').val();
+		var url = '/project/branch/list/' + brcArea; // REST API 방식 적용
+		$.getJSON(
+			url,
+			function(data) {
+				var brcList = '<select name="brcId" ><option>지점선택</option>';
+				$(data).each(function() {
+					brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
+				});
+				brcList += '</select>'
+				$('#brcListOutput').html(brcList);
 			}
-		 });	
-	 </script>
+		); // end getJSON
+	}
+ });	
+</script>
 </body>
 </html>

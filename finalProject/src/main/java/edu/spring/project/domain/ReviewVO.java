@@ -14,12 +14,13 @@ public class ReviewVO {
 	private int rvRatingBefore;
 	// Join data
 	private String mvTitle;
+	private String mvImage;
 
 	public ReviewVO() {
 	}
 
 	public ReviewVO(int rvId, int mvId, String mmbId, String rvContent, int rvRating, Date rvDateCreated,
-			int rvRatingBefore, String mvTitle) {
+			int rvRatingBefore, String mvTitle, String mvImage) {
 		this.rvId = rvId;
 		this.mvId = mvId;
 		this.mmbId = mmbId;
@@ -28,6 +29,7 @@ public class ReviewVO {
 		this.rvDateCreated = rvDateCreated;
 		this.rvRatingBefore = rvRatingBefore;
 		this.mvTitle = mvTitle;
+		this.mvImage = mvImage;
 	}
 
 	public int getRvId() {
@@ -92,6 +94,14 @@ public class ReviewVO {
 
 	public void setMvTitle(String mvTitle) {
 		this.mvTitle = mvTitle;
+	}
+
+	public String getMvImage() {
+		return mvImage;
+	}
+
+	public void setMvImage(String mvImage) {
+		this.mvImage = mvImage;
 	}
 
 	@Override
