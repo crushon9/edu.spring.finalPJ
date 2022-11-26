@@ -16,25 +16,29 @@ public class ScheduleServiceImple implements ScheduleService {
 
 	@Override
 	public int create(ScheduleVO vo) {
-		logger.info("create() ȣ��");
+		logger.info("create() ȣ��");
 		return dao.insert(vo);
 	}
 
 	@Override
 	public ScheduleVO read(int scdId) {
-		logger.info("read() ȣ�� : scdId = " + scdId);
+		logger.info("read() ȣ�� : scdId = " + scdId);
 		return dao.select(scdId);
 	}
 
 	@Override
 	public List<ScheduleVO> read(int mvId, int brcId, String scdDate) {
-		logger.info("read() ȣ�� : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
+		logger.info("read() ȣ�� : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		return dao.select(mvId, brcId, scdDate);
 	}
 
 	@Override
-	public int delete(int scdId) {
-		logger.info("delete() ȣ�� : scdId = " + scdId);
-		return dao.delete(scdId);
+	public int delete(ScheduleVO vo) {
+		logger.info("delete() ȣ�� : scdId = " + vo.getScdId());
+		if (vo.getScdSeatBookedCnt() != 0) {
+			// 예매된 좌석이 있으면 -2 반환
+			return -2;
+		}
+		return dao.delete(vo.getScdId());
 	}
 }

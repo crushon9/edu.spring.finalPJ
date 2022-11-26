@@ -10,8 +10,8 @@
 </head>
 <body>
 
-	<h2>관리자 상영 스케줄</h2>
-
+	<h2>관리자 스케줄 리스트</h2>
+	<a href="/project/schedule/admin/register">스케줄 등록</a>
 	<p>상영 날짜</p>
 	<input type="date" id="dateSelected" name="dateSelected">
 
@@ -123,13 +123,17 @@
 					$(data).each(function() {
 						scheduleList
 						+= '<li>'
-						+ '지점 : ' + this.brcName
-						+ ', 영화 : ' + this.mvTitle
-						+ ', 상영일 : ' + this.scdDate
-						+ ', 상영시간 : ' + timeArray[this.scdTime]
-						+ ', 상영관 : ' + this.scdTheater + '관'
-						+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
-						+ ', 예매가격 : ' + this.scdPrice
+						+ this.brcName
+						+ '_ ' + this.scdTheater + '관'
+						+ ' | ' + this.mvTitle
+						+ ' | ' + this.scdDate
+						+ '_ ' + timeArray[this.scdTime]
+						+ ' | 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
+						+ ' | 예매기준가격 : ' + this.scdPrice
+						+ '&nbsp;&nbsp;'
+						+ '<button class="btn_delete">삭제</button>'
+						+ '<input type="hidden" name="scdId" value="' + this.scdId + '"/>'
+						+ '<input type="hidden" name="scdSeatBookedCnt" value="' + this.scdSeatBookedCnt + '"/>'
 						+ '</li>'
 					});
 					scheduleList += '</ul>';
@@ -137,6 +141,31 @@
 				}
 			); // end getJSON
 	  }
+	  
+	  $('#scheduleListOutput').on('click', 'ul li .btn_delete', function() {
+			var scdId = $(this).nextAll('input[name=scdId]').val();
+			var scdSeatBookedCnt = $(this).nextAll('input[name=scdSeatBookedCnt]').val();
+			$.ajax({
+				type : 'DELETE',
+				url : '/project/schedule/admin/delete',
+				headers : {
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'DELETE'
+				},
+				data : JSON.stringify({
+					'scdId' : scdId,
+					'scdSeatBookedCnt' : scdSeatBookedCnt
+				}),
+				success : function(result) {
+					console.log("스케줄 삭제 결과 : " + result);
+					if (result != -2) {
+						getScheduleList();
+					} else if (result == -2) {
+						alert('예매된 좌석이 있어 삭제 불가합니다!');
+					}
+				}	
+			});
+	    });
   
   	</script>
  </body>

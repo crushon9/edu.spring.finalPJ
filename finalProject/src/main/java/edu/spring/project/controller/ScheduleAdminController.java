@@ -49,15 +49,10 @@ public class ScheduleAdminController {
 		logger.info("listGET() ȣ��");
 	}//end listGET()
 
-	@DeleteMapping("/delete/{scdId}")
-	public ResponseEntity<Integer> deleteREST(@PathVariable("scdId") int scdId) {
-		logger.info("deleteREST() ȣ�� : scdId = " + scdId);
-		int result = 0;
-		try {
-			result = scheduleService.delete(scdId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@DeleteMapping("/delete")
+	public ResponseEntity<Integer> deleteREST(@RequestBody ScheduleVO vo) {
+		logger.info("deleteREST() ȣ�� : scdId = " + vo.getScdId());
+		int result = scheduleService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}//end deleteREST()
 }

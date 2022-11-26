@@ -11,7 +11,7 @@
 <body>
 	
 	<h2>관리자 스케줄 등록</h2>
-	 
+	 <a href="/project/schedule/admin/list">스케줄 조회</a>
 	  	<p>상영 지점</p>
 	  	<select id="brcArea" name="brcArea" >
 	  		<option value="0">지역선택</option>
@@ -151,6 +151,7 @@
 				}
 				scheduleTable += '<input type="hidden" name="scdId"/>'
 				+ '<input type="hidden" name="mvRunningTime" value=""/>'
+				+ '<input type="hidden" name="scdSeatBookedCnt" value=""/>'
 				+ '<input type="hidden" name="scdSeatTotal" value="' + brcTheaterSeats.split(", ")[j] + '"/></td>';
 			}
 			scheduleTable += '</tr>';
@@ -184,6 +185,7 @@
 						thisParentTd.children('input[name=mvRunningTime]').val(this.mvRunningTime);
 						thisParentTd.children('input[name=scdId]').val(this.scdId);
 						thisParentTd.children('input[name=scdPrice]').val(this.scdPrice);
+						thisParentTd.children('input[name=scdSeatBookedCnt]').val(this.scdSeatBookedCnt);
 					}
 				}); // end data.each
 			}
@@ -267,6 +269,7 @@
 			
 	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnDelete', function() {
 			var scdId = $(this).nextAll('input[name=scdId]').val();
+			var scdSeatBookedCnt = $(this).nextAll('input[name=scdSeatBookedCnt]').val();
 			console.log('scdBtnDelete 클릭 : scdId = ' + scdId);
 			// view를 변경하기 위한 변수
 			var mvRunningTime = $(this).nextAll('input[name=mvRunningTime]').val();
@@ -275,30 +278,35 @@
 			
 			$.ajax({
 				type : 'DELETE',
-				url : '/project/schedule/admin/delete/' + scdId,
+				url : '/project/schedule/admin/delete',
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'DELETE'
 				},
 				data : JSON.stringify({
 					'scdId' : scdId,
+					'scdSeatBookedCnt' : scdSeatBookedCnt
 				}),
 				success : function(result) {
 					console.log("스케줄 삭제 결과 : " + result);
-					// 데이터 삭제 성공후 해당 스케줄만 view에 반영
-					for (var i = 0; i < mvRunningTime; i++) {
-						var trIndex = Number(scdTime) + Number(i);
-						var parentTd = $('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater);
-						parentTd.children('.scdBtnInsert').prop('disabled', false);
-						parentTd.children('.scdBtnInsert').css({"border-color":"blue"});
-						if (i == 0) {
-							parentTd.children('.scdBtnDelete').prop('disabled', true);
-							parentTd.children('.scdBtnDelete').css({"border-color":"lightgray"});
+					if (result != -2) {
+						// 데이터 삭제 성공후 해당 스케줄만 view에 반영
+						for (var i = 0; i < mvRunningTime; i++) {
+							var trIndex = Number(scdTime) + Number(i);
+							var parentTd = $('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater);
+							parentTd.children('.scdBtnInsert').prop('disabled', false);
+							parentTd.children('.scdBtnInsert').css({"border-color":"blue"});
+							if (i == 0) {
+								parentTd.children('.scdBtnDelete').prop('disabled', true);
+								parentTd.children('.scdBtnDelete').css({"border-color":"lightgray"});
+							}
+							parentTd.children('input[name=mvTitle]').val('');
+							parentTd.children('input[name=mvTitle]').css({"border-color":"lightgray"});
+							parentTd.children('input[name=mvRunningTime]').val('');
+							parentTd.children('input[name=scdId]').val('');
 						}
-						parentTd.children('input[name=mvTitle]').val('');
-						parentTd.children('input[name=mvTitle]').css({"border-color":"lightgray"});
-						parentTd.children('input[name=mvRunningTime]').val('');
-						parentTd.children('input[name=scdId]').val('');
+					} else if (result == -2) {
+						alert('예매된 좌석이 있어 삭제 불가합니다!');
 					}
 				}	
 			});
