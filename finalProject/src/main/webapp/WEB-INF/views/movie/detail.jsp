@@ -46,7 +46,7 @@
 	<% String mmbIdSession = (String) session.getAttribute("mmbIdSession"); %>
 	<div style="margin-left: 40px">
 		<input type="hidden" id="mvId" value="${vo.mvId }"> 
-		작성자 <input type="text" id="mmbId" value="<%=mmbIdSession %>" > 
+		작성자 <input type="text" id="mmbId" value="<%=mmbIdSession %>" readonly> 
 		관람평 <input type="text" id="rvContent">
 		평점 <select id="rvRating">                               
 			<option value="1">1</option>
