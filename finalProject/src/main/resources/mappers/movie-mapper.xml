@@ -26,14 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_list_by_mv_ts" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
-		order by ${mvTicketSales}
+		order by ${mvTicketSales} desc
 	</select>
 
 	<!-- 평점기준 정렬 -->
 	<select id="select_list_by_mv_ra" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
-		order by ${mvRatingAvg}
+		order by ${mvRatingAvg} desc
 	</select>
 
 	<!-- 기간검색 -->
