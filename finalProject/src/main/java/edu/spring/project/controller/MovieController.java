@@ -35,10 +35,10 @@ public class MovieController {
 		if (searchText != null) {
 			List<MovieVO> mvList = movieService.readSearch(searchText);
 			model.addAttribute("mvList", mvList);
-		} else if (orderChoice == "ts") {
+		} else if (orderChoice.equals("ticketSales")) {
 			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
-		} else if (orderChoice == "ra") {
+		} else if (orderChoice.equals("reviewAvg")) {
 			List<MovieVO> mvList = movieService.readRa();
 			model.addAttribute("mvList", mvList);
 		} else { // ±âº»°ª
