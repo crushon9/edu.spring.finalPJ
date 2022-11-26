@@ -24,124 +24,59 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 
-	// ¾÷·Îµå¿ë ¾î³ëµû¼õ
+	// ï¿½ï¿½ï¿½Îµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
-	// ¸ÞÀÎÆäÀÌÁö¿¡ ¸®½ºÆ® ¿¹¸ÅÀ²orÆòÁ¡ ±âÁØ ¼îÇÏ±â (+¹®ÀÚ¿­°Ë»ö)
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½orï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ (+ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½Ë»ï¿½)
 	@GetMapping("/main")
 	public void mainGET(Model model, String orderChoice, String searchText) {
 		logger.info("mainGET() call");
 		if (searchText != null) {
 			List<MovieVO> mvList = movieService.readSearch(searchText);
-			model.addAttribute("mvList", mvList);
-		} else if (orderChoice.equals("ticketSales")) {
-			List<MovieVO> mvList = movieService.readTs();
-			model.addAttribute("mvList", mvList);
-		} else if (orderChoice.equals("reviewAvg")) {
-			List<MovieVO> mvList = movieService.readRa();
-			model.addAttribute("mvList", mvList);
-		} else { // ±âº»°ª
+			model.addAttribute("mvList", mvList);		
+		} else if (orderChoice != null) {		
+			if (orderChoice.equals("ticketSales")) {
+				List<MovieVO> mvList = movieService.readTs();
+				model.addAttribute("mvList", mvList);
+			} else if (orderChoice.equals("reviewAvg")) {
+				List<MovieVO> mvList = movieService.readRa();
+				model.addAttribute("mvList", mvList);
+			}	
+		} else { // ï¿½âº»ï¿½ï¿½
 			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
 		}
-	}// end mainGet()
+	}// end mainGET()
 
-	// mvId·Î ÀüÃ¼ ³»¿ë show, -> detail.jsp
+	// mvIdï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ show, -> detail.jsp
 	@GetMapping("/detail")
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
-	}// end detail()
+	}// end detailGET()
 
 	@GetMapping("/mvRatingAvg/{mvId}")
 	public ResponseEntity<Float> mvRatingAvgREST(@PathVariable("mvId") int mvId) {
-		logger.info("mvRatingAvgREST() È£Ãâ : mvId = " + mvId);
+		logger.info("mvRatingAvgREST() È£ï¿½ï¿½ : mvId = " + mvId);
 		float mvRatingAvg = movieService.readRatingAvg(mvId);
 		return new ResponseEntity<Float>(mvRatingAvg, HttpStatus.OK);
-	}
+	}//end mvRatingAvgREST()
 
 	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
 			@PathVariable("inputDateEnded") String inputDateEnded) {
-		logger.info("listREST() È£Ãâ : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info("listREST() È£ï¿½ï¿½ : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		List<MovieVO> list = movieService.read(inputDateStarted, inputDateEnded);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
 
 	@GetMapping("/list/{inputDate}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
-		logger.info("listREST() È£Ãâ : inputDate = " + inputDate);
+		logger.info("listREST() È£ï¿½ï¿½ : inputDate = " + inputDate);
 		List<MovieVO> list = movieService.read(inputDate);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
-
-// ----------------------------------- admin ---------------------------------------
-	@GetMapping("/admin/list") // ¾îµå¹Î ¸®½ºÆ® ¼îÇÏ±â
-	public void listGET(Model model, String searchText, String inputDateStarted, String inputDateEnded) {
-		logger.info("listGET() call");
-		if (searchText != null) {
-			List<MovieVO> mvList = movieService.readSearch(searchText);
-			model.addAttribute("mvList", mvList);
-		} else if (inputDateStarted != null && inputDateEnded != null) {
-			List<MovieVO> mvList = movieService.read(inputDateStarted, inputDateEnded);
-			model.addAttribute("mvList", mvList);
-		} else { // ±âº»°ª
-			List<MovieVO> mvList = movieService.readTs();
-			model.addAttribute("mvList", mvList);
-		}
-	}// end listGET()
-
-	// ÇØ´ç ÁÖ¼Òjsp È£Ãâ
-	@GetMapping("/admin/register")
-	public void registerGET() {
-		logger.info("registerGET() È£Ãâ");
-	}// end registerGet()
-
-	// µ¥ÀÌÅÍ Àü´Þ
-	@PostMapping("/admin/register")
-	public void registerPOST(Model model, MovieVO vo) {
-		// RedirectAttributes °æ·Î À§Ä¡¿¡ ¼Ó¼º°ªÀ» Àü¼ÛÇÏ´Â °´Ã¼
-		logger.info("registerPOST() È£Ãâ");
-		logger.info(vo.toString());
-
-		int result = movieService.create(vo);
-		logger.info("result = " + result);
-		model.addAttribute("vo", vo);
-	} // end registerPost()
-
-	@GetMapping("/admin/update")
-	public void updateGET(Model model, int mvId) {
-		logger.info("updateGET() call : mvId = " + mvId);
-		MovieVO vo = movieService.read(mvId);
-		logger.info(vo.toString());
-		// page·Î Àü¼ÛÇÑ´Ù
-		model.addAttribute("vo", vo);
-	}// end updateGET()
-
-	@PostMapping("/admin/update") // void ¿¡¼­ StringÀ¸·Î ¹Ù²Þ
-	public String updatePOST(MovieVO vo) {
-		logger.info("updatePOST() call : vo = " + vo.toString());
-		int result = movieService.update(vo);
-		if (result == 1) {
-			// "list?page=" + page
-			// else ºÎºÐ return ºüÁö¸é ¿À·ù ÂÒ¸£¸£¸¦
-			return "redirect:/movie/admin/list";
-		} else {
-			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();
-		}
-	}// end updatePost()
-
-	@GetMapping("/admin/delete")
-	public String deleteGET(int mvId) {
-		logger.info("deleteGET() call : boardId = " + mvId);
-		int result = movieService.delete(mvId);
-		if (result == 1) {
-			return "redirect:/movie/admin/list";
-		} else {
-			return "redirect:/movie/admin/update?mvId=" + mvId;
-		}
-	}// end deleteGET()
 
 }

@@ -14,7 +14,7 @@ import edu.spring.project.domain.MemberVO;
 import edu.spring.project.service.MemberService;
 
 @Controller
-@RequestMapping(value = "member/admin")
+@RequestMapping(value = "/member/admin")
 public class MemberAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberAdminController.class);
 
@@ -26,15 +26,15 @@ public class MemberAdminController {
 	public void listGET(Model model, String searchMmbId) {
 		logger.info("listGet call");
 		if(searchMmbId != null) {
-			// mmbId·Î ²ø¾î¿À±â
+			// mmbIdï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			List<MemberVO> list = memberService.read(searchMmbId);
 			model.addAttribute("list", list);
 		} else {
-			// ÀÏ¹Ý ¸®½ºÆ®¾÷
+			// ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½
 			List<MemberVO> list = memberService.read();
 			model.addAttribute("list", list);
 		}
 		
-	}
+	}//end listGET()
 
 }

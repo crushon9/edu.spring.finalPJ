@@ -28,17 +28,17 @@ public class TicketController {
 
 	@GetMapping("/buy")
 	public void buyGET(Model model, TicketVO vo) {
-		logger.info("buyGET() È£Ãâ");
+		logger.info("buyGET() È£ï¿½ï¿½");
 		logger.info(vo.toString());
 		model.addAttribute("vo", vo);
 	}
 
 	@PostMapping("/buy")
 	public String buyPOST(TicketVO vo) {
-		logger.info("buyPOST() È£Ãâ");
+		logger.info("buyPOST() È£ï¿½ï¿½");
 		logger.info(vo.toString());
 		int result = ticketService.create(vo);
-		logger.info(result + "Çà »ðÀÔ");
+		logger.info(result + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		if (result == 1) {
 			return "redirect:/movie/main";
 		} else {
@@ -48,41 +48,35 @@ public class TicketController {
 
 	@GetMapping("/list")
 	public void listGET() {
-		logger.info("listGET() È£Ãâ");
+		logger.info("listGET() È£ï¿½ï¿½");
 	}
 
 	@GetMapping("/listAll")
 	public ResponseEntity<List<TicketVO>> listAllREST() {
-		logger.info("listAll() È£Ãâ");
+		logger.info("listAll() È£ï¿½ï¿½");
 		List<TicketVO> list = ticketService.read();
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("/listScdId/{scdId}")
 	public ResponseEntity<List<TicketVO>> listScdIdREST(@PathVariable("scdId") int scdId) {
-		logger.info("listScdIdREST() È£Ãâ : scdId = " + scdId);
+		logger.info("listScdIdREST() È£ï¿½ï¿½ : scdId = " + scdId);
 		List<TicketVO> list = ticketService.read(scdId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("/listMmbId/{mmbId}")
 	public ResponseEntity<List<TicketVO>> listMmbIdREST(@PathVariable("mmbId") String mmbId) {
-		logger.info("listMmbIdREST() È£Ãâ : mmbId = " + mmbId);
+		logger.info("listMmbIdREST() È£ï¿½ï¿½ : mmbId = " + mmbId);
 		List<TicketVO> list = ticketService.read(mmbId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}
 
 	@DeleteMapping
 	public ResponseEntity<Integer> deleteREST(@RequestBody TicketVO vo) {
-		logger.info("deleteREST() È£Ãâ " + vo.toString());
+		logger.info("deleteREST() È£ï¿½ï¿½ " + vo.toString());
 		int result = ticketService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	// ------------------------¿Àºü admin ³ª´²Áà
-
-	@GetMapping("/admin/list")
-	public void listGET(Model model) {
-		logger.info("listGET() È£Ãâ");
-	}
 }

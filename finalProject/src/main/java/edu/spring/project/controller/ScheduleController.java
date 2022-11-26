@@ -24,54 +24,17 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleService scheduleService;
 
-	@GetMapping("/admin/register")
-	public void registerGET() {
-		logger.info("registerGET() 호출");
-	}
-
-	@PostMapping("/admin/register")
-	public ResponseEntity<Integer> registerREST(@RequestBody ScheduleVO vo) {
-		// @RequestBody : json 데이터를 자바객체로 변환
-		logger.info("registerREST() call : vo = " + vo.toString());
-		// ResponseEntity<T> : REST 방식에서 데이터를 리턴할 때 쓰이는 객체
-		// - 데이터와 HttpStatus를 전송
-		// - <T> : 보내고자 하는 데이터 타입
-		int result = 0;
-		try {
-			result = scheduleService.create(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
-	
-	@GetMapping("/admin/list")
-	public void adminListGET() {
-		logger.info("adminListGET() 호출");
-	}
-
 	@GetMapping("/list")
 	public void listGET() {
-		logger.info("listGET() 호출");
-	}
+		logger.info("listGET() 호占쏙옙");
+	}//end listGET()
 
 	@GetMapping("/list/{mvId}&{brcId}&{scdDate}")
 	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("mvId") int mvId, @PathVariable("brcId") int brcId,
 			@PathVariable("scdDate") String scdDate) {
-		logger.info("listREST() 호출 : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
+		logger.info("listREST() 호占쏙옙 : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		List<ScheduleVO> list = scheduleService.read(mvId, brcId, scdDate);
 		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
-	}
+	}//end listRESRT()
 
-	@DeleteMapping("/admin/delete/{scdId}")
-	public ResponseEntity<Integer> deleteREST(@PathVariable("scdId") int scdId) {
-		logger.info("deleteREST() 호출 : scdId = " + scdId);
-		int result = 0;
-		try {
-			result = scheduleService.delete(scdId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
 }

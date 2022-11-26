@@ -27,11 +27,11 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	// È¸¿ø°¡ÀÔ, homeÀÇ ¿ªÇÒ
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, homeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() call");
-	}// end registerGet()
+	}// end registerGET()
 
 	@PostMapping("/register")
 	public String registerPOST(MemberVO vo, RedirectAttributes reAttr) {
@@ -40,14 +40,14 @@ public class MemberController {
 		int result = memberService.create(vo);
 
 		if (result == 1) {
-			logger.info(result + "Çà »ðÀÔ");
+			logger.info(result + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/member/login";
 		} else {
 			reAttr.addFlashAttribute("insert_result", "fail");
 			return "redirect:/member/register";
 		}
-	}// end registerPost()
+	}// end registerPOST()
 
 	// update call
 	@GetMapping("/update")
@@ -55,7 +55,7 @@ public class MemberController {
 		logger.info("updateGET() call");
 		MemberVO vo = memberService.readOne(mmbId);
 		model.addAttribute("vo", vo);
-	}// end updateGet()
+	}// end updateGET()
 
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
@@ -68,7 +68,7 @@ public class MemberController {
 			reAttr.addFlashAttribute("update_result", "fail");
 			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
-	}// end updatePost()
+	}// end updatePOST()
 
 	@PostMapping("/delete")
 	public String deletePOST(String mmbId, RedirectAttributes reAttr) {
@@ -81,14 +81,14 @@ public class MemberController {
 			reAttr.addFlashAttribute("delete_result", "fail");
 			return "redirect:/member/mypage/update?mmbId=" + mmbId;
 		}
-	}// end deletePost()
+	}// end deletePOST()
 
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
-		// @RequestBody : json µ¥ÀÌÅÍ¸¦ ÀÚ¹Ù°´Ã¼·Î º¯È¯
+		// @RequestBody : json ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ú¹Ù°ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
-		// ResponseEntity<T> : REST ¹æ½Ä¿¡¼­ µ¥ÀÌÅÍ¸¦ ¸®ÅÏÇÒ ¶§ ¾²ÀÌ´Â °´Ã¼
-		// - µ¥ÀÌÅÍ¿Í HttpStatus¸¦ Àü¼Û, - <T> : º¸³»°íÀÚ ÇÏ´Â µ¥ÀÌÅÍ Å¸ÀÔ
+		// ResponseEntity<T> : REST ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½Ã¼
+		// - ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ HttpStatusï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, - <T> : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
 		MemberVO vo = memberService.readOne(mmbId);
 		int result = 0;
 		if (vo == null) {
@@ -97,14 +97,14 @@ public class MemberController {
 			result = 0;
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}// end idCheck
+	}// end idCheckREST()
 
 	@GetMapping("/login")
 	public void loginGET() {
-		logger.info("loginGET È£Ãâ");
-	}// end loginGET
+		logger.info("loginGET È£ï¿½ï¿½");
+	}// end loginGET()
 
-	// ·Î±×ÀÎ
+	// ï¿½Î±ï¿½ï¿½ï¿½
 	@PostMapping("/login")
 	public String loginPOST(String mmbId, String mmbPassword, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes reAttr) throws IOException {
@@ -117,29 +117,29 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			session.setMaxInactiveInterval(300);
-			// TODO : targetURL login È®ÀÎÇÊ¿ä
+			// TODO : targetURL login È®ï¿½ï¿½ï¿½Ê¿ï¿½
 			String targetURL = (String) session.getAttribute("targetURL");
 			logger.info("targetURL : " + targetURL);
-			if (targetURL != null) { // targetURLÀÌ ÀÖ´Ù¸é
+			if (targetURL != null) { // targetURLï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
 				session.removeAttribute("targetURL");
 				return "redirect:" + targetURL;
-			} else {// targetURLÀÌ ¾ø´Ù¸é
+			} else {// targetURLï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½
 				return "redirect:/movie/main";
 			}
-			// ·Î±×ÀÎ ½ÇÆÐ
+			// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		} else {
 			logger.info("login failed");
 			return "redirect:/member/login";
 		}
-	}// end loginPOST
+	}// end loginPOST()
 
-	// ·Î±×¾Æ¿ô
+	// ï¿½Î±×¾Æ¿ï¿½
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		logger.info("logout call");
 		HttpSession session = request.getSession();
 		session.removeAttribute("mmbIdSession");
 		return "redirect:/movie/main";
-	}// end logout
+	}// end logout()
 
 }
