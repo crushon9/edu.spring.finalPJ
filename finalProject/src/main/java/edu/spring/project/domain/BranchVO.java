@@ -81,7 +81,7 @@ public class BranchVO {
 	}
 	
 	public String getBrcInfo() {
-		return brcName;
+		return brcInfo;
 	}
 
 	public void setBrcInfo(String brcInfo) {

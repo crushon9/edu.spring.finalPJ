@@ -32,17 +32,12 @@
 <body>
 
 	<h2>branch detail</h2>
-	<h2>${vo.brcId}</h2>
-	<p>${vo.brcName}</p>
-	<p>${vo.brcTheaterNumbers}</p>
-	<p>${vo.brcTheaterSeats}</p>
-	<p>${vo.brcInfo}</p>
+	<h2>지점번호 ${vo.brcId}</h2>
+	<p>지점이름 ${vo.brcName}</p>
+	<p>극장수 ${vo.brcTheaterNumbers}</p>
+	<p>좌석수 ${vo.brcTheaterSeats}</p>
+	<p>지점정보 ${vo.brcInfo}</p>
 	<hr>
-
-	<!-- reply 입력 -->
-	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
 	
-	<hr>
-
 </body>
 </html>
