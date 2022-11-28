@@ -15,7 +15,7 @@ import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.service.ScheduleService;
 
 @Controller
-@RequestMapping(value = "/schedule/admin") // url: /project/schedule
+@RequestMapping(value = "/schedule/admin") // url: /project/schedule/admin
 public class ScheduleAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(ScheduleAdminController.class);
 

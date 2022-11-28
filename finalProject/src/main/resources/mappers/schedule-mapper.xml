@@ -62,13 +62,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${scdId} = #{scdId}
 	</delete>
 
-	<!-- 영화, 스케줄 삭제가능한데 scdSeatBookedCnt 0이어야만 삭제가능 -->
+	<!-- if (scdSeatBookedCnt == 0) {delete PJ_SCHEDULE} -->
 	<delete id="delete_by_mv_id">
 		delete from ${PJ_SCHEDULE}
 		where ${mvId} = #{mvId}
 	</delete>
 	
-	<!-- 티켓판매되면 scdSeatBookedCnt 변경 -->
+	<!-- if ticketSales changed -> scdSeatBookedCnt + #{amount} -->
 	<update id="update_scdSeatBookedCnt">
 		update ${PJ_SCHEDULE}
 		set ${scdSeatBookedCnt} = ${scdSeatBookedCnt} + #{amount}

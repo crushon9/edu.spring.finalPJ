@@ -28,55 +28,55 @@ public class TicketServiceImple implements TicketService {
 	@Override
 	@Transactional
 	public int create(TicketVO vo) {
-		logger.info("create() 호출");
-		// 티켓이 예매되면(insert)
+		logger.info("create() call");
+		// insert -> + 1
 		tkDao.insert(vo);
-		logger.info("ticket insert 성공");
-		// 스케줄의 scdSeatBookedCnt가 예약인원만큼 증가(update)
+		logger.info("ticket insert success");
+		// scdSeatBookedCnt(update)
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
 		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
 		int bookedTotal = adult + adolescent;
 		scdDao.updateScdSeatBookedCnt(bookedTotal, vo.getScdId());
-		logger.info("updateScdSeatBookedCnt 성공");
-		// 무비의 mvTicketSales도 증가
+		logger.info("updateScdSeatBookedCnt success");
+		// mvTicketSales
 		mvDao.updateTicketSales(bookedTotal, vo.getMvId());
-		logger.info("updateTicketSales 성공");
+		logger.info("updateTicketSales success");
 		return 1;
 	}
 	
 	@Override
 	public List<TicketVO> read() {
-		logger.info("read() 호출");
+		logger.info("read() call");
 		return tkDao.select();
 	}
 
 	@Override
 	public List<TicketVO> read(int scdId) {
-		logger.info("read() 호출 : scdId = " + scdId);
+		logger.info("read() call : scdId = " + scdId);
 		return tkDao.select(scdId);
 	}
 
 	@Override
 	public List<TicketVO> read(String mmbId) {
-		logger.info("read() 호출 : mmbId = " + mmbId);
+		logger.info("read() call : mmbId = " + mmbId);
 		return tkDao.select(mmbId);
 	}
 
 	@Transactional
 	@Override
 	public int delete(TicketVO vo) {
-		logger.info("delete() 호출");
+		logger.info("delete() call");
 		tkDao.delete(vo.getTkId());
-		logger.info("ticket delete 성공");
-		// 스케줄의 scdSeatBookedCnt가 예약인원만큼 감소
+		logger.info("ticket delete success");
+		// scdSeatBookedCnt
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
 		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
 		int bookedTotal = adult + adolescent;
 		scdDao.updateScdSeatBookedCnt(-bookedTotal, vo.getScdId());
-		logger.info("updateScdSeatBookedCnt 성공");
-		// 무비의 mvTicketSales도 감소
+		logger.info("updateScdSeatBookedCnt success");
+		// mvTicketSales
 		mvDao.updateTicketSales(-bookedTotal, vo.getMvId());
-		logger.info("updateTicketSales 성공");
+		logger.info("updateTicketSales success");
 		return 1;
 	}
 }

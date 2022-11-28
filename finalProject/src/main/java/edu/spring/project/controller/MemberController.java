@@ -48,7 +48,7 @@ public class MemberController {
 		}
 	}// end registerPOST()
 
-	// update call
+	// update page call
 	@GetMapping("/update")
 	public void updateGET(Model model, String mmbId) {
 		logger.info("updateGET() call");

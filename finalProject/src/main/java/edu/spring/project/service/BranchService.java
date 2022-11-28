@@ -9,21 +9,20 @@ public interface BranchService {
 
 	int create(BranchVO vo);
 
-	// 전체 보기
+	// read all
 	List<BranchVO> read();
 
-	// brcId로 특정 지점만 보기
+	// selectOne data
 	BranchVO readOne(int brcId);
 
-	// 지점 지역번호로 검색
-	List<BranchVO> read(int brcArea);
+	// search by brcArea
+	List<BranchVO> readBrcArea(int brcArea);
 	
-	// 지점 이름으로 검색/ 무비문자열 검색 동일
-	List<BranchVO> read(String brcName);
+	// search by brcName
+	List<BranchVO> readBrcName(String brcName);
 	
 	int update(BranchVO vo);
 
 	int delete(int brcId);
-
 
 }

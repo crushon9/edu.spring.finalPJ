@@ -14,7 +14,7 @@ import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
 
 @Controller
-@RequestMapping(value = "/movie/admin") // url: /project/movie
+@RequestMapping(value = "/movie/admin") // url: /project/movie/admin
 public class MovieAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(MovieAdminController.class);
 
@@ -51,7 +51,7 @@ public class MovieAdminController {
 			List<MovieVO> mvList = movieService.readPeriod(inputDateStarted, inputDateEnded);
 			model.addAttribute("mvList", mvList);
 		} else { // default
-			List<MovieVO> mvList = movieService.readTs();
+			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
 	}// end listGET()

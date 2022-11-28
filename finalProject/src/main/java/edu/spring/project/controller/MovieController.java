@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
@@ -36,14 +35,14 @@ public class MovieController {
 			model.addAttribute("mvList", mvList);		
 		} else if (orderChoice != null) {		
 			if (orderChoice.equals("ticketSales")) {
-				List<MovieVO> mvList = movieService.readTs();
+				List<MovieVO> mvList = movieService.readOrderTicket();
 				model.addAttribute("mvList", mvList);
 			} else if (orderChoice.equals("reviewAvg")) {
-				List<MovieVO> mvList = movieService.readRa();
+				List<MovieVO> mvList = movieService.readOrderReview();
 				model.addAttribute("mvList", mvList);
 			}	
 		} else { // default
-			List<MovieVO> mvList = movieService.readTs();
+			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
 	}// end mainGET()

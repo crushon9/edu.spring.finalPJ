@@ -18,21 +18,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</select>
 
-	<!-- 예매율기준 정렬 -->
-	<select id="select_list_by_mv_ts" resultType="MovieVO">
+	<!-- order by ticketSales -->
+	<select id="select_list_by_mv_order_ticket" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
 		order by ${mvTicketSales} desc
 	</select>
 
-	<!-- 평점기준 정렬 -->
-	<select id="select_list_by_mv_ra" resultType="MovieVO">
+	<!-- order by ReviewAvg -->
+	<select id="select_list_by_mv_order_review" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
 		order by ${mvRatingAvg} desc
 	</select>
 
-	<!-- 기간검색 -->
+	<!-- search by period -->
 	<select id="select_list_by_period" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
 	</select>
 
-	<!-- 날짜(단일)검색 -->
+	<!-- search by date -->
 	<select id="select_list_by_date" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${mvDateEnded}
 	</select>
 
-	<!-- 문자열검색 -->
+	<!-- search by String -->
 	<select id="select_list_by_search_mv_title" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}

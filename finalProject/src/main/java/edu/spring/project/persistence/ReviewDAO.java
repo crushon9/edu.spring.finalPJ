@@ -8,10 +8,10 @@ public interface ReviewDAO {
 
 	int insert(ReviewVO vo);
 	
-	// list mvId 기준 정렬
+	// read list by mvId
 	List<ReviewVO> select(int mvId);
 	
-	// list mmbId 기준 정렬
+	// read list by mvId
 	List<ReviewVO> select(String mmbId);
 	
 	ReviewVO selectOne(int rvId);

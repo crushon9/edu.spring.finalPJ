@@ -13,7 +13,7 @@ import edu.spring.project.domain.MovieVO;
 @Repository
 public class MovieDAOImple implements MovieDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MovieDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.project.movieMapper"; // movie-mapper.xml�� ����
+	private static final String NAMESPACE = "edu.spring.project.movieMapper"; 
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -30,18 +30,18 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mv_id", mvId);
 	}
 
-	// 예매율기준 정렬
+	// order by ticketSales
 	@Override
-	public List<MovieVO> selectTs() {
+	public List<MovieVO> selectOrderTicket() {
 		logger.info("selectTs() call");
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ts");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_ticket");
 	}
 
-	// 평점기준 정렬
+	// order by ReviewAvg
 	@Override
-	public List<MovieVO> selectRa() {
+	public List<MovieVO> selectOrderReview() {
 		logger.info("selectRa() call");
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ra");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_review");
 	}
 
 	// search by period

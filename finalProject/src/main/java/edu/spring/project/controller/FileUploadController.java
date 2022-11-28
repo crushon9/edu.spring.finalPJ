@@ -23,7 +23,7 @@ import edu.spring.project.util.MediaUtil;
 public class FileUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
-	// servlet-context.xml ���� ������ ���ڿ� ���ҽ� ����
+	// servlet-context.xml
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
@@ -35,9 +35,9 @@ public class FileUploadController {
 		// save returns 'the file path'
 		result = FileUploadUtil.saveUploadedFile(uploadPath, files[0].getOriginalFilename(), files[0].getBytes());
 		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}// end uploadAjaxPost()
+	}// end uploadAjaxPOST()
 
-	@GetMapping("/display") // ���� �̹��� ���ε��
+	@GetMapping("/display")
 	public ResponseEntity<byte[]> displayREST(String fileName) throws Exception {
 		logger.info("displayREST() ȣ�� : fileName = " + fileName);
 		ResponseEntity<byte[]> entity = null;

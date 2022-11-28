@@ -22,49 +22,49 @@ public class MemberDAOImple implements MemberDAO{
 	
 	@Override
 	public int insert(MemberVO vo) {
-		logger.info("insert() ȣ��");
+		logger.info("insert() call");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
-		// NAMESPACE�� ������ mapper�� ã�ư��� id="insert"�� insert �±׿� vo �����͸� ����
-	}//end insert
+	}//end insert()
 
 	@Override
 	public List<MemberVO> select() {
-		logger.info("select() ȣ��");
+		logger.info("select() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_all");
-	}//end select List
+	}//end select()
 
+	// updateGET && idCheck && detailGET
 	@Override
 	public MemberVO selectOne(String mmbId) {
-		logger.info("select() ȣ�� : mmbId = " + mmbId);
+		logger.info("select() call : mmbId = " + mmbId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mmb_id", mmbId);
-	}//end select
+	}//end selectOne()
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() ȣ��");
+		logger.info("update() call");
 		return sqlSession.update(NAMESPACE + ".update", vo);
-	}//end update
+	}//end update()
 
 	@Override
 	public int delete(String mmbId) {
-		logger.info("delete() ȣ��");
+		logger.info("delete() call");
 		return sqlSession.delete(NAMESPACE + ".delete", mmbId);
-	}//end delete
+	}//end delete()
 
 	@Override
 	public MemberVO login(String mmbId, String mmbPassword) {
-		logger.info("login() ȣ��");		
+		logger.info("login() call");		
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("mmbId", mmbId);
 		args.put("mmbPassword", mmbPassword);
 		return sqlSession.selectOne(NAMESPACE + ".login", args);		
 	}//end login()
 
-	// mmbId�� �˻�
+	// member admin listGET
 	@Override
 	public List<MemberVO> select(String mmbId) {
-		logger.info("select() ȣ��");
+		logger.info("select() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mmb_id", mmbId);
-	}
+	}//end select()
 	
 }

@@ -19,45 +19,45 @@ public class BranchDAOImple implements BranchDAO {
 
 	@Override
 	public int insert(BranchVO vo) {
-		logger.info("insert() 호출");
+		logger.info("insert() call");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
-		// NAMESPACE가 동일한 mapper를 찾아가서 id="insert"인 insert 태그에 vo 데이터를 전송
 	}
 
 	@Override
 	public List<BranchVO> select() {
-		logger.info("select() 호출");
+		logger.info("select() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_all");
 	}
 
 	@Override
 	public BranchVO selectOne(int brcId) {
-		logger.info("selectOne() 호출 : brcId = " + brcId);
+		logger.info("selectOne() call : brcId = " + brcId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_brc_id", brcId);
 	}
-	// 지역번호로 검색
+	
+	// search by brcArea
 	@Override
-	public List<BranchVO> select(int brcArea) {
-		logger.info("select() 호출 : brcArea = " + brcArea);
+	public List<BranchVO> selectBrcArea(int brcArea) {
+		logger.info("select() call : brcArea = " + brcArea);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area", brcArea);
 	}
 	
-	// 지역명으로 검색
+	// search by brcName
 	@Override
-	public List<BranchVO> select(String brcName) {
-		logger.info("select() 호출 : brcName = " + brcName);
+	public List<BranchVO> selectBrcName(String brcName) {
+		logger.info("select() call : brcName = " + brcName);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_name", brcName);
 	}
 
 	@Override
 	public int update(BranchVO vo) {
-		logger.info("update() 호출");
+		logger.info("update() call");
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public int delete(int brcId) {
-		logger.info("delete() 호출");
+		logger.info("delete() call");
 		return sqlSession.delete(NAMESPACE + ".delete", brcId);
 	}
 

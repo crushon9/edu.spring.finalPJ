@@ -10,28 +10,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{brcId}, #{brcArea}, #{brcName}, #{brcTheaterNumbers}, #{brcTheaterSeats}, #{brcInfo})
 	</insert>
 
-	<!-- 전체리스트 보여주기  -->
+	<!-- select list  -->
 	<select id="select_list_all" resultType="BranchVO">
 		select * from
 		${PJ_BRANCH}
 		order by ${brcId} DESC
 	</select>
 	
-	<!-- 브랜치 아이디로 단일 검색 -->
+	<!-- selectOne data -->
 	<select id="select_one_by_brc_id" resultType="BranchVO">
 		select * from
 		${PJ_BRANCH}
 		where ${brcId} = #{brcId}
 	</select>
 
-	<!-- 지역번호로 검색 -->
+	<!-- search by brcArea -->
 	<select id="select_list_by_brc_area" resultType="BranchVO">		
 		select * from
 		${PJ_BRANCH}
 		where ${brcArea} = #{brcArea}
 	</select>
 	
-	<!-- 지역명으로 검색 -->
+	<!-- search by brcName -->
 	<select id="select_list_by_brc_name" resultType="BranchVO">		
 		select * from
 		${PJ_BRANCH}

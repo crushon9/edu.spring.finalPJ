@@ -27,10 +27,18 @@ public class MemberServiceImple implements MemberService {
 		return dao.select();
 	}
 
+	// updateGET && idCheck && detailGET
 	@Override
 	public MemberVO readOne(String mmbId) {
 		logger.info("read() call : mmbId = " + mmbId);
 		return dao.selectOne(mmbId);
+	}
+	
+	// member admin listGET
+	@Override
+	public List<MemberVO> read(String mmbId) {
+		logger.info("read() call");
+		return dao.select(mmbId);
 	}
 
 	@Override
@@ -49,13 +57,6 @@ public class MemberServiceImple implements MemberService {
 	public MemberVO login(String mmbId, String mmbPassword) {
 		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
 		return dao.login(mmbId, mmbPassword);
-	}
-	
-	// search by mmbId
-	@Override
-	public List<MemberVO> read(String mmbId) {
-		logger.info("read() call");
-		return dao.select(mmbId);
 	}
 
 }

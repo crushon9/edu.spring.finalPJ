@@ -18,21 +18,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{mmbId}, #{mmbPassword}, #{mmbEmail}, #{mmbPhone}, #{mmbBirthday}, #{brcId})
 	</insert>
 
-	<!-- 전체리스트 보여주기 -->
 	<select id="select_list_all" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		order by ${mmbId} DESC
 	</select>
 	
-	<!-- searchMmbId로 검색 -->
+	<!-- search by mmbId -->
 	<select id="select_list_by_search_mmb_id" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
 		where ${mmbId} like '%'|| #{searchMmbId} || '%'
 	</select>
 	
-	<!-- 회원정보조회, 아이중복체크 -->
+	<!-- updateGET && idCheck && detailGET -->
 	<select id="select_one_by_mmb_id" resultType="MemberVO">
 		select mmb.*, brc.${brcName}
 		from ${PJ_MEMBER} mmb JOIN ${PJ_BRANCH} brc ON mmb.${brcId} = brc.${brcId}

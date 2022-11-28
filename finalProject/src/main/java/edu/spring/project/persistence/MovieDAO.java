@@ -4,16 +4,15 @@ import java.util.List;
 import edu.spring.project.domain.MovieVO;
 
 public interface MovieDAO {
-
 	int insert(MovieVO vo);
 
 	MovieVO select(int mvId);
 
-	// 예매율기준 정렬
-	List<MovieVO> selectTs();
+	// order by ticketSales
+	List<MovieVO> selectOrderTicket();
 
-	// 평점기준 정렬
-	List<MovieVO> selectRa();
+	// order by ReviewAvg
+	List<MovieVO> selectOrderReview();
 
 	// search by period
 	List<MovieVO> selectPeriod(String inputDateStarted, String inputDateEnded);

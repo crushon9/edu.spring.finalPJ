@@ -10,19 +10,19 @@ public interface MovieService {
 
 	MovieVO read(int mvId);
 
-	// 예매율기준 정렬
-	List<MovieVO> readTs();
+	// order by ticketSales
+	List<MovieVO> readOrderTicket();
 
-	// 평점기준 정렬
-	List<MovieVO> readRa();
+	// order by ReviewAvg
+	List<MovieVO> readOrderReview();
 
-	// 기간 검색
+	// search by period
 	List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded);
 
-	// 날짜 검색
+	// search by date
 	List<MovieVO> readDate(String inputDate);
 
-	// 문자열 검색
+	// search by String
 	List<MovieVO> readSearch(String search);
 
 	int update(MovieVO vo);

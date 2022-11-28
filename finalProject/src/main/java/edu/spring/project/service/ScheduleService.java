@@ -5,7 +5,7 @@ import java.util.List;
 import edu.spring.project.domain.ScheduleVO;
 
 // CRUD (Create, Read, Update, Delete)
-// Schedule�� Update ����
+// Schedule : Never Update
 public interface ScheduleService {
 
 	int create(ScheduleVO vo);

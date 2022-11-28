@@ -9,10 +9,10 @@ public interface ReviewService {
 
 	int create(ReviewVO vo);
 
-	// list mvId 기준 정렬
+	// read list by mvId
 	List<ReviewVO> read(int mvId);
 
-	// list mmbId 기준 정렬
+	// read list by mmbId
 	List<ReviewVO> read(String mmbId);
 
 	ReviewVO readOne(int mvId);

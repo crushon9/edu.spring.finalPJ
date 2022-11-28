@@ -10,7 +10,7 @@ public class ReviewVO {
 	private String rvContent;
 	private int rvRating;
 	private Date rvDateCreated;
-	// if 'rvRating' changed...
+	// different from rvRating
 	private int rvRatingBefore;
 	// Join data
 	private String mvTitle;

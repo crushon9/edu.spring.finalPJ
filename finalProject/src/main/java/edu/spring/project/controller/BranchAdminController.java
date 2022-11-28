@@ -14,7 +14,7 @@ import edu.spring.project.domain.BranchVO;
 import edu.spring.project.service.BranchService;
 
 @Controller
-@RequestMapping(value = "/branch/admin") // url: /project/admin/branch
+@RequestMapping(value = "/branch/admin") // url: /project/branch/admin
 public class BranchAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(BranchAdminController.class);
 
@@ -34,7 +34,7 @@ public class BranchAdminController {
 		int result = branchService.create(vo);
 
 		if (result == 1) {
-			logger.info(result + "�� ����");
+			logger.info(result + " line registered");
 			reAttr.addFlashAttribute("insert_result", "success");
 		} else {
 			reAttr.addFlashAttribute("insert_result", "fail");
@@ -42,14 +42,14 @@ public class BranchAdminController {
 	}// end registerPOST()
 	
 	@GetMapping("/list") // null : int -> Integer brcArea
-	public void listGET(Model model, String searchText, Integer brcArea) {
+	public void listGET(Model model, String brcName, Integer brcArea) {
 		logger.info("listGET() call");
 
-		if (searchText != null) {
-			List<BranchVO> list = branchService.read(searchText);
+		if (brcName != null) {
+			List<BranchVO> list = branchService.readBrcName(brcName);
 			model.addAttribute("list", list);
 		} else if (brcArea != null) {
-			List<BranchVO> list = branchService.read(brcArea);
+			List<BranchVO> list = branchService.readBrcArea(brcArea);
 			model.addAttribute("list", list);
 		} else {
 			List<BranchVO> list = branchService.read();

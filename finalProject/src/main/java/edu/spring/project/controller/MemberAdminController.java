@@ -21,7 +21,7 @@ public class MemberAdminController {
 	@Autowired
 	private MemberService memberService;
 
-	// admin list show up
+	// member list
 	@GetMapping("/list")
 	public void listGET(Model model, String searchMmbId) {
 		logger.info("listGet call");
@@ -32,7 +32,6 @@ public class MemberAdminController {
 			List<MemberVO> list = memberService.read();
 			model.addAttribute("list", list);
 		}
-
 	}// end listGET()
 
 	// detail call

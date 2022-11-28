@@ -17,45 +17,45 @@ public class BranchServiceImple implements BranchService {
 
 	@Override
 	public int create(BranchVO vo) {
-		logger.info("create() 호출");
+		logger.info("create() call");
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<BranchVO> read() {
-		logger.info("read() 호출");
+		logger.info("read() call");
 		return dao.select();
 	}
 
 	@Override
 	public BranchVO readOne(int brcId) {
-		logger.info("readOne() 호출 : brcId = " + brcId);
+		logger.info("readOne() call : brcId = " + brcId);
 		return dao.selectOne(brcId);
 	}
 	
-	// 지역번호로 검색
+	// search by brcArea
 	@Override
-	public List<BranchVO> read(int brcArea) {
-		logger.info("read() 호출 : brcArea = " + brcArea);
-		return dao.select(brcArea);
+	public List<BranchVO> readBrcArea(int brcArea) {
+		logger.info("read() call : brcArea = " + brcArea);
+		return dao.selectBrcArea(brcArea);
 	}
 	
-	// 지역명으로 검색
+	// search by brcName
 	@Override
-	public List<BranchVO> read(String brcName) {
-		logger.info("read() 호출 : brcName = " + brcName);
-		return dao.select(brcName);
+	public List<BranchVO> readBrcName(String brcName) {
+		logger.info("read() call : brcName = " + brcName);
+		return dao.selectBrcName(brcName);
 	}
 
 	@Override
 	public int update(BranchVO vo) {
-		logger.info("update() 호출");
+		logger.info("update() call");
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(int brcId) {
-		logger.info("delete() 호출 : brcId = " + brcId);
+		logger.info("delete() call : brcId = " + brcId);
 		return dao.delete(brcId);
 	}
 

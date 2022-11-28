@@ -22,7 +22,7 @@ public class BranchController {
 	@Autowired
 	private BranchService branchService;
 	
-	// user main page
+	// main page
 	@GetMapping("/list")
 	public void listGET(Model model) {
 		logger.info("list main page call");
@@ -30,15 +30,15 @@ public class BranchController {
 		model.addAttribute("list", list);
 	}// end listGET()
 
-	// scd's async
+	// reason : scd's async
 	@GetMapping("/list/{brcArea}")
 	public ResponseEntity<List<BranchVO>> listREST(@PathVariable("brcArea") int brcArea) {
 		logger.info("listREST() call : brcArea = " + brcArea);
-		List<BranchVO> list = branchService.read(brcArea);
+		List<BranchVO> list = branchService.readBrcArea(brcArea);
 		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 
 	}// end listREST()
 	
-	// user branch detail
+	// branch detail
 	@GetMapping("/detail")
 	public void detailGET(Model model, int brcId) {
 		logger.info("detailGET() call : mvId = " + brcId);
@@ -46,6 +46,7 @@ public class BranchController {
 		model.addAttribute("vo", vo);
 	}// end detailGET()
 	
+	// reason : scd's async
 	@GetMapping("/detail/{brcId}")
 	public ResponseEntity<BranchVO> detailREST(@PathVariable("brcId") int brcId) {
 		logger.info("detailREST() call : brcId = " + brcId);

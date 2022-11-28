@@ -27,18 +27,18 @@ public class MovieServiceImple implements MovieService {
 		return dao.select(mvId);
 	}
 
-	// 예매율기준 정렬
+	// order by ticketSales
 	@Override
-	public List<MovieVO> readTs() {
+	public List<MovieVO> readOrderTicket() {
 		logger.info("readTs() call");
-		return dao.selectTs();
+		return dao.selectOrderTicket();
 	}
 
-	// 평점기준 정렬
+	// order by ReviewAvg
 	@Override
-	public List<MovieVO> readRa() {
+	public List<MovieVO> readOrderReview() {
 		logger.info("readRa() call");
-		return dao.selectRa();
+		return dao.selectOrderReview();
 	}
 
 	// search by period

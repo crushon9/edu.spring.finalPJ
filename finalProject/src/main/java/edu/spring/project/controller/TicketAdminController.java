@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import edu.spring.project.service.TicketService;
 
 @Controller
-@RequestMapping(value = "/ticket/admin") // url: /project/ticket
+@RequestMapping(value = "/ticket/admin") // url: /project/ticket/admin
 public class TicketAdminController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TicketAdminController.class);
