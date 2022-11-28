@@ -11,21 +11,10 @@
 </head>
 <body>
 <%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
-<h1 id="mainhead">유저 리뷰 조회</h1>
-<div class="grid">
-	<div class="gridleft">
-		<ul>
-			<li><a href="/project/member/update?mmbId=<%=mmbIdSession %>">회원정보 수정</a></li>
-			<li><a href="/project/ticket/list">예매티켓 조회</a></li>
-			<li id="active"><a href="/project/review/list">작성리뷰 조회</a></li>
-		</ul>
-	</div>
-	<div class="gridright">
-		<%=mmbIdSession %> 님 환영합니다
-		<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
+<h1>유저 리뷰 조회</h1>
+	<%=mmbIdSession %> 님 환영합니다
+	<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
 	<div id="reviewListOutput"></div>
-	</div>
-</div>	
 	<script type="text/javascript">
 	  $(document).ready(function() {
 		  getUserReviewList();

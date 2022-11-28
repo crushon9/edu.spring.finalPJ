@@ -7,10 +7,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 	
 	<style type="text/css">
 	.imageSpace {
@@ -28,23 +28,22 @@
 	<!-- Head -->
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="/project/movie/main"><br>&emsp;<i class="fa-solid fa-video"></i>&nbsp;CGVIP</a>
+		<a class="navbar-brand ps-3" href="/project/movie/main">&emsp;<i class="fa-solid fa-video"></i>&nbsp;CGVIP</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><svg class="svg-inline--fa fa-bars" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"></path></svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com --></button>
 		<!-- Navbar-->
+		<div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></div>
 		<ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-			<li class="nav-item dropdown">
-				<c:if test="${empty mmbIdSession }">
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/login"><i class="fa-solid fa-user"></i>&nbsp;Login</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/register"><i class="fa-solid fa-user-pen"></i>&nbsp;Register</a></li>
-				</c:if>
-				<c:if test="${not empty mmbIdSession && empty adminSession}">
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/logout">Logout <i class="fa-solid fa-user"></i>&nbsp;( <%=mmbIdSession %> )</a></li>
-				</c:if>
-				<c:if test="${not empty adminSession }">
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/logout">Logout <i class="fa-solid fa-crown"></i>&nbsp;( <%=mmbIdSession %> )</a></li>
-				</c:if>
-			</li>
+			<c:if test="${empty mmbIdSession }">
+				<li class="nav-item dropdown"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/login"><i class="fa-solid fa-user"></i>&nbsp;Login</a></li>
+				<li class="nav-item dropdown"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/register">&nbsp;<i class="fa-solid fa-user-pen"></i>&nbsp;Register</a></li>
+			</c:if>
+			<c:if test="${not empty mmbIdSession && empty adminSession}">
+				<li class="nav-item dropdown"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/logout">Logout&nbsp;<i class="fa-solid fa-user"></i>&nbsp;[ <%=mmbIdSession %> ]</a></li>
+			</c:if>
+			<c:if test="${not empty adminSession }">
+				<li class="nav-item dropdown"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/project/member/logout">Logout&nbsp;<i class="fa-solid fa-crown"></i>&nbsp;[ <%=mmbIdSession %> ]</a></li>
+			</c:if>
 		</ul>
 	</nav>
 	
@@ -55,30 +54,66 @@
 		        <div class="sb-sidenav-menu">
 		            <div class="nav">
 		            <!-- 계정에 따라 조건문으로 사이드바 출력  -->
-			            <c:if test="${empty mmbIdSession }">
+			            <c:if test="${empty mmbIdSession }"><!-- 비회원 -->
 			            	<br><br>
 			                <a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a>
 			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a>
 			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a>
 			            </c:if>
-						<c:if test="${not empty mmbIdSession && empty adminSession}">
+						<c:if test="${not empty mmbIdSession && empty adminSession}"><!-- 일반회원  -->
 							<br><br>
 							<a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a>
 			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a>
 			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a>
 			                
 			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-			                  &emsp;<i class="fa-solid fa-house-user"></i>&emsp;MyPage<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+			                  &emsp;<i class="fa-solid fa-house-user"></i>&emsp;Mypage<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
 			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 			                    <nav class="sb-sidenav-menu-nested nav">
-			                        <a class="nav-link" href="/project/ticket/list"><i class="fa-solid fa-minus"></i>&emsp;Ticket List</a>
-			                        <a class="nav-link" href="/project/review/list"><i class="fa-solid fa-minus"></i>&emsp;Review List</a>
-			                        <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>"><i class="fa-solid fa-minus"></i>&emsp;Member Modify</a>
+			                        <a class="nav-link" href="/project/ticket/list"><i class="fa-solid fa-minus"></i>&emsp;My Ticket</a>
+			                        <a class="nav-link" href="/project/review/list"><i class="fa-solid fa-minus"></i>&emsp;My Review</a>
+			                        <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>"><i class="fa-solid fa-minus"></i>&emsp;My Info</a>
 			                    </nav>
 			                </div>  
 						</c:if>
-						<c:if test="${not empty adminSession }">
+						<c:if test="${not empty adminSession }"><!-- 관리자 -->
+							<br><br>
+			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+			                  &emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+			                </a>
+			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+			                    <nav class="sb-sidenav-menu-nested nav">
+			                        <a class="nav-link" href="/project/movie/admin/register"><i class="fa-solid fa-minus"></i>&emsp;Register</a>
+			                        <a class="nav-link" href="/project/movie/admin/list"><i class="fa-solid fa-minus"></i>&emsp;List</a>
+			                    </nav>
+			                </div>
+			                
+			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+			                  &emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+			                </a>
+			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+			                    <nav class="sb-sidenav-menu-nested nav">
+			                        <a class="nav-link" href="/project/branch/admin/register"><i class="fa-solid fa-minus"></i>&emsp;Register</a>
+			                        <a class="nav-link" href="/project/branch/admin/list"><i class="fa-solid fa-minus"></i>&emsp;List</a>
+			                    </nav>
+			                </div>  
+			                
+			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+			                  &emsp;<i class="fa-solid fa-calendar-days"></i>&emsp;Schedule<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+			                </a>
+			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+			                    <nav class="sb-sidenav-menu-nested nav">
+									<a class="nav-link" href="/project/schedule/admin/register"><i class="fa-solid fa-minus"></i>&emsp;Register</a>
+			                        <a class="nav-link" href="/project/schedule/admin/list"><i class="fa-solid fa-minus"></i>&emsp;List</a>
+			                    </nav>
+			                </div> 
+			                
+			                 <a class="nav-link" href="/project/ticket/admin/list">&emsp;<i class="fa-solid fa-ticket"></i>&emsp;Ticket</a> 
+			                 <a class="nav-link" href="/project/member/admin/list">&emsp;<i class="fa-solid fa-user"></i>&emsp;Member</a> 
+			                
+			                <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>">&emsp;<i class="fa-solid fa-house-user"></i>&emsp;My Info</a> 
+			                  
 						</c:if>
 		            </div>
 		        </div>

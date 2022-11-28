@@ -11,7 +11,6 @@
 <body>
 
 	<h2>관리자 스케줄 리스트</h2>
-	<a href="/project/schedule/admin/register">스케줄 등록</a>
 	<p>상영 날짜</p>
 	<input type="date" id="dateSelected" name="dateSelected">
 

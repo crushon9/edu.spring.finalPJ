@@ -11,7 +11,6 @@
 <body>
 	
 	<h2>관리자 스케줄 등록</h2>
-	 <a href="/project/schedule/admin/list">스케줄 조회</a>
 	  	<p>상영 지점</p>
 	  	<select id="brcArea" name="brcArea" >
 	  		<option value="0">지역선택</option>
