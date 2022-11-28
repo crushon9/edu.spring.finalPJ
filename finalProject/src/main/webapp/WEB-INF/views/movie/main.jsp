@@ -53,67 +53,72 @@
 		    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 		        <div class="sb-sidenav-menu">
 		            <div class="nav">
+		           	<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
 		            <!-- 계정에 따라 조건문으로 사이드바 출력  -->
 			            <c:if test="${empty mmbIdSession }"><!-- 비회원 -->
-			            	<br>
-			                <a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
-			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
-			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
+			            	<br><br><br>
+			                <a class="nav-link" href="/project/movie/main"><i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
+			                <a class="nav-link" href="/project/branch/list"><i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
+			                <a class="nav-link" href="/project/schedule/list"><i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
 			            </c:if>
 						<c:if test="${not empty mmbIdSession && empty adminSession}"><!-- 일반회원  -->
-							<br>
-							<a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
-			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
-			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
+							<br><br><br>
+							<a class="nav-link" href="/project/movie/main"><i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
+			                <a class="nav-link" href="/project/branch/list"><i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
+			                <a class="nav-link" href="/project/schedule/list"><i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
 			                
 			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-			                  &emsp;<i class="fa-solid fa-house-user"></i>&emsp;Mypage<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-			                </a>
-			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <i class="fa-solid fa-clapperboard"></i>&emsp;MyPage
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion" style="">
 			                    <nav class="sb-sidenav-menu-nested nav">
-			                        <a class="nav-link" href="/project/ticket/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;My Ticket</a>
-			                        <a class="nav-link" href="/project/review/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;My Review</a>
-			                        <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>">&emsp;<i class="fa-solid fa-minus"></i>&emsp;My Info</a>
+			                        <a class="nav-link" href="/project/ticket/list"><i class="fa-solid fa-minus"></i>&emsp;My Ticket</a>
+			                        <a class="nav-link" href="/project/review/list"><i class="fa-solid fa-minus"></i>&emsp;My Review</a>
+			                        <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>"><i class="fa-solid fa-minus"></i>&emsp;My Info</a>
 			                    </nav>
 			                </div>
 						</c:if>
 						<c:if test="${not empty adminSession }"><!-- 관리자 -->
-							<br>
-			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-			                  &emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-			                </a>
-			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-			                    <nav class="sb-sidenav-menu-nested nav">
-			                        <a class="nav-link" href="/project/movie/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
+							<br><br><br>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#movie" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                <i class="fa-solid fa-clapperboard"></i>&emsp;Movie
+                                <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                            </a>
+                            <div class="collapse" id="movie" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/project/movie/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
 			                        <a class="nav-link" href="/project/movie/admin/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;List</a>
-			                    </nav>
-			                </div><br>
-			                
-			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-			                  &emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </nav>
+                            </div><br>
+						
+			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#branch" aria-expanded="false" aria-controls="pagesCollapseAuth">
+			                  <i class="fa-solid fa-building-flag"></i>&emsp;Branch
+			                  <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
-			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+			                <div class="collapse" id="branch" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
 			                    <nav class="sb-sidenav-menu-nested nav">
 			                        <a class="nav-link" href="/project/branch/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
 			                        <a class="nav-link" href="/project/branch/admin/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;List</a>
 			                    </nav>
 			                </div><br>  
 			                
-			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-			                  &emsp;<i class="fa-solid fa-calendar-days"></i>&emsp;Schedule<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#schedule" aria-expanded="false" aria-controls="pagesCollapseAuth">
+			                  <i class="fa-solid fa-calendar-days"></i>&emsp;Schedule
+			                  <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
-			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+			                <div class="collapse" id="schedule" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages" style="">
 			                    <nav class="sb-sidenav-menu-nested nav">
 									<a class="nav-link" href="/project/schedule/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
 			                        <a class="nav-link" href="/project/schedule/admin/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;List</a>
 			                    </nav>
 			                </div><br>
 			                
-			                <a class="nav-link" href="/project/ticket/admin/list">&emsp;<i class="fa-solid fa-ticket"></i>&emsp;Ticket</a><br>
-			                <a class="nav-link" href="/project/member/admin/list">&emsp;<i class="fa-solid fa-user"></i>&emsp;Member</a><br>
-			                <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>">&emsp;<i class="fa-solid fa-house-user"></i>&emsp;My Info</a><br>
-			                  
+			                <a class="nav-link" href="/project/ticket/admin/list"><i class="fa-solid fa-ticket"></i>&emsp;Ticket</a><br>
+			                <a class="nav-link" href="/project/member/admin/list"><i class="fa-solid fa-user"></i>&emsp;Member</a><br>
+			                <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>"><i class="fa-solid fa-house-user"></i>&emsp;My Info</a><br>
 						</c:if>
+					</nav>	
 		            </div>
 		        </div>
 		        <div class="sb-sidenav-footer">
