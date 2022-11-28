@@ -1,39 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Schedule Register</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+	<title>Schedule Register</title>
 </head>
-<body>
-	
-	<h2>관리자 스케줄 등록</h2>
-	  	<p>상영 지점</p>
-	  	<select id="brcArea" name="brcArea" >
-	  		<option value="0">지역선택</option>
-			<option value="1">서울</option>
-			<option value="2">경기/강원</option>
-			<option value="3">부산/경상</option>
-			<option value="4">대전/충청</option>
-			<option value="5">광주/전라</option>
-			<option value="6">제주</option>
-		</select>
-		<div id="brcListOutput"></div>
-	  	
-	    <p>상영 날짜</p>
-	    <input type="date" id="inputDate" name="inputDate">
-	    
-	    <p>상영 영화</p>
-	    <div id="mvListDiv"></div>
-	    
-	    <p>상영 기준 가격</p>
-	    <input type="number" id="scdPrice" name="scdPrice" readonly>
-	  
-	  	<p>상영 스케줄</p>
-	  	<div id="scheduleTable"></div>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
+
+		<div id="layoutSidenav_content">
+			<h1>관리자 스케줄 등록</h1>
+			<div>
+		  	<p>상영 지점</p>
+		  	<select id="brcArea" name="brcArea" >
+		  		<option value="0">지역선택</option>
+				<option value="1">서울</option>
+				<option value="2">경기/강원</option>
+				<option value="3">부산/경상</option>
+				<option value="4">대전/충청</option>
+				<option value="5">광주/전라</option>
+				<option value="6">제주</option>
+			</select>
+			<div id="brcListOutput"></div>
+		  	
+		    <p>상영 날짜</p>
+		    <input type="date" id="inputDate" name="inputDate">
+		    
+		    <p>상영 영화</p>
+		    <div id="mvListDiv"></div>
+		    
+		    <p>상영 기준 가격</p>
+		    <input type="number" id="scdPrice" name="scdPrice" readonly>
+		  
+		  	<p>상영 스케줄</p>
+		  	<div id="scheduleTable"></div>
+		  	</div>
+		  	<%@include file="/WEB-INF/views/footer.jsp" %>
+		</div>
+	</div>
 	  
 	<script type="text/javascript">
 	  $(document).ready(function() {
@@ -143,10 +151,10 @@
 				+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
 				+ '<input type="text" name="mvTitle" style="border-color: lightgray;" value="" readonly/>'
 				if (i > 21) { // 조조 3000원 할인(타임인덱스21까지)
-					scheduleTable += '<input type="number" name="scdPrice" value="' + $('#scdPrice').val() + '" readonly style="width:60px; display:inline;"/>';
+					scheduleTable += '<input type="number" name="scdPrice" value="' + $('#scdPrice').val() + '" readonly style="width:80px; display:inline;"/>';
 				} else {
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
-					scheduleTable += '<input type="number" name="scdPrice" value="' + scdPrice + '" readonly style="width:60px; display:inline;"/>';
+					scheduleTable += '<input type="number" name="scdPrice" value="' + scdPrice + '" readonly style="width:80px; display:inline;"/>';
 				}
 				scheduleTable += '<input type="hidden" name="scdId"/>'
 				+ '<input type="hidden" name="mvRunningTime" value=""/>'

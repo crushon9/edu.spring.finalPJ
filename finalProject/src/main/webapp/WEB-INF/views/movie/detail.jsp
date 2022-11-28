@@ -1,4 +1,3 @@
-<%@page import="edu.spring.project.domain.MovieVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,62 +5,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>${vo.mvTitle}</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+	<title>${vo.mvTitle}</title>
+	
 <style type="text/css">
-.detail {
-	display : inline-flex;
-	width : 200px;
-	height : 200px;
-	border : 1px solid grey;
-}
-.mvContent {
-	padding: 100px 200px 100px 200px;
-	margin-right: 200px;
-	margin-left: 200px;
-}
-.mvImage {
-	margin-right: 150px;
-	width: 300px;
-	height: 450px;
-}
+	.detail {
+		display : inline-flex;
+		width : 200px;
+		height : 200px;
+		border : 1px solid grey;
+	}
+	.mvContent {
+		padding: 100px 200px 100px 200px;
+		margin-right: 200px;
+		margin-left: 200px;
+	}
+	.mvImage {
+		margin-right: 150px;
+		width: 300px;
+		height: 450px;
+	}
 </style>
 
 </head>
-<body>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
-	<h2>movie detail</h2>
-	<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
-	<h2>${vo.mvTitle}</h2>
-	<p>영화 개봉일 : ${vo.mvDateStarted}</p>
-	<p>영화 종료일 : ${vo.mvDateEnded}</p>
-	<p>영화 장르 : ${vo.mvGenre}</p>
-	<p>영화 소개 : </p>
-	<p>${vo.mvInfo}</p>
-	<div id="mvRatingAvgPrint"></div>
-	<hr>
-
-	<!-- reply 입력 -->
-	<% String mmbIdSession = (String) session.getAttribute("mmbIdSession"); %>
-	<div style="margin-left: 40px">
-		<input type="hidden" id="mvId" value="${vo.mvId }"> 
-		작성자 <input type="text" id="mmbId" value="<%=mmbIdSession %>" readonly> 
-		관람평 <input type="text" id="rvContent">
-		평점 <select id="rvRating">                               
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-	       </select>&emsp;
-		<button id="btn_rv_add">등록</button>
-	</div>
-	<hr>
-
-	<!-- 출력할 div공간 마련 reply처럼 끌고와-->
-	<div style="margin-left: 40px" id="reviewListOutput"></div>		
+		<div id="layoutSidenav_content">
+			<h1>movie detail</h1>
+			<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
+			<h2>${vo.mvTitle}</h2>
+			<p>영화 개봉일 : ${vo.mvDateStarted}</p>
+			<p>영화 종료일 : ${vo.mvDateEnded}</p>
+			<p>영화 장르 : ${vo.mvGenre}</p>
+			<p>영화 소개 : </p>
+			<p>${vo.mvInfo}</p>
+			<div id="mvRatingAvgPrint"></div>
+			<hr>
 		
+			<div style="margin-left: 40px">
+				<input type="hidden" id="mvId" value="${vo.mvId }"> 
+				작성자 <input type="text" id="mmbId" value="<%=mmbIdSession %>" readonly> 
+				관람평 <input type="text" id="rvContent">
+				평점 <select id="rvRating">                               
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+			       </select>&emsp;
+				<button id="btn_rv_add">등록</button>
+			</div>
+			<hr>
+		
+			<!-- 출력할 div공간 마련 reply처럼 끌고와-->
+			<div style="margin-left: 40px" id="reviewListOutput"></div>
+			<%@include file="/WEB-INF/views/footer.jsp" %>
+		</div>
+	</div>	
+				
 
 	<script type="text/javascript">
 		$(document).ready(function() {

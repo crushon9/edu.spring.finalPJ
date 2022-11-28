@@ -1,122 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Ticket Buy</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+	<title>Ticket Buy</title>
 
 <style>
-#tkPeopleDiv {
-	border: 1px solid gray;
-	display: inline-block;
-	width: auto;
-	padding: 5px;
-	margin-left: 20px;
-}
-
-#tkInfoDiv {
-	border: 1px solid gray;
-	display: inline-block;
-	width: auto;
-	padding: 5px;
-	margin-bottom: 40px;
-}
-
-#screen {
-	border: 1px solid gray;
-	width: 50%;
-	margin: auto;
-	text-align: center;
-}
-
-#seatBtnsDiv {
-	margin: auto;
-	text-align: center;
-}
-
-.seatBtnUnselected {
-	width: 40px;
-	background-color: lightgray;
-	margin: 3px;
-}
-
-.seatBtnSelected {
-	width: 40px;
-	background-color: red;
-	color: white;
-	margin: 3px;
-}
-
-.seatBtnBooked {
-	width: 40px;
-	margin: 3px;
-}
+	#tkPeopleDiv {
+		border: 1px solid gray;
+		display: inline-block;
+		width: auto;
+		padding: 5px;
+		margin-left: 20px;
+	}
+	
+	#tkInfoDiv {
+		border: 1px solid gray;
+		display: inline-block;
+		width: auto;
+		padding: 5px;
+		margin-bottom: 40px;
+	}
+	
+	#screen {
+		border: 1px solid gray;
+		width: 50%;
+		margin: auto;
+		text-align: center;
+	}
+	
+	#seatBtnsDiv {
+		margin: auto;
+		text-align: center;
+	}
+	
+	.seatBtnUnselected {
+		width: 40px;
+		background-color: lightgray;
+		margin: 3px;
+	}
+	
+	.seatBtnSelected {
+		width: 40px;
+		background-color: red;
+		color: white;
+		margin: 3px;
+	}
+	
+	.seatBtnBooked {
+		width: 40px;
+		margin: 3px;
+	}
 </style>
 </head>
-<body>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
-	<h2>티켓 예매</h2>
-	<!-- ScheduleVO에서 넘어온 데이터 -->
-	<input type="hidden" id="mvTitle" value="${vo.mvTitle }">
-	<input type="hidden" id="brcName" value="${vo.brcName }">
-	<input type="hidden" id="scdDate" value="${vo.scdDate }">
-	<input type="hidden" id="scdTime" value="${vo.scdTime }">
-	<input type="hidden" id="scdTheater" value="${vo.scdTheater }">
-	<input type="hidden" id="scdSeatTotal" value="${vo.scdSeatTotal }">
-	<input type="hidden" id="scdSeatBookedCnt" value="${vo.scdSeatBookedCnt }">
-	<input type="hidden" id="scdPrice" value="${vo.scdPrice }">
-	
-	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
-	
-	<!-- TicketVO로 넘길 데이터 -->
-	<form action="buy" method="post">
-		<input type="text" name="mmbId" value="<%=mmbId %>">
-		<hr>
-		<input type="hidden" name="scdId" value="${vo.scdId }">
-		<input type="hidden" name="mvId" value="${vo.mvId }">
-		<div id="tkPeopleDiv" >
-			일반&emsp;
-			<input type="radio" name="adult" value="0" checked>0
-			<input type="radio" name="adult" value="1">1
-			<input type="radio" name="adult" value="2">2
-			<input type="radio" name="adult" value="3">3
-			<input type="radio" name="adult" value="4">4
-			<input type="radio" name="adult" value="5">5
-			<input type="radio" name="adult" value="6">6
-			<input type="radio" name="adult" value="7">7
-			<input type="radio" name="adult" value="8">8
-			<br>
-			청소년
-			<input type="radio" name="adolescent" value="0" checked>0
-			<input type="radio" name="adolescent" value="1">1
-			<input type="radio" name="adolescent" value="2">2
-			<input type="radio" name="adolescent" value="3">3
-			<input type="radio" name="adolescent" value="4">4
-			<input type="radio" name="adolescent" value="5">5
-			<input type="radio" name="adolescent" value="6">6
-			<input type="radio" name="adolescent" value="7">7
-			<input type="radio" name="adolescent" value="8">8
-			<br>
-			<input type="hidden" name="tkPeopleList" readonly>
-			좌석&emsp;
-			<input type="text" name="tkSeatList" readonly>
-			<br>
-			합계&emsp;
-			<input type="text" name="tkPriceTotal" readonly>
-			<input type="submit" value="결제하기">
+		<div id="layoutSidenav_content">
+
+		<h1>티켓 예매</h1>
+		<!-- ScheduleVO에서 넘어온 데이터 -->
+		<input type="hidden" id="mvTitle" value="${vo.mvTitle }">
+		<input type="hidden" id="brcName" value="${vo.brcName }">
+		<input type="hidden" id="scdDate" value="${vo.scdDate }">
+		<input type="hidden" id="scdTime" value="${vo.scdTime }">
+		<input type="hidden" id="scdTheater" value="${vo.scdTheater }">
+		<input type="hidden" id="scdSeatTotal" value="${vo.scdSeatTotal }">
+		<input type="hidden" id="scdSeatBookedCnt" value="${vo.scdSeatBookedCnt }">
+		<input type="hidden" id="scdPrice" value="${vo.scdPrice }">
+		
+		<!-- TicketVO로 넘길 데이터 -->
+		<form action="buy" method="post">
+			<input type="text" name="mmbId" value="<%=mmbIdSession %>">
+			<hr>
+			<input type="hidden" name="scdId" value="${vo.scdId }">
+			<input type="hidden" name="mvId" value="${vo.mvId }">
+			<div id="tkPeopleDiv" >
+				일반&emsp;
+				<input type="radio" name="adult" value="0" checked>0
+				<input type="radio" name="adult" value="1">1
+				<input type="radio" name="adult" value="2">2
+				<input type="radio" name="adult" value="3">3
+				<input type="radio" name="adult" value="4">4
+				<input type="radio" name="adult" value="5">5
+				<input type="radio" name="adult" value="6">6
+				<input type="radio" name="adult" value="7">7
+				<input type="radio" name="adult" value="8">8
+				<br>
+				청소년
+				<input type="radio" name="adolescent" value="0" checked>0
+				<input type="radio" name="adolescent" value="1">1
+				<input type="radio" name="adolescent" value="2">2
+				<input type="radio" name="adolescent" value="3">3
+				<input type="radio" name="adolescent" value="4">4
+				<input type="radio" name="adolescent" value="5">5
+				<input type="radio" name="adolescent" value="6">6
+				<input type="radio" name="adolescent" value="7">7
+				<input type="radio" name="adolescent" value="8">8
+				<br>
+				<input type="hidden" name="tkPeopleList" readonly>
+				좌석&emsp;
+				<input type="text" name="tkSeatList" readonly>
+				<br>
+				합계&emsp;
+				<input type="text" name="tkPriceTotal" readonly>
+				<input type="submit" value="결제하기">
+			</div>
+			<div id="tkInfoDiv" >
+				${vo.mvTitle } <br>
+				${vo.brcName } ${vo.scdTheater }관 <br>
+				${vo.scdDate } | <div id="scdTimeOutput" style="display: inline-block;"></div> <br>
+				남은좌석 ${vo.scdSeatTotal - vo.scdSeatBookedCnt } / ${vo.scdSeatTotal }
+			</div>
+		</form>
+			<div id="screen" >SCREEN</div>
+			<div id="seatBtnsDiv"></div>
+			
+		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
-		<div id="tkInfoDiv" >
-			${vo.mvTitle } <br>
-			${vo.brcName } ${vo.scdTheater }관 <br>
-			${vo.scdDate } | <div id="scdTimeOutput" style="display: inline-block;"></div> <br>
-			남은좌석 ${vo.scdSeatTotal - vo.scdSeatBookedCnt } / ${vo.scdSeatTotal }
-		</div>
-	</form>
-		<div id="screen" >SCREEN</div>
-		<div id="seatBtnsDiv"></div>
+	</div>
 	
 	<script>
 	 $(document).ready(function() {

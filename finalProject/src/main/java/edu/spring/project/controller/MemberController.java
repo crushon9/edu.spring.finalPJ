@@ -69,16 +69,41 @@ public class MemberController {
 		}
 	}// end updatePOST()
 
+	// delete page call
+	@GetMapping("/delete_confirm")
+	public void deleteConfirmGET() {
+		logger.info("deleteConfirmGET() call");
+	}// end deleteConfirmGET()
+
+	@PostMapping("/delete_confirm")
+	public String deleteConfirmPOST(String mmbId, String mmbPassword, RedirectAttributes reAttr) {
+		logger.info("deleteConfirmPOST call");
+		MemberVO vo = memberService.login(mmbId, mmbPassword);
+		if (vo != null) {
+			return "redirect:/member/delete";
+		} else {
+			return "redirect:/member/delete_confirm";
+		}
+	}// end loginPOST()
+
+	// delete page call
+	@GetMapping("/delete")
+	public void deleteGET() {
+		logger.info("deleteGET() call");
+	}// end deleteGET()
+
 	@PostMapping("/delete")
-	public String deletePOST(String mmbId, RedirectAttributes reAttr) {
+	public String deletePOST(String mmbId, RedirectAttributes reAttr, HttpServletRequest request) {
 		logger.info("deletePOST() call : mmbId = " + mmbId);
 		int result = memberService.delete(mmbId);
 		if (result == 1) {
+			HttpSession session = request.getSession();
+			session.removeAttribute("mmbIdSession");
 			reAttr.addFlashAttribute("delete_result", "success");
 			return "redirect:/movie/main";
 		} else {
 			reAttr.addFlashAttribute("delete_result", "fail");
-			return "redirect:/member/mypage/update?mmbId=" + mmbId;
+			return "redirect:/member/delete_confirm";
 		}
 	}// end deletePOST()
 
@@ -112,7 +137,7 @@ public class MemberController {
 			}
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			session.setMaxInactiveInterval(300);
-			// TODO : targetURL login 
+			// TODO : targetURL login
 			String targetURL = (String) session.getAttribute("targetURL");
 			logger.info("targetURL : " + targetURL);
 			if (targetURL != null) { // targetURL

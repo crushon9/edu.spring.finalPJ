@@ -1,27 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>review list</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+	<title>review list</title>
 </head>
-<body>
-<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
-<h1>유저 리뷰 조회</h1>
-	<%=mmbIdSession %> 님 환영합니다
-	<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
-	<div id="reviewListOutput"></div>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
+
+		<div id="layoutSidenav_content">
+			<h1><%=mmbIdSession %>님 리뷰</h1>
+			<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
+			<div id="reviewListOutput"></div>
+			
+			<%@include file="/WEB-INF/views/footer.jsp" %>
+		</div>
+	</div>
+			
 	<script type="text/javascript">
 	  $(document).ready(function() {
 		  getUserReviewList();
-		  $('#reviewListOutput').on('click', '.rvItem .btn_rv_update', function(){
+		  $('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
 		  	  rvUpdate(this);
 		  });
-		  $('#reviewListOutput').on('click', '.rvItem .btn_rv_delete', function(){
+		  $('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
 			  rvDelete(this);
 	      });
 	  });
@@ -70,9 +76,10 @@
 							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
 							+ '<img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/>'
+							+ '&nbsp;&nbsp;'
 							+ '<strong>' + this.mvTitle + '</strong>'
-							+ '<br>'
-							+ '관람평 <input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
+							+ '&nbsp;&nbsp;'
+							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
 							+ '&nbsp;&nbsp;'
 							+ '<select class="rvRating" disabled>'                               
                             + '<option value="1"' + isSelected1 + '>1</option>'
@@ -85,8 +92,9 @@
                             + '&nbsp;&nbsp;'
 							+ new Date(this.rvDateCreated).toLocaleString()
 							+ '&nbsp;&nbsp;'
-							+ '<button class="btn_rv_update" ' + isDisabled + '>수정</button>'
-							+ '<button class="btn_rv_delete" ' + isDisabled + '>삭제</button>'
+							+ '<input class="btn_update" type="button" value="수정"' + isDisabled + '>'
+							+ '&nbsp;'
+							+ '<input class="btn_delete" type="button" value="삭제"' + isDisabled + '>'
 							+ '</li><br>';
 					}); // end data.each
 					rvList += '</ul>';
@@ -106,8 +114,8 @@
 				$(btn).prevAll('.rvContent').css({"border-color":"red"});
 				$(btn).prevAll('.rvRating').removeAttr('disabled');
 				$(btn).prevAll('.rvRating').css({"border-color":"red"});
-				$(btn).text("수정확인");
-				$(btn).nextAll('.btn_rv_delete').hide();
+				$(btn).val("수정확인");
+				$(btn).nextAll('.btn_delete').hide();
 			} else { // 아니라면 댓글 수정
 				var rvId = $(btn).prevAll('.rvId').val();
 				var mvId = $(btn).prevAll('.mvId').val();

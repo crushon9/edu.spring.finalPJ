@@ -1,47 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>member admin list http://localhost:8080/project/member/admin/list</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+<title>admin member list</title>
 </head>
-<body>
-	<h2>admin member list</h2>
-	
-	<!-- 
-	<% String mmbId = (String) session.getAttribute("mmbIdSession"); %>
-	<input type = "hidden" id="mmbId" value="<%=mmbId %>">
-	 -->
-	 
-	아이디 : 
-	<input id="searchMmbId" type="text">
-	<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="search"></a>
-	
-	<!-- 회원 목록 출력 -->
-	<c:forEach var="vo" items="${list }">
-		<ul>						
-			<li>
-				<Strong>Member ID : ${vo.mmbId }</Strong><br>
-				<a href="detail?mmbId=${vo.mmbId}"><input type="button" value="상세조회"></a>	
-			</li>
-		</ul>											
-	</c:forEach>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
+		<div id="layoutSidenav_content">
+		<h1>admin member list</h1>
+		<div>
+		아이디 <input id="searchMmbId" type="text">
+		<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="Search"></a>
+		<hr>
+		<!-- 회원 목록 출력 -->
+		<c:forEach var="vo" items="${list }">
+			<ul>						
+				<li>
+					<Strong>Member ID : ${vo.mmbId }</Strong><br>
+					<a href="detail?mmbId=${vo.mmbId }"><input type="button" value="상세조회"></a>	
+				</li>
+			</ul>											
+		</c:forEach>
+		</div>
+		<%@include file="/WEB-INF/views/footer.jsp" %>
+		</div>
+	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#searchMmbIdBtn').click(function() {
-				var searchMmbId = $('#searchMmbId').val();
-				var searchMmbIdUrl = 'list?searchMmbId=' + searchMmbId;
-				$('#searchMmbIdUrl').prop("href", searchMmbIdUrl);
-				
-			});			
+	$(document).ready(function() {
+		$('#searchMmbIdBtn').click(function() {
+			var searchMmbId = $('#searchMmbId').val();
+			var searchMmbIdUrl = 'list?searchMmbId=' + searchMmbId;
+			$('#searchMmbIdUrl').prop("href", searchMmbIdUrl);
 			
-		});
-	
+		});			
+	});
 	</script>
 
 </body>

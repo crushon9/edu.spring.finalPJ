@@ -1,21 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mypage.css">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>ticket buy list</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+	<title>ticket buy list</title>
 </head>
-<body>
-<%String mmbIdSession = (String) session.getAttribute("mmbIdSession");%>
-<h1>유저 티켓 리스트</h1>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
-	<%=mmbIdSession %> 님 환영합니다
-	<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
-	<div id="ticketListOutput"></div>
+		<div id="layoutSidenav_content">
+		
+		<h1><%=mmbIdSession %>님 예매 내역</h1>
+		<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
+		<div id="ticketListOutput"></div>
+		
+		<%@include file="/WEB-INF/views/footer.jsp" %>
+		</div>
+	</div>
 	
 	<script type="text/javascript">
 	  $(document).ready(function() {
@@ -92,7 +97,6 @@
 			}
 		});
 	 }
-  
   	</script>
 
 </body>

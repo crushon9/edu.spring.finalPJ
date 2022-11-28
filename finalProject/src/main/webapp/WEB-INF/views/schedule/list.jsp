@@ -1,37 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>Schedule List</title>
+	<%@include file="/WEB-INF/views/headTag.jsp" %>
+	<title>Schedule List</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
+	<div id="layoutSidenav">
+		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
-	<h2>상영 스케줄 정보</h2>
-
-	<p>상영 날짜</p>
-	<input type="date" id="dateSelected" name="dateSelected">
-
-	<p>상영 영화</p>
-	<div id="mvListOutput"></div>
+		<div id="layoutSidenav_content">
+		<h1>상영 스케줄 정보</h1>
+		<div>
+		<p>상영 날짜</p>
+		<input type="date" id="dateSelected" name="dateSelected">
 	
-	<p>상영 지점</p>
-	<select id="brcArea" name="brcArea">
-		<option>지역선택</option>
-		<option value="1">서울</option>
-		<option value="2">경기/강원</option>
-		<option value="3">부산/경상</option>
-		<option value="4">대전/충청</option>
-		<option value="5">광주/전라</option>
-		<option value="6">제주</option>
-	</select>
-	<div id="brcListDiv"></div>
-
-	<p>상영 스케줄</p>
-	<div id="scheduleListOutput"></div>
+		<p>상영 영화</p>
+		<div id="mvListOutput"></div>
+		
+		<p>상영 지점</p>
+		<select id="brcArea" name="brcArea">
+			<option>지역선택</option>
+			<option value="1">서울</option>
+			<option value="2">경기/강원</option>
+			<option value="3">부산/경상</option>
+			<option value="4">대전/충청</option>
+			<option value="5">광주/전라</option>
+			<option value="6">제주</option>
+		</select>
+		<div id="brcListDiv"></div>
+	
+		<p>상영 스케줄</p>
+		<div id="scheduleListOutput"></div>
+		</div>
+		<%@include file="/WEB-INF/views/footer.jsp" %>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 	  $(document).ready(function() {

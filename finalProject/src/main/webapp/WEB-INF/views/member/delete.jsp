@@ -6,26 +6,23 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/headTag.jsp" %>
-	<title>Member Admin detail page</title>
+	<title>Resign</title>
 </head>
 <body class="sb-nav-fixed">
 	<div id="layoutSidenav">
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-	
-		<h1>Member Admin detail page</h1>
-		<div>
-	    <p>아이디 : ${vo.mmbId }</p>
-	    <p>패스워드 : ${vo.mmbPassword }</p>
-	    <p>이메일 : ${vo.mmbEmail }</p>
-	 	<p>전화번호 : ${vo.mmbPhone }</p>
-		<p>생년월일 : ${vo.mmbBirthday }</p>
-		<p>선호지점 : ${vo.brcName }</p>
-		</div>
+		<h1>회원 탈퇴</h1>
+		<p>이용해 주셔서 감사합니다</p>
+ 		<form action="delete" method="POST">
+			<input type="hidden" name="mmbId" value="<%=mmbIdSession %>">
+			<input type="submit" value="탈퇴하기">
+		</form>
+		
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>
-		
+
 </body>
 </html>
