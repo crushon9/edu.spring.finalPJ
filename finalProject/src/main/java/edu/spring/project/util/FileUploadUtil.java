@@ -26,7 +26,7 @@ public class FileUploadUtil {
 		} else {
 			createIcon(uploadPath, saveName);
 		}
-		return "/" + saveName;
+		return saveName;
 	}
 
 	private static void makeDir(String uploadPath) {
@@ -40,22 +40,18 @@ public class FileUploadUtil {
 	}
 
 	private static String createThumbnail(String uploadPath, String fileName) throws IOException {
-
 		BufferedImage source = ImageIO.read(new File(uploadPath, fileName));
 		BufferedImage destination = Scalr.resize(source, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
 		String thumbnailName = uploadPath + File.separator + "thumbnail_" + fileName;
 		File thumbnail = new File(thumbnailName);
 		String formatName = fileName.substring(fileName.lastIndexOf('.') + 1);
-
 		boolean result = ImageIO.write(destination, formatName, thumbnail);
 		logger.info("create thumbnail result: " + result);
-
 		return thumbnailName.substring(uploadPath.length()).replace(File.separatorChar, '/');
 	}
 
 	private static String createIcon(String uploadPath, String fileName) {
 		String iconName = uploadPath + File.separator + fileName;
-
 		return iconName.substring(uploadPath.length()).replace(File.separatorChar, '/');
 	}
 }

@@ -23,7 +23,7 @@ import edu.spring.project.util.MediaUtil;
 public class FileUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
-	// servlet-context.xml ÆÄÀÏ ¼³Á¤µÈ ¹®ÀÚ¿­ ¸®¼Ò½º ÁÖÀÔ
+	// servlet-context.xml ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
@@ -37,12 +37,12 @@ public class FileUploadController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}// end uploadAjaxPost()
 
-	@GetMapping("/display") // ÆÄÀÏ ÀÌ¹ÌÁö ¾÷·Îµå¿ë
+	@GetMapping("/display") // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ï¿½
 	public ResponseEntity<byte[]> displayREST(String fileName) throws Exception {
-		logger.info("displayREST() È£Ãâ : fileName = " + fileName);
+		logger.info("displayREST() È£ï¿½ï¿½ : fileName = " + fileName);
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
-		String filePath = uploadPath + fileName;
+		String filePath = uploadPath + "/" + fileName;
 		logger.info(filePath);
 		in = new FileInputStream(filePath);
 		String extension = filePath.substring(filePath.lastIndexOf(".") + 1);

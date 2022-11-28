@@ -33,7 +33,7 @@
 			function(data) {
 				$(data).each(function() {
 					ticketList += '<li>'
-					+ '<img src="/project/img/display?fileName=' + this.mvImage + '" width="50px"/><br>'
+					+ '<img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/><br>'
 					+ '예매No. ' + this.tkId
 					+ ' | 아이디 : ' + this.mmbId
 					+ ' | 스케줄No. ' + this.scdId

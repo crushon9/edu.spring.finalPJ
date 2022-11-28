@@ -80,7 +80,7 @@
 							+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
 							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
-							+ '<img src="/project/img/display?fileName=' + this.mvImage + '" width="50px"/>'
+							+ '<img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/>'
 							+ '<strong>' + this.mvTitle + '</strong>'
 							+ '<br>'
 							+ '관람평 <input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
