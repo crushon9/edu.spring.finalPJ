@@ -13,41 +13,41 @@ import edu.spring.project.domain.MovieVO;
 @Repository
 public class MovieDAOImple implements MovieDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MovieDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.project.movieMapper"; // movie-mapper.xml¿Í ¿¬°á
+	private static final String NAMESPACE = "edu.spring.project.movieMapper"; // movie-mapper.xmlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	@Autowired
 	private SqlSession sqlSession;
 
 	@Override
 	public int insert(MovieVO vo) {
-		logger.info("insert() È£Ãâ");
+		logger.info("insert() È£ï¿½ï¿½");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public MovieVO select(int mvId) {
-		logger.info("select() È£Ãâ : mvId = " + mvId);
+		logger.info("select() È£ï¿½ï¿½ : mvId = " + mvId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mv_id", mvId);
 	}
 
-	// ¿¹¸ÅÀ² ±âÁØ Á¤·Ä
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public List<MovieVO> selectTs() {
-		logger.info("select() È£Ãâ");
+		logger.info("selectTs() È£ï¿½ï¿½");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ts");
 	}
 
-	// ÆòÁ¡±âÁØ Á¤·Ä
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public List<MovieVO> selectRa() {
-		logger.info("select() È£Ãâ");
+		logger.info("selectRa() È£ï¿½ï¿½");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ra");
 	}
 
 	// select period
 	@Override
 	public List<MovieVO> select(String inputDateStarted, String inputDateEnded) {
-		logger.info("select() È£Ãâ : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info("select() È£ï¿½ï¿½ : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("inputDateStarted", inputDateStarted);
 		args.put("inputDateEnded", inputDateEnded);
@@ -57,30 +57,30 @@ public class MovieDAOImple implements MovieDAO {
 	// select date spot
 	@Override
 	public List<MovieVO> select(String inputDate) {
-		logger.info("select() È£Ãâ : inputDate = " + inputDate);
+		logger.info("select() È£ï¿½ï¿½ : inputDate = " + inputDate);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_date", inputDate);
 	}
 
-	// ¹®ÀÚ¿­°Ë»ö
+	// ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½Ë»ï¿½
 	@Override
 	public List<MovieVO> selectSearch(String search) {
-		logger.info("selectSearch() È£Ãâ : search = " + search);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_search", search);
+		logger.info("selectSearch() È£ï¿½ï¿½ : search = " + search);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mv_title", search);
 	}
 
 	@Override
 	public int update(MovieVO vo) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() È£ï¿½ï¿½");
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public int delete(int mvId) {
-		logger.info("delete() È£Ãâ");
+		logger.info("delete() È£ï¿½ï¿½");
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}
 
-	@Override // ¸®ºä °áÇÕ _ ¿µÈ­ ÆòÁ¡ º¯°æ 
+	@Override // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ _ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	public int updateRating(int amount, int rvRating, int mvId) {
 		logger.info("updateRating() : mvId = " + mvId);
 		int result = 0;
@@ -89,21 +89,21 @@ public class MovieDAOImple implements MovieDAO {
 		args.put("rvRating", rvRating);
 		args.put("mvId", mvId);
 		result = sqlSession.update(NAMESPACE + ".update_ratingTC_by_mv_id", args);
-		if (result != 0) { // ¾Õ¿¡ º¯°æ°ª Àû¿ëÀÌ ¿Ï·áµÈ ÈÄ Æò±Õ °è»êÇÏ¿© DB ÀúÀå
+		if (result != 0) { // ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½æ°ª ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ DB ï¿½ï¿½ï¿½ï¿½
 			result = sqlSession.update(NAMESPACE + ".update_ratingAVG_by_mv_id", mvId);
 		}
 		return result;
 	}
 
-	@Override // ¸®ºä·Î ÆòÁ¡ÀÌ º¯°æµÇ¸é, ÆòÁ¡¸¸ °¡Á®¿À±â
+	@Override // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public float selectRatingAvg(int mvId) {
-		logger.info("selectRatingAvg() È£Ãâ");
+		logger.info("selectRatingAvg() È£ï¿½ï¿½");
 		return sqlSession.selectOne(NAMESPACE + ".select_ratingAVG_by_mv_id", mvId);
 	}
 
 	@Override
 	public int updateTicketSales(int amount, int mvId) {
-		logger.info("updateTicketSales() È£Ãâ : mvId = " + mvId);
+		logger.info("updateTicketSales() È£ï¿½ï¿½ : mvId = " + mvId);
 		Map<String, Integer> args = new HashMap<String, Integer>();
 		args.put("amount", amount);
 		args.put("mvId", mvId);

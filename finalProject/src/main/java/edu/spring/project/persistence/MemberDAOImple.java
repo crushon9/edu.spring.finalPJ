@@ -22,49 +22,49 @@ public class MemberDAOImple implements MemberDAO{
 	
 	@Override
 	public int insert(MemberVO vo) {
-		logger.info("insert() È£Ãâ");
+		logger.info("insert() È£ï¿½ï¿½");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
-		// NAMESPACE°¡ µ¿ÀÏÇÑ mapper¸¦ Ã£¾Æ°¡¼­ id="insert"ÀÎ insert ÅÂ±×¿¡ vo µ¥ÀÌÅÍ¸¦ Àü¼Û
+		// NAMESPACEï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ mapperï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½ï¿½ id="insert"ï¿½ï¿½ insert ï¿½Â±×¿ï¿½ vo ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}//end insert
 
 	@Override
 	public List<MemberVO> select() {
-		logger.info("select() È£Ãâ");
+		logger.info("select() È£ï¿½ï¿½");
 		return sqlSession.selectList(NAMESPACE + ".select_list_all");
 	}//end select List
 
 	@Override
 	public MemberVO selectOne(String mmbId) {
-		logger.info("select() È£Ãâ : mmbId = " + mmbId);
+		logger.info("select() È£ï¿½ï¿½ : mmbId = " + mmbId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mmb_id", mmbId);
 	}//end select
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() È£ï¿½ï¿½");
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}//end update
 
 	@Override
 	public int delete(String mmbId) {
-		logger.info("delete() È£Ãâ");
+		logger.info("delete() È£ï¿½ï¿½");
 		return sqlSession.delete(NAMESPACE + ".delete", mmbId);
 	}//end delete
 
 	@Override
 	public MemberVO login(String mmbId, String mmbPassword) {
-		logger.info("login() È£Ãâ");		
+		logger.info("login() È£ï¿½ï¿½");		
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("mmbId", mmbId);
 		args.put("mmbPassword", mmbPassword);
 		return sqlSession.selectOne(NAMESPACE + ".login", args);		
 	}//end login()
 
-	// mmbId·Î °Ë»ö
+	// mmbIdï¿½ï¿½ ï¿½Ë»ï¿½
 	@Override
 	public List<MemberVO> select(String mmbId) {
-		logger.info("select() È£Ãâ");
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mmb_id", mmbId);
+		logger.info("select() È£ï¿½ï¿½");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mmb_id", mmbId);
 	}
 	
 }

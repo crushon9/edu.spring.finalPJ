@@ -25,16 +25,24 @@ public class MemberAdminController {
 	@GetMapping("/list")
 	public void listGET(Model model, String searchMmbId) {
 		logger.info("listGet call");
-		if(searchMmbId != null) {
-			// mmbId�� �������
+		if (searchMmbId != null) {
+			// mmbId占쏙옙 占쏙옙占쏙옙占쏙옙占�
 			List<MemberVO> list = memberService.read(searchMmbId);
 			model.addAttribute("list", list);
 		} else {
-			// �Ϲ� ����Ʈ��
+			// 占싹뱄옙 占쏙옙占쏙옙트占쏙옙
 			List<MemberVO> list = memberService.read();
 			model.addAttribute("list", list);
 		}
-		
-	}//end listGET()
+
+	}// end listGET()
+
+	// detail call
+	@GetMapping("/detail")
+	public void detailGET(Model model, String mmbId) {
+		logger.info("detailGET() call");
+		MemberVO vo = memberService.readOne(mmbId);
+		model.addAttribute("vo", vo);
+	}// end detailGET()
 
 }

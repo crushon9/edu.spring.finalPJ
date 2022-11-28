@@ -21,12 +21,11 @@
 	<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="search"></a>
 	
 	<!-- 회원 목록 출력 -->
-		
 	<c:forEach var="vo" items="${list }">
 		<ul>						
 			<li>
 				<Strong>Member ID : ${vo.mmbId }</Strong><br>
-				<input type="hidden" class="brcId" value="${vo.brcId }">
+				<a href="detail?mmbId=${vo.mmbId}"><input type="button" value="상세조회"></a>	
 			</li>
 		</ul>											
 	</c:forEach>

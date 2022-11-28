@@ -54,10 +54,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 문자열검색 -->
-	<select id="select_list_by_search" resultType="MovieVO">
+	<select id="select_list_by_search_mv_title" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
-		where ${mvTitle} like '%' || #{search} || '%'
+		where ${mvTitle} like '%' || #{searchMvTitle} || '%'
 	</select>
 
 	<!-- update all -->

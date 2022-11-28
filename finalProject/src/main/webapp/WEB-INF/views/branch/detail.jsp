@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>${vo.brcId}점 정보입니다.</title>
+<title>${vo.brcName}점 정보입니다.</title>
 <style type="text/css">
 .detail {
 	display : inline-flex;
@@ -36,7 +36,7 @@
 	<p>${vo.brcName}</p>
 	<p>${vo.brcTheaterNumbers}</p>
 	<p>${vo.brcTheaterSeats}</p>
-	
+	<p>${vo.brcInfo}</p>
 	<hr>
 
 	<!-- reply 입력 -->
@@ -44,8 +44,5 @@
 	
 	<hr>
 
-	
-	
-		
 </body>
 </html>

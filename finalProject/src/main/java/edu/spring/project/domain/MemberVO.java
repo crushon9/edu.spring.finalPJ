@@ -9,12 +9,15 @@ public class MemberVO {
 	private String mmbBirthday;
 	private int mmbAdminCheck;
 	private int brcId; // 선호지점 선택시 활용
+	// Join Data
+	private String brcName;
 
-	public MemberVO() {}
+	public MemberVO() {
+
+	}
 
 	public MemberVO(String mmbId, String mmbPassword, String mmbEmail, String mmbPhone, String mmbBirthday,
-			int mmbAdminCheck, int brcId) {
-
+			int mmbAdminCheck, int brcId, String brcName) {
 		this.mmbId = mmbId;
 		this.mmbPassword = mmbPassword;
 		this.mmbEmail = mmbEmail;
@@ -22,6 +25,7 @@ public class MemberVO {
 		this.mmbBirthday = mmbBirthday;
 		this.mmbAdminCheck = mmbAdminCheck;
 		this.brcId = brcId;
+		this.brcName = brcName;
 	}
 
 	public String getMmbId() {
@@ -80,11 +84,19 @@ public class MemberVO {
 		this.brcId = brcId;
 	}
 
+	public String getBrcName() {
+		return brcName;
+	}
+
+	public void setBrcName(String brcName) {
+		this.brcName = brcName;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [mmbId=" + mmbId + ", mmbPassword=" + mmbPassword + ", mmbEmail=" + mmbEmail + ", mmbPhone="
 				+ mmbPhone + ", mmbBirthday=" + mmbBirthday + ", mmbAdminCheck=" + mmbAdminCheck + ", brcId=" + brcId
-				+ "]";
+				+ ", brcName=" + brcName + "]";
 	}
 
 }

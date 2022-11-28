@@ -110,11 +110,12 @@ public class MemberController {
 			RedirectAttributes reAttr) throws IOException {
 		logger.info("loginPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
+		HttpSession session = request.getSession();
 		if (vo != null) {
 			if (vo.getMmbAdminCheck() == 1) { // admin login only
+				session.setAttribute("adminSession", vo.getMmbId());
 				return "redirect:/admin/main";
 			}
-			HttpSession session = request.getSession();
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			session.setMaxInactiveInterval(300);
 			// TODO : targetURL login 확占쏙옙占십울옙

@@ -6,12 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_BRANCH} 
-		(${brcId}, ${brcArea}, ${brcName}, ${brcTheaterNumbers}, ${brcTheaterSeats})
-		values (#{brcId}, #{brcArea}, #{brcName}, #{brcTheaterNumbers}, #{brcTheaterSeats})
+		(${brcId}, ${brcArea}, ${brcName}, ${brcTheaterNumbers}, ${brcTheaterSeats}, ${brcInfo})
+		values (#{brcId}, #{brcArea}, #{brcName}, #{brcTheaterNumbers}, #{brcTheaterSeats}, #{brcInfo})
 	</insert>
 
 	<!-- 전체리스트 보여주기  -->
-	<select id="select_list_all" resultType="BranchVO">		
+	<select id="select_list_all" resultType="BranchVO">
 		select * from
 		${PJ_BRANCH}
 		order by ${brcId} DESC
@@ -40,8 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="update">
 		update ${PJ_BRANCH}
-		set ${brcArea} = #{brcArea}, ${brcName} = #{brcName},
-		${brcTheaterNumbers} = #{brcTheaterNumbers}, ${brcTheaterSeats} = #{brcTheaterSeats}
+		set ${brcArea} = #{brcArea}, ${brcName} = #{brcName}, ${brcTheaterNumbers} = #{brcTheaterNumbers}, 
+		${brcTheaterSeats} = #{brcTheaterSeats}, ${brcInfo} = #{brcInfo}
 		where ${brcId} = #{brcId}
 	</update>
 

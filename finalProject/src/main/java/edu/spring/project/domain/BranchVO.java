@@ -10,16 +10,18 @@ public class BranchVO {
 	private int brcTheaterNumbers;
 	private String brcTheaterSeats;
 	private int[] arrBrcTheaterSeats;
-
+	private String brcInfo;
+	
 	public BranchVO() {
 	}
 
-	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, String brcTheaterSeats) {
+	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, String brcTheaterSeats, String brcInfo) {
 		this.brcId = brcId;
 		this.brcArea = brcArea;
 		this.brcName = brcName;
 		this.brcTheaterNumbers = brcTheaterNumbers;
 		this.brcTheaterSeats = brcTheaterSeats;
+		this.brcInfo = brcInfo;
 	}
 
 	public int getBrcId() {
@@ -54,14 +56,14 @@ public class BranchVO {
 		this.brcTheaterNumbers = brcTheaterNumbers;
 	}
 
-	// int[] arrBrcTheaterSeats ¹è¿­À» ¹®ÀÚ¿­·Î º¯È¯
+	// int[] arrBrcTheaterSeats ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	public String getBrcTheaterSeats() {
 		return Arrays.toString(arrBrcTheaterSeats).replace("[", "").replace("]", "");
 	}
 
 	public void setBrcTheaterSeats(String brcTheaterSeats) {
 		this.brcTheaterSeats = brcTheaterSeats;
-		// StringÀ» Array¿¡ ´ã±â
+		// Stringï¿½ï¿½ Arrayï¿½ï¿½ ï¿½ï¿½ï¿½
 		String tempArr[] = brcTheaterSeats.split(", ");
 		int[] intArr = new int[tempArr.length];
 		for (int i = 0; i < tempArr.length; i++) {
@@ -77,11 +79,19 @@ public class BranchVO {
 	public void setArrBrcTheaterSeats(int[] arrBrcTheaterSeats) {
 		this.arrBrcTheaterSeats = arrBrcTheaterSeats;
 	}
+	
+	public String getBrcInfo() {
+		return brcName;
+	}
 
+	public void setBrcInfo(String brcInfo) {
+		this.brcInfo = brcInfo;
+	}
+	
 	@Override
 	public String toString() {
 		return "BranchVO [brcId=" + brcId + ", brcArea=" + brcArea + ", brcName=" + brcName + ", brcTheaterNumbers="
 				+ brcTheaterNumbers + ", brcTheaterSeats=" + brcTheaterSeats + ", arrBrcTheaterSeats="
-				+ Arrays.toString(arrBrcTheaterSeats) + "]";
+				+ Arrays.toString(arrBrcTheaterSeats) + "]" + ", brcInfo=" + brcInfo;
 	}
 }
