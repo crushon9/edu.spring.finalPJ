@@ -8,7 +8,7 @@ public class MemberVO {
 	private String mmbPhone;
 	private String mmbBirthday;
 	private int mmbAdminCheck;
-	private int brcId; // ¼±È£ÁöÁ¡¼±ÅÃ ½Ã È°¿ë
+	private int brcId; // ì„ í˜¸ì§€ì  ì„ íƒì‹œ í™œìš©
 
 	public MemberVO() {}
 
