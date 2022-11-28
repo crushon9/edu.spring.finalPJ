@@ -55,71 +55,69 @@
 		            <div class="nav">
 		            <!-- 계정에 따라 조건문으로 사이드바 출력  -->
 			            <c:if test="${empty mmbIdSession }"><!-- 비회원 -->
-			            	<br><br>
-			                <a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a>
-			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a>
-			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a>
+			            	<br>
+			                <a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
+			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
+			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
 			            </c:if>
 						<c:if test="${not empty mmbIdSession && empty adminSession}"><!-- 일반회원  -->
-							<br><br>
-							<a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a>
-			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a>
-			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a>
+							<br>
+							<a class="nav-link" href="/project/movie/main">&emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
+			                <a class="nav-link" href="/project/branch/list">&emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
+			                <a class="nav-link" href="/project/schedule/list">&emsp;<i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
 			                
 			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 			                  &emsp;<i class="fa-solid fa-house-user"></i>&emsp;Mypage<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
 			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 			                    <nav class="sb-sidenav-menu-nested nav">
-			                        <a class="nav-link" href="/project/ticket/list"><i class="fa-solid fa-minus"></i>&emsp;My Ticket</a>
-			                        <a class="nav-link" href="/project/review/list"><i class="fa-solid fa-minus"></i>&emsp;My Review</a>
-			                        <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>"><i class="fa-solid fa-minus"></i>&emsp;My Info</a>
+			                        <a class="nav-link" href="/project/ticket/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;My Ticket</a>
+			                        <a class="nav-link" href="/project/review/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;My Review</a>
+			                        <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>">&emsp;<i class="fa-solid fa-minus"></i>&emsp;My Info</a>
 			                    </nav>
-			                </div>  
+			                </div>
 						</c:if>
 						<c:if test="${not empty adminSession }"><!-- 관리자 -->
-							<br><br>
+							<br>
 			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 			                  &emsp;<i class="fa-solid fa-clapperboard"></i>&emsp;Movie<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
 			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 			                    <nav class="sb-sidenav-menu-nested nav">
-			                        <a class="nav-link" href="/project/movie/admin/register"><i class="fa-solid fa-minus"></i>&emsp;Register</a>
-			                        <a class="nav-link" href="/project/movie/admin/list"><i class="fa-solid fa-minus"></i>&emsp;List</a>
+			                        <a class="nav-link" href="/project/movie/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
+			                        <a class="nav-link" href="/project/movie/admin/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;List</a>
 			                    </nav>
-			                </div>
+			                </div><br>
 			                
 			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 			                  &emsp;<i class="fa-solid fa-building-flag"></i>&emsp;Branch<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
 			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 			                    <nav class="sb-sidenav-menu-nested nav">
-			                        <a class="nav-link" href="/project/branch/admin/register"><i class="fa-solid fa-minus"></i>&emsp;Register</a>
-			                        <a class="nav-link" href="/project/branch/admin/list"><i class="fa-solid fa-minus"></i>&emsp;List</a>
+			                        <a class="nav-link" href="/project/branch/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
+			                        <a class="nav-link" href="/project/branch/admin/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;List</a>
 			                    </nav>
-			                </div>  
+			                </div><br>  
 			                
 			                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 			                  &emsp;<i class="fa-solid fa-calendar-days"></i>&emsp;Schedule<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 			                </a>
 			                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 			                    <nav class="sb-sidenav-menu-nested nav">
-									<a class="nav-link" href="/project/schedule/admin/register"><i class="fa-solid fa-minus"></i>&emsp;Register</a>
-			                        <a class="nav-link" href="/project/schedule/admin/list"><i class="fa-solid fa-minus"></i>&emsp;List</a>
+									<a class="nav-link" href="/project/schedule/admin/register">&emsp;<i class="fa-solid fa-minus"></i>&emsp;Register</a>
+			                        <a class="nav-link" href="/project/schedule/admin/list">&emsp;<i class="fa-solid fa-minus"></i>&emsp;List</a>
 			                    </nav>
-			                </div> 
+			                </div><br>
 			                
-			                 <a class="nav-link" href="/project/ticket/admin/list">&emsp;<i class="fa-solid fa-ticket"></i>&emsp;Ticket</a> 
-			                 <a class="nav-link" href="/project/member/admin/list">&emsp;<i class="fa-solid fa-user"></i>&emsp;Member</a> 
-			                
-			                <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>">&emsp;<i class="fa-solid fa-house-user"></i>&emsp;My Info</a> 
+			                <a class="nav-link" href="/project/ticket/admin/list">&emsp;<i class="fa-solid fa-ticket"></i>&emsp;Ticket</a><br>
+			                <a class="nav-link" href="/project/member/admin/list">&emsp;<i class="fa-solid fa-user"></i>&emsp;Member</a><br>
+			                <a class="nav-link" href="/project/member/update?mmbId=<%=mmbIdSession%>">&emsp;<i class="fa-solid fa-house-user"></i>&emsp;My Info</a><br>
 			                  
 						</c:if>
 		            </div>
 		        </div>
 		        <div class="sb-sidenav-footer">
-		            <div class="small">Logged in as:</div>
-		            CGVIP
+		            <div class="small">&emsp;CGVIP<br>(Come and See Us)</div>
 		        </div>
 		    </nav>
 		</div>
@@ -154,10 +152,13 @@
 		    <footer class="py-4 bg-light mt-auto">
 		        <div class="container-fluid px-4">
 		            <div class="d-flex align-items-center justify-content-between small">
-		                <div class="text-muted">Copyright &copy; Your Website 2022</div>
+		                <div class="text-muted">서울시 구로구 구트아카데미!  &emsp; contact us : cgvipMaster@cjvip.com
+			                <br>
+			                대표이사 P&S &emsp; 사업자등록번호 102-222-2222 &emsp; 통신판매업신고번호 2017-서울금천-0000
+							<br>
+			                Copyright &copy; CJ CGVIP. All Rights Reserved
+		                </div>
 		                <div>
-		                    <a href="#">Privacy Policy</a>
-		                    &middot;
 		                    <a href="#">Terms &amp; Conditions</a>
 		                </div>
 		            </div>
