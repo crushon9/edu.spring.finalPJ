@@ -46,7 +46,7 @@ public class ReviewController {
 
 	@GetMapping("/list/{mmbId}") // (GET)/review/list/mmbId
 	public ResponseEntity<List<ReviewVO>> listREST(@PathVariable("mmbId") String mmbId) {
-		logger.info("listREST() ȣ�� : mmbId = " + mmbId);
+		logger.info("listREST() call : mmbId = " + mmbId);
 		List<ReviewVO> list = reviewService.read(mmbId);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
 	}//end listREST()

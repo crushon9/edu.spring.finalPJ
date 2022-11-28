@@ -39,7 +39,7 @@ public class FileUploadController {
 
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> displayREST(String fileName) throws Exception {
-		logger.info("displayREST() ȣ�� : fileName = " + fileName);
+		logger.info("displayREST() call : fileName = " + fileName);
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
 		String filePath = uploadPath + "/" + fileName;

@@ -14,11 +14,11 @@ public class MediaUtil {
 		mediaMap.put("JPG", MediaType.IMAGE_JPEG);
 		mediaMap.put("GIF", MediaType.IMAGE_GIF);
 		mediaMap.put("PNG", MediaType.IMAGE_PNG);
-		mediaMap.put("JFIF", MediaType.IMAGE_JPEG); // 신규 확장자명 추가
+		mediaMap.put("JFIF", MediaType.IMAGE_JPEG);
 	}
 	
 	public static MediaType geMediaType(String type) {
-		return mediaMap.get(type.toUpperCase()); // 소문자 -> 대문자
+		return mediaMap.get(type.toUpperCase());
 	}
 	
 }

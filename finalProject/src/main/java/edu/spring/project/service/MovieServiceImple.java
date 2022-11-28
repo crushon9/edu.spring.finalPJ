@@ -30,28 +30,28 @@ public class MovieServiceImple implements MovieService {
 	// order by ticketSales
 	@Override
 	public List<MovieVO> readOrderTicket() {
-		logger.info("readTs() call");
+		logger.info("readOrderTicket() call");
 		return dao.selectOrderTicket();
 	}
 
 	// order by ReviewAvg
 	@Override
 	public List<MovieVO> readOrderReview() {
-		logger.info("readRa() call");
+		logger.info("readOrderReview() call");
 		return dao.selectOrderReview();
 	}
 
 	// search by period
 	@Override
 	public List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded) {
-		logger.info("select() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info("readPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		return dao.selectPeriod(inputDateStarted, inputDateEnded);
 	}
 
 	// search by date
 	@Override
 	public List<MovieVO> readDate(String inputDate) {
-		logger.info("select() call : inputDate = " + inputDate);
+		logger.info("readDate() call : inputDate = " + inputDate);
 		return dao.selectDate(inputDate);
 	}
 
