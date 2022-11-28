@@ -9,32 +9,32 @@ public interface MovieDAO {
 
 	MovieVO select(int mvId);
 
-	// ¿¹¸ÅÀ² ±âÁØ Á¤·Ä
+	// ì˜ˆë§¤ìœ¨ê¸°ì¤€ ì •ë ¬
 	List<MovieVO> selectTs();
 
-	// ÆòÁ¡±âÁØ Á¤·Ä
+	// í‰ì ê¸°ì¤€ ì •ë ¬
 	List<MovieVO> selectRa();
 
-	// ±â°£°Ë»ö
-	List<MovieVO> select(String inputDateStarted, String inputDateEnded);
+	// search by period
+	List<MovieVO> selectPeriod(String inputDateStarted, String inputDateEnded);
 
-	// ³¯Â¥°Ë»ö
-	List<MovieVO> select(String inputDate);
+	// search by date
+	List<MovieVO> selectDate(String inputDate);
 
-	// ¹®ÀÚ¿­°Ë»ö
+	// search by String
 	List<MovieVO> selectSearch(String search);
 
 	int update(MovieVO vo);
 
 	int delete(int mvId);
 
-	// ¸®ºä °áÇÕ _ ¿µÈ­ ÆòÁ¡ º¯°æ 
+	// update rvRating
 	int updateRating(int amount, int rvRating, int mvId);
 
-	// ¸®ºä·Î ÆòÁ¡ÀÌ º¯°æµÇ¸é, ÆòÁ¡¸¸ °¡Á®¿À±â
+	// rvRatingAvg(a/b)
 	float selectRatingAvg(int mvId);
 	
-	// Æ¼ÄÏ °áÇÕ _ ¿µÈ­ ¿¹¸Å¼ö º¯°æ
+	// update TicketSales(int)
 	int updateTicketSales(int amount, int mvId);
 
 }

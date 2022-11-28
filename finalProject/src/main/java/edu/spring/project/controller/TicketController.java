@@ -28,14 +28,14 @@ public class TicketController {
 
 	@GetMapping("/buy")
 	public void buyGET(Model model, TicketVO vo) {
-		logger.info("buyGET() ȣ��");
+		logger.info("buyGET() call");
 		logger.info(vo.toString());
 		model.addAttribute("vo", vo);
-	}
+	}//end buyGET()
 
 	@PostMapping("/buy")
 	public String buyPOST(TicketVO vo) {
-		logger.info("buyPOST() ȣ��");
+		logger.info("buyPOST() call");
 		logger.info(vo.toString());
 		int result = ticketService.create(vo);
 		logger.info(result + "�� ����");
@@ -44,39 +44,39 @@ public class TicketController {
 		} else {
 			return "redirect:/schedule/list";
 		}
-	}
+	}//end buyPOST()
 
 	@GetMapping("/list")
 	public void listGET() {
-		logger.info("listGET() ȣ��");
-	}
+		logger.info("listGET() call");
+	}//end buyPOST()
 
 	@GetMapping("/listAll")
 	public ResponseEntity<List<TicketVO>> listAllREST() {
-		logger.info("listAll() ȣ��");
+		logger.info("listAll() call");
 		List<TicketVO> list = ticketService.read();
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
-	}
+	}//end listAllREST()
 
 	@GetMapping("/listScdId/{scdId}")
 	public ResponseEntity<List<TicketVO>> listScdIdREST(@PathVariable("scdId") int scdId) {
-		logger.info("listScdIdREST() ȣ�� : scdId = " + scdId);
+		logger.info("listScdIdREST() call : scdId = " + scdId);
 		List<TicketVO> list = ticketService.read(scdId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
-	}
+	}//end listScdIdREST()
 
 	@GetMapping("/listMmbId/{mmbId}")
 	public ResponseEntity<List<TicketVO>> listMmbIdREST(@PathVariable("mmbId") String mmbId) {
-		logger.info("listMmbIdREST() ȣ�� : mmbId = " + mmbId);
+		logger.info("listMmbIdREST() call : mmbId = " + mmbId);
 		List<TicketVO> list = ticketService.read(mmbId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
-	}
+	}//end listMmbIdREST()
 
 	@DeleteMapping
 	public ResponseEntity<Integer> deleteREST(@RequestBody TicketVO vo) {
-		logger.info("deleteREST() ȣ�� " + vo.toString());
+		logger.info("deleteREST() call " + vo.toString());
 		int result = ticketService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
+	}//end deleteREST()
 
 }

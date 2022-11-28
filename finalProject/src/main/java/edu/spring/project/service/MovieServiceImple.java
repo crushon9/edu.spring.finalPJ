@@ -17,63 +17,66 @@ public class MovieServiceImple implements MovieService {
 
 	@Override
 	public int create(MovieVO vo) {
-		logger.info("create() »£√‚");
+		logger.info("create() call");
 		return dao.insert(vo);
 	}
 
 	@Override
 	public MovieVO read(int mvId) {
-		logger.info("read() »£√‚ : mvId = " + mvId);
+		logger.info("read() call : mvId = " + mvId);
 		return dao.select(mvId);
 	}
 
-	// øπ∏≈¿≤ ±‚¡ÿ ¡§∑ƒ
+	// ÏòàÎß§Ïú®Í∏∞Ï§Ä Ï†ïÎ†¨
 	@Override
 	public List<MovieVO> readTs() {
-		logger.info("readTs() »£√‚");
+		logger.info("readTs() call");
 		return dao.selectTs();
 	}
 
-	// ∆Ú¡°±‚¡ÿ ¡§∑ƒ
+	// ÌèâÏ†êÍ∏∞Ï§Ä Ï†ïÎ†¨
 	@Override
 	public List<MovieVO> readRa() {
-		logger.info("readRa() »£√‚");
+		logger.info("readRa() call");
 		return dao.selectRa();
 	}
 
+	// search by period
 	@Override
-	public List<MovieVO> read(String inputDateStarted, String inputDateEnded) {
-		logger.info("select() »£√‚ : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
-		return dao.select(inputDateStarted, inputDateEnded);
+	public List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded) {
+		logger.info("select() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		return dao.selectPeriod(inputDateStarted, inputDateEnded);
 	}
 
+	// search by date
 	@Override
-	public List<MovieVO> read(String inputDate) {
-		logger.info("select() »£√‚ : inputDate = " + inputDate);
-		return dao.select(inputDate);
+	public List<MovieVO> readDate(String inputDate) {
+		logger.info("select() call : inputDate = " + inputDate);
+		return dao.selectDate(inputDate);
 	}
 
+	// search by String
 	@Override
 	public List<MovieVO> readSearch(String search) {
-		logger.info("readSearch() »£√‚ : search = " + search);
+		logger.info("readSearch() call : search = " + search);
 		return dao.selectSearch(search);
 	}
 
 	@Override
 	public int update(MovieVO vo) {
-		logger.info("update() »£√‚");
+		logger.info("update() call");
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(int mvId) {
-		logger.info("delete() »£√‚ : mvId = " + mvId);
+		logger.info("delete() call : mvId = " + mvId);
 		return dao.delete(mvId);
 	}
 
 	@Override
 	public float readRatingAvg(int mvId) {
-		logger.info("readRatingAvg() »£√‚ : mvId = " + mvId);
+		logger.info("readRatingAvg() call : mvId = " + mvId);
 		return dao.selectRatingAvg(mvId);
 	}
 

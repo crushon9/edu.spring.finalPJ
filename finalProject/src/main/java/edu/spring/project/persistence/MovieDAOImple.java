@@ -20,67 +20,67 @@ public class MovieDAOImple implements MovieDAO {
 
 	@Override
 	public int insert(MovieVO vo) {
-		logger.info("insert() ȣ��");
+		logger.info("insert() call");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public MovieVO select(int mvId) {
-		logger.info("select() ȣ�� : mvId = " + mvId);
+		logger.info("select() call : mvId = " + mvId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mv_id", mvId);
 	}
 
-	// ������ ���� ����
+	// 예매율기준 정렬
 	@Override
 	public List<MovieVO> selectTs() {
-		logger.info("selectTs() ȣ��");
+		logger.info("selectTs() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ts");
 	}
 
-	// �������� ����
+	// 평점기준 정렬
 	@Override
 	public List<MovieVO> selectRa() {
-		logger.info("selectRa() ȣ��");
+		logger.info("selectRa() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_ra");
 	}
 
-	// select period
+	// search by period
 	@Override
-	public List<MovieVO> select(String inputDateStarted, String inputDateEnded) {
-		logger.info("select() ȣ�� : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+	public List<MovieVO> selectPeriod(String inputDateStarted, String inputDateEnded) {
+		logger.info("selectPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("inputDateStarted", inputDateStarted);
 		args.put("inputDateEnded", inputDateEnded);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_period", args);
 	}
 
-	// select date spot
+	// search by date
 	@Override
-	public List<MovieVO> select(String inputDate) {
-		logger.info("select() ȣ�� : inputDate = " + inputDate);
+	public List<MovieVO> selectDate(String inputDate) {
+		logger.info("selectDate() call : inputDate = " + inputDate);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_date", inputDate);
 	}
 
-	// ���ڿ��˻�
+	// search by String
 	@Override
 	public List<MovieVO> selectSearch(String search) {
-		logger.info("selectSearch() ȣ�� : search = " + search);
+		logger.info("selectSearch() call : search = " + search);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mv_title", search);
 	}
 
 	@Override
 	public int update(MovieVO vo) {
-		logger.info("update() ȣ��");
+		logger.info("update() call");
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public int delete(int mvId) {
-		logger.info("delete() ȣ��");
+		logger.info("delete() call");
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}
 
-	@Override // ���� ���� _ ��ȭ ���� ���� 
+	@Override 
 	public int updateRating(int amount, int rvRating, int mvId) {
 		logger.info("updateRating() : mvId = " + mvId);
 		int result = 0;
@@ -89,21 +89,21 @@ public class MovieDAOImple implements MovieDAO {
 		args.put("rvRating", rvRating);
 		args.put("mvId", mvId);
 		result = sqlSession.update(NAMESPACE + ".update_ratingTC_by_mv_id", args);
-		if (result != 0) { // �տ� ���氪 ������ �Ϸ�� �� ��� ����Ͽ� DB ����
+		if (result != 0) {
 			result = sqlSession.update(NAMESPACE + ".update_ratingAVG_by_mv_id", mvId);
 		}
 		return result;
 	}
 
-	@Override // ����� ������ ����Ǹ�, ������ ��������
+	@Override 
 	public float selectRatingAvg(int mvId) {
-		logger.info("selectRatingAvg() ȣ��");
+		logger.info("selectRatingAvg() call");
 		return sqlSession.selectOne(NAMESPACE + ".select_ratingAVG_by_mv_id", mvId);
 	}
 
 	@Override
 	public int updateTicketSales(int amount, int mvId) {
-		logger.info("updateTicketSales() ȣ�� : mvId = " + mvId);
+		logger.info("updateTicketSales() call : mvId = " + mvId);
 		Map<String, Integer> args = new HashMap<String, Integer>();
 		args.put("amount", amount);
 		args.put("mvId", mvId);

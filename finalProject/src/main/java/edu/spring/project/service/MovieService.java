@@ -10,19 +10,19 @@ public interface MovieService {
 
 	MovieVO read(int mvId);
 
-	// ¿¹¸ÅÀ²±âÁØ Á¤·Ä
+	// ì˜ˆë§¤ìœ¨ê¸°ì¤€ ì •ë ¬
 	List<MovieVO> readTs();
 
-	// ÆòÁ¡±âÁØ Á¤·Ä
+	// í‰ì ê¸°ì¤€ ì •ë ¬
 	List<MovieVO> readRa();
 
-	// ±â°£ °Ë»ö
-	List<MovieVO> read(String inputDateStarted, String inputDateEnded);
+	// ê¸°ê°„ ê²€ìƒ‰
+	List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded);
 
-	// ³¯Â¥ °Ë»ö
-	List<MovieVO> read(String inputDate);
+	// ë‚ ì§œ ê²€ìƒ‰
+	List<MovieVO> readDate(String inputDate);
 
-	// ¹®ÀÚ¿­ °Ë»ö
+	// ë¬¸ìì—´ ê²€ìƒ‰
 	List<MovieVO> readSearch(String search);
 
 	int update(MovieVO vo);

@@ -24,11 +24,10 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 
-	// ���ε�� ������
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
-	// ������������ ����Ʈ ������or���� ���� ���ϱ� (+���ڿ��˻�)
+	// main page
 	@GetMapping("/main")
 	public void mainGET(Model model, String orderChoice, String searchText) {
 		logger.info("mainGET() call");
@@ -43,13 +42,13 @@ public class MovieController {
 				List<MovieVO> mvList = movieService.readRa();
 				model.addAttribute("mvList", mvList);
 			}	
-		} else { // �⺻��
+		} else { // default
 			List<MovieVO> mvList = movieService.readTs();
 			model.addAttribute("mvList", mvList);
 		}
 	}// end mainGET()
 
-	// mvId�� ��ü ���� show, -> detail.jsp
+	// detail.jsp
 	@GetMapping("/detail")
 	public void detailGET(Model model, int mvId) {
 		logger.info("detailGET() call : mvId = " + mvId);
@@ -59,7 +58,7 @@ public class MovieController {
 
 	@GetMapping("/mvRatingAvg/{mvId}")
 	public ResponseEntity<Float> mvRatingAvgREST(@PathVariable("mvId") int mvId) {
-		logger.info("mvRatingAvgREST() ȣ�� : mvId = " + mvId);
+		logger.info("mvRatingAvgREST() call : mvId = " + mvId);
 		float mvRatingAvg = movieService.readRatingAvg(mvId);
 		return new ResponseEntity<Float>(mvRatingAvg, HttpStatus.OK);
 	}//end mvRatingAvgREST()
@@ -67,15 +66,15 @@ public class MovieController {
 	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
 			@PathVariable("inputDateEnded") String inputDateEnded) {
-		logger.info("listREST() ȣ�� : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
-		List<MovieVO> list = movieService.read(inputDateStarted, inputDateEnded);
+		logger.info("listREST() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		List<MovieVO> list = movieService.readPeriod(inputDateStarted, inputDateEnded);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
 
 	@GetMapping("/list/{inputDate}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
-		logger.info("listREST() ȣ�� : inputDate = " + inputDate);
-		List<MovieVO> list = movieService.read(inputDate);
+		logger.info("listREST() call : inputDate = " + inputDate);
+		List<MovieVO> list = movieService.readDate(inputDate);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
 

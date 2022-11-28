@@ -20,6 +20,6 @@ public class TicketAdminController {
 
 	@GetMapping("/list")
 	public void listGET(Model model) {
-		logger.info("listGET() ȣ��");
+		logger.info("listGET() call");
 	}//end listGET()
 }

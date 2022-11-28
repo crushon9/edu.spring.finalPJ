@@ -56,14 +56,14 @@ public class BranchVO {
 		this.brcTheaterNumbers = brcTheaterNumbers;
 	}
 
-	// int[] arrBrcTheaterSeats �迭�� ���ڿ��� ��ȯ
+	// int[] arrBrcTheaterSeats 
 	public String getBrcTheaterSeats() {
 		return Arrays.toString(arrBrcTheaterSeats).replace("[", "").replace("]", "");
 	}
 
 	public void setBrcTheaterSeats(String brcTheaterSeats) {
 		this.brcTheaterSeats = brcTheaterSeats;
-		// String�� Array�� ���
+		// String Array
 		String tempArr[] = brcTheaterSeats.split(", ");
 		int[] intArr = new int[tempArr.length];
 		for (int i = 0; i < tempArr.length; i++) {

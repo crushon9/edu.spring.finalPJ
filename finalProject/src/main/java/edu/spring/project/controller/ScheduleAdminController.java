@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,16 +24,12 @@ public class ScheduleAdminController {
 
 	@GetMapping("/register")
 	public void registerGET() {
-		logger.info("registerGET() ȣ��");
+		logger.info("registerGET() call");
 	}//end registerGET()
 
 	@PostMapping("/register")
 	public ResponseEntity<Integer> registerREST(@RequestBody ScheduleVO vo) {
-		// @RequestBody : json �����͸� �ڹٰ�ü�� ��ȯ
 		logger.info("registerREST() call : vo = " + vo.toString());
-		// ResponseEntity<T> : REST ��Ŀ��� �����͸� ������ �� ���̴� ��ü
-		// - �����Ϳ� HttpStatus�� ����
-		// - <T> : �������� �ϴ� ������ Ÿ��
 		int result = 0;
 		try {
 			result = scheduleService.create(vo);
@@ -46,12 +41,12 @@ public class ScheduleAdminController {
 	
 	@GetMapping("/list")
 	public void listGET() {
-		logger.info("listGET() ȣ��");
+		logger.info("listGET() call");
 	}//end listGET()
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<Integer> deleteREST(@RequestBody ScheduleVO vo) {
-		logger.info("deleteREST() ȣ�� : scdId = " + vo.getScdId());
+		logger.info("deleteREST() call : scdId = " + vo.getScdId());
 		int result = scheduleService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}//end deleteREST()

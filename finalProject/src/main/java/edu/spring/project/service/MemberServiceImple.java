@@ -17,31 +17,31 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int create(MemberVO vo) {
-		logger.info("create() 호출");
+		logger.info("create() call");
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<MemberVO> read() {
-		logger.info("read() 호출");
+		logger.info("read() call");
 		return dao.select();
 	}
 
 	@Override
 	public MemberVO readOne(String mmbId) {
-		logger.info("read() 호출 : mmbId = " + mmbId);
+		logger.info("read() call : mmbId = " + mmbId);
 		return dao.selectOne(mmbId);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update() 호출");
+		logger.info("update() call");
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(String mmbId) {
-		logger.info("delete() 호출 : mmbId = " + mmbId);
+		logger.info("delete() call : mmbId = " + mmbId);
 		return dao.delete(mmbId);
 	}
 
@@ -51,10 +51,10 @@ public class MemberServiceImple implements MemberService {
 		return dao.login(mmbId, mmbPassword);
 	}
 	
-	// mmbId로 검색
+	// search by mmbId
 	@Override
 	public List<MemberVO> read(String mmbId) {
-		logger.info("read() 호출");
+		logger.info("read() call");
 		return dao.select(mmbId);
 	}
 

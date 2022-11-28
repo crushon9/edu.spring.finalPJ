@@ -26,13 +26,13 @@ public class ScheduleController {
 
 	@GetMapping("/list")
 	public void listGET() {
-		logger.info("listGET() ȣ��");
+		logger.info("listGET() call");
 	}//end listGET()
 
 	@GetMapping("/list/{mvId}&{brcId}&{scdDate}")
 	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("mvId") int mvId, @PathVariable("brcId") int brcId,
 			@PathVariable("scdDate") String scdDate) {
-		logger.info("listREST() ȣ�� : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
+		logger.info("listREST() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		List<ScheduleVO> list = scheduleService.read(mvId, brcId, scdDate);
 		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
 	}//end listRESRT()

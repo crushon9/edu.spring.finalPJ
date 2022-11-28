@@ -35,7 +35,7 @@ public class BranchController {
 	public ResponseEntity<List<BranchVO>> listREST(@PathVariable("brcArea") int brcArea) {
 		logger.info("listREST() call : brcArea = " + brcArea);
 		List<BranchVO> list = branchService.read(brcArea);
-		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // �ڵ����� JSON���� �Ľ̵�
+		return new ResponseEntity<List<BranchVO>>(list, HttpStatus.OK); // 
 	}// end listREST()
 	
 	// user branch detail

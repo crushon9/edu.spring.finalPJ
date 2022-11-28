@@ -6,14 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_MOVIE}
-		(${mvTitle}, ${mvImage},
-		${mvDateStarted}, ${mvDateEnded}, ${mvRunningTime},
-		${mvGenre},
-		${mvInfo} )
-		values (#{mvTitle}, #{mvImage},
-		#{mvDateStarted},
-		#{mvDateEnded}, #{mvRunningTime}, #{mvGenre},
-		#{mvInfo})
+		(${mvTitle}, ${mvImage}, ${mvDateStarted}, ${mvDateEnded}, ${mvRunningTime},
+		${mvGenre}, ${mvInfo})
+		values (#{mvTitle}, #{mvImage}, #{mvDateStarted}, #{mvDateEnded}, #{mvRunningTime}, 
+		#{mvGenre}, #{mvInfo})
 	</insert>
 
 	<select id="select_one_by_mv_id" resultType="MovieVO">
@@ -22,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</select>
 
-	<!-- 예매율 기준 정렬 -->
+	<!-- 예매율기준 정렬 -->
 	<select id="select_list_by_mv_ts" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
@@ -40,12 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_list_by_period" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
-		where ${mvDateStarted} <![CDATA[<=]]>
-		#{inputDateStarted} and #{inputDateEnded} <![CDATA[<=]]>
-		${mvDateEnded}
+		where ${mvDateStarted} <![CDATA[<=]]> #{inputDateStarted} 
+		and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
 	</select>
 
-	<!-- 날짜검색 -->
+	<!-- 날짜(단일)검색 -->
 	<select id="select_list_by_date" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
@@ -77,19 +72,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</delete>
 
-	<!-- mvRatingAvg // rvRating : 리뷰점수 , amount : 리뷰삭제되면 -1, 등록하면 +1 -->
+	<!-- mvRatingAvg // rvRating : 리뷰점수, amount : 삭제 -1, 등록 +1 -->
 	<update id="update_ratingTC_by_mv_id">
 		update ${PJ_MOVIE}
-		set
-		${mvRatingTotal} = ${mvRatingTotal} + #{rvRating},
+		set ${mvRatingTotal} = ${mvRatingTotal} + #{rvRating},
 		${mvRatingCnt} = ${mvRatingCnt} + #{amount}
 		where ${mvId} = #{mvId}
 	</update>
+	
 	<!-- rvAvg = rvCnt / rvTotal -->
 	<update id="update_ratingAVG_by_mv_id">
 		update ${PJ_MOVIE}
-		set
-		${mvRatingAvg} = ${mvRatingTotal} / ${mvRatingCnt}
+		set ${mvRatingAvg} = ${mvRatingTotal} / ${mvRatingCnt}
 		where ${mvId} = #{mvId}
 	</update>
 	
@@ -100,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</select>
 
-	<!-- ticketSales // amount : 취소되면 -1, 결제하면 +1 -->
+	<!-- ticketSales // amount : 취소 -1, 결제 +1 -->
 	<update id="update_ticketsales_by_mv_id">
 		update ${PJ_MOVIE}
 		set ${mvTicketSales} = ${mvTicketSales} + #{amount}

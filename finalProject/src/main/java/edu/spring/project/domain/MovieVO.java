@@ -11,7 +11,7 @@ public class MovieVO {
 	private String mvGenre;
 	private String mvInfo;
 	private int mvTicketSales;
-	// rvId && cnt¿Í ¿¬°ü
+	// to show rvId && cnt 
 	private int mvRatingTotal; 
 	private int mvRatingCnt;
 	private float mvRatingAvg;

@@ -26,11 +26,9 @@ public class MemberAdminController {
 	public void listGET(Model model, String searchMmbId) {
 		logger.info("listGet call");
 		if (searchMmbId != null) {
-			// mmbId占쏙옙 占쏙옙占쏙옙占쏙옙占�
 			List<MemberVO> list = memberService.read(searchMmbId);
 			model.addAttribute("list", list);
 		} else {
-			// 占싹뱄옙 占쏙옙占쏙옙트占쏙옙
 			List<MemberVO> list = memberService.read();
 			model.addAttribute("list", list);
 		}

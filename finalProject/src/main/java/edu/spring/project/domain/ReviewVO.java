@@ -10,7 +10,7 @@ public class ReviewVO {
 	private String rvContent;
 	private int rvRating;
 	private Date rvDateCreated;
-	// rvRating 수정시 movie에 반영하기 위한 임시 멤버변수
+	// if 'rvRating' changed...
 	private int rvRatingBefore;
 	// Join data
 	private String mvTitle;

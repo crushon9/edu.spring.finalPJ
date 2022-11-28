@@ -27,7 +27,6 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	// 회占쏙옙占쏙옙占쏙옙, home占쏙옙 占쏙옙占쏙옙
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() call");
@@ -40,7 +39,7 @@ public class MemberController {
 		int result = memberService.create(vo);
 
 		if (result == 1) {
-			logger.info(result + "占쏙옙 占쏙옙占쏙옙");
+			logger.info(result + " data added");
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/member/login";
 		} else {
@@ -85,10 +84,7 @@ public class MemberController {
 
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
-		// @RequestBody : json 占쏙옙占쏙옙占싶몌옙 占쌘바곤옙체占쏙옙 占쏙옙환
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
-		// ResponseEntity<T> : REST 占쏙옙커占쏙옙占� 占쏙옙占쏙옙占싶몌옙 占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占싱댐옙 占쏙옙체
-		// - 占쏙옙占쏙옙占싶울옙 HttpStatus占쏙옙 占쏙옙占쏙옙, - <T> : 占쏙옙占쏙옙占쏙옙占쏙옙 占싹댐옙 占쏙옙占쏙옙占쏙옙 타占쏙옙
 		MemberVO vo = memberService.readOne(mmbId);
 		int result = 0;
 		if (vo == null) {
@@ -101,10 +97,9 @@ public class MemberController {
 
 	@GetMapping("/login")
 	public void loginGET() {
-		logger.info("loginGET 호占쏙옙");
+		logger.info("loginGET call");
 	}// end loginGET()
 
-	// 占싸깍옙占쏙옙
 	@PostMapping("/login")
 	public String loginPOST(String mmbId, String mmbPassword, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes reAttr) throws IOException {
@@ -117,23 +112,21 @@ public class MemberController {
 			}
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			session.setMaxInactiveInterval(300);
-			// TODO : targetURL login 확占쏙옙占십울옙
+			// TODO : targetURL login 
 			String targetURL = (String) session.getAttribute("targetURL");
 			logger.info("targetURL : " + targetURL);
-			if (targetURL != null) { // targetURL占쏙옙 占쌍다몌옙
+			if (targetURL != null) { // targetURL
 				session.removeAttribute("targetURL");
 				return "redirect:" + targetURL;
-			} else {// targetURL占쏙옙 占쏙옙占쌕몌옙
+			} else {// targetURL
 				return "redirect:/movie/main";
 			}
-			// 占싸깍옙占쏙옙 占쏙옙占쏙옙
 		} else {
 			logger.info("login failed");
 			return "redirect:/member/login";
 		}
 	}// end loginPOST()
 
-	// 占싸그아울옙
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		logger.info("logout call");
