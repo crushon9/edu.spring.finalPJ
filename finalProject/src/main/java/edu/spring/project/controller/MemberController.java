@@ -139,6 +139,7 @@ public class MemberController {
 		logger.info("logout call");
 		HttpSession session = request.getSession();
 		session.removeAttribute("mmbIdSession");
+		session.removeAttribute("adminSession");
 		return "redirect:/movie/main";
 	}// end logout()
 
