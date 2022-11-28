@@ -114,7 +114,6 @@ public class MemberController {
 		if (vo != null) {
 			if (vo.getMmbAdminCheck() == 1) { // admin login only
 				session.setAttribute("adminSession", vo.getMmbId());
-				return "redirect:/admin/main";
 			}
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			session.setMaxInactiveInterval(300);
