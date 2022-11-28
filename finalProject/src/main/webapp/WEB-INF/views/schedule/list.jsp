@@ -34,6 +34,7 @@
 		<div id="brcListDiv"></div>
 	
 		<p>상영 스케줄</p>
+		<input type="hidden" id="mmbId" value="<%=mmbIdSession%>">
 		<div id="scheduleListOutput"></div>
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
@@ -136,19 +137,21 @@
 						+ ', 상영시간 : ' + timeArray[this.scdTime]
 						+ ', 상영관 : ' + this.scdTheater + '관'
 						+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
-						+ ', 예매가격 : ' + this.scdPrice
-						+ '&nbsp;&nbsp;'
-						+ '<a href="/project/ticket/buy?scdId=' + this.scdId
-						+ '&mvId=' + this.mvId
-						+ '&mvTitle=' + this.mvTitle
-						+ '&brcName=' + this.brcName
-						+ '&scdDate=' + this.scdDate
-						+ '&scdTime=' + this.scdTime 
-						+ '&scdTheater=' + this.scdTheater 
-						+ '&scdSeatTotal=' + this.scdSeatTotal 
-						+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
-						+ '&scdPrice=' + this.scdPrice + '">'
-						+ '<input type="button" value="예매하기"></a></li>';
+						+ ', 예매가격 : ' + this.scdPrice;
+						if ($("#mmbId").val() != 'null'){
+							scheduleList += '&nbsp;&nbsp;'
+							+ '<a href="/project/ticket/buy?scdId=' + this.scdId
+							+ '&mvId=' + this.mvId
+							+ '&mvTitle=' + this.mvTitle
+							+ '&brcName=' + this.brcName
+							+ '&scdDate=' + this.scdDate
+							+ '&scdTime=' + this.scdTime 
+							+ '&scdTheater=' + this.scdTheater 
+							+ '&scdSeatTotal=' + this.scdSeatTotal 
+							+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
+							+ '&scdPrice=' + this.scdPrice + '">'
+							+ '<input type="button" value="예매하기"></a></li>';
+						}
 					});
 					scheduleList += '</ul>';
 					$('#scheduleListOutput').html(scheduleList);

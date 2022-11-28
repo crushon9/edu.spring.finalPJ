@@ -138,7 +138,7 @@
 						+ ' | 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
 						+ ' | 예매기준가격 : ' + this.scdPrice
 						+ '&nbsp;&nbsp;'
-						+ '<button class="btn_delete">삭제</button>'
+						+ '<input class="btn_delete" type="button" value="삭제">'
 						+ '<input type="hidden" name="scdId" value="' + this.scdId + '"/>'
 						+ '<input type="hidden" name="scdSeatBookedCnt" value="' + this.scdSeatBookedCnt + '"/>'
 						+ '</li>'

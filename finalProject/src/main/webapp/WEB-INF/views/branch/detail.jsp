@@ -6,7 +6,7 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/headTag.jsp" %>
-	<title>${vo.brcName}점 정보입니다.</title>
+	<title>branch detail</title>
 	
 	<style type="text/css">
 	.detail {
@@ -34,13 +34,16 @@
 
 		<div id="layoutSidenav_content">
 
-		<h1>branch detail</h1>
-		<p>지점번호 ${vo.brcId}</p>
-		<p>지점이름 ${vo.brcName}</p>
-		<p>극장수 ${vo.brcTheaterNumbers}</p>
-		<p>좌석수 ${vo.brcTheaterSeats}</p>
-		<hr>
-		<p>지점정보 ${vo.brcInfo}</p>
+		<h1>지점 정보</h1>
+		<p>지점이름</p>${vo.brcName}
+
+		<p>지점번호</p>${vo.brcId}
+		
+		<p>극장수</p> ${vo.brcTheaterNumbers}
+		
+		<p>좌석수 </p>${vo.brcTheaterSeats}
+
+		<p>지점정보</p> ${vo.brcInfo}
 		
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

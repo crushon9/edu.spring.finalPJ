@@ -36,11 +36,11 @@
 			<h1>movie detail</h1>
 			<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
 			<h2>${vo.mvTitle}</h2>
-			<p>영화 개봉일 : ${vo.mvDateStarted}</p>
-			<p>영화 종료일 : ${vo.mvDateEnded}</p>
-			<p>영화 장르 : ${vo.mvGenre}</p>
-			<p>영화 소개 : </p>
-			<p>${vo.mvInfo}</p>
+			<p>영화 개봉일</p>${vo.mvDateStarted}
+			<p>영화 종료일</p>${vo.mvDateEnded}
+			<p>영화 장르 </p>${vo.mvGenre}
+			<p>영화 소개</p>
+			${vo.mvInfo}
 			<div id="mvRatingAvgPrint"></div>
 			<hr>
 		
@@ -55,7 +55,7 @@
 					<option value="4">4</option>
 					<option value="5">5</option>
 			       </select>&emsp;
-				<button id="btn_rv_add">등록</button>
+				<input class="btn_add" type="button" value="등록">
 			</div>
 			<hr>
 		
@@ -69,13 +69,13 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			getReviewList();
-			$('#btn_rv_add').click(function() {
+			$('#btn_add').click(function() {
 				rvAdd();
 			});
-			$('#reviewListOutput').on('click', '.rvItem .btn_rv_update', function(){
+			$('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
 				rvUpdate(this);
 			});
-			$('#reviewListOutput').on('click', '.rvItem .btn_rv_delete', function(){
+			$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
 				rvDelete(this);
 			});
 		});
@@ -140,8 +140,9 @@
                             + '&nbsp;&nbsp;'
 							+ new Date(this.rvDateCreated).toLocaleString()
 							+ '&nbsp;&nbsp;'
-							+ '<button class="btn_rv_update" ' + isDisabled + '>수정</button>'
-							+ '<button class="btn_rv_delete" ' + isDisabled + '>삭제</button>'
+							+ '<input class="btn_update" type="button" value="수정"' + isDisabled + '>'
+							+ '&nbsp;'
+							+ '<input class="btn_delete" type="button" value="삭제"' + isDisabled + '>'
 							+ '</div>';
 					}); // end data.each
 					$('#reviewListOutput').html(rvList); // 반복문으로 생성된 html태그 출력
@@ -188,8 +189,8 @@
 				$(btn).prevAll('.rvContent').css({"border-color":"red"});
 				$(btn).prevAll('.rvRating').removeAttr('disabled');
 				$(btn).prevAll('.rvRating').css({"border-color":"red"});
-				$(btn).text("수정확인");
-				$(btn).nextAll('.btn_rv_delete').hide();
+				$(btn).val("수정확인");
+				$(btn).nextAll('.btn_delete').hide();
 			} else { // 아니라면 댓글 수정
 				var rvId = $(btn).prevAll('.rvId').val();
 				var mvId = $('#mvId').val();
@@ -249,7 +250,7 @@
 				url,
 				function(data) {
 					console.log(data);
-					var mvRatingAvgText = '영화 평점 : '
+					var mvRatingAvgText = '<p>영화 평점</p> '
 										+ (data).toFixed(2) // 소수점 둘째 반올림
 										+ ' / 5.00';
 					$('#mvRatingAvgPrint').html(mvRatingAvgText); // 반복문으로 생성된 html태그 출력

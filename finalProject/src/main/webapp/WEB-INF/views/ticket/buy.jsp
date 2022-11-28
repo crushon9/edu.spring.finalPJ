@@ -75,8 +75,7 @@
 		
 		<!-- TicketVO로 넘길 데이터 -->
 		<form action="buy" method="post">
-			<input type="text" name="mmbId" value="<%=mmbIdSession %>">
-			<hr>
+			<input type="hidden" name="mmbId" value="<%=mmbIdSession %>">
 			<input type="hidden" name="scdId" value="${vo.scdId }">
 			<input type="hidden" name="mvId" value="${vo.mvId }">
 			<div id="tkPeopleDiv" >
