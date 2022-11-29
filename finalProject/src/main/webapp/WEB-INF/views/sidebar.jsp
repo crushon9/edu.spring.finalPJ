@@ -38,7 +38,7 @@
 		            	<br><br><br>
 		                <a class="nav-link" href="/project/movie/main"><i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
 		                <a class="nav-link" href="/project/branch/list"><i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
-		                <a class="nav-link" href="/project/schedule/list"><i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
+		                <a class="nav-link" href="/project/schedule/list?mvId=0&brcId=0&scdDate=none"><i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
 		            </c:if>
 		            
 		            <!-- 일반회원  -->
@@ -46,7 +46,7 @@
 						<br><br><br>
 						<a class="nav-link" href="/project/movie/main"><i class="fa-solid fa-clapperboard"></i>&emsp;Movie</a><br>
 		                <a class="nav-link" href="/project/branch/list"><i class="fa-solid fa-building-flag"></i>&emsp;Branch</a><br>
-		                <a class="nav-link" href="/project/schedule/list"><i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
+		                <a class="nav-link" href="/project/schedule/list?mvId=0&brcId=0&scdDate=none"><i class="fa-regular fa-calendar-days"></i>&emsp;Schedule</a><br>
 		                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#mypage" aria-expanded="false" aria-controls="collapseLayouts">
                            <i class="fa-solid fa-clapperboard"></i>&emsp;MyPage
                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

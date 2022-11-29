@@ -13,8 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="select_one_by_mv_id" resultType="MovieVO">
-		select * from
-		${PJ_MOVIE}
+		select * from ${PJ_MOVIE}
 		where ${mvId} = #{mvId}
 	</select>
 
@@ -100,5 +99,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set ${mvTicketSales} = ${mvTicketSales} + #{amount}
 		where ${mvId} = #{mvId}
 	</update>
+	
+	<select id="select_ticketsales_sum">
+		SELECT sum(mvTicketSales) FROM ${PJ_MOVIE}
+	</select>
 	
 </mapper>

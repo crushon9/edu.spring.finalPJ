@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,12 @@ public class ScheduleController {
 	private ScheduleService scheduleService;
 
 	@GetMapping("/list")
-	public void listGET() {
+	public void listGET(Model model, int mvId, int brcId, String scdDate) {
 		logger.info("listGET() call");
-	}//end listGET()
+		model.addAttribute("mvId", mvId);
+		model.addAttribute("brcId", brcId);
+		model.addAttribute("scdDate", scdDate);
+	}// end listGET()
 
 	@GetMapping("/list/{mvId}&{brcId}&{scdDate}")
 	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("mvId") int mvId, @PathVariable("brcId") int brcId,
@@ -32,6 +36,6 @@ public class ScheduleController {
 		logger.info("listREST() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		List<ScheduleVO> list = scheduleService.read(mvId, brcId, scdDate);
 		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
-	}//end listRESRT()
+	}// end listRESRT()
 
 }

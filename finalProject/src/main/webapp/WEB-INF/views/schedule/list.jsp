@@ -14,10 +14,13 @@
 
 		<div id="layoutSidenav_content">
 		<h1>상영 스케줄 정보</h1>
+		
 		<div>
+		<input type="number" id="mvId" value="${mvId }">
+		<input type="number" id="brcId" value="${brcId }">
+		<input type="text" id="scdDate" value="${scdDate }">
 		<p>상영 날짜</p>
 		<input type="date" id="dateSelected" name="dateSelected">
-	
 		<p>상영 영화</p>
 		<div id="mvListOutput"></div>
 		
