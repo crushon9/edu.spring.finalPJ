@@ -164,11 +164,7 @@
 		 // 최대좌석수에 따라 반복출력 패턴 조정
 		 var iMax = 10;
 		 var jMax = scdSeatTotal / 10;
-		 if (scdSeatTotal / 10 > 20 && scdSeatTotal % 20 == 0) {
-			 jMax = 20;
-			 iMax = scdSeatTotal / 20;
-		 }
-		 else if (scdSeatTotal / 10 > 25 && scdSeatTotal % 25 == 0) {
+		 if (scdSeatTotal / 10 > 25) {
 			 jMax = 25;
 			 iMax = scdSeatTotal / 25;
 		 }
