@@ -19,6 +19,7 @@
 		&emsp;&emsp;
 		<select id="brcArea" name="brcArea">
 			<option value="0">지역선택</option>
+			<option value="-1">전체지역</option>
 			<option value="1">서울</option>
 			<option value="2">경기/강원</option>
 			<option value="3">부산/경상</option>
@@ -53,7 +54,12 @@
 		// area 검색
 		$('#searchAreaBtn').click(function() {
 			var brcArea = $('#brcArea').val();
-			var searchAreaUrl = 'list?brcArea=' + brcArea;
+			var searchAreaUrl = '';
+			if (brcArea == -1) {
+				searchAreaUrl = 'list';
+			} else {
+				searchAreaUrl = 'list?brcArea=' + brcArea;
+			}
 			$('#searchAreaUrl').prop("href", searchAreaUrl);
 		});	
 	});	
