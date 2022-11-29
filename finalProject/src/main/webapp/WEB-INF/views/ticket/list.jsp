@@ -28,6 +28,9 @@
 		  $('#ticketListOutput').on('click', '.btn_delete', function(){
 				tkDelete(this);
 		  });
+		  $('#ticketListOutput').on('click', '.btn_review', function(){
+			  	rvRegister(this);
+		  });
 	  });
 	  
 	  function getUserTicketList() {
@@ -64,6 +67,10 @@
 					+ '<input class="mvId" type="hidden" value="' + this.mvId + '">'
 					+ '<input class="tkPeopleList" type="hidden" value="' + this.tkPeopleList + '">'
 					+ '<input class="btn_delete" type="button" value="예매취소">'
+					+ '&nbsp;&nbsp;'
+					+ '<input class="mvTitle" type="hidden" value="' + this.mvTitle + '">'
+					+ '<input class="mvImage" type="hidden" value="' + this.mvImage + '">'
+					+ '<input class="btn_review" type="button" value="리뷰등록">'
 					+ '</li><br>'
 				});
 				ticketList += '</ul>';
@@ -97,6 +104,15 @@
 			}
 		});
 	 }
+	  
+	 function rvRegister(btn) {
+		 var mvId = $(btn).prevAll('.mvId').val();
+		 var mvTitle = $(btn).prevAll('.mvTitle').val();
+		 var mvImage = $(btn).prevAll('.mvImage').val();
+		 var popUrl = '/project/review/register?mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
+	     var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
+		 var ret = window.open(popUrl, '_blank', popOption);
+	 } 
   	</script>
 
 </body>

@@ -35,7 +35,7 @@
 						<br><Strong>${vo.mvTitle }</Strong>
 						<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
 						<c:if test="${vo.mvRatingAvg != 0}">
-							<br><Strong>평점 ${vo.mvRatingAvg } / 5.0</Strong>
+							<br><Strong>평점 <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.0</Strong>
 						</c:if>
 						<c:if test="${vo.mvRatingAvg == 0}">
 							<br><Strong>평점 미등록</Strong>

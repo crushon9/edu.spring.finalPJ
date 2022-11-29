@@ -33,7 +33,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>movie detail</h1>
+			<h1>영화 상세 정보</h1>
 			<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
 			<h2>${vo.mvTitle}</h2>
 			<p>영화 장르 </p>${vo.mvGenre}
@@ -44,23 +44,10 @@
 			<div id="mvRatingAvgPrint"></div>
 			<hr>
 		
-			<div style="margin-left: 40px">
-				<input type="hidden" id="mvId" value="${vo.mvId }"> 
-				작성자 <input type="text" id="mmbId" value="<%=mmbIdSession %>" readonly> 
-				관람평 <input type="text" id="rvContent">
-				평점 <select id="rvRating">                               
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-			       </select>&emsp;
-				<input class="btn_add" type="button" value="등록">
-			</div>
-			<hr>
-		
 			<!-- 출력할 div공간 마련 reply처럼 끌고와-->
-			<div style="margin-left: 40px" id="reviewListOutput"></div>
+			<input type="hidden" id="mmbId" value="<%=mmbIdSession %>" readonly> 
+			<input type="hidden" id="mvId" value="${vo.mvId }">
+			<div id="reviewListOutput"></div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>	
@@ -69,9 +56,6 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			getReviewList();
-			$('#btn_add').click(function() {
-				rvAdd();
-			});
 			$('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
 				rvUpdate(this);
 			});
@@ -125,9 +109,9 @@
 							+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
 							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
-							+ this.mmbId // getJSON으로 받아온 data에 저장된 memberId 의미
+							+ '<p style="width: 70px; display: inline-block">' + this.mmbId + '</p>'// getJSON으로 받아온 data에 저장된 memberId 의미
 							+ '&nbsp;&nbsp;' // space
-							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
+							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/>'
 							+ '&nbsp;&nbsp;'
 							+ '<select class="rvRating" disabled>'                               
                             + '<option value="1"' + isSelected1 + '>1</option>'
@@ -151,32 +135,6 @@
 			); // end getJSON
 		} // end getAll
 			
-		// 후기 등록
-		function rvAdd() {
-			console.log('rvAdd() call');
-			var mvId = $('#mvId').val();
-			var mmbId = $('#mmbId').val();
-			var rvContent = $('#rvContent').val();
-			var rvRating = $('#rvRating').val();
-			$.ajax({
-				type : 'POST',
-				url : '/project/review', // controller 경로 생성
-				headers : { // 정보를 전송할때는 (GET방식을 빼고는) headers 넣어야함
-					'Content-Type' : 'application/json',
-					'X-HTTP-Method-Override' : 'POST'
-				},
-				data : JSON.stringify({
-					'mvId' : mvId,
-					'mmbId' : mmbId,
-					'rvContent' : rvContent,
-					'rvRating' : rvRating	
-				}), // JSON으로 파싱
-				success : function(result, status) {
-					getReviewList();
-				} // end ajax.success.function
-			}); // end ajax
-		}	
-		
 		// 후기 수정
 		function rvUpdate(btn) {
 			console.log('rvUpdate() call');
@@ -255,7 +213,7 @@
 					if (mvRatingAvg != 0) {
 						mvRatingAvgText += mvRatingAvg + ' / 5.00';
 					} else {
-						mvRatingAvgText += '평점 등록 전 입니다';
+						mvRatingAvgText += '리뷰 등록 전 입니다';
 					}
 					$('#mvRatingAvgPrint').html(mvRatingAvgText); // 반복문으로 생성된 html태그 출력
 				}
