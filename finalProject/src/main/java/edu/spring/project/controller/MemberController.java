@@ -36,13 +36,12 @@ public class MemberController {
 	public String registerPOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
+		// if (brcId isUnselected)
 		if (vo.getBrcId() == 0) {
 			vo.setBrcId(1);
 		}
 		
-		
 		int result = memberService.create(vo);
-
 		if (result == 1) {
 			logger.info(result + " data added");
 			reAttr.addFlashAttribute("insert_result", "success");
@@ -64,9 +63,11 @@ public class MemberController {
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
+		// if (brcId isUnselected) 
 		if (vo.getBrcId() == 0) {
 			vo.setBrcId(1);
 		}
+		
 		int result = memberService.update(vo);
 		if (result == 1) {
 			reAttr.addFlashAttribute("memberUpdateResult", "success");

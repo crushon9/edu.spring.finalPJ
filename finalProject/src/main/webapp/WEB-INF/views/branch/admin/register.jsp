@@ -31,25 +31,40 @@
 		    <input type="number" name="brcTheaterNumbers" id="brcTheaterNumbers" placeholder="지점 극장 수" required="required">
 		 	<p>지점 극장 좌석 수</p>
 			<div id="brcTheaterSeatsOutput"></div>
+			<p>지점 소개</p>
+			<textarea rows="10" cols="100" name="brcInfo" placeholder="지점 정보" required></textarea>
+			
 			<br><br><input type="submit" value="등록">
 		  </form>
 		  
 		  <%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>	
-	  
+	 
+	<input type="hidden" id="branchRegisterResult" value="${branchRegisterResult}"/>
+	
 	<script type="text/javascript">
-	 $(document).ready(function() {
-		$('#brcTheaterNumbers').change(function() {
-			var brcTheaterNumbers = $('#brcTheaterNumbers').val();
-			var brcTheaterSeatsList = '';
-			for (var i = 1; i <= brcTheaterNumbers; i++){
-				brcTheaterSeatsList +=
-				'<input type="number" name="arrBrcTheaterSeats" placeholder="' + i + "관" + '" required">';
-			}
-			$('#brcTheaterSeatsOutput').html(brcTheaterSeatsList);
-		});
-	  });
+	 	$(document).ready(function() {
+	 		responseAlert();
+			$('#brcTheaterNumbers').change(function() {
+				var brcTheaterNumbers = $('#brcTheaterNumbers').val();
+				var brcTheaterSeatsList = '';
+				for (var i = 1; i <= brcTheaterNumbers; i++){
+					brcTheaterSeatsList +=
+					'<input type="number" name="arrBrcTheaterSeats" placeholder="' + i + "관" + '" required">';
+				}
+				$('#brcTheaterSeatsOutput').html(brcTheaterSeatsList);
+			});
+		  });
+	 
+	 	// 결과 값에 대한 알러트
+		function responseAlert() {
+			var branchRegisterResult = $('#branchRegisterResult').val();
+			if (branchRegisterResult == 'fail'){
+				alert("지점등록에 실패하였습니다.");
+			} 
+		}
+	 
 	</script>
 	
 </body>

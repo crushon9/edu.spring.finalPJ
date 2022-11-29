@@ -15,7 +15,7 @@
 		<div id="layoutSidenav_content">
 		  <h1>회원 정보 수정</h1>
 		  <form action="update" method="post">
-		    <p>아이디</p>
+		    <p>아이디 (* 아이디는 수정할 수 없습니다.)</p>
 		    <input type="text" name="mmbId" value="${vo.mmbId }" readonly>	    
 		    <p>패스워드</p>
 		    <input type="password" name="mmbPassword" value="${vo.mmbPassword }">
@@ -45,12 +45,14 @@
 		</div>
 	</div>
 	  
-	 <script type="text/javascript">
-	  $(document).ready(function() {
-		$('#brcArea').change(function() {
+	<input type="hidden" id="memberUpdateResult" value="${memberUpdateResult}"/>
+	  
+	<script type="text/javascript">
+	    $(document).ready(function() {
+			$('#brcArea').change(function() {
 			getBrcList();
 		});
-			// 선택 지역의 지점 가져오기
+		// 선택 지역의 지점 가져오기
 		function getBrcList() {
 			var brcArea = $('#brcArea').val();
 			var url = '/project/branch/list/' + brcArea; // REST API 방식 적용
@@ -63,10 +65,18 @@
 					});
 					brcList += '</select>'
 					$('#brcListOutput').html(brcList);
-				}
-			); // end getJSON
-		}
-	 });	
+					}
+				); // end getJSON
+			}
+	 	});	
+	  
+	 	// 결과 값에 대한 알러트
+	 	function responseAlert() {
+			var memberUpdateResult = $('#memberUpdateResult').val();
+			if (memberUpdateResult == 'fail'){
+				alert("회원정보 수정 실패하였습니다.");
+			}
+		 }
 	</script>
 	
 </body>

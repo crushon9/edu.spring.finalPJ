@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="brcName" value="BRC_NAME" />
 		<property name="brcTheaterNumbers" value="BRC_THEATER_NUMBERS" />
 		<property name="brcTheaterSeats" value="BRC_THEATER_SEATS" />
+		<property name="brcInfo" value="BRC_INFO" />
 
 		<property name="PJ_SCHEDULE" value="PJ_SCHEDULE" />
 		<property name="scdId" value="SCD_ID" />

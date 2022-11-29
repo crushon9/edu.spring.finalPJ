@@ -27,17 +27,16 @@ public class BranchAdminController {
 	}// end registerGET()
 
 	@PostMapping("/register")
-	public void registerPOST(BranchVO vo, RedirectAttributes reAttr) {
-		// RedirectAttributes
+	public String registerPOST(BranchVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
 		int result = branchService.create(vo);
-
 		if (result == 1) {
 			logger.info(result + " line registered");
-			reAttr.addFlashAttribute("insert_result", "success");
+			return "redirect:/branch/admin/list";
 		} else {
-			reAttr.addFlashAttribute("insert_result", "fail");
+			reAttr.addFlashAttribute("branchRegisterResult", "fail");
+			return "redirect:/branch/admin/register";
 		}
 	}// end registerPOST()
 	

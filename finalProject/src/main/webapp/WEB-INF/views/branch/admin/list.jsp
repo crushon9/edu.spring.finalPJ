@@ -29,6 +29,8 @@
 				<option value="5">광주/전라</option>
 				<option value="6">제주</option>
 			</select>
+			
+			
 			<a id="searchAreaUrl" href=""><input id="searchAreaBtn" type="button" value="검색"></a>
 			</div>
 			<hr>
