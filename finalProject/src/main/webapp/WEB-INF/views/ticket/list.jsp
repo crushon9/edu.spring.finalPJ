@@ -106,13 +106,30 @@
 	 }
 	  
 	 function rvRegister(btn) {
+		 console.log('rvRegister() 호출');
+		 var mmbId = $('#mmbId').val();
 		 var mvId = $(btn).prevAll('.mvId').val();
 		 var mvTitle = $(btn).prevAll('.mvTitle').val();
 		 var mvImage = $(btn).prevAll('.mvImage').val();
-		 var popUrl = '/project/review/register?mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
-	     var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
-		 var ret = window.open(popUrl, '_blank', popOption);
-	 } 
+		 $.getJSON (		
+			'/project/review/check/' + mmbId + '/' + mvId,
+			function(data) {
+				// 0:리뷰등록가능, -1:영화미관람, -2:리뷰기등록
+				if (data == 0) {
+					var popUrl = '/project/review/register?mmbId=' + mmbId + '&mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
+				    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
+					window.open(popUrl, '_blank', popOption);
+				} else if (data == -2) {
+					alert("동일계정으로 리뷰 등록된 영화 입니다");
+				} else if (data == -1) {
+					alert("관람 후 리뷰 등록 가능합니다");
+				}
+			}
+		 );
+	 }
+	 
+	 
+	 
   	</script>
 
 </body>

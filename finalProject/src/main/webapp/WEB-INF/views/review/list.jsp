@@ -20,7 +20,6 @@
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>
-			
 	<script type="text/javascript">
 	  $(document).ready(function() {
 		  getUserReviewList();
@@ -166,7 +165,6 @@
 				}
 			});
 		}
-			
 	</script>
 </body>
 </html>

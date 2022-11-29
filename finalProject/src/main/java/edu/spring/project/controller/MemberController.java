@@ -124,8 +124,6 @@ public class MemberController {
 		int result = 0;
 		if (vo == null) {
 			result = 1;
-		} else {
-			result = 0;
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end idCheckREST()

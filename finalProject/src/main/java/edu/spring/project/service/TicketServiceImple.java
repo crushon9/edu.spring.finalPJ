@@ -24,7 +24,7 @@ public class TicketServiceImple implements TicketService {
 	private ScheduleDAO scdDao;
 	@Autowired
 	private MovieDAO mvDao;
-	
+
 	@Override
 	@Transactional
 	public int create(TicketVO vo) {
@@ -43,7 +43,7 @@ public class TicketServiceImple implements TicketService {
 		logger.info("updateTicketSales success");
 		return 1;
 	}
-	
+
 	@Override
 	public List<TicketVO> read() {
 		logger.info("read() call");

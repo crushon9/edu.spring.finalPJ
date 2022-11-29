@@ -47,6 +47,9 @@
 			<!-- 출력할 div공간 마련 reply처럼 끌고와-->
 			<input type="hidden" id="mmbId" value="<%=mmbIdSession %>" readonly> 
 			<input type="hidden" id="mvId" value="${vo.mvId }">
+			<input type="hidden" id="mvTitle" value="${vo.mvTitle }">
+			<input type="hidden" id="mvImage" value="${vo.mvImage }">
+			<input id="btn_review" type="button" value="리뷰등록">
 			<div id="reviewListOutput"></div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
@@ -61,6 +64,9 @@
 			});
 			$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
 				rvDelete(this);
+			});
+			$('#btn_review').click(function(){
+				rvRegister(this);
 			});
 		});
 			
@@ -134,6 +140,31 @@
 				}
 			); // end getJSON
 		} // end getAll
+		
+		function rvRegister() {
+			console.log('rvRegister() 호출');
+			 var mmbId = $('#mmbId').val();
+			 var mvId = $('#mvId').val();
+			 var mvTitle = $('#mvTitle').val();
+			 var mvImage = $('#mvImage').val();
+			 $.getJSON (		
+				'/project/review/check/' + mmbId + '/' + mvId,
+				function(data) {
+					console.log(data);
+					// 0:리뷰등록가능, -1:영화미관람, -2:리뷰기등록
+					if (data == 0) {
+						var popUrl = '/project/review/register?mmbId=' + mmbId + '&mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
+					    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
+						window.open(popUrl, '_blank', popOption);
+					} else if (data == -2) {
+						alert("동일계정으로 리뷰 등록된 영화 입니다");
+					} else if (data == -1) {
+						alert("관람 후 리뷰 등록 가능합니다");
+					}
+				}
+			 );
+		 }
+		 
 			
 		// 후기 수정
 		function rvUpdate(btn) {

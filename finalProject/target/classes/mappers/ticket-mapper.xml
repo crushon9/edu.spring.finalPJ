@@ -40,4 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${PJ_TICKET}
 		where ${tkId} = #{tkId}
 	</delete>
+	
+	<!-- 리뷰 등록 위해서 계정&영화로 티켓구입여부 체크 -->
+	<select id="buy_check" resultType="int">
+		select ${tkId} from	${PJ_TICKET}
+		where ${mmbId} = #{mmbId} and ${mvId} = #{mvId}
+	</select>
 </mapper>

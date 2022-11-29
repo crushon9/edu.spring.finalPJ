@@ -10,8 +10,11 @@ public interface TicketDAO {
 	List<TicketVO> select();
 
 	List<TicketVO> select(int scdId);
-	
+
 	List<TicketVO> select(String scdId);
-	
+
 	int delete(int tkId);
+
+	// 리뷰 작성 위해서 티켓 구매 여부 체크
+	List<Integer> buyCheck(String mmbId, int mvId);
 }

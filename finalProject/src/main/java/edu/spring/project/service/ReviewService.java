@@ -20,5 +20,8 @@ public interface ReviewService {
 	int update(ReviewVO vo);
 
 	int delete(ReviewVO vo);
+	
+	// 티켓구매했는지, 리뷰 등록했는지 체크
+	Integer check(String mmbId, int mvId);
 
 }

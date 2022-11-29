@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import edu.spring.project.domain.MemberVO;
 import edu.spring.project.domain.ReviewVO;
 import edu.spring.project.service.ReviewService;
 
@@ -28,14 +27,14 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
-	
-	@GetMapping("/register") 
+
+	@GetMapping("/register")
 	public void registerGET(Model model, int mvId, String mvTitle, String mvImage) {
 		logger.info("registerGET() call");
 		model.addAttribute("mvId", mvId);
 		model.addAttribute("mvTitle", mvTitle);
 		model.addAttribute("mvImage", mvImage);
-	}//end listGET()
+	}// end listGET()
 
 	@PostMapping("/register")
 	public void registerPOST(ReviewVO vo, Model model) {
@@ -55,32 +54,40 @@ public class ReviewController {
 		logger.info("listREST() call : mvId = " + mvId);
 		List<ReviewVO> list = reviewService.read(mvId);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
-	}//end listREST()
+	}// end listREST()
 
-	@GetMapping("/list") 
+	@GetMapping("/list")
 	public void listGET() {
 		logger.info("listGET() call");
-	}//end listGET()
+	}// end listGET()
 
 	@GetMapping("/list/{mmbId}") // (GET)/review/list/mmbId
 	public ResponseEntity<List<ReviewVO>> listREST(@PathVariable("mmbId") String mmbId) {
 		logger.info("listREST() call : mmbId = " + mmbId);
 		List<ReviewVO> list = reviewService.read(mmbId);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
-	}//end listREST()
+	}// end listREST()
 
 	@PutMapping // (PUT)/review
 	public ResponseEntity<Integer> updateREST(@RequestBody ReviewVO vo) {
 		logger.info("updateREST() call" + vo.toString());
 		int result = reviewService.update(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}//end updateREST()
+	}// end updateREST()
 
 	@DeleteMapping // (DELETE)/review
 	public ResponseEntity<Integer> deleteREST(@RequestBody ReviewVO vo) {
 		logger.info("deleteREST() call" + vo.toString());
 		int result = reviewService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}//end deleteREST()
+	}// end deleteREST()
+
+	@GetMapping("/check/{mmbId}/{mvId}") // (GET)/review/check/mmbId/mvId
+	public ResponseEntity<Integer> checkREST(@PathVariable("mmbId") String mmbId, @PathVariable("mvId") int mvId) {
+		logger.info("checkREST() call" + mmbId + mvId);
+		Integer result = reviewService.check(mmbId, mvId);
+		logger.info(result.toString());
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}// end checkREST()
 
 }

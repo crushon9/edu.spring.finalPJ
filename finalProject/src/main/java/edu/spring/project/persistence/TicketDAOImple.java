@@ -1,6 +1,9 @@
 package edu.spring.project.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +48,15 @@ public class TicketDAOImple implements TicketDAO {
 	public int delete(int tkId) {
 		logger.info("delete() call");
 		return sqlSession.insert(NAMESPACE + ".delete", tkId);
+	}
+	
+	@Override
+	public List<Integer> buyCheck(String mmbId, int mvId) {
+		logger.info("buyCheck() call : mmbId=" + mmbId + ", mvId=" + mvId);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("mmbId", mmbId);
+		args.put("mvId", mvId);
+		return sqlSession.selectList(NAMESPACE + ".buy_check", args);
 	}
 
 }

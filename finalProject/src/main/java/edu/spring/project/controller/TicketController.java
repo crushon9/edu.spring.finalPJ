@@ -38,7 +38,7 @@ public class TicketController {
 		logger.info("buyPOST() call");
 		logger.info(vo.toString());
 		int result = ticketService.create(vo);
-		logger.info(result + "�� ����");
+		logger.info(result + "insert");
 		if (result == 1) {
 			return "redirect:/movie/main";
 		} else {

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.spring.project.domain.ReviewVO;
 import edu.spring.project.persistence.MovieDAO;
 import edu.spring.project.persistence.ReviewDAO;
+import edu.spring.project.persistence.TicketDAO;
 
 @Service
 public class ReviewServiceImple implements ReviewService {
@@ -19,6 +20,9 @@ public class ReviewServiceImple implements ReviewService {
 
 	@Autowired
 	private MovieDAO movieDao;
+
+	@Autowired
+	private TicketDAO ticketDao;
 
 	@Transactional
 	@Override
@@ -68,6 +72,22 @@ public class ReviewServiceImple implements ReviewService {
 		movieDao.updateRating(-1, -vo.getRvRating(), vo.getMvId());
 		logger.info("delete success");
 		return 1;
+	}
+
+	@Override
+	public Integer check(String mmbId, int mvId) {
+		logger.info("check() call");
+		Integer result = 0; // 등록가능
+		List<Integer> isBuy = ticketDao.buyCheck(mmbId, mvId);
+		if (isBuy.isEmpty()) { // 구입 안했을때
+			result = -1;
+		} else {
+			Integer isRegister = reviewDao.registerCheck(mmbId, mvId);
+			if (isRegister != null) { // 등록 되어있을때
+				result = -2;
+			}
+		}
+		return result;
 	}
 
 }

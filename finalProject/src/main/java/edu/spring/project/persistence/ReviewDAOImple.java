@@ -1,6 +1,9 @@
 package edu.spring.project.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +53,15 @@ public class ReviewDAOImple implements ReviewDAO {
 	public int delete(int rvId) {
 		logger.info("delete() call");
 		return sqlSession.delete(NAMESPACE + ".delete", rvId);
+	}
+
+	@Override
+	public Integer registerCheck(String mmbId, int mvId) {
+		logger.info("registerCheck() call : mmbId=" + mmbId + ", mvId=" + mvId);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("mmbId", mmbId);
+		args.put("mvId", mvId);
+		return sqlSession.selectOne(NAMESPACE + ".registered_check", args);
 	}
 
 }

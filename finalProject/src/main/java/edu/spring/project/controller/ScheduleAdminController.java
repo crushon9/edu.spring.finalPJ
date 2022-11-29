@@ -25,29 +25,24 @@ public class ScheduleAdminController {
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() call");
-	}//end registerGET()
+	}// end registerGET()
 
 	@PostMapping("/register")
 	public ResponseEntity<Integer> registerREST(@RequestBody ScheduleVO vo) {
 		logger.info("registerREST() call : vo = " + vo.toString());
-		int result = 0;
-		try {
-			result = scheduleService.create(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		int result = scheduleService.create(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}//end registerREST()
-	
+	}// end registerREST()
+
 	@GetMapping("/list")
 	public void listGET() {
 		logger.info("listGET() call");
-	}//end listGET()
+	}// end listGET()
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<Integer> deleteREST(@RequestBody ScheduleVO vo) {
 		logger.info("deleteREST() call : scdId = " + vo.getScdId());
 		int result = scheduleService.delete(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}//end deleteREST()
+	}// end deleteREST()
 }

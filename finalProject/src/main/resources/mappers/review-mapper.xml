@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 한 계정 당 한 번 리뷰 등록 체크 -->
-	<select id="registered_check" resultType="ReviewVO">
-		select * from
+	<select id="registered_check" resultType="int">
+		select ${rvId} from
 		${PJ_REVIEW}
 		where ${mmbId} = #{mmbId} and ${mvId} = #{mvId}
 	</select>
