@@ -44,10 +44,10 @@ public class MemberController {
 		int result = memberService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");
-			reAttr.addFlashAttribute("insert_result", "success");
+			reAttr.addFlashAttribute("memberRegisterResult", "success");
 			return "redirect:/member/login";
 		} else {
-			reAttr.addFlashAttribute("insert_result", "fail");
+			reAttr.addFlashAttribute("memberRegisterResult", "fail");
 			return "redirect:/member/register";
 		}
 	}// end registerPOST()
@@ -108,10 +108,11 @@ public class MemberController {
 		if (result == 1) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("mmbIdSession");
-			reAttr.addFlashAttribute("delete_result", "success");
+			reAttr.addFlashAttribute("memberDeleteResult", "success");
+			// movie/main -> withdrawal 
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("delete_result", "fail");
+			reAttr.addFlashAttribute("memberDeleteResult", "fail");
 			return "redirect:/member/delete_confirm";
 		}
 	}// end deletePOST()
@@ -140,23 +141,33 @@ public class MemberController {
 		logger.info("loginPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
 		HttpSession session = request.getSession();
+		
 		if (vo != null) {
-			if (vo.getMmbAdminCheck() == 1) { // admin login only
+			// admin login only
+			if (vo.getMmbAdminCheck() == 1) { 
+				logger.info("admin login success");
 				session.setAttribute("adminSession", vo.getMmbId());
 			}
+			// user login
 			session.setAttribute("mmbIdSession", vo.getMmbId());
-			session.setMaxInactiveInterval(300);
+			logger.info(mmbId + " user login");
+			session.setMaxInactiveInterval(600);
 			// TODO : targetURL login
 			String targetURL = (String) session.getAttribute("targetURL");
 			logger.info("targetURL : " + targetURL);
-			if (targetURL != null) { // targetURL
+			if (targetURL != null) { // targetURL yes
 				session.removeAttribute("targetURL");
 				return "redirect:" + targetURL;
-			} else {// targetURL
+			// targetURL X -> main.jsp
+			} else { // targetURL no
+				// 일반 유저가 정상 로그인시 이까지 나옴...
+				logger.info("targetURL NO?");
 				return "redirect:/movie/main";
 			}
+		// login failed
 		} else {
 			logger.info("login failed");
+			reAttr.addFlashAttribute("memberLoginResult", "fail");
 			return "redirect:/member/login";
 		}
 	}// end loginPOST()

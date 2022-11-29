@@ -14,7 +14,6 @@
 
 		<div id="layoutSidenav_content">
 		<h1>관리자 지점 등록</h1>
-		 
 		  <form action="register" method="post">
 		    <p>지역 설정</p>
 		    <select name="brcArea" >
@@ -55,7 +54,7 @@
 				}
 				$('#brcTheaterSeatsOutput').html(brcTheaterSeatsList);
 			});
-		  });
+		 });
 	 
 	 	// 결과 값에 대한 알러트
 		function responseAlert() {

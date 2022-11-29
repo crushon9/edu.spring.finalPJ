@@ -6,7 +6,7 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/headTag.jsp" %>
-	<title>My Info</title>
+	<title>My Info Update</title>
 </head>
 <body class="sb-nav-fixed">
 	<div id="layoutSidenav">
@@ -49,6 +49,7 @@
 	  
 	<script type="text/javascript">
 	    $(document).ready(function() {
+	    	responseAlert();
 			$('#brcArea').change(function() {
 			getBrcList();
 		});
@@ -74,7 +75,7 @@
 	 	function responseAlert() {
 			var memberUpdateResult = $('#memberUpdateResult').val();
 			if (memberUpdateResult == 'fail'){
-				alert("회원정보 수정 실패하였습니다.");
+				alert("회원정보 수정이 실패하였습니다.");
 			}
 		 }
 	</script>

@@ -8,7 +8,7 @@ public interface MemberDAO {
 
 	List<MemberVO> select();
 
-	// updateGET && idCheck && detailGET
+	// detailGET&&updateGET && idCheck&&login
 	MemberVO selectOne(String mmbId);
 
 	// member admin listGET

@@ -32,6 +32,7 @@ public class BranchAdminController {
 		logger.info(vo.toString());
 		int result = branchService.create(vo);
 		if (result == 1) {
+			// success -> list.jsp
 			logger.info(result + " line registered");
 			return "redirect:/branch/admin/list";
 		} else {
