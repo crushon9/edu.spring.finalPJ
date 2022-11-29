@@ -32,10 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- search by brcName -->
-	<select id="select_list_by_brc_name" resultType="BranchVO">		
+	<select id="select_list_by_search_brc_name" resultType="BranchVO">		
 		select * from
 		${PJ_BRANCH}
-		where ${brcName} like '%' || #{brcArea} || '%'
+		where ${brcName} like '%' || #{searchBrcName} || '%'
 	</select>
 	
 	<update id="update">

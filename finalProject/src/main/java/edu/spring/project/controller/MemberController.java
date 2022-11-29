@@ -36,6 +36,11 @@ public class MemberController {
 	public String registerPOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
+		if (vo.getBrcId() == 0) {
+			vo.setBrcId(1);
+		}
+		
+		
 		int result = memberService.create(vo);
 
 		if (result == 1) {
@@ -59,12 +64,15 @@ public class MemberController {
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
+		if (vo.getBrcId() == 0) {
+			vo.setBrcId(1);
+		}
 		int result = memberService.update(vo);
 		if (result == 1) {
-			reAttr.addFlashAttribute("update_result", "success");
-			return "redirect:/member/mypage/main";
+			reAttr.addFlashAttribute("memberUpdateResult", "success");
+			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("update_result", "fail");
+			reAttr.addFlashAttribute("memberUpdateResult", "fail");
 			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
 	}// end updatePOST()

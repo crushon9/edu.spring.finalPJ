@@ -44,9 +44,9 @@ public class BranchDAOImple implements BranchDAO {
 	
 	// search by brcName
 	@Override
-	public List<BranchVO> selectBrcName(String brcName) {
-		logger.info("select() call : brcName = " + brcName);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_name", brcName);
+	public List<BranchVO> selectBrcName(String searchBrcName) {
+		logger.info("select() call : searchBrcName = " + searchBrcName);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_brc_name", searchBrcName);
 	}
 
 	@Override

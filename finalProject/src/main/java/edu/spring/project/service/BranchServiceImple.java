@@ -42,9 +42,9 @@ public class BranchServiceImple implements BranchService {
 	
 	// search by brcName
 	@Override
-	public List<BranchVO> readBrcName(String brcName) {
-		logger.info("read() call : brcName = " + brcName);
-		return dao.selectBrcName(brcName);
+	public List<BranchVO> readBrcName(String searchBrcName) {
+		logger.info("read() call : searchBrcName = " + searchBrcName);
+		return dao.selectBrcName(searchBrcName);
 	}
 
 	@Override

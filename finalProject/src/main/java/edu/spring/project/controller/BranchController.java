@@ -24,11 +24,13 @@ public class BranchController {
 
 	// main page
 	@GetMapping("/list")
-	public void listGET(Model model, Integer brcArea) {
+	public void listGET(Model model, Integer brcArea, String searchBrcName) {
 		logger.info("list main page call");
 		List<BranchVO> list;
 		if (brcArea != null) {
 			list = branchService.readBrcArea(brcArea);
+		} else if (searchBrcName != null) {
+			list = branchService.readBrcName(searchBrcName);
 		} else {
 			list = branchService.read();
 		}

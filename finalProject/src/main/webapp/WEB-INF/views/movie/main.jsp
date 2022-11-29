@@ -48,8 +48,11 @@
 		</div>
 	</div>
 	
+	<input type="hidden" id="memberUpdateResult" value="${memberUpdateResult}"/>
+	
 	<script type="text/javascript">			
 		$(document).ready(function() {
+			responseAlert();
 			// 정렬
 			$('#orderChoice, #orderBtn').click(function() {
 				var orderChoice = $('#orderChoice').val();
@@ -65,8 +68,14 @@
 				var searchUrl = 'main?searchText=' + searchText;
 				$('#searchUrl').prop("href", searchUrl);
 			});//end searchBtn_click();
-		
-		});	
+		});
+		// 결과 값에 대한 알러트
+		function responseAlert() {
+			var memberUpdateResult = $('#memberUpdateResult').val();
+			if (memberUpdateResult == 'success'){
+				alert("회원정보 수정 성공하였나이다");
+			}
+		}
 	</script>
 	
 </body>
