@@ -27,7 +27,7 @@
 			<c:forEach var="vo" items="${mvList }">
 				<ol>						
 					<li style="list-style-type: none">						
-						<img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/>
+						<img src="/project/img/display?fileName=thumbnail_${vo.mvImage}"/>
 						<br>
 						<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
 						<a href="update?mvId=${vo.mvId}"><input type="button" value="정보수정"></a>	
