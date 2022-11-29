@@ -31,4 +31,6 @@ public interface MovieService {
 
 	float readRatingAvg(int mvId);
 
+	int readMvTicketSalesTotal();
+
 }

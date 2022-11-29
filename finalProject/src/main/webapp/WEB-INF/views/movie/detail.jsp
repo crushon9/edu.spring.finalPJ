@@ -36,11 +36,11 @@
 			<h1>movie detail</h1>
 			<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
 			<h2>${vo.mvTitle}</h2>
-			<p>영화 개봉일</p>${vo.mvDateStarted}
-			<p>영화 종료일</p>${vo.mvDateEnded}
 			<p>영화 장르 </p>${vo.mvGenre}
-			<p>영화 소개</p>
-			${vo.mvInfo}
+			<p>상영일</p>${vo.mvDateStarted} ~ ${vo.mvDateEnded}
+			<p>영화 정보</p>${vo.mvInfo}
+			<p>예매율 </p>
+			<fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %
 			<div id="mvRatingAvgPrint"></div>
 			<hr>
 		
@@ -250,9 +250,13 @@
 				url,
 				function(data) {
 					console.log(data);
-					var mvRatingAvgText = '<p>영화 평점</p> '
-										+ (data).toFixed(2) // 소수점 둘째 반올림
-										+ ' / 5.00';
+					var mvRatingAvgText = '<p>영화 평점</p>';
+					var mvRatingAvg = (data).toFixed(2); // 소수점 둘째 반올림
+					if (mvRatingAvg != 0) {
+						mvRatingAvgText += mvRatingAvg + ' / 5.00';
+					} else {
+						mvRatingAvgText += '평점 등록 전 입니다';
+					}
 					$('#mvRatingAvgPrint').html(mvRatingAvgText); // 반복문으로 생성된 html태그 출력
 				}
 			);

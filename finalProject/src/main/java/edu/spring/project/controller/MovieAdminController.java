@@ -54,6 +54,9 @@ public class MovieAdminController {
 			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
+		// 영화 전체 예매 합
+		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
+		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end listGET()
 
 	@GetMapping("/update")

@@ -33,8 +33,14 @@
 						<Strong>NO. ${status.count}</Strong><br>
 						<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
 						<br><Strong>${vo.mvTitle }</Strong>
-						<br><Strong>평점 ${vo.mvRatingAvg } / 5.0</Strong>
-						<br><Strong>예매율 ${vo.mvTicketSales }</Strong><br>
+						<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
+						<c:if test="${vo.mvRatingAvg != 0}">
+							<br><Strong>평점 ${vo.mvRatingAvg } / 5.0</Strong>
+						</c:if>
+						<c:if test="${vo.mvRatingAvg == 0}">
+							<br><Strong>평점 미등록</Strong>
+						</c:if>
+						<br>개봉일 ${vo.mvDateStarted }<br>
 						<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
 						<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
 					</li>
@@ -73,7 +79,7 @@
 		function responseAlert() {
 			var memberUpdateResult = $('#memberUpdateResult').val();
 			if (memberUpdateResult == 'success'){
-				alert("회원정보 수정 성공하였나이다");
+				alert("회원정보 수정 성공");
 			}
 		}
 	</script>

@@ -32,19 +32,22 @@ public class MovieController {
 		logger.info("mainGET() call");
 		if (searchText != null) {
 			List<MovieVO> mvList = movieService.readSearch(searchText);
-			model.addAttribute("mvList", mvList);		
-		} else if (orderChoice != null) {		
+			model.addAttribute("mvList", mvList);
+		} else if (orderChoice != null) {
 			if (orderChoice.equals("ticketSales")) {
 				List<MovieVO> mvList = movieService.readOrderTicket();
 				model.addAttribute("mvList", mvList);
 			} else if (orderChoice.equals("reviewAvg")) {
 				List<MovieVO> mvList = movieService.readOrderReview();
 				model.addAttribute("mvList", mvList);
-			}	
+			}
 		} else { // default
 			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
+		// 영화 전체 예매 합
+		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
+		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end mainGET()
 
 	// detail.jsp
@@ -53,6 +56,9 @@ public class MovieController {
 		logger.info("detailGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
+		// 영화 전체 예매 합
+		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
+		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end detailGET()
 
 	@GetMapping("/mvRatingAvg/{mvId}")
@@ -60,12 +66,14 @@ public class MovieController {
 		logger.info("mvRatingAvgREST() call : mvId = " + mvId);
 		float mvRatingAvg = movieService.readRatingAvg(mvId);
 		return new ResponseEntity<Float>(mvRatingAvg, HttpStatus.OK);
-	}//end mvRatingAvgREST()
+	}// end mvRatingAvgREST()
 
+	// 스케줄에서 쓰는 비동기 검색
 	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
 			@PathVariable("inputDateEnded") String inputDateEnded) {
-		logger.info("listREST() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info(
+				"listREST() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		List<MovieVO> list = movieService.readPeriod(inputDateStarted, inputDateEnded);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()

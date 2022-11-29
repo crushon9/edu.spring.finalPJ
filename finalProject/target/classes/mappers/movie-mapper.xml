@@ -100,8 +100,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</update>
 	
-	<select id="select_ticketsales_sum">
-		SELECT sum(mvTicketSales) FROM ${PJ_MOVIE}
+	<select id="select_ticketsales_total" resultType="int">
+		SELECT sum(${mvTicketSales}) FROM ${PJ_MOVIE}
 	</select>
 	
 </mapper>

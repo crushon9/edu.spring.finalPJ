@@ -13,7 +13,7 @@ import edu.spring.project.domain.MovieVO;
 @Repository
 public class MovieDAOImple implements MovieDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MovieDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.project.movieMapper"; 
+	private static final String NAMESPACE = "edu.spring.project.movieMapper";
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -47,7 +47,8 @@ public class MovieDAOImple implements MovieDAO {
 	// search by period
 	@Override
 	public List<MovieVO> selectPeriod(String inputDateStarted, String inputDateEnded) {
-		logger.info("selectPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info("selectPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = "
+				+ inputDateEnded);
 		Map<String, String> args = new HashMap<String, String>();
 		args.put("inputDateStarted", inputDateStarted);
 		args.put("inputDateEnded", inputDateEnded);
@@ -80,7 +81,7 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}
 
-	@Override 
+	@Override
 	public int updateRating(int amount, int rvRating, int mvId) {
 		logger.info("updateRating() : mvId = " + mvId);
 		int result = 0;
@@ -95,7 +96,7 @@ public class MovieDAOImple implements MovieDAO {
 		return result;
 	}
 
-	@Override 
+	@Override
 	public float selectRatingAvg(int mvId) {
 		logger.info("selectRatingAvg() call");
 		return sqlSession.selectOne(NAMESPACE + ".select_ratingAVG_by_mv_id", mvId);
@@ -108,6 +109,12 @@ public class MovieDAOImple implements MovieDAO {
 		args.put("amount", amount);
 		args.put("mvId", mvId);
 		return sqlSession.update(NAMESPACE + ".update_ticketsales_by_mv_id", args);
+	}
+
+	@Override // VO 멤버변수에는 없지만 필요한 데이터라서 쿼리로만 가져옴
+	public int selectTicketSalesTotal() {
+		logger.info("selectTicketSalesTotal() call");
+		return sqlSession.selectOne(NAMESPACE + ".select_ticketsales_total");
 	}
 
 }

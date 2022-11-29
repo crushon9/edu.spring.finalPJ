@@ -174,13 +174,17 @@
 		 }
 		 // 반복으로 버튼생성
 		 var seatBtns = '<br>';
-		 for (var i = 0; i < iMax; i++) {
+		 var count = 0;
+		 for (var i = 0; i < iMax + 1; i++) {
 			 for (var j = 1; j <= jMax; j++) {
+				 count++;
 				 if (j == 4 || j == 11 || j == 17 || j == 23) {
 					 seatBtns += '&emsp;';
 				 }
-				 var seatBtnId = seatArray[i] + j;
-				 seatBtns += '<button class="seatBtnUnselected" id="' + seatBtnId + '">' + seatBtnId + '</button>';
+				 if (count <= scdSeatTotal) {
+				 	var seatBtnId = seatArray[i] + j;
+				 	seatBtns += '<button class="seatBtnUnselected" id="' + seatBtnId + '">' + seatBtnId + '</button>';
+				 }
 			 }
 			 seatBtns += '<br>';
 		 }

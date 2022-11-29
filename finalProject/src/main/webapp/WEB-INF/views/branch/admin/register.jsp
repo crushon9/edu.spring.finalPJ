@@ -28,7 +28,7 @@
 		    <p>지점 이름</p>
 		    <input type="text" name="brcName" placeholder="지점 이름 입력" required="required">
 		    <p>지점 극장 수</p>
-		    <input type="number" name="brcTheaterNumbers" id="brcTheaterNumbers" placeholder="지점 극장 수" required="required">
+		    <input type="number" name="brcTheaterNumbers" id="brcTheaterNumbers" placeholder="지점 극장 수" min="1" max="20" required="required">
 		 	<p>지점 극장 좌석 수</p>
 			<div id="brcTheaterSeatsOutput"></div>
 			<p>지점 소개</p>
@@ -51,7 +51,7 @@
 				var brcTheaterSeatsList = '';
 				for (var i = 1; i <= brcTheaterNumbers; i++){
 					brcTheaterSeatsList +=
-					'<input type="number" name="arrBrcTheaterSeats" placeholder="' + i + "관" + '" required">';
+					'<input type="number" name="arrBrcTheaterSeats" placeholder="' + i + "관" + '" required" min="1" max="650">';
 				}
 				$('#brcTheaterSeatsOutput').html(brcTheaterSeatsList);
 			});

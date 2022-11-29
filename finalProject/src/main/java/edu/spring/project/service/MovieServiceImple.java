@@ -44,7 +44,8 @@ public class MovieServiceImple implements MovieService {
 	// search by period
 	@Override
 	public List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded) {
-		logger.info("readPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info(
+				"readPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		return dao.selectPeriod(inputDateStarted, inputDateEnded);
 	}
 
@@ -78,6 +79,12 @@ public class MovieServiceImple implements MovieService {
 	public float readRatingAvg(int mvId) {
 		logger.info("readRatingAvg() call : mvId = " + mvId);
 		return dao.selectRatingAvg(mvId);
+	}
+
+	@Override
+	public int readMvTicketSalesTotal() {
+		logger.info("readMvTicketSalesTotal() call");
+		return dao.selectTicketSalesTotal();
 	}
 
 }

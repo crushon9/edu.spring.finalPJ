@@ -32,8 +32,11 @@ public interface MovieDAO {
 
 	// rvRatingAvg(a/b)
 	float selectRatingAvg(int mvId);
-	
+
 	// update TicketSales(int)
 	int updateTicketSales(int amount, int mvId);
+
+	// VO 멤버변수에는 없지만 필요한 데이터라서 쿼리로만 가져옴
+	int selectTicketSalesTotal();
 
 }
