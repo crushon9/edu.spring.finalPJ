@@ -36,73 +36,76 @@
 			console.log('getUserReviewList() call');
 			var mmbId = $('#mmbId').val();
 			var url = '/project/review/list/' + mmbId;
-			var rvList = '<table>'
-						   + '<thead>'
-							   + '<tr>'
-								   + '<th></th>'
-								   + '<th>영화제목</th>'
-								   + '<th>관람평</th>'
-								   + '<th>평점</th>'
-								   + '<th>등록일</th>'
-								   + '<th></th>'
-								   + '<th></th>'
-							   + '</tr>'
-						   + '</thead>';
 			$.getJSON(			
 				url,
 				function(data) {// 서버에서 온 data가 저장되어있음
-					$(data).each(function() {
-						// DB에 저장된 평점으로 옵션 selected 설정
-						var isSelected1 = '';
-						var isSelected2 = '';
-						var isSelected3 = '';
-						var isSelected4 = '';
-						var isSelected5 = '';
-						switch (this.rvRating) {
-						  case 1:
-							isSelected1 = 'selected';
-						    break;
-						  case 2:
-							isSelected2 = 'selected';
-							break;
-						  case 3:
-							isSelected3 = 'selected';
-						    break;
-						  case 4:
-							isSelected4 = 'selected';
-							break
-						  case 5:
-							isSelected5 = 'selected';
-							break;
-						}
-						
-						// 로그인된 세션과 작성자가 일치할때만 수정활성화
-						var isDisabled = 'disabled';
-						if (mmbId == this.mmbId) {
-							isDisabled = '';
-						}
-						rvList += '<tboby>'
-							+ '<tr class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
-								+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
-								+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
-								+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
-	                            + '<input type="hidden" class="rvRatingBefore"/>'
-								+ '<td><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></td>'
-								+ '<td><strong>' + this.mvTitle + '</strong></td>'
-								+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
-								+ '<td class="rvRating"><select class="rvRating" disabled>'                               
-	                            + '<option value="1"' + isSelected1 + '>1</option>'
-	                            + '<option value="2"' + isSelected2 + '>2</option>'
-	                            + '<option value="3"' + isSelected3 + '>3</option>'
-	                            + '<option value="4"' + isSelected4 + '>4</option>'
-	                            + '<option value="5"' + isSelected5 + '>5</option>'
-	                            + '</select></td>'
-								+ '<td>' + new Date(this.rvDateCreated).toLocaleString() + '</td>'
-								+ '<td class="update"><input class="btn_update" type="button" value="수정"' + isDisabled + '></td>'
-								+ '<td class="delete"><input class="btn_delete" type="button" value="삭제"' + isDisabled + '></td>'
-							+ '</tr>';
-					}); // end data.each
-					rvList += '</tbody></table>';
+					var rvList = '등록된 리뷰가 없습니다';
+					if ($(data).length != 0) {
+						rvList = '<table>'
+							   + '<thead>'
+							   + '<tr>'
+							   + '<th></th>'
+							   + '<th>영화제목</th>'
+							   + '<th>관람평</th>'
+							   + '<th>평점</th>'
+							   + '<th>등록일</th>'
+							   + '<th></th>'
+							   + '<th></th>'
+							   + '</tr>'
+							   + '</thead>'
+							   + '<tbody>';
+						$(data).each(function() {
+							// DB에 저장된 평점으로 옵션 selected 설정
+							var isSelected1 = '';
+							var isSelected2 = '';
+							var isSelected3 = '';
+							var isSelected4 = '';
+							var isSelected5 = '';
+							switch (this.rvRating) {
+							  case 1:
+								isSelected1 = 'selected';
+							    break;
+							  case 2:
+								isSelected2 = 'selected';
+								break;
+							  case 3:
+								isSelected3 = 'selected';
+							    break;
+							  case 4:
+								isSelected4 = 'selected';
+								break
+							  case 5:
+								isSelected5 = 'selected';
+								break;
+							}
+							
+							// 로그인된 세션과 작성자가 일치할때만 수정활성화
+							var isDisabled = 'disabled';
+							if (mmbId == this.mmbId) {
+								isDisabled = '';
+							}
+							rvList += '<tr class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
+									+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
+									+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
+									+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
+		                            + '<input type="hidden" class="rvRatingBefore"/>'
+									+ '<td><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></td>'
+									+ '<td><strong>' + this.mvTitle + '</strong></td>'
+									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
+									+ '<td class="rvRating"><select class="rvRating" disabled>'                               
+		                            + '<option value="1"' + isSelected1 + '>1</option>'
+		                            + '<option value="2"' + isSelected2 + '>2</option>'
+		                            + '<option value="3"' + isSelected3 + '>3</option>'
+		                            + '<option value="4"' + isSelected4 + '>4</option>'
+		                            + '<option value="5"' + isSelected5 + '>5</option>'
+		                            + '</select></td>'
+									+ '<td>' + new Date(this.rvDateCreated).toLocaleString() + '</td>'
+									+ '<td class="update"><input class="btn_update" type="button" value="수정"' + isDisabled + '></td>'
+									+ '<td class="delete"><input class="btn_delete" type="button" value="삭제"' + isDisabled + '></td>'
+									+ '</tr>';
+						}); // end data.each
+						rvList += '</tbody></table>';
+					}
 					$('#reviewListOutput').html(rvList); // 반복문으로 생성된 html태그 출력
 				}
 			); // end getJSON

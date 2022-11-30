@@ -136,9 +136,14 @@
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 			 	"22:00", "22:30", "23:00", "23:30"];
-		  var scheduleList = '<table>'
-						   + '<thead>'
-						   + '<tr>'
+		  $.getJSON(			
+				url,
+			 function(data) {
+				var scheduleList = '등록된 상영스케줄이 없습니다';
+				if ($(data).length != 0) {
+					scheduleList = '<table>'
+							   + '<thead>'
+							   + '<tr>'
 							   + '<th>영화</th>'
 							   + '<th>지점</th>'
 							   + '<th>관</th>'
@@ -146,11 +151,9 @@
 							   + '<th>상영시간</th>'
 							   + '<th>좌석</th>'
 							   + '<th>상영가격</th>'
-						   + '</tr>'
-					   	   + '</thead>';
-			$.getJSON(			
-					url,
-				function(data) {
+							   + '</tr>'
+						   	   + '</thead>'
+						   	   + '<tbody>';
 					$(data).each(function() {
 						scheduleList
 						+= '<li>'
@@ -167,10 +170,11 @@
 						+ '<input type="hidden" name="scdSeatBookedCnt" value="' + this.scdSeatBookedCnt + '"/>'
 						+ '</li>'
 					});
-					scheduleList += '</table>';
-					$('#scheduleListOutput').html(scheduleList);
+					scheduleList += '</tbody></table>';
 				}
-			); // end getJSON
+				$('#scheduleListOutput').html(scheduleList);
+			 }
+		  ); // end getJSON
 	  }
 	  
 	  $('#scheduleListOutput').on('click', 'ul li .btn_delete', function() {
