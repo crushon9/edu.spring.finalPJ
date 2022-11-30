@@ -38,6 +38,7 @@
 	
 		<p>상영 스케줄</p>
 		<input type="hidden" id="mmbId" value="<%=mmbIdSession%>">
+		<input type="hidden" id="admin" value="<%=adminSession%>">
 		<div id="scheduleListOutput"></div>
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
@@ -127,34 +128,50 @@
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 			 	"22:00", "22:30", "23:00", "23:30"];
+		  var mmbId = $('#mmbId').val();
+		  var admin = $('#admin').val();
 		  var scheduleList = '<ul>';
 			$.getJSON(			
 					url,
 				function(data) {
 					$(data).each(function() {
-						scheduleList
-						+= '<li>'
-						+ '지점 : ' + this.brcName
-						+ ', 영화 : ' + this.mvTitle
-						+ ', 상영일 : ' + this.scdDate
-						+ ', 상영시간 : ' + timeArray[this.scdTime]
-						+ ', 상영관 : ' + this.scdTheater + '관'
-						+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
-						+ ', 예매가격 : ' + this.scdPrice;
-						if ($("#mmbId").val() != 'null'){
-							scheduleList += '&nbsp;&nbsp;'
-							+ '<a href="/project/ticket/buy?scdId=' + this.scdId
-							+ '&mvId=' + this.mvId
-							+ '&mvTitle=' + this.mvTitle
-							+ '&brcName=' + this.brcName
-							+ '&scdDate=' + this.scdDate
-							+ '&scdTime=' + this.scdTime 
-							+ '&scdTheater=' + this.scdTheater 
-							+ '&scdSeatTotal=' + this.scdSeatTotal 
-							+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
-							+ '&scdPrice=' + this.scdPrice + '">'
-							+ '<input type="button" value="예매하기"></a></li>';
+						var ticketURL = '/project/ticket/buy'
+										+ '?scdId=' + this.scdId
+										+ '&mvId=' + this.mvId
+										+ '&mvTitle=' + this.mvTitle
+										+ '&brcName=' + this.brcName
+										+ '&scdDate=' + this.scdDate
+										+ '&scdTime=' + this.scdTime 
+										+ '&scdTheater=' + this.scdTheater 
+										+ '&scdSeatTotal=' + this.scdSeatTotal 
+										+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
+										+ '&scdPrice=' + this.scdPrice;
+						
+						scheduleList += '<li>'
+										+ '지점 : ' + this.brcName
+										+ ', 영화 : ' + this.mvTitle
+										+ ', 상영일 : ' + this.scdDate
+										+ ', 상영시간 : ' + timeArray[this.scdTime]
+										+ ', 상영관 : ' + this.scdTheater + '관'
+										+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
+										+ ', 예매가격 : ' + this.scdPrice
+										+ '&nbsp;&nbsp;';
+						// 일반회원 티켓예매가능
+						if (mmbId != 'null' && admin == 'null') { 
+							scheduleList += '<a class="ticketURL" href="' + ticketURL +'">'
+										  + '<input type="button" class="btn_ticket" value="예매하기"></a></li>';
+						// 비회원은 로그인페이지로
+						} else if (mmbId == 'null' && admin == 'null') {
+							scheduleList += '<a class="ticketURL" href="/project/member/login?alertMessage=ticketMmbIdSessionFail">'
+							 			  + '<input type="button" class="btn_ticket" value="예매하기"></a></li>';
 						}
+						$('#scheduleListOutput').on('click', '.btn_ticket', function(){
+							var mmbId = $('#mmbId').val();
+							if (mmbId == null) {
+								alert('로그인 후 예매 가능합니다');
+								$(this).prevAll('.ticketURL').prop("href", "/project/member/login");
+							}
+						});
 					});
 					scheduleList += '</ul>';
 					$('#scheduleListOutput').html(scheduleList);
