@@ -36,10 +36,21 @@
 			console.log('getUserReviewList() call');
 			var mmbId = $('#mmbId').val();
 			var url = '/project/review/list/' + mmbId;
+			var rvList = '<table>'
+						   + '<thead>'
+							   + '<tr>'
+								   + '<th></th>'
+								   + '<th>영화제목</th>'
+								   + '<th>관람평</th>'
+								   + '<th>평점</th>'
+								   + '<th>등록일</th>'
+								   + '<th></th>'
+								   + '<th></th>'
+							   + '</tr>'
+						   + '</thead>';
 			$.getJSON(			
 				url,
 				function(data) {// 서버에서 온 data가 저장되어있음
-					var rvList = '<ul>';
 					$(data).each(function() {
 						// DB에 저장된 평점으로 옵션 selected 설정
 						var isSelected1 = '';
@@ -70,33 +81,28 @@
 						if (mmbId == this.mmbId) {
 							isDisabled = '';
 						}
-						rvList += '<li class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
-							+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
-							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
-							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
-							+ '<img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/>'
-							+ '&nbsp;&nbsp;'
-							+ '<strong>' + this.mvTitle + '</strong>'
-							+ '&nbsp;&nbsp;'
-							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly/>'
-							+ '&nbsp;&nbsp;'
-							+ '<select class="rvRating" disabled>'                               
-                            + '<option value="1"' + isSelected1 + '>1</option>'
-                            + '<option value="2"' + isSelected2 + '>2</option>'
-                            + '<option value="3"' + isSelected3 + '>3</option>'
-                            + '<option value="4"' + isSelected4 + '>4</option>'
-                            + '<option value="5"' + isSelected5 + '>5</option>'
-                            + '</select>'
-                            + '<input type="hidden" class="rvRatingBefore"/>'
-                            + '&nbsp;&nbsp;'
-							+ new Date(this.rvDateCreated).toLocaleString()
-							+ '&nbsp;&nbsp;'
-							+ '<input class="btn_update" type="button" value="수정"' + isDisabled + '>'
-							+ '&nbsp;'
-							+ '<input class="btn_delete" type="button" value="삭제"' + isDisabled + '>'
-							+ '</li><br>';
+						rvList += '<tboby>'
+							+ '<tr class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
+								+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
+								+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
+								+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
+	                            + '<input type="hidden" class="rvRatingBefore"/>'
+								+ '<td><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></td>'
+								+ '<td><strong>' + this.mvTitle + '</strong></td>'
+								+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
+								+ '<td class="rvRating"><select class="rvRating" disabled>'                               
+	                            + '<option value="1"' + isSelected1 + '>1</option>'
+	                            + '<option value="2"' + isSelected2 + '>2</option>'
+	                            + '<option value="3"' + isSelected3 + '>3</option>'
+	                            + '<option value="4"' + isSelected4 + '>4</option>'
+	                            + '<option value="5"' + isSelected5 + '>5</option>'
+	                            + '</select></td>'
+								+ '<td>' + new Date(this.rvDateCreated).toLocaleString() + '</td>'
+								+ '<td class="update"><input class="btn_update" type="button" value="수정"' + isDisabled + '></td>'
+								+ '<td class="delete"><input class="btn_delete" type="button" value="삭제"' + isDisabled + '></td>'
+							+ '</tr>';
 					}); // end data.each
-					rvList += '</ul>';
+					rvList += '</tbody></table>';
 					$('#reviewListOutput').html(rvList); // 반복문으로 생성된 html태그 출력
 				}
 			); // end getJSON
@@ -106,21 +112,22 @@
 		function rvUpdate(btn) {
 			console.log('rvUpdate() call');
 			// 수정버튼을 처음누르면 readonly 속성제거, 수정확인을 누르면 ajax로 데이터 변경
-			var isReadOnly = $(btn).prevAll('.rvContent').prop('readonly');
+			var isReadOnly = $(btn).parent().prevAll('.rvContent').children('.rvContent').prop('readonly');
 			if (isReadOnly == true) { // readonly가 true면
-				$(btn).prevAll('.rvRatingBefore').val($(btn).prevAll('.rvRating').val());
-				$(btn).prevAll('.rvContent').removeAttr('readonly');
-				$(btn).prevAll('.rvContent').css({"border-color":"red"});
-				$(btn).prevAll('.rvRating').removeAttr('disabled');
-				$(btn).prevAll('.rvRating').css({"border-color":"red"});
+				var rvRating = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();
+				$(btn).parent().prevAll('.rvRatingBefore').val(rvRating);
+				$(btn).parent().prevAll('.rvContent').children('.rvContent').removeAttr('readonly');
+				$(btn).parent().prevAll('.rvContent').children('.rvContent').css({"border-color":"red"});
+				$(btn).parent().prevAll('.rvRating').children('.rvRating').removeAttr('disabled');
+				$(btn).parent().prevAll('.rvRating').children('.rvRating').css({"border-color":"red"});
 				$(btn).val("수정확인");
-				$(btn).nextAll('.btn_delete').hide();
+				$(btn).parent().nextAll('.delete').children('.btn_delete').hide();
 			} else { // 아니라면 댓글 수정
-				var rvId = $(btn).prevAll('.rvId').val();
-				var mvId = $(btn).prevAll('.mvId').val();
-				var rvContent = $(btn).prevAll('.rvContent').val();
-				var rvRatingAfter = $(btn).prevAll('.rvRating').val();
-				var rvRatingBefore = $(btn).prevAll('.rvRatingBefore').val();
+				var rvId = $(btn).parent().prevAll('.rvId').val();
+				var mvId = $(btn).parent().prevAll('.mvId').val();
+				var rvRatingBefore = $(btn).parent().prevAll('.rvRatingBefore').val();
+				var rvContent = $(btn).parent().prevAll('.rvContent').children('.rvContent').val();
+				var rvRatingAfter = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();
 				$.ajax({
 					type : 'PUT',
 					url : '/project/review',
@@ -145,9 +152,9 @@
 		// 후기 삭제
 		function rvDelete(btn) {
 			console.log('rvDelete() call');
-			var rvId = $(btn).prevAll('.rvId').val();
-			var mvId = $(btn).prevAll('.mvId').val();
-			var rvRating = $(btn).prevAll('.rvRating').val();
+			var rvId = $(btn).parent().prevAll('.rvId').val();
+			var mvId = $(btn).parent().prevAll('.mvId').val();
+			var rvRating = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();
 			$.ajax({
 				type : 'DELETE',
 				url : '/project/review',

@@ -15,25 +15,38 @@
 		<div id="layoutSidenav_content">
 			<h1>관리자 스케줄 리스트</h1>
 			<div>
-			<p>상영 날짜</p>
-			<input type="date" id="dateSelected" name="dateSelected">
+			<table>
+				<thead>
+					<tr>
+						<th>상영 영화</th>
+						<th>상영 지점</th>
+						<th>상영 날짜</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div id="mvListOutput"></div>
+						</td>
+						<td>
+							<select id="brcArea" name="brcArea">
+								<option>지역선택</option>
+								<option value="1">서울</option>
+								<option value="2">경기/강원</option>
+								<option value="3">부산/경상</option>
+								<option value="4">대전/충청</option>
+								<option value="5">광주/전라</option>
+								<option value="6">제주</option>
+							</select>
+							<div id="brcListDiv"></div>
+						</td>
+						<td>
+							<input type="date" id="dateSelected" name="dateSelected">
+						</td>
+					</tr>
+				</tbody>
+		  	</table>
 		
-			<p>상영 영화</p>
-			<div id="mvListOutput"></div>
-			
-			<p>상영 지점</p>
-			<select id="brcArea" name="brcArea">
-				<option>지역선택</option>
-				<option value="1">서울</option>
-				<option value="2">경기/강원</option>
-				<option value="3">부산/경상</option>
-				<option value="4">대전/충청</option>
-				<option value="5">광주/전라</option>
-				<option value="6">제주</option>
-			</select>
-			<div id="brcListDiv"></div>
-		
-			<p>상영 스케줄</p>
 			<div id="scheduleListOutput"></div>
 			</div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
@@ -123,7 +136,18 @@
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 			 	"22:00", "22:30", "23:00", "23:30"];
-		  var scheduleList = '<ul>';
+		  var scheduleList = '<table>'
+						   + '<thead>'
+						   + '<tr>'
+							   + '<th>영화</th>'
+							   + '<th>지점</th>'
+							   + '<th>관</th>'
+							   + '<th>상영일</th>'
+							   + '<th>상영시간</th>'
+							   + '<th>좌석</th>'
+							   + '<th>상영가격</th>'
+						   + '</tr>'
+					   	   + '</thead>';
 			$.getJSON(			
 					url,
 				function(data) {
@@ -143,7 +167,7 @@
 						+ '<input type="hidden" name="scdSeatBookedCnt" value="' + this.scdSeatBookedCnt + '"/>'
 						+ '</li>'
 					});
-					scheduleList += '</ul>';
+					scheduleList += '</table>';
 					$('#scheduleListOutput').html(scheduleList);
 				}
 			); // end getJSON
