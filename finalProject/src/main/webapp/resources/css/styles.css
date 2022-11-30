@@ -312,10 +312,8 @@ svg {
   vertical-align: middle;
 }
 
-table {
-  caption-side: bottom;
-  border-collapse: collapse;
-  border: solid gray 1px;
+thead, tbody, tr, td, th {
+	border: solid gray 1px !important;
 }
 
 caption {
@@ -323,22 +321,6 @@ caption {
   padding-bottom: 0.5rem;
   color: #6c757d;
   text-align: left;
-}
-
-th {
-  text-align: inherit;
-  text-align: -webkit-match-parent;
-}
-
-thead,
-tbody,
-tfoot,
-tr,
-td,
-th {
-  border-color: gray;
-  border-style: solid;
-  border-width: 1px;
 }
 
 label {
@@ -11710,4 +11692,14 @@ body {
   width: 20px !important;
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
+}
+
+table,
+thead,
+tbody,
+tr,
+td,
+th {
+  border: solid gray 1px;
+  text-align: center;
 }

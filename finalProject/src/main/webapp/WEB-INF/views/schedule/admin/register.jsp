@@ -15,29 +15,42 @@
 		<div id="layoutSidenav_content">
 			<h1>관리자 스케줄 등록</h1>
 			<div>
-		  	<p>상영 지점</p>
-		  	<select id="brcArea" name="brcArea" >
-		  		<option value="0">지역선택</option>
-				<option value="1">서울</option>
-				<option value="2">경기/강원</option>
-				<option value="3">부산/경상</option>
-				<option value="4">대전/충청</option>
-				<option value="5">광주/전라</option>
-				<option value="6">제주</option>
-			</select>
-			<div id="brcListOutput"></div>
-		  	
-		    <p>상영 날짜</p>
-		    <input type="date" id="inputDate" name="inputDate">
-		    
-		    <p>상영 영화</p>
-		    <div id="mvListDiv"></div>
-		    
-		    <p>상영 기준 가격</p>
-		    <input type="number" id="scdPrice" name="scdPrice" readonly>
-		  
-		  	<p>상영 스케줄</p>
-		  	<div id="scheduleTable"></div>
+				<table>
+					<thead>
+						<tr>
+							<th>상영 지점</th>
+							<th>상영 날짜</th>
+							<th>상영 영화</th>
+							<th>상영 기준 가격</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<select id="brcArea" name="brcArea" style="display: inline-block;">
+							  		<option value="0">지역선택</option>
+									<option value="1">서울</option>
+									<option value="2">경기/강원</option>
+									<option value="3">부산/경상</option>
+									<option value="4">대전/충청</option>
+									<option value="5">광주/전라</option>
+									<option value="6">제주</option>
+								</select>
+								<div id="brcListOutput" style="display: inline-block;"></div>
+							</td>
+							<td>
+								<input type="date" id="inputDate" name="inputDate">
+							</td>
+							<td>
+								<div id="mvListDiv" style="display: inline-block;"></div>
+							</td>
+							<td>
+								<input type="number" id="scdPrice" name="scdPrice" readonly>
+							</td>
+						</tr>
+					</tbody>
+			  	</table>
+			  	<div id="scheduleTable"></div>
 		  	</div>
 		  	<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
@@ -135,10 +148,10 @@
 		 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 		 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 		 	"22:00", "22:30", "23:00", "23:30"];
-		var scheduleTable = '<table border="1"><thead><tr><th style="width: 50px">시간</th>';
+		var scheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
 		for (var i = 1; i <= brcTheaterNumbers; i++) {
 			scheduleTable +=
-				'<th style="width: 200px">' + i + "관" + '</th>';
+				'<th style="width: 250px">' + i + "관" + '</th>';
 		}
 		scheduleTable += '</tr></thead><tbody>';
 		for (var i = 0; i < 48; i++) {
@@ -147,19 +160,26 @@
 				if (j == 0) {
 					scheduleTable += '<td class="0">' + timeArray[i] + '</td>';
 				}
-				scheduleTable += '<td class="' + (j + 1) + '"><button style="border-color: blue;" class="scdBtnInsert">등록</button>'
-				+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
-				+ '<input type="text" name="mvTitle" style="border-color: lightgray;" value="" readonly/>'
-				if (i > 21) { // 조조 3000원 할인(타임인덱스21까지)
-					scheduleTable += '<input type="number" name="scdPrice" value="' + $('#scdPrice').val() + '" readonly style="width:80px; display:inline;"/>';
-				} else {
+				scheduleTable += '<td class="' + (j + 1) + '">';
+				if (i < 22) { // 조조 3000원 할인(타임인덱스21까지)
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
-					scheduleTable += '<input type="number" name="scdPrice" value="' + scdPrice + '" readonly style="width:80px; display:inline;"/>';
+					scheduleTable += '<div style="color: red; display: inline-block;">조조할인_'+ scdPrice + '</div>'
+								   +'<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
+								   + '&nbsp;';
+				} else {
+					var scdPrice = $('#scdPrice').val();
+					scheduleTable += '상영가격_'+ scdPrice
+					               + '<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
+								   + '&nbsp;';
 				}
-				scheduleTable += '<input type="hidden" name="scdId"/>'
-				+ '<input type="hidden" name="mvRunningTime" value=""/>'
-				+ '<input type="hidden" name="scdSeatBookedCnt" value=""/>'
-				+ '<input type="hidden" name="scdSeatTotal" value="' + brcTheaterSeats.split(", ")[j] + '"/></td>';
+				scheduleTable += '<button style="border-color: blue;" class="scdBtnInsert">등록</button>'
+							+ '&nbsp;'
+							+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
+							+ '<input width="270px" type="text" name="mvTitle" style="border-color: lightgray;" value="" readonly/>'
+							+ '<input type="hidden" name="scdId"/>'
+							+ '<input type="hidden" name="mvRunningTime" value=""/>'
+							+ '<input type="hidden" name="scdSeatBookedCnt" value=""/>'
+							+ '<input type="hidden" name="scdSeatTotal" value="' + brcTheaterSeats.split(", ")[j] + '"/></td>';
 			}
 			scheduleTable += '</tr>';
 		}

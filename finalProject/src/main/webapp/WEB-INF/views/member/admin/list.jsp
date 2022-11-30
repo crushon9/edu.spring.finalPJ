@@ -23,7 +23,7 @@
 			<thead>
 				<tr>
 					<th style="width: 150px">아이디</th>
-					<th style="width: 150px">상세조회</th>
+					<th style="width: 100px">상세조회</th>
 				</tr>
 			</thead>
 			<tbody>
