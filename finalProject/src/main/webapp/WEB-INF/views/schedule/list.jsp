@@ -16,27 +16,39 @@
 		<h1>상영 스케줄 정보</h1>
 		
 		<div>
-		<input type="number" id="mvId" value="${mvId }">
-		<input type="number" id="brcId" value="${brcId }">
-		<input type="text" id="scdDate" value="${scdDate }">
-		<p>상영 날짜</p>
-		<input type="date" id="dateSelected" name="dateSelected">
-		<p>상영 영화</p>
-		<div id="mvListOutput"></div>
-		
-		<p>상영 지점</p>
-		<select id="brcArea" name="brcArea">
-			<option>지역선택</option>
-			<option value="1">서울</option>
-			<option value="2">경기/강원</option>
-			<option value="3">부산/경상</option>
-			<option value="4">대전/충청</option>
-			<option value="5">광주/전라</option>
-			<option value="6">제주</option>
-		</select>
-		<div id="brcListDiv"></div>
+		<table>
+			<thead>
+				<tr>
+					<th>상영 영화</th>
+					<th>상영 지점</th>
+					<th>상영 날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<div id="mvListOutput"></div>
+					</td>
+					<td>
+						<select id="brcArea" name="brcArea">
+							<option>지역선택</option>
+							<option value="1">서울</option>
+							<option value="2">경기/강원</option>
+							<option value="3">부산/경상</option>
+							<option value="4">대전/충청</option>
+							<option value="5">광주/전라</option>
+							<option value="6">제주</option>
+						</select>
+						<div id="brcListDiv"></div>
+					</td>
+					<td>
+						<input type="date" id="dateSelected" name="dateSelected">
+					</td>
+				</tr>
+			</tbody>
+	  	</table>
 	
-		<p>상영 스케줄</p>
+		<p>상영 스케줄 목록</p>
 		<input type="hidden" id="mmbId" value="<%=mmbIdSession%>">
 		<input type="hidden" id="admin" value="<%=adminSession%>">
 		<div id="scheduleListOutput"></div>
@@ -130,52 +142,68 @@
 			 	"22:00", "22:30", "23:00", "23:30"];
 		  var mmbId = $('#mmbId').val();
 		  var admin = $('#admin').val();
-		  var scheduleList = '<ul>';
 			$.getJSON(			
 					url,
 				function(data) {
-					$(data).each(function() {
-						var ticketURL = '/project/ticket/buy'
-										+ '?scdId=' + this.scdId
-										+ '&mvId=' + this.mvId
-										+ '&mvTitle=' + this.mvTitle
-										+ '&brcName=' + this.brcName
-										+ '&scdDate=' + this.scdDate
-										+ '&scdTime=' + this.scdTime 
-										+ '&scdTheater=' + this.scdTheater 
-										+ '&scdSeatTotal=' + this.scdSeatTotal 
-										+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
-										+ '&scdPrice=' + this.scdPrice;
-						
-						scheduleList += '<li>'
-										+ '지점 : ' + this.brcName
-										+ ', 영화 : ' + this.mvTitle
-										+ ', 상영일 : ' + this.scdDate
-										+ ', 상영시간 : ' + timeArray[this.scdTime]
-										+ ', 상영관 : ' + this.scdTheater + '관'
-										+ ', 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
-										+ ', 예매가격 : ' + this.scdPrice
-										+ '&nbsp;&nbsp;';
-						// 일반회원 티켓예매가능
-						if (mmbId != 'null' && admin == 'null') { 
-							scheduleList += '<a class="ticketURL" href="' + ticketURL +'">'
-										  + '<input type="button" class="btn_ticket" value="예매하기"></a></li>';
-						// 비회원은 로그인페이지로
-						} else if (mmbId == 'null' && admin == 'null') {
-							scheduleList += '<a class="ticketURL" href="/project/member/login?alertMessage=ticketMmbIdSessionFail">'
-							 			  + '<input type="button" class="btn_ticket" value="예매하기"></a></li>';
-						}
-						$('#scheduleListOutput').on('click', '.btn_ticket', function(){
-							var mmbId = $('#mmbId').val();
-							if (mmbId == null) {
-								alert('로그인 후 예매 가능합니다');
-								$(this).prevAll('.ticketURL').prop("href", "/project/member/login");
+					var scheduleList = '등록된 상영스케줄이 없습니다';
+					if ($(data).length != 0) {
+						scheduleList = '<table>'
+								   + '<thead>'
+								   + '<tr>'
+								   + '<th>영화</th>'
+								   + '<th>지점</th>'
+								   + '<th>극장</th>'
+								   + '<th>상영일</th>'
+								   + '<th>상영시간</th>'
+								   + '<th>잔여좌석</th>'
+								   + '<th>상영가격</th>'
+								   + '<th>예매하기</th>'
+								   + '</tr>'
+							   	   + '</thead>'
+							   	   + '<tbody>';
+						$(data).each(function() {
+							var ticketURL = '/project/ticket/buy'
+											+ '?scdId=' + this.scdId
+											+ '&mvId=' + this.mvId
+											+ '&mvTitle=' + this.mvTitle
+											+ '&brcName=' + this.brcName
+											+ '&scdDate=' + this.scdDate
+											+ '&scdTime=' + this.scdTime 
+											+ '&scdTheater=' + this.scdTheater 
+											+ '&scdSeatTotal=' + this.scdSeatTotal 
+											+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
+											+ '&scdPrice=' + this.scdPrice;
+							scheduleList += '<tr>'
+											+ '<td>' + this.mvTitle + '</td>'
+											+ '<td>' + this.brcName + '</td>'
+											+ '<td>' + this.scdTheater + '관</td>'
+											+ '<td>' + this.scdDate + '</td>'
+											+ '<td>' + timeArray[this.scdTime] + '</td>'
+											+ '<td>' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal + '</td>'
+											+ '<td>' + this.scdPrice + '</td>';
+							// 일반회원 티켓예매가능
+							if (mmbId != 'null' && admin == 'null') { 
+								scheduleList += '<td><a class="ticketURL" href="' + ticketURL +'">'
+											  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
+							// 비회원은 로그인페이지로
+							} else if (mmbId == 'null' && admin == 'null') {
+								scheduleList += '<td><a class="ticketURL" href="/project/member/login?alertMessage=ticketMmbIdSessionFail">'
+								 			  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
+							} else {
+								scheduleList += '<td><input type="button" value="비활성" disabled></tr>';
 							}
-						});
-					});
-					scheduleList += '</ul>';
+							$('#scheduleListOutput').on('click', '.btn_ticket', function(){
+								var mmbId = $('#mmbId').val();
+								if (mmbId == null) {
+									alert('로그인 후 예매 가능합니다');
+									$(this).prevAll('.ticketURL').prop("href", "/project/member/login");
+								}
+							});
+						}); // data.each
+						scheduleList += '</tbody></table>';
+					} // data.length if
 					$('#scheduleListOutput').html(scheduleList);
-				}
+	 			} // data
 			); // end getJSON
 	  }
   

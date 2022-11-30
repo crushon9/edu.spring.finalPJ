@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-		<h1>회원 리스트(관리자용 페이지)</h1>
+		<h1>회원 목록 보기 (관리자용)</h1>
 		<div>
 		아이디 <input id="searchMmbId" type="text">
 		<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="Search"></a>
@@ -23,14 +23,14 @@
 			<thead>
 				<tr>
 					<th style="width: 150px">아이디</th>
-					<th style="width: 100px">상세조회</th>
+					<th style="width: 100px"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="vo" items="${list }">
 					<tr>						
 						<td><Strong> ${vo.mmbId }</Strong></td>
-						<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="Go"></a></td>
+						<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="상세조회"></a></td>
 					</tr>											
 				</c:forEach>
 			</tbody>

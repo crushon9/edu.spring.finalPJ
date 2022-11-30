@@ -11,11 +11,18 @@
 	border: 1px solid gray;
 }
 
-table, thead, tbody, tr, td, th {
+table{
 	border: solid gray 1px;
-	text-align: center;
+	border-collapse: collapse;
+	padding: 0px;
 	margin: 10px;
-	padding: 4px;
+}
+
+td, th {
+	border: solid gray 1px;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 6px;
 }
 
 th {

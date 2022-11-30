@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>관리자 스케줄 리스트</h1>
+			<h1>스케줄 목록 보기 (관리자용)</h1>
 			<div>
 			<table>
 				<thead>
@@ -46,7 +46,7 @@
 					</tr>
 				</tbody>
 		  	</table>
-		
+			<p>등록된 스케줄 목록</p>
 			<div id="scheduleListOutput"></div>
 			</div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
@@ -146,29 +146,28 @@
 							   + '<tr>'
 							   + '<th>영화</th>'
 							   + '<th>지점</th>'
-							   + '<th>관</th>'
+							   + '<th>극장</th>'
 							   + '<th>상영일</th>'
 							   + '<th>상영시간</th>'
-							   + '<th>좌석</th>'
+							   + '<th>잔여좌석</th>'
 							   + '<th>상영가격</th>'
+							   + '<th></th>'
 							   + '</tr>'
 						   	   + '</thead>'
 						   	   + '<tbody>';
 					$(data).each(function() {
-						scheduleList
-						+= '<li>'
-						+ this.brcName
-						+ '_ ' + this.scdTheater + '관'
-						+ ' | ' + this.mvTitle
-						+ ' | ' + this.scdDate
-						+ '_ ' + timeArray[this.scdTime]
-						+ ' | 잔여좌석 : ' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal
-						+ ' | 예매기준가격 : ' + this.scdPrice
-						+ '&nbsp;&nbsp;'
-						+ '<input class="btn_delete" type="button" value="삭제">'
-						+ '<input type="hidden" name="scdId" value="' + this.scdId + '"/>'
-						+ '<input type="hidden" name="scdSeatBookedCnt" value="' + this.scdSeatBookedCnt + '"/>'
-						+ '</li>'
+						scheduleList += '<tr>'
+								+ '<td>' + this.mvTitle + '</td>'
+								+ '<td>' + this.brcName + '</td>'
+								+ '<td>' + this.scdTheater + '관</td>'
+								+ '<td>' + this.scdDate + '</td>'
+								+ '<td>' + timeArray[this.scdTime] + '</td>'
+								+ '<td>' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal + '</td>'
+								+ '<td>' + this.scdPrice + '</td>'
+								+ '<td><input class="btn_delete" type="button" value="삭제">'
+								+ '<input type="hidden" name="scdId" value="' + this.scdId + '"/>'
+								+ '<input type="hidden" name="scdSeatBookedCnt" value="' + this.scdSeatBookedCnt + '"/></td>'
+								+ '</tr>';
 					});
 					scheduleList += '</tbody></table>';
 				}

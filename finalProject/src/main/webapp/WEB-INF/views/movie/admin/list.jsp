@@ -13,25 +13,25 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>영화목록 보기(관리자용)</h1>
+			<h1>영화 목록 보기 (관리자용)</h1>
 			<div>
 			<!-- 영화 검색 -->
 			<strong>시작일 </strong><input id="inputDateStarted" type="date">
 			<strong>종료일 </strong><input id="inputDateEnded" type="date">
-			<a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="검색"></a>
-			<hr>			
-			<strong>제목 </strong><input id="searchText" type="text" placeholder="제목을 입력해주세요.">&nbsp;<a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="검색"></a>
+			<a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="Go"></a>
 			&emsp;&emsp;
-			<br><br><br>
+			<input id="searchText" type="text" placeholder="제목을 입력해주세요.">&nbsp;<a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="Search"></a>
+			<hr>			
 			<!-- 영화 목록 출력 -->
-			
 			<table>
 				<thead>
 					<tr>
 						<th>이미지</th>
-						<th>영화제목</th>
-						<th>수정</th>
-						<th>삭제</th>
+						<th>제목</th>
+						<th>개봉일</th>
+						<th>장르</th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 			
@@ -40,8 +40,10 @@
 						<tr>				
 							<td><img src="/project/img/display?fileName=thumbnail_${vo.mvImage}"/></td>
 							<td>${vo.mvTitle }</td>
-							<td><a href="update?mvId=${vo.mvId}"><input type="button" value="Go!"></a></td>
-							<td><a href="delete?mvId=${vo.mvId}"><input type="button" value="Go!"></a></td>
+							<td>${vo.mvDateStarted }</td>
+							<td>${vo.mvGenre }</td>
+							<td><a href="update?mvId=${vo.mvId}"><input type="button" value="수정"></a></td>
+							<td><a href="delete?mvId=${vo.mvId}"><input type="button" value="삭제"></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

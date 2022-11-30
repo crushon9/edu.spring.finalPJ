@@ -75,6 +75,14 @@ public class TicketController {
 		List<TicketVO> list = ticketService.read(mmbId);
 		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
 	}//end listMmbIdREST()
+	
+	@GetMapping("/list/{searchText}")
+	public ResponseEntity<List<TicketVO>> listGET(@PathVariable("searchText") String searchText) {
+		logger.info("listGET() call");
+		// search by String
+		List<TicketVO> list = ticketService.readSearch(searchText);
+		return new ResponseEntity<List<TicketVO>>(list, HttpStatus.OK);
+	}// end listGET()
 
 	@DeleteMapping
 	public ResponseEntity<Integer> deleteREST(@RequestBody TicketVO vo) {

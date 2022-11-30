@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>지점정보 목록(관리자용 페이지)</h1>
+			<h1>지점 목록 보기 (관리자용)</h1>
 			
 			<div>
 			<!-- 지역검색 -->

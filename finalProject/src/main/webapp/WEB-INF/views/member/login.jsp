@@ -14,8 +14,8 @@
 
 		<div id="layoutSidenav_content">
 			<h1>Member Login</h1>
-			<form action="login" method="post">
-				<input type="text" name="mmbId" placeholder="아이디" required autofocus>
+			<form action="login" method="post" style="margin-bottom : 5px;">
+				<input type="text" name="mmbId" placeholder="아이디" required autofocus style="margin-bottom : 5px;">
 				<br>
 				<input type="password" name="mmbPassword" placeholder="비밀번호" required>
 				<br><br>

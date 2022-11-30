@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1><%=mmbIdSession %>님 리뷰</h1>
+			<h1><%=mmbIdSession %>님 리뷰 내역</h1>
 			<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
 			<div id="reviewListOutput"></div>
 			
@@ -78,7 +78,6 @@
 								isSelected5 = 'selected';
 								break;
 							}
-							
 							// 로그인된 세션과 작성자가 일치할때만 수정활성화
 							var isDisabled = 'disabled';
 							if (mmbId == this.mmbId) {
@@ -89,7 +88,7 @@
 									+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 									+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
 		                            + '<input type="hidden" class="rvRatingBefore"/>'
-									+ '<td><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></td>'
+									+ '<td><a href="/project/movie/detail?mvId=' + this.mvId + '"><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></a></td>'
 									+ '<td><strong>' + this.mvTitle + '</strong></td>'
 									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
 									+ '<td class="rvRating"><select class="rvRating" disabled>'                               

@@ -13,12 +13,9 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-		<h1>지점정보 목록</h1>
+		<h1>지점 정보 목록</h1>
 		<div>
-		지점 : <input id="searchBrcName" type="text" placeholder="지점을 입력하세요">&nbsp;
-		<a id="searchBrcNameUrl" href=""><input id="searchBrcNameBtn" type="button" value="Search"></a>
-		&emsp;&emsp;
-		지역 : 
+		<!-- 지역검색 -->
 		<select id="brcArea" name="brcArea">
 			<option value="0">지역선택</option>
 			<option value="-1">전체</option>
@@ -30,16 +27,31 @@
 			<option value="6">제주</option>
 		</select>
 		<a id="searchAreaUrl" href=""><input id="searchAreaBtn" type="button" value="Go"></a>
+		&emsp;&emsp;
+		<!-- 지점이름검색 -->
+		<input id="searchBrcName" type="text" placeholder="지점을 입력하세요">&nbsp;
+		<a id="searchBrcNameUrl" href=""><input id="searchBrcNameBtn" type="button" value="Search"></a>
 		<hr>
 		
-		<c:forEach var="vo" items="${list }">
-			<ul>						
-				<li style="list-style-type: none">						
-					<p>${vo.brcName }점</p>
-					<a href="detail?brcId=${vo.brcId}"><input type="button" value="상세보기"></a>	
-				</li>				
-			</ul>											
-		</c:forEach>
+		<table>
+			<thead>
+				<tr>
+					<th>지역</th>
+					<th>지점</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>						
+			<c:forEach var="vo" items="${list }" varStatus="status">
+				<tr id="brc${status.index}">						
+					<td class="brcAreaTd"><input type="hidden" class="brcArea" value="${vo.brcArea }">
+					<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
+					<td><Strong>${vo.brcName }점</Strong></td>
+					<td><a href="detail?brcId=${vo.brcId}"><input type="button" value="상세보기"></a></td>
+				</tr>				
+			</c:forEach>
+			</tbody>
+		</table>			
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
@@ -47,6 +59,7 @@
 	
 	<script type="text/javascript">			
 		$(document).ready(function() {
+			setBrcAreaName();
 			// 문자열 검색
 			$('#searchBrcNameBtn').click(function() {
 				var searchBrcName = $('#searchBrcName').val();
@@ -66,6 +79,15 @@
 				$('#searchAreaUrl').prop("href", searchAreaUrl);
 			});	
 		});	
+		
+		function setBrcAreaName() {
+			  console.log('setBrcAreaName() 호출');
+			  var brcAreaArray = ['서울', '경기/강원', '부산/경상', '대전/충청', '광주/전라', '제주'];
+			  for (var i = 0; i < $('td').length; i++){
+			  	var brcArea = $('#brc' + i).children('.brcAreaTd').children('.brcArea').val();
+			  	$('#brc' + i).children('.brcAreaTd').children('.brcAreaName').html(brcAreaArray[brcArea - 1]);
+			  }
+		};
 	</script>
 	  
 </body>

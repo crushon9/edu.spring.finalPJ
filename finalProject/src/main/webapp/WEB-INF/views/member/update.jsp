@@ -15,8 +15,9 @@
 		<div id="layoutSidenav_content">
 		  <h1>회원 정보 수정</h1>
 		  <form action="update" method="post">
-		    <p>아이디 (* 아이디는 수정할 수 없습니다.)</p>
-		    <input type="text" name="mmbId" value="${vo.mmbId }" readonly>	    
+		    <p>아이디</p>
+		     ${vo.mmbId }
+		    <input type="hidden" name="mmbId" value="${vo.mmbId }">	    
 		    <p>패스워드</p>
 		    <input type="password" name="mmbPassword" value="${vo.mmbPassword }">
 		    <p>이메일</p>

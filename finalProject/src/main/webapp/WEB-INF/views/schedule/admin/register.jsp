@@ -50,6 +50,7 @@
 						</tr>
 					</tbody>
 			  	</table>
+			  	<p>스케줄 등록</p>
 			  	<div id="scheduleTable"></div>
 		  	</div>
 		  	<%@include file="/WEB-INF/views/footer.jsp" %>

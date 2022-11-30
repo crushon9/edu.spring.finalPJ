@@ -43,37 +43,59 @@
 		 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 		 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 		 	"22:00", "22:30", "23:00", "23:30"];
-		var ticketList = '<ul>';
 		$.getJSON(			
 				url,
 			function(data) {
-				$(data).each(function() {
-					ticketList += '<li>'
-					+ '<img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/><br>'
-					+ '예매No. ' + this.tkId
-					+ ' | 아이디 : ' + this.mmbId
-					+ ' | 스케줄No. ' + this.scdId
-					+ ' | ' + this.mvTitle
-					+ ' | ' + this.brcName + '점'
-					+ ' _' + this.scdTheater + '관'
-					+ ' | ' + this.scdDate
-					+ ' _' + timeArray[this.scdTime]
-					+ ' | 예매인원 : ' + this.tkPeopleList
-					+ ' | 예매좌석 : ' + this.tkSeatList
-					+ ' | 결제금액 : ' + this.tkPriceTotal
-					+ '&nbsp;&nbsp;'
-					+ '<input class="tkId" type="hidden" value="' + this.tkId + '">'
-					+ '<input class="scdId" type="hidden" value="' + this.scdId + '">'
-					+ '<input class="mvId" type="hidden" value="' + this.mvId + '">'
-					+ '<input class="tkPeopleList" type="hidden" value="' + this.tkPeopleList + '">'
-					+ '<input class="btn_delete" type="button" value="예매취소">'
-					+ '&nbsp;&nbsp;'
-					+ '<input class="mvTitle" type="hidden" value="' + this.mvTitle + '">'
-					+ '<input class="mvImage" type="hidden" value="' + this.mvImage + '">'
-					+ '<input class="btn_review" type="button" value="리뷰등록">'
-					+ '</li><br>'
-				});
-				ticketList += '</ul>';
+				var ticketList = '예매 티켓 내역이 없습니다';
+				if ($(data).length != 0) {
+					ticketList = '<table>'
+							   + '<thead>'
+							   + '<tr>'
+							   + '<th>예매번호</th>'
+							   + '<th>아이디</th>'
+							   + '<th></th>'
+							   + '<th>영화</th>'
+							   + '<th>지점</th>'
+							   + '<th>극장</th>'
+							   + '<th>상영일</th>'
+							   + '<th>상영시간</th>'
+							   + '<th>예매인원</th>'
+							   + '<th>예매좌석</th>'
+							   + '<th>결제금액</th>'
+							   + '<th>예매</th>'
+							   + '<th>리뷰</th>'
+							   + '</tr>'
+							   + '</thead>'
+							   + '<tbody>';
+					$(data).each(function() {
+						var tkPeopleListArray = this.tkPeopleList.split('&');
+						var adult = tkPeopleListArray[0].split('=');
+						var adolescent = tkPeopleListArray[1].split('=');
+						ticketList += '<tr>'
+								+ '<td>' + this.tkId + '</td>'
+								+ '<td>' + this.mmbId + '</td>'
+								+ '<td><a href="/project/movie/detail?mvId=' + this.mvId + '"><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></a></td>'
+								+ '<td>' + this.mvTitle + '</td>'
+								+ '<td>' + this.brcName + '</td>'
+								+ '<td>' + this.scdTheater + '관</td>'
+								+ '<td>' + this.scdDate + '</td>'
+								+ '<td>' + timeArray[this.scdTime] + '</td>'
+								+ '<td>일반 ' + adult[1] + '명 & 청소년 ' + adolescent[1] + '명</td>'
+								+ '<td>' + this.tkSeatList + '</td>'
+								+ '<td>' + this.tkPriceTotal + '</td>'
+								+ '<td><input class="tkId" type="hidden" value="' + this.tkId + '">'
+								+ '<input class="scdId" type="hidden" value="' + this.scdId + '">'
+								+ '<input class="mvId" type="hidden" value="' + this.mvId + '">'
+								+ '<input class="tkPeopleList" type="hidden" value="' + this.tkPeopleList + '">'
+								+ '<input class="btn_delete" type="button" value="예매취소"></td>'
+								+ '<td><input class="mvId" type="hidden" value="' + this.mvId + '">'
+								+ '<input class="mvTitle" type="hidden" value="' + this.mvTitle + '">'
+								+ '<input class="mvImage" type="hidden" value="' + this.mvImage + '">'
+								+ '<input class="btn_review" type="button" value="리뷰등록"></td>'
+								+ '</tr>'
+					});
+					ticketList += '</tbody></table>';
+				}
 				$('#ticketListOutput').html(ticketList);
 			}
 		);
@@ -127,8 +149,6 @@
 			}
 		 );
 	 }
-	 
-	 
 	 
   	</script>
 
