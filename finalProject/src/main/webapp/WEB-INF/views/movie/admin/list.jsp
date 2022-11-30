@@ -6,35 +6,47 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/headTag.jsp" %>
-	<title>Movie list</title>
+	<title>Movie List for admin</title>
 </head>
 <body class="sb-nav-fixed">
 	<div id="layoutSidenav">
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>관리자 영화 목록보기</h1>
+			<h1>영화목록 보기(관리자용)</h1>
 			<div>
 			<!-- 영화 검색 -->
-			<strong>제목 </strong><input id="searchText" type="text">&nbsp;<a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="검색"></a>
-			&emsp;&emsp;
 			<strong>시작일 </strong><input id="inputDateStarted" type="date">
 			<strong>종료일 </strong><input id="inputDateEnded" type="date">
 			<a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="검색"></a>
-			<hr>
-			
+			<hr>			
+			<strong>제목 </strong><input id="searchText" type="text" placeholder="제목을 입력해주세요.">&nbsp;<a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="검색"></a>
+			&emsp;&emsp;
+			<br><br><br>
 			<!-- 영화 목록 출력 -->
-			<c:forEach var="vo" items="${mvList }">
-				<ol>						
-					<li style="list-style-type: none">						
-						<img src="/project/img/display?fileName=thumbnail_${vo.mvImage}"/>
-						<br>
-						<Strong class="mvTitle" >${vo.mvTitle }</Strong><br>
-						<a href="update?mvId=${vo.mvId}"><input type="button" value="정보수정"></a>	
-						<a href="delete?mvId=${vo.mvId}"><input type="button" value="정보삭제"></a>	
-					</li>				
-				</ol>											
-			</c:forEach>
+			
+			<table>
+				<thead>
+					<tr>
+						<th>이미지</th>
+						<th>영화제목</th>
+						<th>수정</th>
+						<th>삭제</th>
+					</tr>
+				</thead>
+			
+				<tbody>
+					<c:forEach var="vo" items="${mvList }">
+						<tr>				
+							<td><img src="/project/img/display?fileName=thumbnail_${vo.mvImage}"/></td>
+							<td>${vo.mvTitle }</td>
+							<td><a href="update?mvId=${vo.mvId}"><input type="button" value="Go!"></a></td>
+							<td><a href="delete?mvId=${vo.mvId}"><input type="button" value="Go!"></a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			
 			</div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

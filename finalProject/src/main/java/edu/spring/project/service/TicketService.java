@@ -12,6 +12,10 @@ public interface TicketService {
 	List<TicketVO> read(int scdId);
 
 	List<TicketVO> read(String mmbId);
-
+	
+	// search by String
+	List<TicketVO> readSearch(String search);
+	
 	int delete(TicketVO vo);
+	
 }

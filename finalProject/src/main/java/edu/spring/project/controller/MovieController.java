@@ -26,7 +26,7 @@ public class MovieController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
-	// main page
+	// main page == list
 	@GetMapping("/main")
 	public void mainGET(Model model, String orderChoice, String searchText) {
 		logger.info("mainGET() call");

@@ -59,4 +59,11 @@ public class TicketDAOImple implements TicketDAO {
 		return sqlSession.selectList(NAMESPACE + ".buy_check", args);
 	}
 
+	// search by String
+	@Override
+	public List<TicketVO> selectSearch(String search) {
+		logger.info("selectSearch() call : search = " + search);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mv_title", search);
+	}
+
 }

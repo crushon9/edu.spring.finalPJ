@@ -34,6 +34,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${tkId} desc
 	</select>
 	
+	<!-- search by String -->
+	<select id="select_list_by_search_mv_title" resultType="TicketVO">
+		select tk.*, mv.${mvTitle}, mv.${mvImage}, scd.${brcId}, scd.${scdDate}, scd.${scdTime}, scd.${scdTheater}, brc.${brcName}
+		from ${PJ_TICKET} tk JOIN ${PJ_MOVIE} mv ON tk.${mvId} = mv.${mvId}
+		left JOIN ${PJ_SCHEDULE} scd ON tk.${scdId} = scd.${scdId}
+		left JOIN ${PJ_BRANCH} brc ON scd.${brcId} = brc.${brcId}
+		where mv.${mvTitle} like '%' || #{searchMvTitle} || '%'
+		order by ${mvTitle} desc
+	</select>
+	
 	<!-- 티켓은 수정이 없음 -->
 	
 	<delete id="delete">

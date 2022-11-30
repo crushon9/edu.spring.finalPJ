@@ -6,15 +6,18 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/headTag.jsp" %>
-	<title>Ticket List</title>
+	<title>Ticket List for admin</title>
 </head>
 <body class="sb-nav-fixed">
 	<div id="layoutSidenav">
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-		<h1>관리자 예매 티켓 조회</h1>
-		<div id="ticketListOutput"></div>
+			<h1>예매티켓 목록보기(관리자용)</h1>
+			<div><input id="searchText" type="text" placeholder="영화제목을 입력해주세요.">&nbsp;<a id="searchTextUrl" href=""><input id="searchTextBtn" type="button" value="Search"></a></div>
+			<hr>
+			<div id="ticketListOutput">
+		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>
@@ -22,6 +25,12 @@
 	<script type="text/javascript">
 	  $(document).ready(function() {
 		  getTicketList();
+		// 문자열 검색
+			$('#searchTextBtn').click(function() {
+				var searchText = $('#searchText').val();
+				var searchTextUrl = 'list?searchText=' + searchText;
+				$('#searchTextUrl').prop("href", searchTextUrl);
+			});
 	  });
 	  
 	  function getTicketList() {

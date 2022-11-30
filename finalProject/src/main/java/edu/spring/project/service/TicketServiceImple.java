@@ -79,4 +79,11 @@ public class TicketServiceImple implements TicketService {
 		logger.info("updateTicketSales success");
 		return 1;
 	}
+
+	// search by String
+	@Override
+	public List<TicketVO> readSearch(String search) {
+		logger.info("readSearch() call : search = " + search);
+		return tkDao.selectSearch(search);
+	}
 }
