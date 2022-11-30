@@ -65,6 +65,11 @@
 				rvDelete(this);
 			});
 			$('#btn_review').click(function(){
+				var mmbId = $('#mmbId').val();
+				if (mmbId == 'null') {
+					alert("로그인 후 리뷰 등록 가능합니다");
+					return;
+				}
 				rvRegister(this);
 			});
 		});

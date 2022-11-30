@@ -75,6 +75,10 @@
 		// 아이디 중복검사	
 		function idCheck(){
 			var mmbId = $('#mmbId').val(); 
+			if (mmbId == 'null') {
+				$('#idCheckOutput').html('사용 불가한 아이디 입니다');
+				return;
+			}
 			$.ajax({
 				type : 'POST',
 				url : '/project/member/idCheck',
