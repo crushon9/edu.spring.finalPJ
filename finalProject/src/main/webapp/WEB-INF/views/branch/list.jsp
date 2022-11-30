@@ -62,6 +62,7 @@
 				} else {
 					searchAreaUrl = 'list?brcArea=' + brcArea;
 				}
+				
 				$('#searchAreaUrl').prop("href", searchAreaUrl);
 			});	
 		});	

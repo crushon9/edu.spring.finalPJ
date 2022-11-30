@@ -63,11 +63,17 @@
 				var searchBrcName = $('#searchBrcName').val();
 				var searchBrcNameUrl = 'list?searchBrcName=' + searchBrcName;
 				$('#searchBrcNameUrl').prop("href", searchBrcNameUrl);
-			});
+			  });
 			  // Area 검색
 			  $('#searchAreaBtn').click(function() {
 				  var brcArea = $('#brcArea').val();
-				  var searchAreaUrl = 'list?brcArea=' + brcArea;
+				  var searchAreaUrl = '';
+				  if (brcArea == -1) {
+					  searchAreaUrl = 'list';
+				  } else {
+					  searchAreaUrl = 'list?brcArea=' + brcArea;
+				  }
+				  
 				  $('#searchAreaUrl').prop("href", searchAreaUrl);
 			  });					
 		  });

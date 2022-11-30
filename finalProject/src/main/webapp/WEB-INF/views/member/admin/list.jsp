@@ -19,14 +19,22 @@
 		<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="Search"></a>
 		<hr>
 		<!-- 회원 목록 출력 -->
-		<c:forEach var="vo" items="${list }">
-			<ul>						
-				<li>
-					<Strong>Member ID : ${vo.mmbId }</Strong><br>
-					<a href="detail?mmbId=${vo.mmbId }"><input type="button" value="상세조회"></a>	
-				</li>
-			</ul>											
-		</c:forEach>
+		<table>
+			<thead>
+				<tr>
+					<th style="width: 150px">아이디</th>
+					<th style="width: 150px">상세조회</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="vo" items="${list }">
+					<tr>						
+						<td><Strong> ${vo.mmbId }</Strong></td>
+						<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="Go"></a></td>
+					</tr>											
+				</c:forEach>
+			</tbody>
+		</table>
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

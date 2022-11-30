@@ -315,6 +315,7 @@ svg {
 table {
   caption-side: bottom;
   border-collapse: collapse;
+  border: solid gray 1px;
 }
 
 caption {
@@ -335,9 +336,9 @@ tfoot,
 tr,
 td,
 th {
-  border-color: inherit;
+  border-color: gray;
   border-style: solid;
-  border-width: 0;
+  border-width: 1px;
 }
 
 label {
