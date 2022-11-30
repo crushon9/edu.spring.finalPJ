@@ -45,11 +45,8 @@
 		</div>
 	</div>
 	  
-	<input type="hidden" id="memberUpdateResult" value="${memberUpdateResult}"/>
-	  
 	<script type="text/javascript">
 	    $(document).ready(function() {
-	    	responseAlert();
 			$('#brcArea').change(function() {
 			getBrcList();
 		});
@@ -70,14 +67,6 @@
 				); // end getJSON
 			}
 	 	});	
-	  
-	 	// 결과 값에 대한 알러트
-	 	function responseAlert() {
-			var memberUpdateResult = $('#memberUpdateResult').val();
-			if (memberUpdateResult == 'fail'){
-				alert("회원정보 수정이 실패하였습니다.");
-			}
-		 }
 	</script>
 	
 </body>

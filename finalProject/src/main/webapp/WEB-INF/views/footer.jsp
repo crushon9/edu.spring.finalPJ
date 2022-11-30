@@ -17,6 +17,7 @@
 	    </div>
 	</footer>
 	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/alert.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/demo/chart-area-demo.js"></script>

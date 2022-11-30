@@ -44,10 +44,10 @@ public class MemberController {
 		int result = memberService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");
-			reAttr.addFlashAttribute("memberRegisterResult", "success");
+			reAttr.addFlashAttribute("alertMassage", "memberRegisterSuccess");
 			return "redirect:/member/login";
 		} else {
-			reAttr.addFlashAttribute("memberRegisterResult", "fail");
+			reAttr.addFlashAttribute("alertMassage", "memberRegisterFail");
 			return "redirect:/member/register";
 		}
 	}// end registerPOST()
@@ -69,10 +69,10 @@ public class MemberController {
 		}
 		int result = memberService.update(vo);
 		if (result == 1) {
-			reAttr.addFlashAttribute("memberUpdateResult", "success");
+			reAttr.addFlashAttribute("alertMassage", "memberUpdateSuccess");
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("memberUpdateResult", "fail");
+			reAttr.addFlashAttribute("alertMassage", "memberUpdateFail");
 			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
 	}// end updatePOST()
@@ -107,11 +107,11 @@ public class MemberController {
 		if (result == 1) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("mmbIdSession");
-			reAttr.addFlashAttribute("memberDeleteResult", "success");
+			reAttr.addFlashAttribute("alertMassage", "memberDeleteSuccess");
 			// movie/main -> withdrawal
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("memberDeleteResult", "fail");
+			reAttr.addFlashAttribute("alertMassage", "memberDeleteFail");
 			return "redirect:/member/delete_confirm";
 		}
 	}// end deletePOST()
@@ -165,7 +165,7 @@ public class MemberController {
 			// login failed
 		} else {
 			logger.info("login failed");
-			reAttr.addFlashAttribute("memberLoginResult", "fail");
+			reAttr.addFlashAttribute("alertMassage", "memberLoginFail");
 			return "redirect:/member/login";
 		}
 	}// end loginPOST()

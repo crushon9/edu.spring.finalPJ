@@ -36,7 +36,7 @@ public class BranchAdminController {
 			logger.info(result + " line registered");
 			return "redirect:/branch/admin/list";
 		} else {
-			reAttr.addFlashAttribute("branchRegisterResult", "fail");
+			reAttr.addFlashAttribute("alertMessage", "branchRegisterFail");
 			return "redirect:/branch/admin/register";
 		}
 	}// end registerPOST()
@@ -64,12 +64,13 @@ public class BranchAdminController {
 	}// end updateGET()
 
 	@PostMapping("/update")
-	public String updatePOST(BranchVO vo) {
+	public String updatePOST(BranchVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = branchService.update(vo);
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
 		} else {
+			reAttr.addFlashAttribute("alertMessage", "branchUpdateFail");
 			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();
 		}
 	}// end updatePOST()

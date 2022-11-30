@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import edu.spring.project.domain.MovieVO;
 import edu.spring.project.service.MovieService;
 
@@ -31,14 +33,17 @@ public class MovieAdminController {
 	}// end registerGET()
 
 	@PostMapping("/register")
-	public void registerPOST(Model model, MovieVO vo) {
+	public String registerPOST(MovieVO vo, RedirectAttributes reAttr) {
 		// RedirectAttributes
 		logger.info("registerPOST() call");
-		logger.info(vo.toString());
-
 		int result = movieService.create(vo);
 		logger.info("result = " + result);
-		model.addAttribute("vo", vo);
+		if (result == 1) {
+			return "redirect:/movie/admin/list";
+		} else {
+			reAttr.addFlashAttribute("alertMassage", "movieRegisterFail");
+			return "redirect:/movie/admin/register";
+		}
 	} // end registerPOST()
 
 	@GetMapping("/list") 
@@ -68,12 +73,13 @@ public class MovieAdminController {
 	}// end updateGET()
 
 	@PostMapping("/update") 
-	public String updatePOST(MovieVO vo) {
+	public String updatePOST(MovieVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = movieService.update(vo);
 		if (result == 1) {
 			return "redirect:/movie/admin/list";
 		} else {
+			reAttr.addFlashAttribute("alertMassage", "movieUpdateFail");
 			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();
 		}
 	}// end updatePOST()

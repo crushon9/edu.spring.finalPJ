@@ -40,12 +40,9 @@
 		  <%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>		
-	
-	<input type="hidden" id="branchUpdateResult" value="${branchUpdateResult}"/>
 	  
 	<script type="text/javascript">
 	 	$(document).ready(function() {
-			responseAlert();
 			$('#brcTheaterNumbers').change(function() {
 				var brcTheaterNumbers = $('#brcTheaterNumbers').val();
 				var brcTheaterSeatsList = '';
@@ -56,15 +53,6 @@
 				$('#brcTheaterSeatsOutput').html(brcTheaterSeatsList);
 			});
 	    });
-	  
-		// 결과 값에 대한 알러트
-		function responseAlert() {
-			var branchRegisterResult = $('#branchUpdateResult').val();
-			if (branchRegisterResult == 'fail'){
-				alert("지점수정에 실패하였습니다.");
-			} 
-		}
-	  
 	 </script>
 	
 </body>

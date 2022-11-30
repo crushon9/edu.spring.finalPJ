@@ -165,7 +165,6 @@
 			 );
 		 }
 		 
-			
 		// 후기 수정
 		function rvUpdate(btn) {
 			console.log('rvUpdate() call');

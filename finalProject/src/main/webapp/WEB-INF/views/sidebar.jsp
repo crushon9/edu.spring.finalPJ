@@ -109,3 +109,5 @@
         </div>
     </nav>
 </div>
+
+<input type="hidden" id="alertMessage" value="${alertMessage}"/>

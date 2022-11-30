@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import edu.spring.project.domain.TicketVO;
 import edu.spring.project.service.TicketService;
 
@@ -34,14 +36,16 @@ public class TicketController {
 	}//end buyGET()
 
 	@PostMapping("/buy")
-	public String buyPOST(TicketVO vo) {
+	public String buyPOST(TicketVO vo, RedirectAttributes reAttr) {
 		logger.info("buyPOST() call");
 		logger.info(vo.toString());
 		int result = ticketService.create(vo);
 		logger.info(result + "insert");
 		if (result == 1) {
+			reAttr.addFlashAttribute("alertMassage", "ticketBuySuccess");
 			return "redirect:/movie/main";
 		} else {
+			reAttr.addFlashAttribute("alertMassage", "ticketBuyFail");
 			return "redirect:/schedule/list";
 		}
 	}//end buyPOST()

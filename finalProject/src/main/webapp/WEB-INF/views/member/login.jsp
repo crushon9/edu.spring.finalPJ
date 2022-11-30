@@ -27,32 +27,5 @@
 		</div>
 	</div>
 	
-	<input type="hidden" id="memberRegisterResult" value="${memberRegisterResult}"/>
-	<input type="hidden" id="memberLoginResult" value="${memberLoginResult}"/>	
-	<input type="hidden" id="alertMessage" value="${alertMessage}"/>	
-	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			responseAlert();
-		});
-		
-		// 결과 값에 대한 알러트
-		function responseAlert() {
-			var memberRegisterResult = $('#memberRegisterResult').val();
-			if (memberRegisterResult == 'success'){
-				alert("회원가입에 성공하였습니다. 멤버가 되신 것을 축하합니다.");
-			} 
-			var memberLoginResult = $('#memberLoginResult').val();
-			if (memberLoginResult == 'fail'){
-				alert("로그인이 실패하였습니다. 정보를 다시 확인해주세요");
-			}
-			var alertMessage = $('#alertMessage').val();
-			if (alertMessage == 'ticketMmbIdSessionFail'){
-				alert("로그인 후 예매 가능합니다");
-			}
-			
-		}
-		
-	</script>
 </body>
 </html>

@@ -53,15 +53,9 @@
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>
-	<!-- 회원정보 수정 알러트용 -->
-	<input type="hidden" id="memberUpdateResult" value="${memberUpdateResult}"/>
-	
-	<!-- 회원 탈퇴 알러트용 -->
-	<input type="hidden" id="memberDeleteResult" value="${memberDeleteResult}"/>
 	
 	<script type="text/javascript">			
 		$(document).ready(function() {
-			responseAlert();
 			// 정렬
 			$('#orderChoice, #orderBtn').click(function() {
 				var orderChoice = $('#orderChoice').val();
@@ -83,21 +77,6 @@
 					
 			});//end searchBtn_click();
 		});
-		// 결과 값에 대한 알러트
-		function responseAlert() {
-			// 회원정보 수정
-			var memberUpdateResult = $('#memberUpdateResult').val();
-			if (memberUpdateResult == 'success'){
-				alert("정보수정이 완료되었습니다.");
-			}
-			
-			// 회원 탈퇴
-			var memberDeleteResult = $('#memberDeleteResult').val();
-			if (memberDeleteResult == 'success'){
-				alert("회원탈퇴 되었습니다. 그 동안 이용해 주셔서 감사합니다.");
-			}
-			
-		}
 	</script>
 	
 </body>
