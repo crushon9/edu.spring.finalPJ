@@ -40,21 +40,20 @@ public class BranchAdminController {
 			return "redirect:/branch/admin/register";
 		}
 	}// end registerPOST()
-	
-	@GetMapping("/list") // null : int -> Integer brcArea
-	public void listGET(Model model, String brcName, Integer brcArea) {
-		logger.info("listGET() call");
 
-		if (brcName != null) {
-			List<BranchVO> list = branchService.readBrcName(brcName);
-			model.addAttribute("list", list);
-		} else if (brcArea != null) {
-			List<BranchVO> list = branchService.readBrcArea(brcArea);
-			model.addAttribute("list", list);
+	// main page
+	@GetMapping("/list")
+	public void listGET(Model model, Integer brcArea, String searchBrcName) {
+		logger.info("list main page call");
+		List<BranchVO> list;
+		if (brcArea != null) {
+			list = branchService.readBrcArea(brcArea);
+		} else if (searchBrcName != null) {
+			list = branchService.readBrcName(searchBrcName);
 		} else {
-			List<BranchVO> list = branchService.read();
-			model.addAttribute("list", list);
+			list = branchService.read();
 		}
+		model.addAttribute("list", list);
 	}// end listGET()
 
 	@GetMapping("/update")

@@ -13,10 +13,12 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-		<h1>지점 정보</h1>
+		<h1>지점정보 목록</h1>
 		<div>
-		<input id="searchBrcName" type="text" placeholder="지점명">&nbsp;<a id="searchBrcNameUrl" href=""><input id="searchBrcNameBtn" type="button" value="Search"></a>
+		지점 : <input id="searchBrcName" type="text" placeholder="지점을 입력하세요">&nbsp;
+		<a id="searchBrcNameUrl" href=""><input id="searchBrcNameBtn" type="button" value="Search"></a>
 		&emsp;&emsp;
+		지역 : 
 		<select id="brcArea" name="brcArea">
 			<option value="0">지역선택</option>
 			<option value="-1">전체</option>
@@ -44,25 +46,25 @@
 	</div>
 	
 	<script type="text/javascript">			
-	$(document).ready(function() {
-		// 문자열 검색
-		$('#searchBrcNameBtn').click(function() {
-			var searchBrcName = $('#searchBrcName').val();
-			var searchBrcNameUrl = 'list?searchBrcName=' + searchBrcName;
-			$('#searchBrcNameUrl').prop("href", searchBrcNameUrl);
-		});
-		// area 검색
-		$('#searchAreaBtn').click(function() {
-			var brcArea = $('#brcArea').val();
-			var searchAreaUrl = '';
-			if (brcArea == -1) {
-				searchAreaUrl = 'list';
-			} else {
-				searchAreaUrl = 'list?brcArea=' + brcArea;
-			}
-			$('#searchAreaUrl').prop("href", searchAreaUrl);
+		$(document).ready(function() {
+			// 문자열 검색
+			$('#searchBrcNameBtn').click(function() {
+				var searchBrcName = $('#searchBrcName').val();
+				var searchBrcNameUrl = 'list?searchBrcName=' + searchBrcName;
+				$('#searchBrcNameUrl').prop("href", searchBrcNameUrl);
+			});
+			// Area 검색
+			$('#searchAreaBtn').click(function() {
+				var brcArea = $('#brcArea').val();
+				var searchAreaUrl = '';
+				if (brcArea == -1) {
+					searchAreaUrl = 'list';
+				} else {
+					searchAreaUrl = 'list?brcArea=' + brcArea;
+				}
+				$('#searchAreaUrl').prop("href", searchAreaUrl);
+			});	
 		});	
-	});	
 	</script>
 	  
 </body>

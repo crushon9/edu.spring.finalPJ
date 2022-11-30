@@ -23,7 +23,7 @@
 			</select>
 			<a id="orderUrl" href=""><input id="orderBtn" type="button" value="Go"></a>&emsp;&emsp;
 			<!-- 영화 검색 -->
-			<input id="searchText" type="text" placeholder="영화 제목을 입력하세요">&nbsp;<a id="searchUrl" href=""><input id="searchBtn" type="button" value="Search"></a>
+			<input id="searchText" type="text" placeholder="영화 제목을 입력하세요" required>&nbsp;<a id="searchUrl" href=""><input id="searchBtn" type="button" value="Search"></a>
 			<hr>
 			
 			<!-- 영화 목록 출력 -->
@@ -53,8 +53,11 @@
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>
-	
+	<!-- 회원정보 수정 알러트용 -->
 	<input type="hidden" id="memberUpdateResult" value="${memberUpdateResult}"/>
+	
+	<!-- 회원 탈퇴 알러트용 -->
+	<input type="hidden" id="memberDeleteResult" value="${memberDeleteResult}"/>
 	
 	<script type="text/javascript">			
 		$(document).ready(function() {
@@ -71,16 +74,29 @@
 			// 검색
 			$('#searchBtn').click(function() {
 				var searchText = $('#searchText').val();
+				// space 제거
+				if (searchText == null || searchText == " ") {
+					alert("검색어를 확인해주세요");
+				}
 				var searchUrl = 'main?searchText=' + searchText;
 				$('#searchUrl').prop("href", searchUrl);
+					
 			});//end searchBtn_click();
 		});
 		// 결과 값에 대한 알러트
 		function responseAlert() {
+			// 회원정보 수정
 			var memberUpdateResult = $('#memberUpdateResult').val();
 			if (memberUpdateResult == 'success'){
-				alert("회원정보 수정 성공");
+				alert("정보수정이 완료되었습니다.");
 			}
+			
+			// 회원 탈퇴
+			var memberDeleteResult = $('#memberDeleteResult').val();
+			if (memberDeleteResult == 'success'){
+				alert("회원탈퇴 되었습니다. 그 동안 이용해 주셔서 감사합니다.");
+			}
+			
 		}
 	</script>
 	

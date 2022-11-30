@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-		<h1>admin member list</h1>
+		<h1>회원 리스트(관리자용 페이지)</h1>
 		<div>
 		아이디 <input id="searchMmbId" type="text">
 		<a id="searchMmbIdUrl" href=""><input id="searchMmbIdBtn" type="button" value="Search"></a>
