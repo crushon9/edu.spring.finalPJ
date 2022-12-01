@@ -53,9 +53,10 @@
 					</thead>
 					<tbody>
 					<c:forEach var="vo" items="${list }" varStatus="status">
-						<tr id="brc${status.index}">						
+						<tr id="brc${status.index}"> <!-- status.index : 추후 개별 행 접근 위해 반복횟수를 tr아이디로 부여 -->						
 							<td><Strong>${vo.brcId }</Strong></td>
 							<td><Strong>${vo.brcName }</Strong></td>
+							<!-- 지역ID를 이름으로 변환하여 출력  -->
 							<td class="brcAreaTd"><input type="hidden" class="brcArea" value="${vo.brcArea }">
 							<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
 				   			<td>${vo.brcTheaterNumbers }관 </td>
@@ -88,20 +89,22 @@
 			  $('#searchAreaBtn').click(function() {
 				  var brcArea = $('#brcArea').val();
 				  var searchAreaUrl = '';
+				  // brcArea == -1 : 전체지역
 				  if (brcArea == -1) {
 					  searchAreaUrl = 'list';
 				  } else {
 					  searchAreaUrl = 'list?brcArea=' + brcArea;
 				  }
-				  
 				  $('#searchAreaUrl').prop("href", searchAreaUrl);
 			  });					
 		  });
 		  
+		  // 지역이름을 td의 요소 길이만큼 반복하여 세팅
 		  function setBrcAreaName() {
 			  console.log('setBrcAreaName() 호출');
 			  var brcAreaArray = ['서울', '경기/강원', '부산/경상', '대전/충청', '광주/전라', '제주'];
 			  for (var i = 0; i < $('td').length; i++){
+				// '#brc' + i : status.index로 부여된 tr(row) id
 			  	var brcArea = $('#brc' + i).children('.brcAreaTd').children('.brcArea').val();
 			  	$('#brc' + i).children('.brcAreaTd').children('.brcAreaName').html(brcAreaArray[brcArea - 1]);
 			  }

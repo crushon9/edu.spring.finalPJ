@@ -47,6 +47,7 @@
 
 	<script type="text/javascript">
 	$(document).ready(function() {
+		// 문자열 검색
 		$('#searchMmbIdBtn').click(function() {
 			var searchMmbId = $('#searchMmbId').val();
 			var searchMmbIdUrl = 'list?searchMmbId=' + searchMmbId;

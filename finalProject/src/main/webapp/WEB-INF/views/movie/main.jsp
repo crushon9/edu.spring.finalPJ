@@ -37,10 +37,12 @@
 							<Strong>NO. ${status.count}</Strong><br>
 							<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
 							<br><Strong>${vo.mvTitle }</Strong>
+							<!-- 예매율 : 해당영화판매/영화전체판매 -->
 							<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
 							<c:if test="${vo.mvRatingAvg != 0}">
 								<br><Strong>평점 <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
 							</c:if>
+							<!-- 평점이 0이면 미등록 표기 -->
 							<c:if test="${vo.mvRatingAvg == 0}">
 								<br><Strong>평점 미등록</Strong>
 							</c:if>
@@ -48,6 +50,7 @@
 							<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
 							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
 						</li>
+						<!-- 영화 4개 마다 공백으로 띄우기 -->
 						<c:if test="${(status.count % 4) == 0}">
 							<br> 
 				        </c:if>

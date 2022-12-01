@@ -72,11 +72,16 @@
 			); // end getJSON
 		}
 		
-		// 아이디 중복검사	
+		// 아이디 사용 가능 여부 검사	
 		function idCheck(){
-			var mmbId = $('#mmbId').val(); 
+			var mmbId = $('#mmbId').val();
+			// 기본 출력 값 설정
+			var massage = '';
+			var color = 'black';
+			// 'null' 아이디는 가입불가 (추후 세션검사 때문)
 			if (mmbId == 'null') {
-				$('#idCheckOutput').html('사용 불가한 아이디 입니다');
+				massage = '사용 불가한 아이디 입니다';
+				color = 'black';
 				return;
 			}
 			$.ajax({
@@ -88,21 +93,19 @@
 				},
 				data : mmbId,
 				success : function(result) {
-					console.log(result)
-					if(result == 0) {
-						text = '중복된 아이디입니다';
-					} else if(result == 1 && mmbId != '') {
-						text = '사용가능한 아이디입니다';
-					}
-					$('#idCheckOutput').html(text);
-					if(result == 0) {
-						$('#idCheckOutput').css("color", "red");
-					} else {
-						$('#idCheckOutput').css("color", "blue");
+					// -1 : 가입불가, 1 : 가입가능
+					if (result == -1) {
+						massage = '중복된 아이디입니다';
+						color = 'red';
+					} else if (result == 1 && mmbId != '') {
+						massage = '사용가능한 아이디입니다';
+						color = 'blue';
 					}
 				}	
-			});			
-		}// end idCheck
+			});
+			$('#idCheckOutput').html(massage);
+			$('#idCheckOutput').css("color", color);
+		}
 	</script>
 
 </body>

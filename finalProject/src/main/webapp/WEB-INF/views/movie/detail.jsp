@@ -39,12 +39,12 @@
 			<p>영화 장르 </p>${vo.mvGenre}
 			<p>상영일</p>${vo.mvDateStarted} ~ ${vo.mvDateEnded}
 			<p>영화 정보</p>${vo.mvInfo}
-			<p>예매율 </p>
+			<p>예매율 </p><!-- 예매율 : 해당영화판매/영화전체판매 -->
 			<fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %
 			<div id="mvRatingAvgPrint"></div>
 			<hr>
 		
-			<!-- 출력할 div공간 마련 reply처럼 끌고와-->
+			<!-- 영화리뷰출력 -->
 			<input type="hidden" id="mmbId" value="<%=mmbIdSession %>" readonly> 
 			<input type="hidden" id="mvId" value="${vo.mvId }">
 			<input type="hidden" id="mvTitle" value="${vo.mvTitle }">
@@ -57,21 +57,19 @@
 				
 	<script type="text/javascript">
 		$(document).ready(function() {
+			// 리뷰 목록 불러오기
 			getReviewList();
-			$('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
-				rvUpdate(this);
-			});
-			$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
-				rvDelete(this);
-			});
+			// 리뷰 등록하기 버튼 이벤트
 			$('#btn_review').click(function(){
 				var mmbId = $('#mmbId').val();
+				// 미로그인시 예외처리
 				if (mmbId == 'null') {
 					alert("로그인 후 리뷰 등록 가능합니다");
 					return;
 				}
-				rvRegister(this);
+				reviewRegister(this);
 			});
+			
 		});
 			
 		// 영화 후기 전체 출력
@@ -84,69 +82,82 @@
 			$.getJSON(			
 				url,
 				function(data) {// 서버에서 온 data가 저장되어있음
-					var rvList = '';
-					$(data).each(function() {
-						// DB에 저장된 평점으로 옵션 selected 설정
-						var isSelected1 = '';
-						var isSelected2 = '';
-						var isSelected3 = '';
-						var isSelected4 = '';
-						var isSelected5 = '';
-						switch (this.rvRating) {
-						  case 1:
-							isSelected1 = 'selected';
-						    break;
-						  case 2:
-							isSelected2 = 'selected';
-							break;
-						  case 3:
-							isSelected3 = 'selected';
-						    break;
-						  case 4:
-							isSelected4 = 'selected';
-							break
-						  case 5:
-							isSelected5 = 'selected';
-							break;
-						}
-						
-						// 로그인된 세션과 작성자가 일치할때만 수정활성화
-						var isDisabled = 'disabled';
-						if (mmbId == this.mmbId) {
-							isDisabled = '';
-						}
-						rvList += '<div class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
-							+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
-							+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
-							+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
-							+ '<p style="width: 70px; display: inline-block">' + this.mmbId + '</p>'// getJSON으로 받아온 data에 저장된 memberId 의미
-							+ '&nbsp;&nbsp;' // space
-							+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/>'
-							+ '&nbsp;&nbsp;'
-							+ '<select class="rvRating" disabled>'                               
-                            + '<option value="1"' + isSelected1 + '>1</option>'
-                            + '<option value="2"' + isSelected2 + '>2</option>'
-                            + '<option value="3"' + isSelected3 + '>3</option>'
-                            + '<option value="4"' + isSelected4 + '>4</option>'
-                            + '<option value="5"' + isSelected5 + '>5</option>'
-                            + '</select>'
-                            + '<input type="hidden" class="rvRatingBefore"/>'
-                            + '&nbsp;&nbsp;'
-							+ new Date(this.rvDateCreated).toLocaleString()
-							+ '&nbsp;&nbsp;'
-							+ '<input class="btn_update" type="button" value="수정"' + isDisabled + '>'
-							+ '&nbsp;'
-							+ '<input class="btn_delete" type="button" value="삭제"' + isDisabled + '>'
-							+ '</div>';
-					}); // end data.each
-					$('#reviewListOutput').html(rvList); // 반복문으로 생성된 html태그 출력
+					var rvList = '등록된 리뷰가 없습니다';
+					// 데이터가 있을때만 출력
+					if ($(data).length != 0) {
+						$(data).each(function() {
+							// DB에 저장된 평점으로 옵션 selected 설정
+							var isSelected1 = '';
+							var isSelected2 = '';
+							var isSelected3 = '';
+							var isSelected4 = '';
+							var isSelected5 = '';
+							switch (this.rvRating) {
+							  case 1:
+								isSelected1 = 'selected';
+							    break;
+							  case 2:
+								isSelected2 = 'selected';
+								break;
+							  case 3:
+								isSelected3 = 'selected';
+							    break;
+							  case 4:
+								isSelected4 = 'selected';
+								break
+							  case 5:
+								isSelected5 = 'selected';
+								break;
+							}
+							// 로그인된 세션과 작성자가 일치할때만 수정버튼 활성화
+							var isDisabled = 'disabled';
+							if (mmbId == this.mmbId) {
+								isDisabled = '';
+							}
+							// 댓글 한줄마다 구분하여 접근하기 위해 div class 지정
+							rvList = '<div class="rvItem">' 
+									+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
+									+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
+									+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
+									+ '<p style="width: 70px; display: inline-block">' + this.mmbId + '</p>'
+									+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/>'
+									+ '&nbsp;&nbsp;'
+									+ '<select class="rvRating" disabled>'                               
+		                            + '<option value="1"' + isSelected1 + '>1</option>'
+		                            + '<option value="2"' + isSelected2 + '>2</option>'
+		                            + '<option value="3"' + isSelected3 + '>3</option>'
+		                            + '<option value="4"' + isSelected4 + '>4</option>'
+		                            + '<option value="5"' + isSelected5 + '>5</option>'
+		                            + '</select>'
+		                            // rvRatingBefore : 추후 평점 수정할때 수정전 평점을 영화평점 계산에 보내기 위해 임시 설정
+		                            + '<input type="hidden" class="rvRatingBefore"/>'
+		                            + '&nbsp;&nbsp;'
+									+ new Date(this.rvDateCreated).toLocaleString()
+									+ '&nbsp;&nbsp;'
+									+ '<input class="btn_update" type="button" value="수정"' + isDisabled + '>'
+									+ '&nbsp;'
+									+ '<input class="btn_delete" type="button" value="삭제"' + isDisabled + '>'
+									+ '</div>';
+						}); // end data.each
+					}
+					// 반복문으로 생성된 html태그 출력
+					$('#reviewListOutput').html(rvList);
+					// 리뷰를 가져올때마다 영화 평균 평점도 새로 계산하여 출력
 					mvRatingRefresh();
+					// 리뷰를 가져올때 수정 삭제 이벤트 호출
+					$('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
+						reviewUpdate(this);
+					});
+					$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
+						reviewDelete(this);
+					});
 				}
 			); // end getJSON
-		} // end getAll
+		}
 		
-		function rvRegister() {
-			console.log('rvRegister() 호출');
+		// 리뷰 등록
+		function reviewRegister() {
+			console.log('reviewRegister() 호출');
 			 var mmbId = $('#mmbId').val();
 			 var mvId = $('#mvId').val();
 			 var mvTitle = $('#mvTitle').val();
@@ -157,6 +168,7 @@
 					console.log(data);
 					// 0:리뷰등록가능, -1:영화미관람, -2:리뷰기등록
 					if (data == 0) {
+						// 리뷰 등록 가능할때 리뷰등록 새창
 						var popUrl = '/project/review/register?mmbId=' + mmbId + '&mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
 					    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
 						window.open(popUrl, '_blank', popOption);
@@ -170,12 +182,11 @@
 		 }
 		 
 		// 후기 수정
-		function rvUpdate(btn) {
-			console.log('rvUpdate() call');
-			// prevAll() : 선택된 노드 이전에 위치해 있는 모든 형제 노드를 접근
+		function reviewUpdate(btn) {
+			console.log('reviewUpdate() call');
 			// 수정버튼을 처음누르면 readonly 속성제거, 수정확인을 누르면 ajax로 데이터 변경
 			var isReadOnly = $(btn).prevAll('.rvContent').prop('readonly');
-			if (isReadOnly == true) { // readonly가 true면
+			if (isReadOnly == true) { // readonly가 true면 readonly 속성제거
 				$(btn).prevAll('.rvRatingBefore').val($(btn).prevAll('.rvRating').val());
 				$(btn).prevAll('.rvContent').removeAttr('readonly');
 				$(btn).prevAll('.rvContent').css({"border-color":"red"});
@@ -183,11 +194,13 @@
 				$(btn).prevAll('.rvRating').css({"border-color":"red"});
 				$(btn).val("수정확인");
 				$(btn).nextAll('.btn_delete').hide();
-			} else { // 아니라면 댓글 수정
+			} else { // 아니라면(수정확인을 누르면) ajax로 데이터 변경
 				var rvId = $(btn).prevAll('.rvId').val();
 				var mvId = $('#mvId').val();
 				var rvContent = $(btn).prevAll('.rvContent').val();
+				// rvRatingAfter : 변경 후 평점
 				var rvRatingAfter = $(btn).prevAll('.rvRating').val();
+				// rvRatingBefore : 변경 전 평점
 				var rvRatingBefore = $(btn).prevAll('.rvRatingBefore').val();
 				$.ajax({
 					type : 'PUT',
@@ -204,6 +217,7 @@
 						'rvRatingBefore' : rvRatingBefore
 					}),
 					success : function(result) {
+						// 변경 후 리뷰리스트 다시 불러오기
 						getReviewList();
 					}
 				});
@@ -211,8 +225,8 @@
 		}
 		
 		// 후기 삭제
-		function rvDelete(btn) {
-			console.log('rvDelete() call');
+		function reviewDelete(btn) {
+			console.log('reviewDelete() call');
 			var rvId = $(btn).prevAll('.rvId').val();
 			var mvId = $('#mvId').val();
 			var rvRating = $(btn).prevAll('.rvRating').val();
@@ -227,13 +241,15 @@
 					'rvId' : rvId,
 					'mvId' : mvId,
 					'rvRating' : rvRating	
-				}), // 여기 데이터는 vo에 자동으로 담기는데, rvId가 노필요?
+				}),
 				success : function(result) {
+					// 변경 후 리뷰리스트 다시 불러오기
 					getReviewList();							
 				}
 			});
 		}
 		
+		// 영화 평균 평점 새로고침
 		function mvRatingRefresh() {
 			console.log('mvRatingRefresh() 호출');
 			var mvId = $('#mvId').val();
@@ -246,10 +262,11 @@
 					var mvRatingAvg = (data).toFixed(2); // 소수점 둘째 반올림
 					if (mvRatingAvg != 0) {
 						mvRatingAvgText += mvRatingAvg + ' / 5.00';
+					// 평점이 0이면 리뷰 미등록 표기
 					} else {
 						mvRatingAvgText += '리뷰 등록 전 입니다';
 					}
-					$('#mvRatingAvgPrint').html(mvRatingAvgText); // 반복문으로 생성된 html태그 출력
+					$('#mvRatingAvgPrint').html(mvRatingAvgText)
 				}
 			);
 		}

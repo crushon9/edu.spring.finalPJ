@@ -120,7 +120,8 @@ public class MemberController {
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
 		MemberVO vo = memberService.readOne(mmbId);
-		int result = 0;
+		// 가입불가 : -1, 가입가능 : 1
+		int result = -1;
 		if (vo == null) {
 			result = 1;
 		}

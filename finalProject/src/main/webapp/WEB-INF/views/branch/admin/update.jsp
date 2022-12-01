@@ -43,6 +43,7 @@
 	  
 	<script type="text/javascript">
 	 	$(document).ready(function() {
+	 		// 지점 극장수에 맞춰서 좌석수 입력 칸 반복하여 출력
 			$('#brcTheaterNumbers').change(function() {
 				var brcTheaterNumbers = $('#brcTheaterNumbers').val();
 				var brcTheaterSeatsList = '';
