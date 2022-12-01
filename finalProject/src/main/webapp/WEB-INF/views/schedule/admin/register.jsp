@@ -167,7 +167,7 @@
 			for (var col = 0; col < brcTheaterNumbers; col++) {
 				// 첫번째 열은 시간 정보 출력
 				if (col == 0) { 
-					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + timeArray[row] + '</div></td>';
+					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + timeArray[timeIndex] + '</div></td>';
 				}
 				// 추후 데이터 컨트롤을 위하여 td class = 극장번호로 지정
 				scheduleTable += '<td class="' + (col + 1) + '">';
@@ -248,7 +248,7 @@
 	  function scheduleBtn() {
 		 console.log('scheduleBtn() 호출');
 		 // 스케줄 등록
-	     $('#scheduleTable').on('click', 'table tbody tr td .scdBtnInsert', function() {
+	     $('#scheduleTable').on('click', '.scdBtnInsert', function() {
 			console.log('scdBtnInsert 클릭');
 			// 스케줄 등록시 가져갈 정보
 	    	var mvSelected = $('#mvId option:selected').text();
@@ -314,7 +314,7 @@
 			}
 		});
 		// 스케줄 삭제
-	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnDelete', function() {
+	    $('#scheduleTable').on('click', '.scdBtnDelete', function() {
 			var scdId = $(this).nextAll('input[name=scdId]').val();
 			var scdSeatBookedCnt = $(this).nextAll('input[name=scdSeatBookedCnt]').val();
 			console.log('scdBtnDelete 클릭 : scdId = ' + scdId);

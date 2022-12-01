@@ -202,6 +202,7 @@
 					console.log("스케줄 삭제 결과 : " + result);
 					if (result != -2) {
 						getScheduleList();
+					// 예매된 좌석이 있을때는 -2 반환
 					} else if (result == -2) {
 						alert('예매된 좌석이 있어 삭제 불가합니다!');
 					}

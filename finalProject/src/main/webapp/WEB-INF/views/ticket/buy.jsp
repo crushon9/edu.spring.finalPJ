@@ -37,6 +37,7 @@
 		text-align: center;
 	}
 	
+/* 좌석 선택여부와 예매여부를 3개의 클래스로 구분 */
 	.seatBtnUnselected {
 		width: 40px;
 		background-color: lightgray;
@@ -54,6 +55,7 @@
 		width: 40px;
 		margin: 3px;
 	}
+/* --------------------------- */
 </style>
 </head>
 <body class="sb-nav-fixed">
@@ -125,35 +127,27 @@
 	
 	<script>
 	 $(document).ready(function() {
+		 // 상영 시간 인덱스를 시간 문자열로 변환하는 함수 호출
 		 scdTimePrint();
+		 // 초기 좌석 버튼 반복문 출력
 		 seatBtnPrint();
+		 // 초기 인원 미선택시 알람 
 		 $('#seatBtnsDiv').children('button').click(function (){
 			 alert('인원을 선택해주세요');
 		 });
+		 // 인원 변경시 인원정보, 가격정보, 좌석버튼 초기화
 		 $('input[name=adult],input[name=adolescent]').change(function() {
 			 setTkPeopleList();
 			 setTkPriceTotal();
-			 // 인원 변경되면 좌석버튼 초기화
 			 seatBtnPrint();
+			 // 좌석 버튼을 클릭할때마다 클릭한 좌석의 정보에 따라 인원,좌석정보 변경 이벤트 발생
 			 $('#seatBtnsDiv').children('button').click(function (){
-				 setTkSeatList(this);
+				 setSeatBtnEvent(this);
 			 });
 		 });
 	 });
 	 
-	 // 상영 시간 인덱스를 시간 문자열로 변환
-	 function scdTimePrint() {
-		 var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
-			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
-			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
-			 	"22:00", "22:30", "23:00", "23:30"];
-		 var scdTime = $('#scdTime').val();
-		 var realTime = timeArray[scdTime];
-		 $('#scdTimeOutput').html(realTime);
-	 }
-	 
-	 // 좌석 버튼 반복문 출력
+	 // 좌석 버튼 반복문 기본틀 출력
 	 function seatBtnPrint() {
 		 console.log('seatBtnPrint() 호출');
 		 var scdSeatTotal = $('#scdSeatTotal').val();
@@ -181,14 +175,17 @@
 				 }
 				 // count가 총 좌석보다 적을때까지만 좌석버튼 출력
 				 if (count <= scdSeatTotal) {
-				 	var seatBtnId = seatAlphabetRowArray[row] + col;
-				 	seatBtns += '<button class="seatBtnUnselected" id="' + seatBtnId + '">' + seatBtnId + '</button>';
+				 	// seatId : 영문(row) + 숫자(col)
+				 	var seatId = seatAlphabetRowArray[row] + col;
+				 	// 추후 데이터 접근을 위해 좌석ID를 해당 좌석 버튼에 아이디로 지정
+				 	seatBtns += '<button class="seatBtnUnselected" id="' + seatId + '">' + seatId + '</button>';
 				 }
 			 }
 			 seatBtns += '<br>';
 		 }
 		 $('#seatBtnsDiv').html(seatBtns);
 		 $('input[name=tkSeatList]').val('');
+		 // 기본틀 출력 후 DB에서 예매된 좌석 정보 가져오기
 		 getBookedList();
 	 }
 	 
@@ -198,29 +195,73 @@
 		console.log('getBookedList() 호출');
 		var scdId = $('input[name=scdId]').val();
 		var url = '/project/ticket/listScdId/' + scdId;
-		$.getJSON(			
+		$.getJSON(
 				url,
-			function(data) {// 서버에서 온 data가 저장되어있음
+			function(data) {
+				// data : scdId에 해당하는 좌석정보들을 담은 리스트
 				$(data).each(function() {
-					var temp = this.tkSeatList;
-					var tempSplit = temp.split('&');
-					for (var i = 0; i < tempSplit.length; i++) {
-						$('#seatBtnsDiv').children('#' + tempSplit[i]).prop('class', 'seatBtnBooked');
-						$('#seatBtnsDiv').children('#' + tempSplit[i]).prop('disabled', true);
+					// seatSplitedArray : 하나의 구매내역에 해당하는 좌석 String을 구분자 &로 나눈 배열
+					var seatSplitedArray = this.tkSeatList.split('&');
+					for (var i = 0; i < seatSplitedArray.length; i++) {
+						// seatId로 접근하여 예매된 좌석은 seatBtnBooked 클래스 적용 (디자인 효과 부여 및 비활성화)
+						$('#seatBtnsDiv').children('#' + seatSplitedArray[i]).prop('class', 'seatBtnBooked');
+						$('#seatBtnsDiv').children('#' + seatSplitedArray[i]).prop('disabled', true);
 					}
 				}); // end data.each
 			}
 		); // end getJSON
-	 } // end getBookedList
+	 }
 	 
-	 // 선택한 인원정보 String 정보로 변환
+	 // 선택한 좌석을 String 정보로 변환
+	 function setSeatBtnEvent(btn) {
+		 console.log('setSeatBtnEvent(btn) 호출');
+		 var btnClass = $(btn).prop('class');
+		 // 클릭한 좌석버튼의 클래스가 선택이면 미선택으로, 아니면 선택으로 (toggle)
+		 $(btn).prop('class', btnClass == 'seatBtnSelected' ? 'seatBtnUnselected' : 'seatBtnSelected');
+		 // peopleTotal : 선택인원 합계
+		 var adultNumber = $('input[type=radio][name=adult]:checked').val();
+		 var adolescentNumber = $('input[type=radio][name=adolescent]:checked').val();
+		 var peopleTotal = Number(adultNumber) + Number(adolescentNumber);
+		 // seatBtnSelectedTotal : 선택좌석 합계
+		 var seatBtnSelectedArray =  $('#seatBtnsDiv').children('.seatBtnSelected');
+		 var seatBtnSelectedTotal = seatBtnSelectedArray.length;
+		 // 선택인원과 현재 선택된 좌석 수 비교
+		 console.log('현재선택버튼수=' + seatBtnSelectedTotal + '인원수=' + peopleTotal);
+		// 선택된 좌석 버튼수가 총인원보다 작거나 같을때
+		 if (seatBtnSelectedTotal <= peopleTotal) { 
+			 // 선택한 좌석을 String 정보로 변환
+			 var tkSeatList = '';
+			 for (var index = 0; index < seatBtnSelectedArray.length; index++) {
+				 // seatBtnSelectedArray의 요소를 eq(index)로 접근하여 seatId를  String 이어붙이기
+			 	tkSeatList += seatBtnSelectedArray.eq(index).text();
+			 	// 마지막 요소만 제외하고 좌석간 구분자 &
+			 	if (index != seatBtnSelectedArray.length - 1) { 
+			 		tkSeatList += '&';
+			 	}
+			 }
+			 $('input[name=tkSeatList]').val(tkSeatList);
+		 // 선택버튼이 총인원보다 클때	 
+		 } else {
+			 // 현재 누른 버튼을 seatBtnUnselected로 클래스 변경한 뒤 알람
+			 $(btn).prop('class', 'seatBtnUnselected');
+			 alert('선택 인원을 초과하였습니다');
+		 }
+		 // 선택버튼과 총인원이 동일할때만 결제하기 버튼 활성화
+		 if (seatBtnSelectedTotal == peopleTotal) {
+			$('#submit').prop('disabled', false);
+		 } else if (seatBtnSelectedTotal < peopleTotal) {
+			$('#submit').prop('disabled', true);
+		 }
+	 }
+	 
+	 // 선택한 인원정보 String 정보로 변환하여 input박스에 출력
 	 function setTkPeopleList() {
 		 var theNumOfAdt = $('input[type=radio][name=adult]:checked').val();
 		 var theNumOfAdsc = $('input[type=radio][name=adolescent]:checked').val();
 		 $('input[name=tkPeopleList]').val('adult='+ theNumOfAdt + '&adolescent='+ theNumOfAdsc);
 	 }
 	 
-	 // 선택한 인원정보에 맞추어  tkPriceTotal 계산
+	 // 선택한 인원정보에 맞추어  총 가격 계산하여 input박스에 출력
 	 function setTkPriceTotal() {
 		 var theNumOfAdt = $('input[type=radio][name=adult]:checked').val();
 		 var theNumOfAdsc = $('input[type=radio][name=adolescent]:checked').val();
@@ -229,41 +270,16 @@
 		 $('input[name=tkPriceTotal]').val(tkPriceTotal);
 	 }
 	 
-	 // 선택한 좌석을 String 정보로 변환
-	 function setTkSeatList(btn) {
-		 console.log('setTkSeatList(btn) 호출');
-		 var isSelected = $(btn).prop('class');
-		 $(btn).prop('class', isSelected == 'seatBtnSelected' ? 'seatBtnUnselected' : 'seatBtnSelected');
-		 // 선택인원 합계
-		 var theNumOfAdt = $('input[type=radio][name=adult]:checked').val();
-		 var theNumOfAdsc = $('input[type=radio][name=adolescent]:checked').val();
-		 var peopleTotal = Number(theNumOfAdt) + Number(theNumOfAdsc);
-		 // 선택좌석 합계
-		 var seatBtnSelected =  $('#seatBtnsDiv').children('.seatBtnSelected');
-		 var theNumOfSelected = seatBtnSelected.length;
-		 // 선택인원과 좌석 비교
-		 console.log('선택버튼수=' + theNumOfSelected + '인원수=' + peopleTotal);
-		 if (theNumOfSelected <= peopleTotal) { // 선택버튼이 총인원보다 작거나 같을때
-			 // 선택한 좌석을 String 정보로 변환
-			 var tkSeatList = '';
-			 for (var i = 0; i < theNumOfSelected; i++) {
-			 	tkSeatList += seatBtnSelected.eq(i).text();
-			 	if (i != theNumOfSelected - 1) {
-			 		tkSeatList += '&';
-			 	}
-			 }
-			 console.log('tkSeatList : ' + tkSeatList);
-			 $('input[name=tkSeatList]').val(tkSeatList);
-		 } else { // 선택버튼이 총인원보다 클때
-			 $(btn).prop('class', 'seatBtnUnselected');
-			 alert('선택 인원을 초과하였습니다');
-		 }
-		 // 선택버튼과 총인원이 동일할때만 결제하기 버튼 활성화
-		 if (theNumOfSelected == peopleTotal) {
-			$('#submit').prop('disabled', false);
-		 } else if (theNumOfSelected < peopleTotal) {
-			$('#submit').prop('disabled', true);
-		 }
+	 // 상영 시간 인덱스를 시간 문자열로 변환
+	 function scdTimePrint() {
+		 var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
+			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
+			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
+			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
+			 	"22:00", "22:30", "23:00", "23:30"];
+		 var scdTime = $('#scdTime').val();
+		 var realTime = timeArray[scdTime];
+		 $('#scdTimeOutput').html(realTime);
 	 }
 	</script>
 

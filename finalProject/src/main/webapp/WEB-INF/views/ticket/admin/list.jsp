@@ -39,6 +39,7 @@
 				url,
 			function(data) {
 				var ticketList = '검색 조건에 해당하는 예매 내역이 없습니다';
+				// 데이터가 있을때만 테이블 출력
 				if ($(data).length != 0) {
 					ticketList = '<table>'
 							   + '<thead>'

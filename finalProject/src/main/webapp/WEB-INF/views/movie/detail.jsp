@@ -161,7 +161,7 @@
 					    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
 						window.open(popUrl, '_blank', popOption);
 					} else if (data == -2) {
-						alert("동일계정으로 리뷰 등록된 영화 입니다");
+						alert("이미 리뷰 등록하신 영화 입니다");
 					} else if (data == -1) {
 						alert("관람 후 리뷰 등록 가능합니다");
 					}
