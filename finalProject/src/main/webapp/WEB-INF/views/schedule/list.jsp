@@ -62,10 +62,11 @@
 			// #dateSelected를 오늘날짜로 기본값 세팅
 			$('#dateSelected').val(new Date().toISOString().substring(0, 10));
 			getScheduleList();
-			// 값 선택시 비동기로 데이터 가져옴
+			// 지역 선택시 비동기로 지점정보 get
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
+			// 날짜 선택시 비동기로 영화정보 get
 			$('#dateSelected').change(function() {
 				console.log("#dateSelected.change");
 				getMvList();
@@ -86,6 +87,7 @@
 				});
 				brcList += '</select>';
 				$('#brcListDiv').html(brcList);
+				// 지점정보가 바뀔때 마다 getScheduleList
 				$('#brcId').change(function() {
 					console.log("#brcId.click");
 					getScheduleList();
@@ -107,6 +109,7 @@
 				});
 				mvList += '</select>';
 				$('#mvListOutput').html(mvList);
+				// 영화 바뀔때 마다 getScheduleList
 				$('#mvId').change(function() {
 					console.log("#mvId.click");
 					getScheduleList();
@@ -120,6 +123,7 @@
 		  var mvId = $("#mvId").val();
  		  var brcId = $("#brcId").val();
 		  var dateSelected = $("#dateSelected").val();
+		  // 선택하지 않았을때 기본값 0과 none으로 세팅
 		  if (mvId == null) {
 			  mvId = 0;
 		  }
@@ -134,79 +138,83 @@
 		  console.log('dateSelected : ' + dateSelected);
 		  var url = '/project/schedule/list/' + mvId + '&' + brcId + '&' + dateSelected;
 		  console.log(url);
-		  var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30",
-			 	"04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00",
+		$.getJSON(			
+				url,
+			function(data) {
+				var scheduleList = '해당 조건으로 등록된 상영스케줄이 없습니다';
+				if ($(data).length != 0) {
+					scheduleList = '<table>'
+							   + '<thead>'
+							   + '<tr>'
+							   + '<th>영화</th>'
+							   + '<th>지점</th>'
+							   + '<th>극장</th>'
+							   + '<th>상영일</th>'
+							   + '<th>상영시간</th>'
+							   + '<th>잔여좌석</th>'
+							   + '<th>상영가격</th>'
+							   + '<th>예매</th>'
+							   + '</tr>'
+						   	   + '</thead>'
+						   	   + '<tbody>';
+					$(data).each(function() {
+						var ticketURL = '/project/ticket/buy'
+										+ '?scdId=' + this.scdId
+										+ '&mvId=' + this.mvId
+										+ '&mvTitle=' + this.mvTitle
+										+ '&brcName=' + this.brcName
+										+ '&scdDate=' + this.scdDate
+										+ '&scdTime=' + this.scdTime 
+										+ '&scdTheater=' + this.scdTheater 
+										+ '&scdSeatTotal=' + this.scdSeatTotal 
+										+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
+										+ '&scdPrice=' + this.scdPrice;
+						scheduleList += '<tr>'
+										+ '<td>' + this.mvTitle + '</td>'
+										+ '<td>' + this.brcName + '</td>'
+										+ '<td>' + this.scdTheater + '관</td>'
+										+ '<td>' + this.scdDate + '</td>'
+										+ '<td>' + setScdTime(this.scdTime) + '</td>'
+										+ '<td>' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal + '</td>'
+										+ '<td>' + this.scdPrice + '</td>';
+						// 세션으로 예매 페이지 이동 버튼 조건화하여 세팅
+						var mmbId = $('#mmbId').val();
+						var admin = $('#admin').val();
+						// 일반회원 티켓예매가능
+						if (mmbId != 'null' && admin == 'null') { 
+							scheduleList += '<td><a class="ticketURL" href="' + ticketURL +'">'
+										  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
+						// 비회원은 alert후 로그인페이지로
+						} else if (mmbId == 'null' && admin == 'null') {
+							scheduleList += '<td><a class="ticketURL" href="/project/member/login?alertMessage=ticketMmbIdSessionFail">'
+							 			  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
+						} else {
+							scheduleList += '<td><input type="button" value="비활성" disabled></tr>';
+						}
+						$('#scheduleListOutput').on('click', '.btn_ticket', function(){
+							var mmbId = $('#mmbId').val();
+							if (mmbId == null) {
+								alert('로그인 후 예매 가능합니다');
+								$(btn).prevAll('.ticketURL').prop("href", "/project/member/login");
+							}
+						});
+					}); // data.each
+					scheduleList += '</tbody></table>';
+				} // data.length if
+				$('#scheduleListOutput').html(scheduleList);
+ 			} // data
+		); // end getJSON
+	  }
+	  // DB에 저장된 타임 인덱스를 시간 String으로 변환
+	  function setScdTime(scdIndex) {
+		  var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
 			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 			 	"22:00", "22:30", "23:00", "23:30"];
-		  var mmbId = $('#mmbId').val();
-		  var admin = $('#admin').val();
-			$.getJSON(			
-					url,
-				function(data) {
-					var scheduleList = '해당 조건으로 등록된 상영스케줄이 없습니다';
-					if ($(data).length != 0) {
-						scheduleList = '<table>'
-								   + '<thead>'
-								   + '<tr>'
-								   + '<th>영화</th>'
-								   + '<th>지점</th>'
-								   + '<th>극장</th>'
-								   + '<th>상영일</th>'
-								   + '<th>상영시간</th>'
-								   + '<th>잔여좌석</th>'
-								   + '<th>상영가격</th>'
-								   + '<th>예매</th>'
-								   + '</tr>'
-							   	   + '</thead>'
-							   	   + '<tbody>';
-						$(data).each(function() {
-							var ticketURL = '/project/ticket/buy'
-											+ '?scdId=' + this.scdId
-											+ '&mvId=' + this.mvId
-											+ '&mvTitle=' + this.mvTitle
-											+ '&brcName=' + this.brcName
-											+ '&scdDate=' + this.scdDate
-											+ '&scdTime=' + this.scdTime 
-											+ '&scdTheater=' + this.scdTheater 
-											+ '&scdSeatTotal=' + this.scdSeatTotal 
-											+ '&scdSeatBookedCnt=' + this.scdSeatBookedCnt 
-											+ '&scdPrice=' + this.scdPrice;
-							scheduleList += '<tr>'
-											+ '<td>' + this.mvTitle + '</td>'
-											+ '<td>' + this.brcName + '</td>'
-											+ '<td>' + this.scdTheater + '관</td>'
-											+ '<td>' + this.scdDate + '</td>'
-											+ '<td>' + timeArray[this.scdTime] + '</td>'
-											+ '<td>' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal + '</td>'
-											+ '<td>' + this.scdPrice + '</td>';
-							// 일반회원 티켓예매가능
-							if (mmbId != 'null' && admin == 'null') { 
-								scheduleList += '<td><a class="ticketURL" href="' + ticketURL +'">'
-											  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
-							// 비회원은 로그인페이지로
-							} else if (mmbId == 'null' && admin == 'null') {
-								scheduleList += '<td><a class="ticketURL" href="/project/member/login?alertMessage=ticketMmbIdSessionFail">'
-								 			  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
-							} else {
-								scheduleList += '<td><input type="button" value="비활성" disabled></tr>';
-							}
-							$('#scheduleListOutput').on('click', '.btn_ticket', function(){
-								var mmbId = $('#mmbId').val();
-								if (mmbId == null) {
-									alert('로그인 후 예매 가능합니다');
-									$(this).prevAll('.ticketURL').prop("href", "/project/member/login");
-								}
-							});
-						}); // data.each
-						scheduleList += '</tbody></table>';
-					} // data.length if
-					$('#scheduleListOutput').html(scheduleList);
-	 			} // data
-			); // end getJSON
+		  return timeArray[scdIndex];
 	  }
-  
+	  
   	</script>
  </body>
 </html>

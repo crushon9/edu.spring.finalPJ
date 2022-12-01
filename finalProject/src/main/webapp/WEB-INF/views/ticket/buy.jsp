@@ -107,7 +107,7 @@
 				<br>
 				합계&emsp;
 				<input type="text" name="tkPriceTotal" readonly>
-				<input type="submit" value="결제하기">
+				<input id="submit" type="submit" value="예매하기" disabled>
 			</div>
 			<div id="tkInfoDiv" >
 				${vo.mvTitle } <br>
@@ -143,8 +143,7 @@
 	 
 	 // 상영 시간 인덱스를 시간 문자열로 변환
 	 function scdTimePrint() {
-		 var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30",
-			 	"04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00",
+		 var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
 			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
 			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
@@ -158,27 +157,31 @@
 	 function seatBtnPrint() {
 		 console.log('seatBtnPrint() 호출');
 		 var scdSeatTotal = $('#scdSeatTotal').val();
-		 var seatArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-			 			  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-			 			  'U', 'V', 'W', 'X', 'Y', 'Z'];
+		 var seatAlphabetRowArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+					 			  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+					 			  'U', 'V', 'W', 'X', 'Y', 'Z'];
 		 // 최대좌석수에 따라 반복출력 패턴 조정
-		 var iMax = 10;
-		 var jMax = scdSeatTotal / 10;
+		 // 기본 좌석 열 10, 행은 총좌석을 열로 나눈 몫 + 1
+		 var seatNumberColMax = 10;
+		 var seatAlphabetRowMax = (scdSeatTotal / 10) + 1;
+		 // 만약 25열을 넘으면 최대 좌석 열 25로 제한
 		 if (scdSeatTotal / 10 > 25) {
-			 jMax = 25;
-			 iMax = scdSeatTotal / 25;
+			 seatNumberColMax = 25;
+			 seatAlphabetRowMax = (scdSeatTotal / 25) + 1;
 		 }
-		 // 반복으로 버튼생성
+		 // 반복으로 좌석버튼생성
 		 var seatBtns = '<br>';
 		 var count = 0;
-		 for (var i = 0; i < iMax + 1; i++) {
-			 for (var j = 1; j <= jMax; j++) {
+		 for (var row = 0; row < seatAlphabetRowMax; row++) { 
+			 for (var col = 1; col <= seatNumberColMax; col++) {
 				 count++;
-				 if (j == 4 || j == 11 || j == 17 || j == 23) {
+				 // 행이 아래와 같을때 칸 띄우기
+				 if (col == 4 || col == 11 || col == 17 || col == 23) {
 					 seatBtns += '&emsp;';
 				 }
+				 // count가 총 좌석보다 적을때까지만 좌석버튼 출력
 				 if (count <= scdSeatTotal) {
-				 	var seatBtnId = seatArray[i] + j;
+				 	var seatBtnId = seatAlphabetRowArray[row] + col;
 				 	seatBtns += '<button class="seatBtnUnselected" id="' + seatBtnId + '">' + seatBtnId + '</button>';
 				 }
 			 }
@@ -240,7 +243,7 @@
 		 var theNumOfSelected = seatBtnSelected.length;
 		 // 선택인원과 좌석 비교
 		 console.log('선택버튼수=' + theNumOfSelected + '인원수=' + peopleTotal);
-		 if (theNumOfSelected <= peopleTotal) {
+		 if (theNumOfSelected <= peopleTotal) { // 선택버튼이 총인원보다 작거나 같을때
 			 // 선택한 좌석을 String 정보로 변환
 			 var tkSeatList = '';
 			 for (var i = 0; i < theNumOfSelected; i++) {
@@ -251,9 +254,15 @@
 			 }
 			 console.log('tkSeatList : ' + tkSeatList);
 			 $('input[name=tkSeatList]').val(tkSeatList);
-		 } else {
+		 } else { // 선택버튼이 총인원보다 클때
 			 $(btn).prop('class', 'seatBtnUnselected');
 			 alert('선택 인원을 초과하였습니다');
+		 }
+		 // 선택버튼과 총인원이 동일할때만 결제하기 버튼 활성화
+		 if (theNumOfSelected == peopleTotal) {
+			$('#submit').prop('disabled', false);
+		 } else if (theNumOfSelected < peopleTotal) {
+			$('#submit').prop('disabled', true);
 		 }
 	 }
 	</script>
