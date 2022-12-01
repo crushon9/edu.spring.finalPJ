@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${mvDateEnded}
 	</select>
 
-	<!-- search by String -->
+	<!-- search by String / keyword-->
 	<select id="select_list_by_search_mv_title" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
@@ -55,7 +55,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${mvTicketSales} desc
 	</select>
 
-	<!-- update all -->
 	<update id="update">
 		update ${PJ_MOVIE}
 		set ${mvTitle} = #{mvTitle},
@@ -72,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</delete>
 
-	<!-- mvRatingAvg // rvRating : 리뷰점수, amount : 삭제 -1, 등록 +1 -->
+	<!-- mvRatingTotal + amount(삭제 -1, 등록 +1), mvRatingCnt + amount(삭제 -1, 등록 +1) -->
 	<update id="update_ratingTC_by_mv_id">
 		update ${PJ_MOVIE}
 		set ${mvRatingTotal} = ${mvRatingTotal} + #{rvRating},
@@ -80,7 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</update>
 	
-	<!-- rvAvg = rvCnt / rvTotal -->
+	<!-- ratingAvg = ratingTotal / ratingCnt
+	(NULLIF key, value) -> null일 때 지정 값 출력, 아니면 원래 값 출력 하도록 만듦
+	-->
 	<update id="update_ratingAVG_by_mv_id">
 		update ${PJ_MOVIE}
 		set ${mvRatingAvg} = NVL(${mvRatingTotal} / NULLIF(${mvRatingCnt}, 0), 0)
@@ -93,13 +94,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</select>
 
-	<!-- ticketSales // amount : 취소 -1, 결제 +1 -->
+	<!-- ticketSales + amount(취소 -1, 결제 +1) -->
 	<update id="update_ticketsales_by_mv_id">
 		update ${PJ_MOVIE}
 		set ${mvTicketSales} = ${mvTicketSales} + #{amount}
 		where ${mvId} = #{mvId}
 	</update>
 	
+	<!-- 각 영화마다 예매율을 구하기 위함 --> 
 	<select id="select_ticketsales_total" resultType="int">
 		SELECT sum(${mvTicketSales}) FROM ${PJ_MOVIE}
 	</select>

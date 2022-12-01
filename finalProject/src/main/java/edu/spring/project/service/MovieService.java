@@ -22,7 +22,7 @@ public interface MovieService {
 	// search by date
 	List<MovieVO> readDate(String inputDate);
 
-	// search by String
+	// search by String(keyword)
 	List<MovieVO> readSearch(String search);
 
 	int update(MovieVO vo);
@@ -31,6 +31,7 @@ public interface MovieService {
 
 	float readRatingAvg(int mvId);
 
+	// 각 영화마다 예매율을 구하기 위함 
 	int readMvTicketSalesTotal();
 
 }

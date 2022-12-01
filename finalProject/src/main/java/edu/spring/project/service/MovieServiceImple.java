@@ -56,7 +56,7 @@ public class MovieServiceImple implements MovieService {
 		return dao.selectDate(inputDate);
 	}
 
-	// search by String
+	// search by String(keyword)
 	@Override
 	public List<MovieVO> readSearch(String search) {
 		logger.info("readSearch() call : search = " + search);
@@ -81,6 +81,7 @@ public class MovieServiceImple implements MovieService {
 		return dao.selectRatingAvg(mvId);
 	}
 
+	// 각 영화마다 예매율을 구하기 위함
 	@Override
 	public int readMvTicketSalesTotal() {
 		logger.info("readMvTicketSalesTotal() call");

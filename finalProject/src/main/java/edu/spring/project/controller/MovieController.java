@@ -26,26 +26,30 @@ public class MovieController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
-	// main page == list
+	// site main page => movie list show
 	@GetMapping("/main")
 	public void mainGET(Model model, String orderChoice, String searchText) {
 		logger.info("mainGET() call");
+		// searchText : keyword search
 		if (searchText != null) {
 			List<MovieVO> mvList = movieService.readSearch(searchText);
 			model.addAttribute("mvList", mvList);
 		} else if (orderChoice != null) {
+			// order by ticketSales
 			if (orderChoice.equals("ticketSales")) {
 				List<MovieVO> mvList = movieService.readOrderTicket();
 				model.addAttribute("mvList", mvList);
+			// order by reviewAvg
 			} else if (orderChoice.equals("reviewAvg")) {
 				List<MovieVO> mvList = movieService.readOrderReview();
 				model.addAttribute("mvList", mvList);
 			}
-		} else { // default
+		// default : order by ticketSales
+		} else { 
 			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
-		// 영화 전체 예매 합
+		// 각 영화마다 예매율을 구하기 위함
 		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
 		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end mainGET()
@@ -56,7 +60,7 @@ public class MovieController {
 		logger.info("detailGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
-		// 영화 전체 예매 합
+		// 각 영화마다 예매율을 구하기 위함
 		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
 		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end detailGET()
@@ -68,16 +72,16 @@ public class MovieController {
 		return new ResponseEntity<Float>(mvRatingAvg, HttpStatus.OK);
 	}// end mvRatingAvgREST()
 
-	// 스케줄에서 쓰는 비동기 검색
+	// Asynchronous : for schedule table
 	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
 			@PathVariable("inputDateEnded") String inputDateEnded) {
-		logger.info(
-				"listREST() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+		logger.info("listREST() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
 		List<MovieVO> list = movieService.readPeriod(inputDateStarted, inputDateEnded);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
 
+	// Asynchronous : for schedule table
 	@GetMapping("/list/{inputDate}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
 		logger.info("listREST() call : inputDate = " + inputDate);

@@ -11,7 +11,7 @@ public class MovieVO {
 	private String mvGenre;
 	private String mvInfo;
 	private int mvTicketSales;
-	// to show rvId && reviewCnt
+	// mvRatingAvg = mvRatingTotal / mvRatingCnt
 	private int mvRatingTotal;
 	private int mvRatingCnt;
 	private float mvRatingAvg;

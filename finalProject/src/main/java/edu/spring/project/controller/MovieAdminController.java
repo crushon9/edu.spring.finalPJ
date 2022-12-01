@@ -49,17 +49,19 @@ public class MovieAdminController {
 	@GetMapping("/list") 
 	public void listGET(Model model, String searchText, String inputDateStarted, String inputDateEnded) {
 		logger.info("listGET() call");
+		// searchText : keyword search
 		if (searchText != null) {
 			List<MovieVO> mvList = movieService.readSearch(searchText);
 			model.addAttribute("mvList", mvList);
 		} else if (inputDateStarted != null && inputDateEnded != null) {
 			List<MovieVO> mvList = movieService.readPeriod(inputDateStarted, inputDateEnded);
 			model.addAttribute("mvList", mvList);
-		} else { // default
+		// default : order by ticketSales
+		} else { 
 			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
-		// 영화 전체 예매 합
+		// 각 영화마다 예매율을 구하기 위함
 		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
 		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end listGET()

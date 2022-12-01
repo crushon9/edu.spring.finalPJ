@@ -62,7 +62,7 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_date", inputDate);
 	}
 
-	// search by String
+	// search by String(keyword)
 	@Override
 	public List<MovieVO> selectSearch(String search) {
 		logger.info("selectSearch() call : search = " + search);
@@ -96,12 +96,14 @@ public class MovieDAOImple implements MovieDAO {
 		return result;
 	}
 
+	// mvId로 평균평점 변경시 평점만 가져온다.
 	@Override
 	public float selectRatingAvg(int mvId) {
 		logger.info("selectRatingAvg() call");
 		return sqlSession.selectOne(NAMESPACE + ".select_ratingAVG_by_mv_id", mvId);
 	}
 
+	// ticketSales + amount(취소 -1, 결제 +1)
 	@Override
 	public int updateTicketSales(int amount, int mvId) {
 		logger.info("updateTicketSales() call : mvId = " + mvId);
@@ -111,7 +113,8 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.update(NAMESPACE + ".update_ticketsales_by_mv_id", args);
 	}
 
-	@Override // VO 멤버변수에는 없지만 필요한 데이터라서 쿼리로만 가져옴
+	// 각 영화마다 예매율을 구하기 위함
+	@Override 
 	public int selectTicketSalesTotal() {
 		logger.info("selectTicketSalesTotal() call");
 		return sqlSession.selectOne(NAMESPACE + ".select_ticketsales_total");
