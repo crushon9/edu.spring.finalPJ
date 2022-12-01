@@ -62,7 +62,15 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript">			
+	<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
+	<script type="text/javascript">
+		// document가 생성되기 전에 view에서 생성한 sessionStorage를 통해서 targetURL 리다이렉트
+		if (sessionStorage.getItem('targetURL') !== null && $('#mmbId').val() != 'null') {
+			var targetURL = sessionStorage.getItem('targetURL');
+			sessionStorage.removeItem('targetURL');
+			location.href = targetURL;
+		}
+		
 		$(document).ready(function() {
 			// 정렬
 			$('#orderChoice, #orderBtn').click(function() {

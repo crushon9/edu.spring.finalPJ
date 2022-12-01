@@ -40,7 +40,6 @@ public class MemberController {
 		if (vo.getBrcId() == 0) {
 			vo.setBrcId(1);
 		}
-
 		int result = memberService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");
@@ -87,6 +86,7 @@ public class MemberController {
 	public String deleteConfirmPOST(String mmbId, String mmbPassword, RedirectAttributes reAttr) {
 		logger.info("deleteConfirmPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
+		// vo != null : 아이디 패스워드가 일치한 경우
 		if (vo != null) {
 			return "redirect:/member/delete";
 		} else {
@@ -129,8 +129,8 @@ public class MemberController {
 	}// end idCheckREST()
 
 	@GetMapping("/login")
-	public void loginGET(Model model, String alertMessage) {
-		logger.info("loginGET call");
+	public void loginGET(Model model, String alertMessage, String targetURL) {
+		logger.info("loginGET call : alertMessage=" + alertMessage);
 		model.addAttribute("alertMessage", alertMessage);
 	}// end loginGET()
 
@@ -140,29 +140,21 @@ public class MemberController {
 		logger.info("loginPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
 		HttpSession session = request.getSession();
-
+		// vo != null : 아이디 패스워드에 일치하는 데이터가 있는 경우, 즉 로그인 성공
 		if (vo != null) {
-			// mbAdminCheck가 "1"인 admin 계정만 login
+			logger.info("login failed");
+			// mbAdminCheck가 "1"인 admin 계정 adminSession 생성
 			if (vo.getMmbAdminCheck() == 1) {
 				logger.info("admin login success");
 				session.setAttribute("adminSession", vo.getMmbId());
 			}
-			// mbAdminCheck가 "0"인 일반 user 계정 login
+			// mbAdminCheck가 "0"인 일반 user계정 mmbIdSession 생성
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			logger.info(mmbId + " user login");
-			// 세션 생성 후, 일정 시간 경과 시 세션유지 제한
 			session.setMaxInactiveInterval(600);
-			String targetURL = (String) session.getAttribute("targetURL");
-			logger.info("targetURL : " + targetURL);
-			if (targetURL != null) { 
-				session.removeAttribute("targetURL");
-				return "redirect:" + targetURL;
-				// targetURL X -> main.jsp
-			} else { 
-				logger.info("targetURL NO?");
-				return "redirect:/movie/main";
-			}
-		// login failed
+			// 로그인시 targetURL이 있으면 해당 페이지로 이동
+			return "redirect:/movie/main";
+			// login failed
 		} else {
 			logger.info("login failed");
 			reAttr.addFlashAttribute("alertMassage", "memberLoginFail");

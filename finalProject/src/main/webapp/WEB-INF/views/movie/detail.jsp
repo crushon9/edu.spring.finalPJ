@@ -64,8 +64,10 @@
 				var mmbId = $('#mmbId').val();
 				// 미로그인시 예외처리
 				if (mmbId == 'null') {
-					alert("로그인 후 리뷰 등록 가능합니다");
-					return;
+					var targetURL = location.href;
+					console.log(targetURL);
+					sessionStorage.setItem('targetURL', targetURL);
+					location.href = '/project/member/login?alertMessage=reviewMmbIdSessionFail';
 				}
 				reviewRegister(this);
 			});

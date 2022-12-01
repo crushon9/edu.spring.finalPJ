@@ -49,4 +49,7 @@ if (alertMessage == 'ticketBuyFail') {
 	alert("티켓 구매 실패하였습니다");
 }
 
-
+// 리뷰
+if (alertMessage == 'reviewMmbIdSessionFail') {
+	alert("로그인 후 리뷰 등록 가능합니다");
+}

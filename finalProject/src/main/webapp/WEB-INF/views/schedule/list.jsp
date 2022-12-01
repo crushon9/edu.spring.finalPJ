@@ -177,17 +177,18 @@
 										+ '<td>' + setScdTime(this.scdTime) + '</td>'
 										+ '<td>' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal + '</td>'
 										+ '<td>' + this.scdPrice + '</td>';
-						// 세션으로 예매 페이지 이동 버튼 조건화하여 세팅
+						// 세션으로 예매버튼 조건화하여 세팅
 						var mmbId = $('#mmbId').val();
 						var admin = $('#admin').val();
-						// 일반회원 티켓예매가능
+						// 일반회원 예매버튼URL을 ticketURL로 세팅
 						if (mmbId != 'null' && admin == 'null') { 
 							scheduleList += '<td><a class="ticketURL" href="' + ticketURL +'">'
 										  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
-						// 비회원은 alert후 로그인페이지로
+						// 비회원은 targetURL에 ticketURL을 담고 추후 클릭시 세션 & 리다이렉트로 처리
 						} else if (mmbId == 'null' && admin == 'null') {
-							scheduleList += '<td><a class="ticketURL" href="/project/member/login?alertMessage=ticketMmbIdSessionFail">'
-							 			  + '<input type="button" class="btn_ticket" value="Go"></a></td></tr>';
+							scheduleList += '<td><input type="hidden" class="targetURL" value="' + ticketURL + '">'
+							 			  + '<input type="button" class="btn_targetURL" value="Go"></td></tr>';
+						// 관리자는 예매 버튼 비활성
 						} else {
 							scheduleList += '<td><input type="button" value="비활성" disabled></tr>';
 						}
@@ -205,6 +206,17 @@
  			} // data
 		); // end getJSON
 	  }
+	  
+	  // 비회원이 예매 버튼을 눌렀을때
+	  $('#scheduleListOutput').on('click', '.btn_targetURL', function(){
+		  console.log('btn_targetURL() click');
+		  // 비회원이면 티켓예매 페이지 세션 생성
+		  var targetURL = $(this).prevAll('.targetURL').val();
+		  console.log(targetURL);
+		  sessionStorage.setItem('targetURL', targetURL);
+		  location.href = '/project/member/login?alertMessage=ticketMmbIdSessionFail';
+	  });
+	  
 	  // DB에 저장된 타임 인덱스를 시간 String으로 변환
 	  function setScdTime(scdIndex) {
 		  var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
