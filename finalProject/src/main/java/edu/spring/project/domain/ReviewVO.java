@@ -3,15 +3,15 @@ package edu.spring.project.domain;
 import java.util.Date;
 
 public class ReviewVO {
-
+	// DB data
 	private int rvId;
 	private int mvId;
 	private String mmbId;
 	private String rvContent;
 	private int rvRating;
 	private Date rvDateCreated;
-	// different from rvRating
-	private int rvRatingBefore;
+	// 평점 수정시 영화 평균평점 계산위한 임시 변수
+	private int rvRatingBefore; 
 	// Join data
 	private String mvTitle;
 	private String mvImage;

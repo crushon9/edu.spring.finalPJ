@@ -9,8 +9,9 @@ public class BranchVO {
 	private String brcName;
 	private int brcTheaterNumbers;
 	private String brcTheaterSeats;
-	private int[] arrBrcTheaterSeats;
 	private String brcInfo;
+	// view에서 보내온 데이터를 가공하기 위한 임시 멤버 변수
+	private int[] arrBrcTheaterSeats;
 	
 	public BranchVO() {
 	}
@@ -56,18 +57,20 @@ public class BranchVO {
 		this.brcTheaterNumbers = brcTheaterNumbers;
 	}
 
-	// int[] arrBrcTheaterSeats 
 	public String getBrcTheaterSeats() {
+		// int[] arrBrcTheaterSeats를 toString하여 [ ] 떼고 DB에 저장
 		return Arrays.toString(arrBrcTheaterSeats).replace("[", "").replace("]", "");
 	}
 
 	public void setBrcTheaterSeats(String brcTheaterSeats) {
+		// String brcTheaterSeats을 set한 뒤
 		this.brcTheaterSeats = brcTheaterSeats;
-		// String Array
-		String tempArr[] = brcTheaterSeats.split(", ");
-		int[] intArr = new int[tempArr.length];
-		for (int i = 0; i < tempArr.length; i++) {
-			intArr[i] = Integer.parseInt(tempArr[i]);
+		// arrBrcTheaterSeats도 set
+		String splitArr[] = brcTheaterSeats.split(", ");
+		int[] intArr = new int[splitArr.length];
+		// String을 int로 변환하여 배열에 저장
+		for (int i = 0; i < splitArr.length; i++) {
+			intArr[i] = Integer.parseInt(splitArr[i]);
 		}
 		this.arrBrcTheaterSeats = intArr;
 	}

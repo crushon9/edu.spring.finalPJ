@@ -89,6 +89,7 @@ public class MovieDAOImple implements MovieDAO {
 		args.put("amount", amount);
 		args.put("rvRating", rvRating);
 		args.put("mvId", mvId);
+		// 평점총합변경 후, 평균평점 변경
 		result = sqlSession.update(NAMESPACE + ".update_ratingTC_by_mv_id", args);
 		if (result != 0) {
 			result = sqlSession.update(NAMESPACE + ".update_ratingAVG_by_mv_id", mvId);

@@ -49,7 +49,7 @@ public class MovieController {
 			List<MovieVO> mvList = movieService.readOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
-		// 각 영화마다 예매율을 구하기 위함
+		// 각 영화마다 예매율을 구하기 위해 영화 전체 판매수를 DB에서 가져옴
 		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
 		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end mainGET()
@@ -60,7 +60,7 @@ public class MovieController {
 		logger.info("detailGET() call : mvId = " + mvId);
 		MovieVO vo = movieService.read(mvId);
 		model.addAttribute("vo", vo);
-		// 각 영화마다 예매율을 구하기 위함
+		// 각 영화마다 예매율을 구하기 위해 영화 전체 판매수를 DB에서 가져옴
 		int mvTicketSalesTotal = movieService.readMvTicketSalesTotal();
 		model.addAttribute("mvTicketSalesTotal", mvTicketSalesTotal);
 	}// end detailGET()

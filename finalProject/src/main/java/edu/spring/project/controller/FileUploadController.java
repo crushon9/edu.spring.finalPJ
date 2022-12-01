@@ -23,7 +23,7 @@ import edu.spring.project.util.MediaUtil;
 public class FileUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
-	// servlet-context.xml
+	// servlet-context.xml 에서 설정
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 
@@ -32,24 +32,24 @@ public class FileUploadController {
 		logger.info("uploadREST() call");
 		// single file saving
 		String result = null;
-		// save returns 'the file path'
 		result = FileUploadUtil.saveUploadedFile(uploadPath, files[0].getOriginalFilename(), files[0].getBytes());
+		// result : DB에 저장될 파일 이름
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}// end uploadAjaxPOST()
 
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> displayREST(String fileName) throws Exception {
 		logger.info("displayREST() call : fileName = " + fileName);
-		ResponseEntity<byte[]> entity = null;
-		InputStream in = null;
+		// filePath : 파일경로 + DB에 저장되어있는 파일이름
 		String filePath = uploadPath + "/" + fileName;
-		logger.info(filePath);
-		in = new FileInputStream(filePath);
+		logger.info(filePath); 
+		InputStream in = new FileInputStream(filePath);
+		// extension : 확장자
 		String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
-		logger.info(extension);
 		HttpHeaders httpsHeader = new HttpHeaders();
 		httpsHeader.setContentType(MediaUtil.geMediaType(extension));
-		entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), httpsHeader, HttpStatus.OK);
+		// entity : 파일경로, 확장자정보를 모두 담은 객체
+		ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), httpsHeader, HttpStatus.OK);
 		return entity;
 	}// end display()
 

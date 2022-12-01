@@ -8,7 +8,7 @@ public class MemberVO {
 	private String mmbPhone;
 	private String mmbBirthday;
 	private int mmbAdminCheck;
-	private int brcId; // 선호지점 선택시 활용
+	private int brcId;
 	// Join Data
 	private String brcName;
 

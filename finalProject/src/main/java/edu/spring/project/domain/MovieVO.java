@@ -11,10 +11,9 @@ public class MovieVO {
 	private String mvGenre;
 	private String mvInfo;
 	private int mvTicketSales;
-	// mvRatingAvg = mvRatingTotal / mvRatingCnt
 	private int mvRatingTotal;
 	private int mvRatingCnt;
-	private float mvRatingAvg;
+	private float mvRatingAvg; // : mvRatingTotal / mvRatingCnt
 
 	public MovieVO() {
 	}

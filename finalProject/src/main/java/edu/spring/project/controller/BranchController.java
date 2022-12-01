@@ -66,7 +66,6 @@ public class BranchController {
 	public ResponseEntity<BranchVO> detailREST(@PathVariable("brcId") int brcId) {
 		logger.info("detailREST() call : brcId = " + brcId);
 		BranchVO vo = branchService.readOne(brcId);
-		System.out.println(vo);
 		return new ResponseEntity<BranchVO>(vo, HttpStatus.OK);
 	}// end detailREST()
 }
