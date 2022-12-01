@@ -29,7 +29,7 @@
 							<input type="date" id="dateSelected" name="dateSelected">
 						</td>
 						<td>
-							<div id="mvListOutput"><select disabled><option>날짜를 선택해 주세요</option></select></div>
+							<div id="mvListOutput"></div>
 						</td>
 						<td>
 							<select id="brcArea" name="brcArea">
@@ -57,6 +57,7 @@
 	  $(document).ready(function() {
 			// #dateSelected를 오늘날짜로 기본값 세팅
 			$('#dateSelected').val(new Date().toISOString().substring(0, 10));
+			getMvList();
 			getScheduleList();
 			// 선택 지역의 지점 가져오기
 			$('#brcArea').change(function() {

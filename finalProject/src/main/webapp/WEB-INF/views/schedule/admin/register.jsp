@@ -60,21 +60,23 @@
 	  
 	<script type="text/javascript">
 	  $(document).ready(function() {
+			// #dateSelected를 오늘날짜로 기본값 세팅
 			$('#inputDate').val(new Date().toISOString().substring(0, 10));
-			setScdPrice($('#inputDate').val());
 			getMvList();
+			// 평일13000 주말15000 상영가격세팅
+			setScdPrice($('#inputDate').val());
+			// 선택 지역의 지점 가져오기
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
+			// 선택 날짜 변경시 상영중인 영화 목록 재설정, 상영가격 재설정
 			$('#inputDate').change(function() {
 				getMvList();
-				getBrcVO();
 				setScdPrice($('#inputDate').val());
 			});
-			scheduleBtn();
 	   });
 	  
-	  // 평일13000 주말15000 
+	  // 평일13000 주말15000 상영가격세팅
 	  function setScdPrice(date){
 		  console.log('setScdPrice() 호출');
 	    var dayOfWeek = new Date(date).getDay();
@@ -91,7 +93,7 @@
 	  function getBrcList() {
 		var brcArea = $('#brcArea').val();
 		var url = '/project/branch/list/' + brcArea;
-		$.getJSON( // $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
+		$.getJSON(
 			url,
 			function(data) {
 				var brcList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
@@ -101,11 +103,11 @@
 				brcList += '</select>'
 				$('#brcListOutput').html(brcList);
 				$('#brcId').change(function() {
-					getBrcVO();
+					getBrcTheater();
 				});
 			}
 		);
-	  } // end getBrcList
+	  }
 	  
 	  // 선택 날짜에 상영중인 영화 목록 가져오기
 	  function getMvList() {
@@ -122,11 +124,11 @@
 				$('#mvListDiv').html(mvList);
 			}
 		);
-	  } // end getMvList
+	  }
 	  
-	  // 선택지점의 VO 정보 가져오기
-      function getBrcVO() {
-    	console.log('getBrcVO() 호출');
+	  // 선택지점의 극장 정보 가져오기
+      function getBrcTheater() {
+    	console.log('getBrcTheater() 호출');
 		var brcId = $('#brcId').val();
 		var url = '/project/branch/detail/' + brcId;
 		$.getJSON(
@@ -135,34 +137,42 @@
 				$(data).each(function() {
 					var brcTheaterNumbers = this.brcTheaterNumbers;
 					var brcTheaterSeats = this.brcTheaterSeats;
+					// 극장 선택시 스케줄 테이블 출력
 					setScheduleTable(brcTheaterNumbers, brcTheaterSeats);
 				});
 			}
 		);
-	  } // end getBrcVO
+	  }
 	
 	  // 스케줄 테이블 기본 형태 출력
 	  function setScheduleTable(brcTheaterNumbers, brcTheaterSeats) {
 		console.log('setScheduleTable() 호출');
+		// 상영 시간 String 정보를 담은 배열
 		var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
 		 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
 		 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
 		 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
 		 	"22:00", "22:30", "23:00", "23:30"];
 		var scheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
-		for (var i = 1; i <= brcTheaterNumbers; i++) {
-			scheduleTable +=
-				'<th style="width: 240px">' + i + "관" + '</th>';
+		// 지점 극장수만큼 반복하여 제목 컬럼 생성 (col == 극장관번호)
+		for (var col = 1; col <= brcTheaterNumbers; col++) {
+			scheduleTable += '<th style="width: 240px">' + col + "관" + '</th>';
 		}
 		scheduleTable += '</tr></thead><tbody>';
-		for (var i = 0; i < timeArray.length; i++) {
-			scheduleTable += '<tr class="' + i + '">';
-			for (var j = 0; j < brcTheaterNumbers; j++) {
-				if (j == 0) {
-					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + timeArray[i] + '</div></td>';
+		// timeArray만큼 행을 반복
+		for (var timeIndex = 0; timeIndex < timeArray.length; timeIndex++) {
+			// 추후 데이터 컨트롤을 위하여 tr class = DB에 저장될  timeIndex값으로 지정
+			scheduleTable += '<tr class="' + timeIndex + '">';
+			// 극장수 만큼 열을 반복
+			for (var col = 0; col < brcTheaterNumbers; col++) {
+				// 첫번째 열은 시간 정보 출력
+				if (col == 0) { 
+					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + timeArray[row] + '</div></td>';
 				}
-				scheduleTable += '<td class="' + (j + 1) + '">';
-				if (i < 22) { // 조조 3000원 할인(타임인덱스21까지)
+				// 추후 데이터 컨트롤을 위하여 td class = 극장번호로 지정
+				scheduleTable += '<td class="' + (col + 1) + '">';
+				// 상영가격 설정 조조 3000원 할인 (timeArray[13] == "11:00")
+				if (timeIndex < 13) { 
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
 					scheduleTable += '<div style="color: red; font-size: 12px; display: inline-block;">조조할인_'+ scdPrice + '</div>'
 								   +'<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
@@ -173,58 +183,74 @@
 					               + '<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
 								   + '&nbsp;';
 				}
+				// 등록 삭제 버튼 세팅
 				scheduleTable += '<button style="border-color: blue;" class="scdBtnInsert">등록</button>'
 							+ '&nbsp;'
+							// 삭제버튼은 비활성화가 기본값
 							+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
 							+ '<input width="270px" type="text" name="mvTitle" style="border-color: lightgray;" value="" readonly/>'
 							+ '<input type="hidden" name="scdId"/>'
 							+ '<input type="hidden" name="mvRunningTime" value=""/>'
 							+ '<input type="hidden" name="scdSeatBookedCnt" value=""/>'
-							+ '<input type="hidden" name="scdSeatTotal" value="' + brcTheaterSeats.split(", ")[j] + '"/></td>';
+							// scdSeatTotal은 brcTheaterSeats을 구분자로 split한 배열의 col인덱스와 동일
+							+ '<input type="hidden" name="scdSeatTotal" value="' + brcTheaterSeats.split(", ")[col] + '"/></td>';
 			}
 			scheduleTable += '</tr>';
 		}
 		scheduleTable += '</tbody></table>';
 		$('#scheduleTable').html(scheduleTable);
+		// 테이블 기본틀 세팅 후 DB에 저장된 스케줄 리스트를 불러오는 함수 호출
 		getScheduleList();
-	  } // end setScheduleTable
+	  }
 	  
+	  // DB에 저장된 스케줄 리스트를 불러와서 CSS 적용
 	  function getScheduleList() {
 		console.log('getScheduleList() 호출');
 		var brcId = $('#brcId').val();
 		var scdDate = $('#inputDate').val();
+		// url : schedule/list/mvId(없으므로 0으로 기본설정)&brcId&scdDate
 		var url = '/project/schedule/list/0&' + brcId + '&' + scdDate;
-		// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
-		$.getJSON(			
+		$.getJSON(
 				url,
-			function(data) {// 서버에서 온 data가 저장되어있음
+			function(data) {
 				$(data).each(function() {
+					// mvRunningTime : 상영시간을 30분으로 나눈뒤 +1 한 값
 					for (var i = 0; i < this.mvRunningTime; i++) {
+						// DB에 저장된 상영시간 Index에 mvRunningTime길이 만큼 더하며 반복하며 효과 적용
 						var trIndex = Number(this.scdTime) + Number(i);
+						// 상영시간(tr, row)과 극장번호(td, col)를 좌표로 테이블에서 위치찾기
 						var thisParentTd = $('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + this.scdTheater);
-						thisParentTd.children('.scdBtnInsert').prop('disabled', true);
-						thisParentTd.children('.scdBtnInsert').css({"border-color":"lightgray"});
-						if (i == 0) {
-							thisParentTd.children('.scdBtnDelete').prop('disabled', false);
-							thisParentTd.children('.scdBtnDelete').css({"border-color":"red"});
-						}
+						// 찾은 좌표에 DB에서 가져온 데이터 값 출력
 						thisParentTd.children('input[name=mvTitle]').val(this.mvTitle);
 						thisParentTd.children('input[name=mvTitle]').css({"border-color":"red"});
 						thisParentTd.children('input[name=mvRunningTime]').val(this.mvRunningTime);
 						thisParentTd.children('input[name=scdId]').val(this.scdId);
 						thisParentTd.children('input[name=scdPrice]').val(this.scdPrice);
+						// 중복 등록 방지를 위해 등록 버튼 비활성화 
+						thisParentTd.children('.scdBtnInsert').prop('disabled', true);
+						thisParentTd.children('.scdBtnInsert').css({"border-color":"lightgray"});
+						// 비활성화된 삭제버튼 활성화
+						if (i == 0) {
+							thisParentTd.children('.scdBtnDelete').prop('disabled', false);
+							thisParentTd.children('.scdBtnDelete').css({"border-color":"red"});
+						}
+						// 삭제시 데이터 전송으로 위해 hidden 박스에 데이터 삽입
 						thisParentTd.children('input[name=scdSeatBookedCnt]').val(this.scdSeatBookedCnt);
 					}
 				}); // end data.each
 			}
 		); // end getJSON
+		// 등록과 삭제 버튼 클릭 이벤트 내용을 담은 함수 호출
+		scheduleBtn();
 	  } // end getScheduleList
 	  
-	  // 버튼을 클릭하면 영화 등록 혹은 삭제
+	  // 등록과 삭제 버튼 클릭 이벤트 내용을 담은 함수
 	  function scheduleBtn() {
 		 console.log('scheduleBtn() 호출');
+		 // 스케줄 등록
 	     $('#scheduleTable').on('click', 'table tbody tr td .scdBtnInsert', function() {
 			console.log('scdBtnInsert 클릭');
+			// 스케줄 등록시 가져갈 정보
 	    	var mvSelected = $('#mvId option:selected').text();
 			var brcId = $('#brcId').val();
 			var mvId = $('#mvId').val();
@@ -235,12 +261,14 @@
 			var scdTheater = $(this).parents().attr('class');
 		 	var scdSeatTotal = $(this).nextAll('input[name=scdSeatTotal]').val();
 		 	var scdPrice = $(this).prevAll('input[name=scdPrice]').val();
-			
+			// 영화 미선택시 예외처리
 			if (mvSelected == '') {
 				alert('상영 영화를 선택 해주세요');
 			} else {
+				// 등록버튼을 누른 칸에 데이터가 있는지 검사
 				var startRow = $(this).nextAll('input[name=mvTitle]').val();
 				if (startRow == '') {
+					// 없다면 mvRunningTime길이만큼 중복되는지 검사
 					var overlapFlag = 0;
 					for (var i = 1; i < mvRunningTime; i++) {
 						var trIndex = Number(scdTime) + Number(i);
@@ -252,19 +280,8 @@
 							break;
 						}
 					}
-					// 중복되지 않았을때 데이터만 ajax로 DB에 저장하고 getScheduleList 호출	
+					// 중복되지 않았을때 데이터만 ajax로 DB에 저장
 					if (overlapFlag == 0) {		
-						console.log("---스케줄 등록 정보---");
-						console.log("brcId : " + brcId);
-						console.log("mvId : " + mvId);
-						console.log("mvTitle : " + mvTitle);
-						console.log("mvRunningTime : " + mvRunningTime);
-						console.log("scdDate : " + scdDate);
-						console.log("scdTime : " + scdTime);
-						console.log("scdTheater : " + scdTheater);
-						console.log("scdSeatTotal : " + scdSeatTotal);
-						console.log("scdPrice : " + scdPrice);
-						
 						$.ajax({
 							type : 'POST',
 							url : '/project/schedule/admin/register',
@@ -285,16 +302,18 @@
 							}),
 							success : function(result) {
 								console.log("스케줄 등록 결과 : " + result);
+								// 저장성공후 getScheduleList 호출
 								getScheduleList();
 							}
 						});
 					}
+				// 등록버튼을 누른 칸에 데이터가 있다면 alert
 				} else {
 					alert('상영 스케줄이 중복 됩니다');
 				}
 			}
 		});
-			
+		// 스케줄 삭제
 	    $('#scheduleTable').on('click', 'table tbody tr td .scdBtnDelete', function() {
 			var scdId = $(this).nextAll('input[name=scdId]').val();
 			var scdSeatBookedCnt = $(this).nextAll('input[name=scdSeatBookedCnt]').val();
