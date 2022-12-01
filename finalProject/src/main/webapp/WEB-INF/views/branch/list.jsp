@@ -32,26 +32,31 @@
 		<input id="searchBrcName" type="text" placeholder="지점을 입력하세요">&nbsp;
 		<a id="searchBrcNameUrl" href=""><input id="searchBrcNameBtn" type="button" value="Search"></a>
 		<hr>
-		
-		<table>
-			<thead>
-				<tr>
-					<th>지역</th>
-					<th>지점</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>						
-			<c:forEach var="vo" items="${list }" varStatus="status">
-				<tr id="brc${status.index}">						
-					<td class="brcAreaTd"><input type="hidden" class="brcArea" value="${vo.brcArea }">
-					<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
-					<td><Strong>${vo.brcName }점</Strong></td>
-					<td><a href="detail?brcId=${vo.brcId}"><input type="button" value="상세보기"></a></td>
-				</tr>				
-			</c:forEach>
-			</tbody>
-		</table>			
+		<!-- 지점 반복문 출력 -->
+		<c:if test="${empty list}">
+			검색 결과가 없습니다
+		</c:if>
+		<c:if test="${not empty list}">
+			<table>
+				<thead>
+					<tr>
+						<th>지역</th>
+						<th>지점</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>						
+				<c:forEach var="vo" items="${list }" varStatus="status">
+					<tr id="brc${status.index}">						
+						<td class="brcAreaTd"><input type="hidden" class="brcArea" value="${vo.brcArea }">
+						<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
+						<td><Strong>${vo.brcName }점</Strong></td>
+						<td><a href="detail?brcId=${vo.brcId}"><input type="button" value="상세보기"></a></td>
+					</tr>				
+				</c:forEach>
+				</tbody>
+			</table>
+		</c:if>		
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

@@ -14,14 +14,18 @@
 
 		<div id="layoutSidenav_content">
 	
-		<h1>Member Admin detail page</h1>
+		<h1>회원 정보 조회 (관리자용)</h1>
 		<div>
-	    <p>아이디 : ${vo.mmbId }</p>
-	    <p>패스워드 : ${vo.mmbPassword }</p>
-	    <p>이메일 : ${vo.mmbEmail }</p>
-	 	<p>전화번호 : ${vo.mmbPhone }</p>
-		<p>생년월일 : ${vo.mmbBirthday }</p>
-		<p>선호지점 : ${vo.brcName }</p>
+	    <p>아이디</p>
+	    ${vo.mmbId }
+	    <p>이메일</p>
+	    ${vo.mmbEmail }
+	 	<p>전화번호</p>
+	 	${vo.mmbPhone }
+		<p>생년월일 </p>
+		${vo.mmbBirthday }
+		<p>선호지점 </p>
+		${vo.brcName }점
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

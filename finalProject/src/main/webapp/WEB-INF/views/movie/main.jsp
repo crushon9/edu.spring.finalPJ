@@ -27,28 +27,33 @@
 			<hr>
 			
 			<!-- 영화 목록 출력 -->
-			<ul>						
-				<c:forEach var="vo" items="${mvList }" varStatus="status">
-					<li style="list-style-type: none; display: inline-block; text-align: center; margin: 20px; border: solid gray 1px;">
-						<Strong>NO. ${status.count}</Strong><br>
-						<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
-						<br><Strong>${vo.mvTitle }</Strong>
-						<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
-						<c:if test="${vo.mvRatingAvg != 0}">
-							<br><Strong>평점 <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
-						</c:if>
-						<c:if test="${vo.mvRatingAvg == 0}">
-							<br><Strong>평점 미등록</Strong>
-						</c:if>
-						<br>개봉일 ${vo.mvDateStarted }<br>
-						<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
-						<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
-					</li>
-					<c:if test="${(status.count % 4) == 0}">
-						<br> 
-			        </c:if>
-				</c:forEach>
-			</ul>											
+			<c:if test="${empty mvList}">
+				검색 결과가 없습니다
+			</c:if>
+			<c:if test="${not empty mvList}">
+				<ul>						
+					<c:forEach var="vo" items="${mvList }" varStatus="status">
+						<li style="list-style-type: none; display: inline-block; text-align: center; margin: 20px; border: solid gray 1px;">
+							<Strong>NO. ${status.count}</Strong><br>
+							<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
+							<br><Strong>${vo.mvTitle }</Strong>
+							<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
+							<c:if test="${vo.mvRatingAvg != 0}">
+								<br><Strong>평점 <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
+							</c:if>
+							<c:if test="${vo.mvRatingAvg == 0}">
+								<br><Strong>평점 미등록</Strong>
+							</c:if>
+							<br>개봉일 ${vo.mvDateStarted }<br>
+							<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
+							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
+						</li>
+						<c:if test="${(status.count % 4) == 0}">
+							<br> 
+				        </c:if>
+					</c:forEach>
+				</ul>
+			</c:if>										
 			</div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

@@ -18,14 +18,20 @@
 				<table>
 					<thead>
 						<tr>
-							<th>상영 지점</th>
 							<th>상영 날짜</th>
 							<th>상영 영화</th>
+							<th>상영 지점</th>
 							<th>상영 기준 가격</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
+							<td>
+								<input type="date" id="inputDate" name="inputDate">
+							</td>
+							<td>
+								<div id="mvListDiv" style="display: inline-block;"></div>
+							</td>
 							<td>
 								<select id="brcArea" name="brcArea" style="display: inline-block;">
 							  		<option value="0">지역선택</option>
@@ -36,16 +42,11 @@
 									<option value="5">광주/전라</option>
 									<option value="6">제주</option>
 								</select>
-								<div id="brcListOutput" style="display: inline-block;"></div>
+								<div id="brcListOutput" style="display: inline-block;"><select disabled><option>지점선택</option></select></div>
 							</td>
 							<td>
-								<input type="date" id="inputDate" name="inputDate">
-							</td>
-							<td>
-								<div id="mvListDiv" style="display: inline-block;"></div>
-							</td>
-							<td>
-								<input type="number" id="scdPrice" name="scdPrice" readonly>
+								<div id="scdPriceDiv" style="display: inline-block;"></div>
+								<input type="hidden" id="scdPrice" name="scdPrice">
 							</td>
 						</tr>
 					</tbody>
@@ -77,13 +78,13 @@
 	  function setScdPrice(date){
 		  console.log('setScdPrice() 호출');
 	    var dayOfWeek = new Date(date).getDay();
-		  console.log(dayOfWeek);
+	    var scdPriceResult = 13000;
 	  	// 일요일(0), 토요일(6)
 		if (dayOfWeek == 0 || dayOfWeek == 6) {
-			$('#scdPrice').val(15000);
-		} else {
-			$('#scdPrice').val(13000);
+			scdPriceResult = 15000;
 		}
+		$('#scdPrice').val(scdPriceResult);
+		$('#scdPriceDiv').html(scdPriceResult + '<div style="font-size: 12px; color: blue;"> *평일13000 주말15000</div>');
 	  }
 	  
 	  // 선택 지역의 지점 가져오기
@@ -152,24 +153,24 @@
 		var scheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
 		for (var i = 1; i <= brcTheaterNumbers; i++) {
 			scheduleTable +=
-				'<th style="width: 250px">' + i + "관" + '</th>';
+				'<th style="width: 240px">' + i + "관" + '</th>';
 		}
 		scheduleTable += '</tr></thead><tbody>';
 		for (var i = 0; i < 48; i++) {
 			scheduleTable += '<tr class="' + i + '">';
 			for (var j = 0; j < brcTheaterNumbers; j++) {
 				if (j == 0) {
-					scheduleTable += '<td class="0">' + timeArray[i] + '</td>';
+					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + timeArray[i] + '</div></td>';
 				}
 				scheduleTable += '<td class="' + (j + 1) + '">';
 				if (i < 22) { // 조조 3000원 할인(타임인덱스21까지)
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
-					scheduleTable += '<div style="color: red; display: inline-block;">조조할인_'+ scdPrice + '</div>'
+					scheduleTable += '<div style="color: red; font-size: 12px; display: inline-block;">조조할인_'+ scdPrice + '</div>'
 								   +'<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
 								   + '&nbsp;';
 				} else {
 					var scdPrice = $('#scdPrice').val();
-					scheduleTable += '상영가격_'+ scdPrice
+					scheduleTable += '<div style="font-size: 12px; display: inline-block;">상영가격_'+ scdPrice + '</div>'
 					               + '<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
 								   + '&nbsp;';
 				}

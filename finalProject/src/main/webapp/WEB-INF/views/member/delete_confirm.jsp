@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-		<h1>회원 탈퇴</h1>
+		<h1>회원 탈퇴 확인</h1>
 		<p>개인정보 보호를 위하여 비밀번호를 다시 한번 입력해 주세요</p>
 		<form action="delete_confirm" method="POST">
 			<p>아이디&emsp;&emsp;<input type="text" name="mmbId" value="<%=mmbIdSession %>" readonly></p>

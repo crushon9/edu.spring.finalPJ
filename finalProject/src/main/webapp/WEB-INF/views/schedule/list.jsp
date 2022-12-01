@@ -19,15 +19,18 @@
 		<table>
 			<thead>
 				<tr>
+					<th>상영 날짜</th>
 					<th>상영 영화</th>
 					<th>상영 지점</th>
-					<th>상영 날짜</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>
-						<div id="mvListOutput"></div>
+						<input type="date" id="dateSelected" name="dateSelected">
+					</td>
+					<td>
+						<div id="mvListOutput"><select disabled><option>날짜를 선택해 주세요</option></select></div>
 					</td>
 					<td>
 						<select id="brcArea" name="brcArea">
@@ -39,10 +42,7 @@
 							<option value="5">광주/전라</option>
 							<option value="6">제주</option>
 						</select>
-						<div id="brcListDiv"></div>
-					</td>
-					<td>
-						<input type="date" id="dateSelected" name="dateSelected">
+						<div id="brcListDiv" style="display: inline-block;"><select disabled><option>지점선택</option></select></div>
 					</td>
 				</tr>
 			</tbody>
@@ -145,7 +145,7 @@
 			$.getJSON(			
 					url,
 				function(data) {
-					var scheduleList = '등록된 상영스케줄이 없습니다';
+					var scheduleList = '해당 조건으로 등록된 상영스케줄이 없습니다';
 					if ($(data).length != 0) {
 						scheduleList = '<table>'
 								   + '<thead>'
@@ -157,7 +157,7 @@
 								   + '<th>상영시간</th>'
 								   + '<th>잔여좌석</th>'
 								   + '<th>상영가격</th>'
-								   + '<th>예매하기</th>'
+								   + '<th>예매</th>'
 								   + '</tr>'
 							   	   + '</thead>'
 							   	   + '<tbody>';

@@ -18,7 +18,7 @@
 		<form action="register" method="post">
 			<p>아이디</p>
 			<input type="text" name="mmbId" id="mmbId" placeholder="아이디 입력" required="required">
-			<div id='idCheckOutput' style="font-style : italic; display: block; height: 20px;"></div>
+			<div id='idCheckOutput' style="font-style : italic; display: inline-block; height: 20px;"></div>
 			<p>패스워드</p>
 			<input type="password" name="mmbPassword" placeholder="비밀번호 입력" required="required">
 			<p>이메일</p>
@@ -38,7 +38,7 @@
 				<option value="5">광주/전라</option>
 				<option value="6">제주</option>
 			</select>
-			<div id="brcListOutput"></div>
+			<div id="brcListOutput" style="display: inline-block;"><select disabled><option>지점선택</option></select></div>
 			<br><br><input type="submit" value="가입하기">
 		</form>
 		

@@ -37,8 +37,8 @@
 				<option value="5">광주/전라</option>
 				<option value="6">제주</option>
 			</select>
-			<div id="brcListOutput"></div>
-			<br>
+			<div id="brcListOutput" style="display: inline-block;"><select disabled><option>지점선택</option></select></div>
+			<br><br>
 			<input type="submit" value="수정">
 		  </form>
 		  

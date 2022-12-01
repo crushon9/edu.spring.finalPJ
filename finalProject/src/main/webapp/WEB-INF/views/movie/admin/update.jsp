@@ -13,8 +13,8 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>관리자 영화정보 수정</h1>
-			<p>영화 이미지 : </p>
+			<h1>관리자 영화 수정</h1>
+			<p>영화 이미지 </p>
 			<div class="imageDrop"></div>
 				
 			<form action="update" method="post" enctype="multipart/form-data">

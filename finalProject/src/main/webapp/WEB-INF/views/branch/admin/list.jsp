@@ -35,36 +35,41 @@
 			<hr>
 			
 			<!-- 지점 목록 출력, br con에서 model.addAttribute(list)-->
-			<table>
-				<thead>
-					<tr>
-						<th>지점번호</th>
-						<th>지점이름</th>
-						<th>지역</th>
-						<th>극장수</th>
-						<th>좌석수</th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>						
-				<c:forEach var="vo" items="${list }" varStatus="status">
-					<tr id="brc${status.index}">						
-						<td><Strong>${vo.brcId }</Strong></td>
-						<td><Strong>${vo.brcName }</Strong></td>
-						<td class="brcAreaTd"><input type="hidden" class="brcArea" value="${vo.brcArea }">
-						<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
-			   			<td>${vo.brcTheaterNumbers }관 </td>
-			   			<td>[${vo.brcTheaterSeats }]</td>
-						<td><a href="update?brcId=${vo.brcId}"><input type="button" value="수정"></a></td>
-						<td><form action="delete" method="post">
-							<input type="hidden" name="brcId" value="${vo.brcId }">
-							<input type="submit" value="삭제">
-						</form></td>
-					</tr>				
-				</c:forEach>
-				</tbody>
-			</table>												
+			<c:if test="${empty list}">
+				검색 결과가 없습니다
+			</c:if>
+			<c:if test="${not empty list}">
+				<table>
+					<thead>
+						<tr>
+							<th>지점번호</th>
+							<th>지점이름</th>
+							<th>지역</th>
+							<th>극장수</th>
+							<th>좌석수</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					<c:forEach var="vo" items="${list }" varStatus="status">
+						<tr id="brc${status.index}">						
+							<td><Strong>${vo.brcId }</Strong></td>
+							<td><Strong>${vo.brcName }</Strong></td>
+							<td class="brcAreaTd"><input type="hidden" class="brcArea" value="${vo.brcArea }">
+							<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
+				   			<td>${vo.brcTheaterNumbers }관 </td>
+				   			<td>[${vo.brcTheaterSeats }]</td>
+							<td><a href="update?brcId=${vo.brcId}"><input type="button" value="수정"></a></td>
+							<td><form action="delete" method="post">
+								<input type="hidden" name="brcId" value="${vo.brcId }">
+								<input type="submit" value="삭제">
+							</form></td>
+						</tr>				
+					</c:forEach>
+					</tbody>
+				</table>
+			</c:if>												
 			</div>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

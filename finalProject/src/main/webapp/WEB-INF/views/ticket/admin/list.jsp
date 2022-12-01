@@ -14,7 +14,7 @@
 
 		<div id="layoutSidenav_content">
 			<h1>예매티켓 목록 보기 (관리자용)</h1>
-			<div><input id="searchText" type="text" placeholder="영화제목을 입력해주세요.">&nbsp;<input id="searchTextBtn" type="button" value="Search"></div>
+			<div><input id="searchText" type="text" placeholder="영화제목 검색">&nbsp;<input id="searchTextBtn" type="button" value="Search"></div>
 			<hr>
 			<div id="ticketListOutput">
 		</div>
@@ -44,7 +44,7 @@
 		$.getJSON(			
 				url,
 			function(data) {
-				var ticketList = '티켓 내역이 없습니다';
+				var ticketList = '검색 조건에 해당하는 예매 내역이 없습니다';
 				if ($(data).length != 0) {
 					ticketList = '<table>'
 							   + '<thead>'
