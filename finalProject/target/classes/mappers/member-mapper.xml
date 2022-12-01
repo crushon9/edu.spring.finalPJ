@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${mmbId} DESC
 	</select>
 	
-	<!-- search by mmbId -->
+	<!-- search by mmbId (keyword)-->
 	<select id="select_list_by_search_mmb_id" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}

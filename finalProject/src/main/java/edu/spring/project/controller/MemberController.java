@@ -36,7 +36,7 @@ public class MemberController {
 	public String registerPOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
-		// if (brcId isUnselected)
+		// 회원가입 시 brcId 미 선택(0)이면, 서울(1)로 자동 할당.
 		if (vo.getBrcId() == 0) {
 			vo.setBrcId(1);
 		}
@@ -63,7 +63,7 @@ public class MemberController {
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
-		// if (brcId isUnselected)
+		// 정보 수정 시 brcId 미 선택(0)이면, 서울(1)로 자동 할당.
 		if (vo.getBrcId() == 0) {
 			vo.setBrcId(1);
 		}
@@ -77,7 +77,7 @@ public class MemberController {
 		}
 	}// end updatePOST()
 
-	// delete page call
+	// delete_confirm page call
 	@GetMapping("/delete_confirm")
 	public void deleteConfirmGET() {
 		logger.info("deleteConfirmGET() call");
@@ -108,7 +108,6 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.removeAttribute("mmbIdSession");
 			reAttr.addFlashAttribute("alertMassage", "memberDeleteSuccess");
-			// movie/main -> withdrawal
 			return "redirect:/movie/main";
 		} else {
 			reAttr.addFlashAttribute("alertMassage", "memberDeleteFail");
@@ -120,8 +119,9 @@ public class MemberController {
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
 		MemberVO vo = memberService.readOne(mmbId);
-		// 가입불가 : -1, 가입가능 : 1
+		// 가입불가 : -1, 기본값으로 설정
 		int result = -1;
+		// vo에 데이터가 비어있다면, 가입가능 : 1
 		if (vo == null) {
 			result = 1;
 		}
@@ -142,28 +142,27 @@ public class MemberController {
 		HttpSession session = request.getSession();
 
 		if (vo != null) {
-			// admin login only
+			// mbAdminCheck가 "1"인 admin 계정만 login
 			if (vo.getMmbAdminCheck() == 1) {
 				logger.info("admin login success");
 				session.setAttribute("adminSession", vo.getMmbId());
 			}
-			// user login
+			// mbAdminCheck가 "0"인 일반 user 계정 login
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			logger.info(mmbId + " user login");
+			// 세션 생성 후, 일정 시간 경과 시 세션유지 제한
 			session.setMaxInactiveInterval(600);
-			// TODO : targetURL login
 			String targetURL = (String) session.getAttribute("targetURL");
 			logger.info("targetURL : " + targetURL);
-			if (targetURL != null) { // targetURL yes
+			if (targetURL != null) { 
 				session.removeAttribute("targetURL");
 				return "redirect:" + targetURL;
 				// targetURL X -> main.jsp
-			} else { // targetURL no
-				// 일반 유저가 정상 로그인시 이까지 나옴...
+			} else { 
 				logger.info("targetURL NO?");
 				return "redirect:/movie/main";
 			}
-			// login failed
+		// login failed
 		} else {
 			logger.info("login failed");
 			reAttr.addFlashAttribute("alertMassage", "memberLoginFail");
@@ -175,6 +174,7 @@ public class MemberController {
 	public String logout(HttpServletRequest request) {
 		logger.info("logout call");
 		HttpSession session = request.getSession();
+		// adminSession or mmbIdSession 제거
 		session.removeAttribute("mmbIdSession");
 		session.removeAttribute("adminSession");
 		return "redirect:/movie/main";

@@ -21,13 +21,15 @@ public class MemberAdminController {
 	@Autowired
 	private MemberService memberService;
 
-	// member list
+	// member list에 mmbId로 검색 기능
 	@GetMapping("/list")
 	public void listGET(Model model, String searchMmbId) {
 		logger.info("listGet call");
+		// mmbId keyword로 검색
 		if (searchMmbId != null) {
 			List<MemberVO> list = memberService.read(searchMmbId);
 			model.addAttribute("list", list);
+		// default : 기본 리스트 가져오기(쿼리로 내림차순)
 		} else {
 			List<MemberVO> list = memberService.read();
 			model.addAttribute("list", list);
