@@ -109,4 +109,13 @@
         </div>
     </nav>
 </div>
-<input type="hidden" id="alertMessage" value="${alertMessage}"/>
+<input type="hidden" id="alert" value="${alert}"/>
+<input type="hidden" id="alertBranchRegister" value="${alertBranchRegister}"/>
+<input type="hidden" id="alertMovieRegister" value="${alertMovieRegister}"/>
+<input type="hidden" id="alertMemberRegister" value="${alertMemberRegister}"/>
+<input type="hidden" id="alertMemberUpdate" value="${alertMemberUpdate}"/>
+<input type="hidden" id="alertMemberResign" value="${alertMemberResign}"/>
+<input type="hidden" id="alertMemberLogin" value="${alertMemberLogin}"/>
+<input type="hidden" id="alertTicketMmbId" value="${alertTicketMmbId}"/>
+<input type="hidden" id="alertTicketBuy" value="${alertTicketBuy}"/>
+<input type="hidden" id="alertReviewMmbIdSession" value="${alertReviewMmbIdSession}"/>
