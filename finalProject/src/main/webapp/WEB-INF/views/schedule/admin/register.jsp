@@ -269,51 +269,43 @@
 			if (mvSelected == '') {
 				alert('상영 영화를 선택 해주세요');
 			} else {
-				// 등록버튼을 누른 칸에 데이터가 있는지 검사
-				var startRow = $(this).nextAll('input[name=mvTitle]').val();
-				if (startRow == '') {
-					// 없다면 mvRunningTime길이만큼 중복되는지 검사
-					var overlapFlag = 0;
-					for (var i = 1; i < mvRunningTime; i++) {
-						var trIndex = Number(scdTime) + Number(i);
-						console.log(trIndex);
-						var loopRow = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=mvTitle]').val();
-						if (loopRow != '') {
-							alert('상영 스케줄이 중복 됩니다!');
-							overlapFlag = 1;
-							break;
+				// mvRunningTime길이만큼 스케줄 칸이 되는지 검사
+				var overlapFlag = 0;
+				for (var i = 1; i < mvRunningTime; i++) {
+					var trIndex = Number(scdTime) + Number(i);
+					console.log(trIndex);
+					var loopRow = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=mvTitle]').val();
+					if (loopRow != '') {
+						alert('상영 스케줄 시간을 확인 해주세요');
+						overlapFlag = 1;
+						break;
+					}
+				}
+				// 중복되지 않았을때 데이터만 ajax로 DB에 저장
+				if (overlapFlag == 0) {		
+					$.ajax({
+						type : 'POST',
+						url : '/project/schedule/admin/register',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},
+						data : JSON.stringify({
+							'brcId' : brcId,
+							'mvId' : mvId,
+							'mvTitle' : mvTitle,
+							'mvRunningTime' : mvRunningTime,
+							'scdDate' : scdDate,
+							'scdTime' : scdTime,
+							'scdTheater' : scdTheater,
+							'scdSeatTotal' : scdSeatTotal,
+							'scdPrice' : scdPrice
+						}),
+						success : function(result) {
+							// 저장 성공 후 테이블 다시 세팅
+							setScheduleTable();
 						}
-					}
-					// 중복되지 않았을때 데이터만 ajax로 DB에 저장
-					if (overlapFlag == 0) {		
-						$.ajax({
-							type : 'POST',
-							url : '/project/schedule/admin/register',
-							headers : {
-								'Content-Type' : 'application/json',
-								'X-HTTP-Method-Override' : 'POST'
-							},
-							data : JSON.stringify({
-								'brcId' : brcId,
-								'mvId' : mvId,
-								'mvTitle' : mvTitle,
-								'mvRunningTime' : mvRunningTime,
-								'scdDate' : scdDate,
-								'scdTime' : scdTime,
-								'scdTheater' : scdTheater,
-								'scdSeatTotal' : scdSeatTotal,
-								'scdPrice' : scdPrice
-							}),
-							success : function(result) {
-								console.log("스케줄 등록 결과 : " + result);
-								// 저장 성공 후 테이블 다시 세팅
-								setScheduleTable();
-							}
-						});
-					}
-				// 등록버튼을 누른 칸에 데이터가 있다면 alert
-				} else {
-					alert('상영 스케줄이 중복 됩니다');
+					});
 				}
 			}
 		});
@@ -339,7 +331,6 @@
 					'scdSeatBookedCnt' : scdSeatBookedCnt
 				}),
 				success : function(result) {
-					console.log("스케줄 삭제 결과 : " + result);
 					if (result != -2) {
 						// 삭제 성공 후 테이블 다시 세팅
 						setScheduleTable();
