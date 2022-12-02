@@ -26,7 +26,7 @@
 				<p>영화 종료일</p>
 				<input type="date" name="mvDateEnded" value="2023-12-31">
 				<p>영화 러닝타임</p>
-				<input type="number" id="mvRunningTimeTemp" placeholder="상영시간 입력" required>
+				<input type="number" id="mvRunningTimeTemp" placeholder="상영시간 입력" min="1" max="1000" required>
 				<input type="hidden" id="mvRunningTime" name="mvRunningTime" >
 				<p>영화 장르</p>
 				<select name="mvGenre" required>
