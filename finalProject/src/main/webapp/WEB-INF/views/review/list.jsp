@@ -23,12 +23,6 @@
 	<script type="text/javascript">
 	  $(document).ready(function() {
 		  getUserReviewList();
-		  $('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
-		  	  rvUpdate(this);
-		  });
-		  $('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
-			  rvDelete(this);
-	      });
 	  });
 			
 		// 영화 후기 전체 출력
@@ -105,14 +99,21 @@
 						}); // end data.each
 						rvList += '</tbody></table>';
 					}
-					$('#reviewListOutput').html(rvList); // 반복문으로 생성된 html태그 출력
+					$('#reviewListOutput').html(rvList);
+					// 리뷰를 가져올때 수정 삭제 이벤트 호출
+				    $('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
+						reviewUpdate(this);
+					});
+					$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
+						reviewDelete(this);
+				    });
 				}
 			); // end getJSON
 		} // end getAll
 		
 		// 후기 수정
-		function rvUpdate(btn) {
-			console.log('rvUpdate() call');
+		function reviewUpdate(btn) {
+			console.log('reviewUpdate() call');
 			// 수정버튼을 처음누르면 readonly 속성제거, 수정확인을 누르면 ajax로 데이터 변경
 			var isReadOnly = $(btn).parent().prevAll('.rvContent').children('.rvContent').prop('readonly');
 			if (isReadOnly == true) { // readonly가 true면
@@ -152,8 +153,8 @@
 		}
 		
 		// 후기 삭제
-		function rvDelete(btn) {
-			console.log('rvDelete() call');
+		function reviewDelete(btn) {
+			console.log('reviewDelete() call');
 			var rvId = $(btn).parent().prevAll('.rvId').val();
 			var mvId = $(btn).parent().prevAll('.mvId').val();
 			var rvRating = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();

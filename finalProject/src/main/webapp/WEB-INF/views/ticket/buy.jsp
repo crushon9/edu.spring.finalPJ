@@ -127,8 +127,8 @@
 	
 	<script>
 	 $(document).ready(function() {
-		 // 상영 시간 인덱스를 시간 문자열로 변환하는 함수 호출
-		 scdTimePrint();
+		 // 상영 시간 인덱스를 시간 문자열로 변환출력
+		 $('#scdTimeOutput').html(publicScdTimeArray[$('#scdTime').val()]);
 		 // 초기 좌석 버튼 반복문 출력
 		 seatBtnPrint();
 		 // 초기 인원 미선택시 알람 
@@ -188,7 +188,6 @@
 		 // 기본틀 출력 후 DB에서 예매된 좌석 정보 가져오기
 		 getBookedList();
 	 }
-	 
 	 
 	 // DB에서 ajax로 예매된 좌석 불러오기
 	 function getBookedList() {
@@ -268,18 +267,6 @@
 		 var scdPrice = $('#scdPrice').val();
 		 var tkPriceTotal = scdPrice * theNumOfAdt + (scdPrice - 3000) * theNumOfAdsc;
 		 $('input[name=tkPriceTotal]').val(tkPriceTotal);
-	 }
-	 
-	 // 상영 시간 인덱스를 시간 문자열로 변환
-	 function scdTimePrint() {
-		 var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
-			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
-			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
-			 	"22:00", "22:30", "23:00", "23:30"];
-		 var scdTime = $('#scdTime').val();
-		 var realTime = timeArray[scdTime];
-		 $('#scdTimeOutput').html(realTime);
 	 }
 	</script>
 

@@ -28,11 +28,11 @@
 		  getTicketListByMmbId();
 		  // 티켓 삭제 버튼 클릭시 티켓 내역 삭제
 		  $('#ticketListOutput').on('click', '.btn_delete', function(){
-				tkDelete(this);
+			  ticketDelete(this);
 		  });
 		  // 리뷰 버튼 클릭시 리뷰 등록 새창
 		  $('#ticketListOutput').on('click', '.btn_review', function(){
-			  	rvRegister(this);
+			  reviewRegister(this);
 		  });
 	  });
 	  
@@ -77,7 +77,7 @@
 								+ '<td>' + this.brcName + '</td>'
 								+ '<td>' + this.scdTheater + '관</td>'
 								+ '<td>' + this.scdDate + '</td>'
-								+ '<td>' + setScdTime(this.scdTime) + '</td>'
+								+ '<td>' + publicScdTimeArray[this.scdTime] + '</td>'
 								+ '<td>일반' + adult[1] + '명 & 청소년' + adolescent[1] + '명</td>'
 								+ '<td>' + this.tkSeatList + '</td>'
 								+ '<td>' + this.tkPriceTotal + '</td>'
@@ -100,8 +100,8 @@
 	  }
 	  
 	  // 예매티켓 삭제
-	  function tkDelete(btn) {
-		console.log('tkDelete() call');
+	  function ticketDelete(btn) {
+		console.log('ticketDelete() call');
 		var tkId = $(btn).prevAll('.tkId').val();
 		var scdId = $(btn).prevAll('.scdId').val();
 		var mvId = $(btn).prevAll('.mvId').val();
@@ -127,8 +127,8 @@
 	 }
 	 
 	 // 리뷰 등록 버튼
-	 function rvRegister(btn) {
-		 console.log('rvRegister() 호출');
+	 function reviewRegister(btn) {
+		 console.log('reviewRegister() 호출');
 		 var mmbId = $('#mmbId').val();
 		 var mvId = $(btn).prevAll('.mvId').val();
 		 var mvTitle = $(btn).prevAll('.mvTitle').val();
@@ -150,17 +150,6 @@
 			}
 		 );
 	 }
-	 
-	// DB에 저장된 타임 인덱스를 시간 String으로 변환
-    function setScdTime(scdIndex) {
-		  var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
-			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
-			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
-			 	"22:00", "22:30", "23:00", "23:30"];
-		  return timeArray[scdIndex];
-    }
-	 
   	</script>
 
 </body>

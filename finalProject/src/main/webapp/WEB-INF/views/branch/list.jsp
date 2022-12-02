@@ -65,7 +65,7 @@
 	
 	<script type="text/javascript">			
 		$(document).ready(function() {
-			setBrcAreaName();
+			publicSetBrcAreaName();
 			// 문자열 검색
 			$('#searchBrcNameBtn').click(function() {
 				var searchBrcName = $('#searchBrcName').val();
@@ -85,17 +85,6 @@
 				$('#searchAreaUrl').prop("href", searchAreaUrl);
 			});	
 		});	
-		
-		// 지역이름을 td의 요소 길이만큼 반복하여 세팅
-		function setBrcAreaName() {
-		  console.log('setBrcAreaName() 호출');
-		  var brcAreaArray = ['서울', '경기/강원', '부산/경상', '대전/충청', '광주/전라', '제주'];
-		  for (var i = 0; i < $('td').length; i++){
-			// '#brc' + i : status.index로 부여된 tr(row) id
-		  	var brcArea = $('#brc' + i).children('.brcAreaTd').children('.brcArea').val();
-		  	$('#brc' + i).children('.brcAreaTd').children('.brcAreaName').html(brcAreaArray[brcArea - 1]);
-		  }
-		};
 	</script>
 	  
 </body>

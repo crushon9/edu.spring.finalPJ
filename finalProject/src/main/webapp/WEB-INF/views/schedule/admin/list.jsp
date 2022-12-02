@@ -26,7 +26,7 @@
 				<tbody>
 					<tr>
 						<td>
-							<input type="date" id="dateSelected" name="dateSelected">
+							<input type="date" id="inputDate" name="inputDate">
 						</td>
 						<td>
 							<div id="mvListOutput"></div>
@@ -55,21 +55,40 @@
 
 	<script type="text/javascript">
 	  $(document).ready(function() {
-			// #dateSelected를 오늘날짜로 기본값 세팅
-			$('#dateSelected').val(new Date().toISOString().substring(0, 10));
+			// #inputDate를 오늘날짜로 기본값 세팅
+			$('#inputDate').val(new Date().toISOString().substring(0, 10));
 			getMvList();
 			getScheduleList();
+			// 선택 날짜에 상영중인 영화 목록 가져오기
+			$('#inputDate').change(function() {
+				getMvList();
+				getScheduleList();
+			});
 			// 선택 지역의 지점 가져오기
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
-			// 선택 날짜에 상영중인 영화 목록 가져오기
-			$('#dateSelected').change(function() {
-				console.log("#dateSelected.change");
-				getMvList();
-				getScheduleList();
-			});
 	   });
+	  
+	  // 선택 날짜에 상영중인 영화 목록 가져오기
+	  function getMvList() {
+		var inputDate = $('#inputDate').val();
+		var url = '/project/movie/list/' + inputDate;
+		$.getJSON(
+			url,
+			function(data) {
+				var mvList = '<select id="mvId" name="mvId"><option value="0">영화선택</option>';
+				$(data).each(function() {
+					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '</option>';
+				});
+				mvList += '</select>';
+				$('#mvListOutput').html(mvList);
+				$('#mvId').change(function() {
+					getScheduleList();
+				});
+			}
+		);
+	  } // end getMvList
 	  
 	  // 선택 지역의 지점 가져오기
 	  function getBrcList() {
@@ -85,39 +104,17 @@
 				brcList += '</select>';
 				$('#brcListDiv').html(brcList);
 				$('#brcId').change(function() {
-					console.log("#brcId.click");
 					getScheduleList();
 				});
 			}
 		);
 	  } // end getBrcList
 	  
-	  // 선택 날짜에 상영중인 영화 목록 가져오기
-	  function getMvList() {
-		var dateSelected = $('#dateSelected').val();
-		var url = '/project/movie/list/' + dateSelected;
-		$.getJSON(
-			url,
-			function(data) {
-				var mvList = '<select id="mvId" name="mvId"><option value="0">영화선택</option>';
-				$(data).each(function() {
-					mvList += '<option value="' + this.mvId + '">' + this.mvTitle + '</option>';
-				});
-				mvList += '</select>';
-				$('#mvListOutput').html(mvList);
-				$('#mvId').change(function() {
-					console.log("#mvId.click");
-					getScheduleList();
-				});
-			}
-		);
-	  } // end getMvList
-	  
 	  function getScheduleList() {
  		  console.log('getScheduleList() 호출');
 		  var mvId = $("#mvId").val();
  		  var brcId = $("#brcId").val();
-		  var dateSelected = $("#dateSelected").val();
+		  var inputDate = $("#inputDate").val();
 		  // 선택하지 않았을때 기본값 0과 none으로 세팅
 		  if (mvId == null) {
 			  mvId = 0;
@@ -125,13 +122,13 @@
 		  if (brcId == null) {
 			  brcId = 0;
 		  }
-		  if (dateSelected == '') {
-			  dateSelected = 'none';
+		  if (inputDate == '') {
+			  inputDate = 'none';
 		  }
 		  console.log('mvId : ' + mvId);
 		  console.log('brcId : ' + brcId);
-		  console.log('dateSelected : ' + dateSelected);
-		  var url = '/project/schedule/list/' + mvId + '&' + brcId + '&' + dateSelected;
+		  console.log('inputDate : ' + inputDate);
+		  var url = '/project/schedule/list/' + mvId + '&' + brcId + '&' + inputDate;
 		  console.log(url);
 		  $.getJSON(			
 				url,
@@ -160,7 +157,7 @@
 								+ '<td>' + this.brcName + '</td>'
 								+ '<td>' + this.scdTheater + '관</td>'
 								+ '<td>' + this.scdDate + '</td>'
-								+ '<td>' + setScdTime(this.scdTime) + '</td>'
+								+ '<td>' + publicScdTimeArray[this.scdTime] + '</td>'
 								+ '<td>' + (this.scdSeatTotal - this.scdSeatBookedCnt) + '/' + this.scdSeatTotal + '</td>'
 								+ '<td>' + this.scdPrice + '</td>'
 								+ '<td><input class="btn_delete" type="button" value="삭제">'
@@ -174,15 +171,7 @@
 			 }
 		  ); // end getJSON
 	  }
-	  // DB에 저장된 타임 인덱스를 시간 String으로 변환
-	  function setScdTime(scdIndex) {
-		  var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
-			 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-			 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
-			 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
-			 	"22:00", "22:30", "23:00", "23:30"];
-		  return timeArray[scdIndex];
-	  }
+
 	  // 스케줄 삭제
 	  $('#scheduleListOutput').on('click', '.btn_delete', function() {
 			var scdId = $(this).nextAll('input[name=scdId]').val();

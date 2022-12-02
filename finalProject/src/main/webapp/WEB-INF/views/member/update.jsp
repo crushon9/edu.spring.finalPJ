@@ -49,25 +49,10 @@
 	<script type="text/javascript">
 	    $(document).ready(function() {
 			$('#brcArea').change(function() {
-			getBrcList();
-		});
-		// 선택 지역의 지점 가져오기
-		function getBrcList() {
-			var brcArea = $('#brcArea').val();
-			var url = '/project/branch/list/' + brcArea; // REST API 방식 적용
-			$.getJSON(
-				url,
-				function(data) {
-					var brcList = '<select name="brcId" ><option>지점선택</option>';
-					$(data).each(function() {
-						brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
-					});
-					brcList += '</select>'
-					$('#brcListOutput').html(brcList);
-					}
-				); // end getJSON
-			}
-	 	});	
+				publicGetBrcList();
+			});
+	    });
+		
 	</script>
 	
 </body>

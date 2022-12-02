@@ -60,19 +60,18 @@
 	  
 	<script type="text/javascript">
 	  $(document).ready(function() {
-			// #dateSelected를 오늘날짜로 기본값 세팅
+			// #inputDate를 오늘날짜로 기본값 세팅
 			$('#inputDate').val(new Date().toISOString().substring(0, 10));
 			getMvList();
-			// 평일13000 주말15000 상영가격세팅
 			setScdPrice($('#inputDate').val());
-			// 선택 지역의 지점 가져오기
-			$('#brcArea').change(function() {
-				getBrcList();
-			});
 			// 선택 날짜 변경시 상영중인 영화 목록 재설정, 상영가격 재설정
 			$('#inputDate').change(function() {
 				getMvList();
 				setScdPrice($('#inputDate').val());
+			});
+			// 선택 지역의 지점 가져오기
+			$('#brcArea').change(function() {
+				getBrcList();
 			});
 	   });
 	  
@@ -87,26 +86,6 @@
 		}
 		$('#scdPrice').val(scdPriceResult);
 		$('#scdPriceDiv').html(scdPriceResult + '<div style="font-size: 12px; color: blue;"> *평일13000 주말15000</div>');
-	  }
-	  
-	  // 선택 지역의 지점 가져오기
-	  function getBrcList() {
-		var brcArea = $('#brcArea').val();
-		var url = '/project/branch/list/' + brcArea;
-		$.getJSON(
-			url,
-			function(data) {
-				var brcList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
-				$(data).each(function() {
-					brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
-				});
-				brcList += '</select>'
-				$('#brcListOutput').html(brcList);
-				$('#brcId').change(function() {
-					getBrcTheater();
-				});
-			}
-		);
 	  }
 	  
 	  // 선택 날짜에 상영중인 영화 목록 가져오기
@@ -124,6 +103,26 @@
 				$('#mvListDiv').html(mvList);
 			}
 		);
+	  }
+	  
+	  // 선택 지역의 지점 가져오기
+	  function getBrcList() {
+	  	var brcArea = $('#brcArea').val();
+	  	var url = '/project/branch/list/' + brcArea;
+	  	$.getJSON(
+	  		url,
+	  		function(data) {
+	  			var brcList = '<select id="brcId" name="brcId" ><option>지점선택</option>';
+	  			$(data).each(function() {
+	  				brcList += '<option value="' + this.brcId + '">' + this.brcName + '</option>';
+	  			});
+	  			brcList += '</select>'
+	  			$('#brcListOutput').html(brcList);
+	  			$('#brcId').change(function() {
+	  				getBrcTheater();
+	  			});
+	  		}
+	  	);
 	  }
 	  
 	  // 선택지점의 극장 정보 가져오기
@@ -147,12 +146,6 @@
 	  // 스케줄 테이블 기본 형태 출력
 	  function setScheduleTable(brcTheaterNumbers, brcTheaterSeats) {
 		console.log('setScheduleTable() 호출');
-		// 상영 시간 String 정보를 담은 배열
-		var timeArray = ["00:00", "00:30", "01:00", "01:30", "02:00", "07:00", "07:30", "08:00",
-		 	"08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-		 	"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",	"17:00",
-		 	"17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30",
-		 	"22:00", "22:30", "23:00", "23:30"];
 		var scheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
 		// 지점 극장수만큼 반복하여 제목 컬럼 생성 (col == 극장관번호)
 		for (var col = 1; col <= brcTheaterNumbers; col++) {
@@ -160,19 +153,19 @@
 		}
 		scheduleTable += '</tr></thead><tbody>';
 		// timeArray만큼 행을 반복
-		for (var timeIndex = 0; timeIndex < timeArray.length; timeIndex++) {
+		for (var timeIndex = 0; timeIndex < publicScdTimeArray.length; timeIndex++) {
 			// 추후 데이터 컨트롤을 위하여 tr class = DB에 저장될  timeIndex값으로 지정
 			scheduleTable += '<tr class="' + timeIndex + '">';
 			// 극장수 만큼 열을 반복
 			for (var col = 0; col < brcTheaterNumbers; col++) {
 				// 첫번째 열은 시간 정보 출력
 				if (col == 0) { 
-					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + timeArray[timeIndex] + '</div></td>';
+					scheduleTable += '<td class="0"><div style="font-weight:bold;">' + publicScdTimeArray[timeIndex] + '</div></td>';
 				}
 				// 추후 데이터 컨트롤을 위하여 td class = 극장번호로 지정
 				scheduleTable += '<td class="' + (col + 1) + '">';
-				// 상영가격 설정 조조 3000원 할인 (timeArray[13] == "11:00")
-				if (timeIndex < 13) { 
+				// 상영가격 설정 조조 3000원 할인 (timeArray[8] == "11:00")
+				if (timeIndex < 8) { 
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
 					scheduleTable += '<div style="color: red; font-size: 12px; display: inline-block;">조조할인_'+ scdPrice + '</div>'
 								   +'<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
