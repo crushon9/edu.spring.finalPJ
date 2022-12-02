@@ -43,10 +43,10 @@ public class MemberController {
 		int result = memberService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");
-			reAttr.addFlashAttribute("alert", "memberRegisterSuccess");
+			reAttr.addFlashAttribute("alertMemberRegister", "memberRegisterSuccess");
 			return "redirect:/member/login";
 		} else {
-			reAttr.addFlashAttribute("alert", "memberRegisterFail");
+			reAttr.addFlashAttribute("alertMemberRegister", "memberRegisterFail");
 			return "redirect:/member/register";
 		}
 	}// end registerPOST()
@@ -129,9 +129,9 @@ public class MemberController {
 	}// end idCheckREST()
 
 	@GetMapping("/login")
-	public void loginGET(Model model, String alert, String targetURL) {
-		logger.info("loginGET call : alert=" + alert);
-		model.addAttribute("alert", alert);
+	public void loginGET(Model model, String alertSession, String targetURL) {
+		logger.info("loginGET call : alertSession=" + alertSession);
+		model.addAttribute("alertSession", alertSession);
 	}// end loginGET()
 
 	@PostMapping("/login")

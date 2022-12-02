@@ -109,7 +109,7 @@
         </div>
     </nav>
 </div>
-<input type="hidden" id="alert" value="${alert}"/>
+<input type="hidden" id="alertSession" value="${alertSession}"/>
 <input type="hidden" id="alertBranchRegister" value="${alertBranchRegister}"/>
 <input type="hidden" id="alertMovieRegister" value="${alertMovieRegister}"/>
 <input type="hidden" id="alertMemberRegister" value="${alertMemberRegister}"/>

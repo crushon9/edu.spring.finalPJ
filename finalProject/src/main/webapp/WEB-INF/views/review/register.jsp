@@ -50,19 +50,19 @@
 		</div>
 	  </form>
 	</div>
-	<input type="hidden" id="alertMassage" value="${alertMassage}"/>
+	<input type="hidden" id="alertReviewRegister" value="${alertReviewRegister}"/>
 	<script type="text/javascript">
 		function resizeWindow(win) {
 			var width = 550;
 			var heigh = 500;
 			win.resizeTo(width,heigh);
 		}
-		var alertMassage = $('#alertMassage').val();
-		if (alertMassage == 'reviewRegisterSuccess'){
+		var alertReviewRegister = $('#alertReviewRegister').val();
+		if (alertReviewRegister == 'reviewRegisterSuccess'){
 			alert("리뷰 등록 성공");
 			opener.document.location.reload();
 			self.close();
-		} else if (alertMassage == 'reviewRegisterFail'){
+		} else if (alertReviewRegister == 'reviewRegisterFail'){
 			alert("리뷰 등록 실패");
 			opener.document.location.reload();
 			self.close();

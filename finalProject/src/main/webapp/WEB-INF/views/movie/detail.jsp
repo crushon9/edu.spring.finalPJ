@@ -67,7 +67,7 @@
 					var targetURL = location.href;
 					console.log(targetURL);
 					sessionStorage.setItem('targetURL', targetURL);
-					location.href = '/project/member/login?alert=reviewMmbIdSessionFail';
+					location.href = '/project/member/login?alertSession=reviewSessionFail';
 				}
 				reviewRegister(this);
 			});
@@ -87,6 +87,7 @@
 					var rvList = '등록된 리뷰가 없습니다';
 					// 데이터가 있을때만 출력
 					if ($(data).length != 0) {
+					var rvList = '';
 						$(data).each(function() {
 							// DB에 저장된 평점으로 옵션 selected 설정
 							var isSelected1 = '';
@@ -117,7 +118,7 @@
 								isDisabled = '';
 							}
 							// 댓글 한줄마다 구분하여 접근하기 위해 div class 지정
-							rvList = '<div class="rvItem">' 
+							rvList += '<div class="rvItem">' 
 									+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
 									+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 									+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'

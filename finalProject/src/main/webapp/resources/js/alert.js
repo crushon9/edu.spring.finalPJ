@@ -1,6 +1,3 @@
-var alert = $('#alert').val();
-console.log(alert);
-
 var alertBranchRegister = $('#alertBranchRegister').val();
 console.log(alertBranchRegister);
 // 지점
@@ -55,13 +52,6 @@ if (alertMemberLogin == 'memberLoginFail') {
 	alert("로그인이 실패하였습니다. 정보를 다시 확인해주세요");
 }
 
-var alertTicketMmbId = $('#alertTicketMmbId').val();
-console.log(alertTicketMmbId);
-// 티켓
-if (alertTicketMmbId == 'ticketMmbIdSessionFail') {
-	alert("로그인 후 예매 가능합니다");
-}
-
 var alertTicketBuy = $('#alertTicketBuy').val();
 console.log(alertTicketBuy);
 if (alertTicketBuy == 'ticketBuySuccess') {
@@ -71,9 +61,11 @@ if (alertTicketBuy == 'ticketBuyFail') {
 	alert("티켓 구매 실패하였습니다");
 }
 
-var alertReviewMmbIdSession = $('#alertReviewMmbIdSession').val();
-console.log(alertReviewMmbIdSession);
-// 리뷰
-if (alertReviewMmbIdSession == 'reviewMmbIdSessionFail') {
+//세션 알럿
+var alertSession = $('#alertSession').val();
+console.log(alertSession);
+if (alertSession == 'ticketSessionFail') {
+	alert("로그인 후 티켓 예매 가능합니다");
+} else if (alertSession == 'reviewSessionFail') {
 	alert("로그인 후 리뷰 등록 가능합니다");
 }
