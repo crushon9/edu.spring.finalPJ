@@ -48,7 +48,7 @@
 				var brcTheaterSeatsList = '';
 				for (var i = 1; i <= brcTheaterNumbers; i++){
 					brcTheaterSeatsList +=
-					'<input type="number" name="arrBrcTheaterSeats" placeholder="' + i + "관" + '" required" min="1" max="650">';
+					'<input type="number" name="arrBrcTheaterSeats" placeholder="' + i + "관" + ' min="1" max="650" required>';
 				}
 				$('#brcTheaterSeatsOutput').html(brcTheaterSeatsList);
 			});
