@@ -43,10 +43,10 @@ public class MemberController {
 		int result = memberService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");
-			reAttr.addFlashAttribute("alertMassage", "memberRegisterSuccess");
+			reAttr.addFlashAttribute("alert", "memberRegisterSuccess");
 			return "redirect:/member/login";
 		} else {
-			reAttr.addFlashAttribute("alertMassage", "memberRegisterFail");
+			reAttr.addFlashAttribute("alert", "memberRegisterFail");
 			return "redirect:/member/register";
 		}
 	}// end registerPOST()
@@ -68,10 +68,10 @@ public class MemberController {
 		}
 		int result = memberService.update(vo);
 		if (result == 1) {
-			reAttr.addFlashAttribute("alertMassage", "memberUpdateSuccess");
+			reAttr.addFlashAttribute("alertMemberUpdate", "memberUpdateSuccess");
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("alertMassage", "memberUpdateFail");
+			reAttr.addFlashAttribute("alertMemberUpdate", "memberUpdateFail");
 			return "redirect:/member/mypage/update?mmbId=" + vo.getMmbId();
 		}
 	}// end updatePOST()
@@ -107,10 +107,10 @@ public class MemberController {
 		if (result == 1) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("mmbIdSession");
-			reAttr.addFlashAttribute("alertMassage", "memberResignSuccess");
+			reAttr.addFlashAttribute("alertMemberResign", "memberResignSuccess");
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("alertMassage", "memberResignFail");
+			reAttr.addFlashAttribute("alertMemberResign", "memberResignFail");
 			return "redirect:/member/resign_confirm";
 		}
 	}// end resignPOST()
@@ -129,9 +129,9 @@ public class MemberController {
 	}// end idCheckREST()
 
 	@GetMapping("/login")
-	public void loginGET(Model model, String alertMessage, String targetURL) {
-		logger.info("loginGET call : alertMessage=" + alertMessage);
-		model.addAttribute("alertMessage", alertMessage);
+	public void loginGET(Model model, String alert, String targetURL) {
+		logger.info("loginGET call : alert=" + alert);
+		model.addAttribute("alert", alert);
 	}// end loginGET()
 
 	@PostMapping("/login")
@@ -155,7 +155,7 @@ public class MemberController {
 			return "redirect:/movie/main";
 		} else {
 			logger.info("login failed");
-			model.addAttribute("alertMassage", "memberLoginFail");
+			reAttr.addFlashAttribute("alertMemberLogin", "memberLoginFail");
 			return "redirect:/member/login";
 		}
 	}// end loginPOST()

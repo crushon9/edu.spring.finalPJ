@@ -41,9 +41,9 @@ public class ReviewController {
 		int result = reviewService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");
-			model.addAttribute("alertMassage", "reviewRegisterSuccess");
+			model.addAttribute("alertReviewRegister", "reviewRegisterSuccess");
 		} else {
-			model.addAttribute("alertMassage", "reviewRegisterFail");
+			model.addAttribute("alertReviewRegister", "reviewRegisterFail");
 		}
 	}// end registerPOST()
 

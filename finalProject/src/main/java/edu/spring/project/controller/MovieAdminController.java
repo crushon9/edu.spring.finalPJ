@@ -41,7 +41,7 @@ public class MovieAdminController {
 		if (result == 1) {
 			return "redirect:/movie/admin/list";
 		} else {
-			reAttr.addFlashAttribute("alertMassage", "movieRegisterFail");
+			reAttr.addFlashAttribute("alertMovieRegister", "movieRegisterFail");
 			return "redirect:/movie/admin/register";
 		}
 	} // end registerPOST()
@@ -81,7 +81,7 @@ public class MovieAdminController {
 		if (result == 1) {
 			return "redirect:/movie/admin/list";
 		} else {
-			reAttr.addFlashAttribute("alertMassage", "movieUpdateFail");
+			reAttr.addFlashAttribute("alertMovieUpdate", "movieUpdateFail");
 			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();
 		}
 	}// end updatePOST()

@@ -67,7 +67,7 @@
 					var targetURL = location.href;
 					console.log(targetURL);
 					sessionStorage.setItem('targetURL', targetURL);
-					location.href = '/project/member/login?alertMessage=reviewMmbIdSessionFail';
+					location.href = '/project/member/login?alert=reviewMmbIdSessionFail';
 				}
 				reviewRegister(this);
 			});

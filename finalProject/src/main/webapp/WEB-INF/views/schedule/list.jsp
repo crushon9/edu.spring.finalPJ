@@ -212,7 +212,7 @@
 		  var targetURL = $(this).prevAll('.targetURL').val();
 		  console.log(targetURL);
 		  sessionStorage.setItem('targetURL', targetURL);
-		  location.href = '/project/member/login?alertMessage=ticketMmbIdSessionFail';
+		  location.href = '/project/member/login?alert=ticketMmbIdSessionFail';
 	  });
 	  
   	</script>

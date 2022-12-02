@@ -42,10 +42,10 @@ public class TicketController {
 		int result = ticketService.create(vo);
 		logger.info(result + "insert");
 		if (result == 1) {
-			reAttr.addFlashAttribute("alertMessage", "ticketBuySuccess");
+			reAttr.addFlashAttribute("alertTicketBuy", "ticketBuySuccess");
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("alertMessage", "ticketBuyFail");
+			reAttr.addFlashAttribute("alertTicketBuy", "ticketBuyFail");
 			return "redirect:/schedule/list";
 		}
 	}//end buyPOST()

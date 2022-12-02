@@ -36,7 +36,7 @@ public class BranchAdminController {
 			logger.info(result + " line registered");
 			return "redirect:/branch/admin/list";
 		} else {
-			reAttr.addFlashAttribute("alertMessage", "branchRegisterFail");
+			reAttr.addFlashAttribute("alertBranchRegister", "branchRegisterFail");
 			return "redirect:/branch/admin/register";
 		}
 	}// end registerPOST()
@@ -70,7 +70,7 @@ public class BranchAdminController {
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
 		} else {
-			reAttr.addFlashAttribute("alertMessage", "branchUpdateFail");
+			reAttr.addFlashAttribute("alertBranchUpdate", "branchUpdateFail");
 			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();
 		}
 	}// end updatePOST()
