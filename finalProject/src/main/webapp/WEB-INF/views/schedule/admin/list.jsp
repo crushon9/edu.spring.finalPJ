@@ -175,27 +175,24 @@
 	  // 스케줄 삭제
 	  $('#scheduleListOutput').on('click', '.btn_delete', function() {
 			var scdId = $(this).nextAll('input[name=scdId]').val();
-			var scdSeatBookedCnt = $(this).nextAll('input[name=scdSeatBookedCnt]').val();
 			$.ajax({
 				type : 'DELETE',
-				url : '/project/schedule/admin/delete',
+				url : '/project/schedule/admin/delete/' + scdId,
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'DELETE'
 				},
 				data : JSON.stringify({
-					'scdId' : scdId,
-					'scdSeatBookedCnt' : scdSeatBookedCnt
+					'scdId' : scdId
 				}),
 				success : function(result) {
-					console.log("스케줄 삭제 결과 : " + result);
 					if (result != -2) {
+						// 삭제 성공 후 테이블 다시 세팅
 						getScheduleList();
-					// 예매된 좌석이 있을때는 -2 반환
 					} else if (result == -2) {
-						alert('예매된 좌석이 있어 삭제 불가합니다!');
+						alert('티켓 예매내역이 있어 삭제 불가합니다!');
 					}
-				}	
+				}
 			});
 	    });
 	  

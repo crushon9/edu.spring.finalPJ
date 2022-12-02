@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.persistence.BranchDAO;
 import edu.spring.project.persistence.MovieDAO;
@@ -20,10 +22,16 @@ public class ScheduleServiceImple implements ScheduleService {
 	@Autowired
 	private MovieDAO movieDao;
 
+	@Transactional
 	@Override
 	public int create(ScheduleVO vo) {
 		logger.info("create() call");
-		return scheduleDao.insert(vo);
+		scheduleDao.insert(vo);
+		// 스케줄 등록시 해당 브랜치와 무비 변경불가하게 업데이트
+		branchDao.updateImmutableCheck(vo.getBrcId());
+		movieDao.updateImmutableCheck(vo.getMvId());
+		logger.info("updateImmutableCheck : brcId=" + vo.getBrcId() + ", mvId=" + vo.getMvId());
+		return 1;
 	}
 
 	@Override
@@ -39,12 +47,14 @@ public class ScheduleServiceImple implements ScheduleService {
 	}
 
 	@Override
-	public int delete(ScheduleVO vo) {
-		logger.info("delete() call : scdId = " + vo.getScdId());
-		if (vo.getScdSeatBookedCnt() != 0) {
-			// 예매된 좌석이 있으면 -2 반환
-			return -2;
+	public int delete(int scdId) {
+		logger.info("delete() call : scdId = " + scdId);
+		// 변경불가 상태일때 -2반환
+		int immutable = scheduleDao.selectImmutableCheck(scdId);
+		if (immutable != -2) {
+			return scheduleDao.delete(scdId);
+		} else {
+			return immutable;
 		}
-		return scheduleDao.delete(vo.getScdId());
 	}
 }

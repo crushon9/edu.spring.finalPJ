@@ -38,6 +38,9 @@ public class TicketServiceImple implements TicketService {
 		int bookedTotal = adult + adolescent;
 		scheduleDao.updateScdSeatBookedCnt(bookedTotal, vo.getScdId());
 		logger.info("updateScdSeatBookedCnt success");
+		// 티켓예매시 해당 스케줄 변경불가하게 업데이트
+		scheduleDao.updateImmutableCheck(vo.getScdId());
+		logger.info("updateImmutableCheck success");
 		// mvTicketSales
 		movieDao.updateTicketSales(bookedTotal, vo.getMvId());
 		logger.info("updateTicketSales success");

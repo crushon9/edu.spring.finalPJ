@@ -61,6 +61,13 @@ public class BranchDAOImple implements BranchDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", brcId);
 	}
 
+	// 브랜치 삭제시 멤버 선호지점을 가장작은 번호로 바꾸기 위해
+	@Override
+	public int selectMinBrcId() {
+		logger.info("selectMinBrcId() call");
+		return sqlSession.selectOne(NAMESPACE + ".select_min_brc_id");
+	}
+
 	// 데이터 변경가능여부 체크 immutableCheck
 	@Override
 	public int selectImmutableCheck(int brcId) {

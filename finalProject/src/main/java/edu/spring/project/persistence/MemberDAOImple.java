@@ -73,4 +73,13 @@ public class MemberDAOImple implements MemberDAO {
 		return sqlSession.selectOne(NAMESPACE + ".id_check", mmbId);
 	}
 
+	@Override
+	public int replaceBrcIdDeleted(int deleteBrcId, int minBrcId) {
+		logger.info("replaceBrcIdDeleted() call");
+		Map<String, Integer> args = new HashMap<String, Integer>();
+		args.put("deleteBrcId", deleteBrcId);
+		args.put("minBrcId", minBrcId);
+		return sqlSession.update(NAMESPACE + ".replace_brc_id_deleted", args);
+	}
+
 }

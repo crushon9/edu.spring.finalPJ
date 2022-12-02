@@ -69,6 +69,9 @@ public class BranchAdminController {
 		int result = branchService.update(vo);
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
+		} else if (result == -2) { // Immutable 일때 -2 반환
+			reAttr.addFlashAttribute("alertBranchUpdate", "branchUpdateImmutableFail");
+			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();
 		} else {
 			reAttr.addFlashAttribute("alertBranchUpdate", "branchUpdateFail");
 			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();
@@ -76,13 +79,17 @@ public class BranchAdminController {
 	}// end updatePOST()
 
 	@PostMapping("/delete")
-	public String deletePOST(int brcId) {
+	public String deletePOST(int brcId, RedirectAttributes reAttr) {
 		logger.info("deletePOST() call : brcId = " + brcId);
 		int result = branchService.delete(brcId);
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
+		} else if (result == -2) { // Immutable 일때 -2 반환
+			reAttr.addFlashAttribute("alertBranchDelete", "branchDeleteImmutableFail");
+			return "redirect:/branch/admin/list";
 		} else {
-			return "redirect:/branch/admin/update?brcId=" + brcId;
+			reAttr.addFlashAttribute("alertBranchDelete", "branchDeleteFail");
+			return "redirect:/branch/admin/list";
 		}
 	}// end deletePOST()
 

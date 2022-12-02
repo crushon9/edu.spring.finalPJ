@@ -8,9 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.service.ScheduleService;
 
@@ -39,10 +42,10 @@ public class ScheduleAdminController {
 		logger.info("listGET() call");
 	}// end listGET()
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<Integer> deleteREST(@RequestBody ScheduleVO vo) {
-		logger.info("deleteREST() call : scdId = " + vo.getScdId());
-		int result = scheduleService.delete(vo);
+	@DeleteMapping("/delete/{scdId}")
+	public ResponseEntity<Integer> deleteREST(@PathVariable("scdId") int scdId) {
+		logger.info("deleteREST() call : scdId = " + scdId);
+		int result = scheduleService.delete(scdId);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}// end deleteREST()
 }

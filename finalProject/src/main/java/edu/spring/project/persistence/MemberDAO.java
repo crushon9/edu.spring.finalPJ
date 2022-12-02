@@ -13,12 +13,15 @@ public interface MemberDAO {
 
 	// member admin listGET
 	List<MemberVO> select(String searchText);
-	
+
 	int update(MemberVO vo);
 
 	String idCheck(String mmbId);
-	
+
 	MemberVO login(String mmbId, String mmbPassword);
 
 	int resign(String mmbId);
+
+	// 브랜치 삭제시 해당하는 선호지점을 가져와서 replace
+	int replaceBrcIdDeleted(int deleteBrcId, int minBrcId);
 }

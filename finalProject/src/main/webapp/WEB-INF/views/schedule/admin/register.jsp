@@ -312,13 +312,7 @@
 		// 스케줄 삭제
 	    $('#scheduleTable').on('click', '.scdBtnDelete', function() {
 			var scdId = $(this).nextAll('input[name=scdId]').val();
-			var scdSeatBookedCnt = $(this).nextAll('input[name=scdSeatBookedCnt]').val();
 			console.log('scdBtnDelete 클릭 : scdId = ' + scdId);
-			// view를 변경하기 위한 변수
-			var mvRunningTime = $(this).nextAll('input[name=mvRunningTime]').val();
-			var scdTime = $(this).parents().parents().attr('class');
-			var scdTheater = $(this).parents().attr('class');
-			
 			$.ajax({
 				type : 'DELETE',
 				url : '/project/schedule/admin/delete',
@@ -327,15 +321,14 @@
 					'X-HTTP-Method-Override' : 'DELETE'
 				},
 				data : JSON.stringify({
-					'scdId' : scdId,
-					'scdSeatBookedCnt' : scdSeatBookedCnt
+					'scdId' : scdId
 				}),
 				success : function(result) {
 					if (result != -2) {
 						// 삭제 성공 후 테이블 다시 세팅
 						setScheduleTable();
 					} else if (result == -2) {
-						alert('예매된 좌석이 있어 삭제 불가합니다!');
+						alert('티켓 예매내역이 있어 삭제 불가합니다!');
 					}
 				}	
 			});

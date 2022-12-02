@@ -57,4 +57,16 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		return sqlSession.update(NAMESPACE + ".update_scdSeatBookedCnt", args);
 	}
 
+	@Override
+	public int selectImmutableCheck(int scdId) {
+		logger.info("selectImmutableCheck() call");
+		return sqlSession.selectOne(NAMESPACE + ".select_scdImmutableCheck_by_scd_id", scdId);
+	}
+
+	@Override
+	public int updateImmutableCheck(int scdId) {
+		logger.info("updateImmutableCheck() call");
+		return sqlSession.update(NAMESPACE + ".update_scdImmutableCheck_by_scd_id", scdId);
+	}
+
 }

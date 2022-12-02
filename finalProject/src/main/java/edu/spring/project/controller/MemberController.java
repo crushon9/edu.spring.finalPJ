@@ -36,10 +36,6 @@ public class MemberController {
 	public String registerPOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() call");
 		logger.info(vo.toString());
-		// 회원가입 시 brcId 미 선택(0)이면, 서울(1)로 자동 할당.
-		if (vo.getBrcId() == 0) {
-			vo.setBrcId(1);
-		}
 		int result = memberService.create(vo);
 		if (result == 1) {
 			logger.info(result + " data added");

@@ -66,15 +66,28 @@ public class MovieServiceImple implements MovieService {
 	@Override
 	public int update(MovieVO vo) {
 		logger.info("update() call");
-		return dao.update(vo);
+		// 변경불가 상태일때 -2반환
+		int immutable = dao.selectImmutableCheck(vo.getMvId());
+		if (immutable != -2) {
+			return dao.update(vo);
+		} else {
+			return immutable;
+		}
 	}
 
 	@Override
 	public int delete(int mvId) {
 		logger.info("delete() call : mvId = " + mvId);
-		return dao.delete(mvId);
+		// 변경불가 상태일때 -2반환
+		int immutable = dao.selectImmutableCheck(mvId);
+		if (immutable != -2) {
+			return dao.delete(mvId);
+		} else {
+			return immutable;
+		}
 	}
 
+	// 영화 평균 평점 불러오는 메소드
 	@Override
 	public float readRatingAvg(int mvId) {
 		logger.info("readRatingAvg() call : mvId = " + mvId);

@@ -14,6 +14,6 @@ public interface ScheduleService {
 
 	List<ScheduleVO> read(int mvId, int brcId, String scdDate);
 
-	int delete(ScheduleVO vo);
+	int delete(int scdId);
 
 }

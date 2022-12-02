@@ -109,13 +109,16 @@
         </div>
     </nav>
 </div>
+<!-- 자바스크립트 알럿 출력을 위한 hidden 데이터 (alert.js)-->
 <input type="hidden" id="alertSession" value="${alertSession}"/>
 <input type="hidden" id="alertBranchRegister" value="${alertBranchRegister}"/>
+<input type="hidden" id="alertBranchUpdate" value="${alertBranchUpdate}"/>
+<input type="hidden" id="alertBranchDelete" value="${alertBranchDelete}"/>
 <input type="hidden" id="alertMovieRegister" value="${alertMovieRegister}"/>
+<input type="hidden" id="alertMovieUpdate" value="${alertMovieUpdate}"/>
+<input type="hidden" id="alertMovieDelete" value="${alertMovieDelete}"/>
 <input type="hidden" id="alertMemberRegister" value="${alertMemberRegister}"/>
 <input type="hidden" id="alertMemberUpdate" value="${alertMemberUpdate}"/>
 <input type="hidden" id="alertMemberResign" value="${alertMemberResign}"/>
 <input type="hidden" id="alertMemberLogin" value="${alertMemberLogin}"/>
-<input type="hidden" id="alertTicketMmbId" value="${alertTicketMmbId}"/>
 <input type="hidden" id="alertTicketBuy" value="${alertTicketBuy}"/>
-<input type="hidden" id="alertReviewMmbIdSession" value="${alertReviewMmbIdSession}"/>
