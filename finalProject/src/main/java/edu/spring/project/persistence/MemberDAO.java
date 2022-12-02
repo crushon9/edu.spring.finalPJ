@@ -12,11 +12,13 @@ public interface MemberDAO {
 	MemberVO selectOne(String mmbId);
 
 	// member admin listGET
-	List<MemberVO> select(String mmbId);
+	List<MemberVO> select(String searchText);
 	
 	int update(MemberVO vo);
 
-	int delete(String mmbId);
-
+	String idCheck(String mmbId);
+	
 	MemberVO login(String mmbId, String mmbPassword);
+
+	int resign(String mmbId);
 }

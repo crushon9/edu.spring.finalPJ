@@ -1,4 +1,5 @@
 var alertMessage = $('#alertMessage').val();
+console.log(alertMessage);
 // 지점
 if (alertMessage == 'branchRegisterFail'){
 	alert("지점등록 실패하였습니다.");
@@ -28,10 +29,10 @@ if (alertMessage == 'memberUpdateSuccess'){
 if (alertMessage == 'memberUpdateFail'){
 	alert("회원정보 수정 실패하였습니다.");
 }
-if (alertMessage == 'memberDeleteSuccess'){
+if (alertMessage == 'memberResignSuccess'){
 	alert("회원탈퇴 되었습니다. 그 동안 이용해 주셔서 감사합니다.");
 }
-if (alertMessage == 'memberDeleteFail'){
+if (alertMessage == 'memberResignFail'){
 	alert("회원탈퇴 실패");
 }
 if (alertMessage == 'memberLoginFail') {

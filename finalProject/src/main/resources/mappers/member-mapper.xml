@@ -24,18 +24,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${mmbId} DESC
 	</select>
 	
-	<!-- search by mmbId (keyword)-->
-	<select id="select_list_by_search_mmb_id" resultType="MemberVO">
-		select * from
-		${PJ_MEMBER}
-		where ${mmbId} like '%'|| #{searchMmbId} || '%'
-	</select>
-	
 	<!-- updateGET && idCheck && detailGET -->
 	<select id="select_one_by_mmb_id" resultType="MemberVO">
 		select mmb.*, brc.${brcName}
 		from ${PJ_MEMBER} mmb JOIN ${PJ_BRANCH} brc ON mmb.${brcId} = brc.${brcId}
 		where ${mmbId} = #{mmbId}
+	</select>
+	
+	<!-- search by mmbId (keyword)-->
+	<select id="select_list_by_search_mmb_id" resultType="MemberVO">
+		select * from
+		${PJ_MEMBER}
+		where ${mmbId} like '%'|| #{searchMmbId} || '%'
 	</select>
 		
 	<update id="update">
@@ -45,16 +45,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${brcId} = #{brcId}
 		where ${mmbId} = #{mmbId}
 	</update>
-
-	<delete id="delete"> 
-		delete from ${PJ_MEMBER}
+	
+	<select id="id_check" resultType="String">
+		select ${mmbId} from ${PJ_MEMBER}
 		where ${mmbId} = #{mmbId}
-	</delete>
+	</select>
 
+	<!-- mmbResignCheck = 0: 활성 / -2: 탈퇴  -->
 	<select id="login" resultType="MemberVO">
 		select * from
 		${PJ_MEMBER}
-		where ${mmbId} = #{mmbId} and ${mmbPassword} = #{mmbPassword}
+		where ${mmbId} = #{mmbId} and ${mmbPassword} = #{mmbPassword} and ${mmbResignCheck} = 0
 	</select>
+	
+	<!-- 탈퇴시 mmbResignCheck값을 -2로 변경  -->
+	<update id="update_mmbResignCheck"> 
+		update ${PJ_MEMBER}
+		set ${mmbResignCheck} = -2
+		where ${mmbId} = #{mmbId}
+	</update>
 		
 </mapper>

@@ -76,53 +76,53 @@ public class MemberController {
 		}
 	}// end updatePOST()
 
-	// delete_confirm page call
-	@GetMapping("/delete_confirm")
-	public void deleteConfirmGET() {
-		logger.info("deleteConfirmGET() call");
-	}// end deleteConfirmGET()
+	// resign_confirm page call
+	@GetMapping("/resign_confirm")
+	public void resignConfirmGET() {
+		logger.info("resignConfirmGET() call");
+	}// end resignConfirmGET()
 
-	@PostMapping("/delete_confirm")
-	public String deleteConfirmPOST(String mmbId, String mmbPassword, RedirectAttributes reAttr) {
-		logger.info("deleteConfirmPOST call");
+	@PostMapping("/resign_confirm")
+	public String resignConfirmPOST(String mmbId, String mmbPassword, RedirectAttributes reAttr) {
+		logger.info("resignConfirmPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
 		// vo != null : 아이디 패스워드가 일치한 경우
 		if (vo != null) {
-			return "redirect:/member/delete";
+			return "redirect:/member/resign";
 		} else {
-			return "redirect:/member/delete_confirm";
+			return "redirect:/member/resign_confirm";
 		}
 	}// end loginPOST()
 
-	// delete page call
-	@GetMapping("/delete")
-	public void deleteGET() {
-		logger.info("deleteGET() call");
-	}// end deleteGET()
+	// resign page call
+	@GetMapping("/resign")
+	public void resignGET() {
+		logger.info("resignGET() call");
+	}// end resignGET()
 
-	@PostMapping("/delete")
-	public String deletePOST(String mmbId, RedirectAttributes reAttr, HttpServletRequest request) {
-		logger.info("deletePOST() call : mmbId = " + mmbId);
-		int result = memberService.delete(mmbId);
+	@PostMapping("/resign")
+	public String resignPOST(String mmbId, RedirectAttributes reAttr, HttpServletRequest request) throws IOException {
+		logger.info("resignPOST() call : mmbId = " + mmbId);
+		int result = memberService.resign(mmbId);
 		if (result == 1) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("mmbIdSession");
-			reAttr.addFlashAttribute("alertMassage", "memberDeleteSuccess");
+			reAttr.addFlashAttribute("alertMassage", "memberResignSuccess");
 			return "redirect:/movie/main";
 		} else {
-			reAttr.addFlashAttribute("alertMassage", "memberDeleteFail");
-			return "redirect:/member/delete_confirm";
+			reAttr.addFlashAttribute("alertMassage", "memberResignFail");
+			return "redirect:/member/resign_confirm";
 		}
-	}// end deletePOST()
+	}// end resignPOST()
 
 	@PostMapping("/idCheck")
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
-		MemberVO vo = memberService.readOne(mmbId);
+		String idCheck = memberService.idCheck(mmbId);
 		// 가입불가 : -1, 기본값으로 설정
 		int result = -1;
 		// vo에 데이터가 비어있다면, 가입가능 : 1
-		if (vo == null) {
+		if (idCheck == null) {
 			result = 1;
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -136,13 +136,13 @@ public class MemberController {
 
 	@PostMapping("/login")
 	public String loginPOST(String mmbId, String mmbPassword, HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes reAttr) throws IOException {
+			RedirectAttributes reAttr, Model model) throws IOException {
 		logger.info("loginPOST call");
 		MemberVO vo = memberService.login(mmbId, mmbPassword);
 		HttpSession session = request.getSession();
 		// vo != null : 아이디 패스워드에 일치하는 데이터가 있는 경우, 즉 로그인 성공
 		if (vo != null) {
-			logger.info("login failed");
+			logger.info("login 성공");
 			// mbAdminCheck가 "1"인 admin 계정 adminSession 생성
 			if (vo.getMmbAdminCheck() == 1) {
 				logger.info("admin login success");
@@ -152,12 +152,10 @@ public class MemberController {
 			session.setAttribute("mmbIdSession", vo.getMmbId());
 			logger.info(mmbId + " user login");
 			session.setMaxInactiveInterval(600);
-			// 로그인시 targetURL이 있으면 해당 페이지로 이동
 			return "redirect:/movie/main";
-			// login failed
 		} else {
 			logger.info("login failed");
-			reAttr.addFlashAttribute("alertMassage", "memberLoginFail");
+			model.addAttribute("alertMassage", "memberLoginFail");
 			return "redirect:/member/login";
 		}
 	}// end loginPOST()

@@ -6,7 +6,7 @@
 	<footer class="py-4 bg-light mt-auto">
 	    <div class="container-fluid px-4">
 	        <div class="d-flex align-items-center justify-content-between small">
-	            <div class="text-muted">서울시 구로구 구트아카데미!  &emsp; contact us : cgvipMaster@cjvip.com
+	            <div class="text-muted">서울시 구로구 구트아카데미!  &emsp; contact us : cgvipMaster@cgvip.com
 		            <br>대표이사 PNS &emsp; 사업자등록번호 102-222-2222 &emsp; 통신판매업신고번호 2017-서울금천-0000
 					<br>Copyright &copy; CJ CGVIP. All Rights Reserved
 	            </div>

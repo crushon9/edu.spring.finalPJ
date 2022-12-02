@@ -9,7 +9,7 @@ public class TicketVO {
 	private String tkPeopleList;
 	private String tkSeatList;
 	private int tkPriceTotal;
-	private String tkCancelCheck;
+	private int tkCancelCheck;
 	// Join data
 	private String mvTitle;
 	private String mvImage;
@@ -25,7 +25,7 @@ public class TicketVO {
 	}
 
 	public TicketVO(int tkId, String mmbId, int scdId, int mvId, String tkPeopleList, String tkSeatList,
-			int tkPriceTotal, String tkCancelCheck, String mvTitle, String mvImage, String brcName, String scdDate,
+			int tkPriceTotal, int tkCancelCheck, String mvTitle, String mvImage, String brcName, String scdDate,
 			int scdTime, int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
 		this.tkId = tkId;
 		this.mmbId = mmbId;
@@ -102,11 +102,11 @@ public class TicketVO {
 		this.tkPriceTotal = tkPriceTotal;
 	}
 
-	public String getTkCancelCheck() {
+	public int getTkCancelCheck() {
 		return tkCancelCheck;
 	}
 
-	public void setTkCancelCheck(String tkCancelCheck) {
+	public void setTkCancelCheck(int tkCancelCheck) {
 		this.tkCancelCheck = tkCancelCheck;
 	}
 
@@ -186,9 +186,9 @@ public class TicketVO {
 	public String toString() {
 		return "TicketVO [tkId=" + tkId + ", mmbId=" + mmbId + ", scdId=" + scdId + ", mvId=" + mvId + ", tkPeopleList="
 				+ tkPeopleList + ", tkSeatList=" + tkSeatList + ", tkPriceTotal=" + tkPriceTotal + ", tkCancelCheck="
-				+ tkCancelCheck + ", mvTitle=" + mvTitle + ", brcName=" + brcName + ", scdDate=" + scdDate
-				+ ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal=" + scdSeatTotal
-				+ ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + "]";
+				+ tkCancelCheck + ", mvTitle=" + mvTitle + ", mvImage=" + mvImage + ", brcName=" + brcName
+				+ ", scdDate=" + scdDate + ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal="
+				+ scdSeatTotal + ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + "]";
 	}
 
 }

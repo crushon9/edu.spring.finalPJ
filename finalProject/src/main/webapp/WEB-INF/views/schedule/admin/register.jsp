@@ -90,7 +90,7 @@
 			scdPriceResult = 15000;
 		}
 		$('#scdPrice').val(scdPriceResult);
-		$('#scdPriceDiv').html(scdPriceResult + '<div style="font-size: 12px; color: blue;"> *평일13000 주말15000</div>');
+		$('#scdPriceDiv').html(scdPriceResult + '<div style="font-size: 12px; color: blue;"> *평일13000 주말15000<br>청소년할인3000</div>');
 	  }
 	  
 	  // 선택 날짜에 상영중인 영화 목록 가져오기

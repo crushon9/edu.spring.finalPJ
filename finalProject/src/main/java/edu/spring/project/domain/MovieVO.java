@@ -14,13 +14,14 @@ public class MovieVO {
 	private int mvRatingTotal;
 	private int mvRatingCnt;
 	private float mvRatingAvg; // : mvRatingTotal / mvRatingCnt
+	private int mvImmutableCheck;
 
 	public MovieVO() {
 	}
 
 	public MovieVO(int mvId, String mvTitle, String mvImage, String mvDateStarted, String mvDateEnded,
 			int mvRunningTime, String mvGenre, String mvInfo, int mvTicketSales, int mvRatingTotal, int mvRatingCnt,
-			float mvRatingAvg) {
+			float mvRatingAvg, int mvImmutableCheck) {
 		this.mvId = mvId;
 		this.mvTitle = mvTitle;
 		this.mvImage = mvImage;
@@ -33,6 +34,7 @@ public class MovieVO {
 		this.mvRatingTotal = mvRatingTotal;
 		this.mvRatingCnt = mvRatingCnt;
 		this.mvRatingAvg = mvRatingAvg;
+		this.mvImmutableCheck = mvImmutableCheck;
 	}
 
 	public int getMvId() {
@@ -131,12 +133,21 @@ public class MovieVO {
 		this.mvRatingAvg = mvRatingAvg;
 	}
 
+	public int getMvImmutableCheck() {
+		return mvImmutableCheck;
+	}
+
+	public void setMvImmutableCheck(int mvImmutableCheck) {
+		this.mvImmutableCheck = mvImmutableCheck;
+	}
+
 	@Override
 	public String toString() {
 		return "MovieVO [mvId=" + mvId + ", mvTitle=" + mvTitle + ", mvImage=" + mvImage + ", mvDateStarted="
 				+ mvDateStarted + ", mvDateEnded=" + mvDateEnded + ", mvRunningTime=" + mvRunningTime + ", mvGenre="
 				+ mvGenre + ", mvInfo=" + mvInfo + ", mvTicketSales=" + mvTicketSales + ", mvRatingTotal="
-				+ mvRatingTotal + ", mvRatingCnt=" + mvRatingCnt + ", mvRatingAvg=" + mvRatingAvg + "]";
+				+ mvRatingTotal + ", mvRatingCnt=" + mvRatingCnt + ", mvRatingAvg=" + mvRatingAvg
+				+ ", mvImmutableCheck=" + mvImmutableCheck + "]";
 	}
 
 }

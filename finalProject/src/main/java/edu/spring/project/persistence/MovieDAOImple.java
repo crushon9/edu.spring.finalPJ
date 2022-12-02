@@ -33,14 +33,14 @@ public class MovieDAOImple implements MovieDAO {
 	// order by ticketSales
 	@Override
 	public List<MovieVO> selectOrderTicket() {
-		logger.info("selectTs() call");
+		logger.info("selectOrderTicket() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_ticket");
 	}
 
 	// order by ReviewAvg
 	@Override
 	public List<MovieVO> selectOrderReview() {
-		logger.info("selectRa() call");
+		logger.info("selectOrderReview() call");
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_review");
 	}
 
@@ -115,10 +115,23 @@ public class MovieDAOImple implements MovieDAO {
 	}
 
 	// 각 영화마다 예매율을 구하기 위함
-	@Override 
+	@Override
 	public int selectTicketSalesTotal() {
 		logger.info("selectTicketSalesTotal() call");
 		return sqlSession.selectOne(NAMESPACE + ".select_ticketsales_total");
+	}
+
+	// 데이터 변경가능여부 체크 immutableCheck
+	@Override
+	public int selectImmutableCheck(int mvId) {
+		logger.info("selectImmutableCheck() call");
+		return sqlSession.selectOne(NAMESPACE + ".select_mvImmutableCheck_by_mv_id", mvId);
+	}
+
+	@Override
+	public int updateImmutableCheck(int mvId) {
+		logger.info("updateImmutableCheck() call");
+		return sqlSession.update(NAMESPACE + ".update_mvImmutableCheck_by_mv_id", mvId);
 	}
 
 }

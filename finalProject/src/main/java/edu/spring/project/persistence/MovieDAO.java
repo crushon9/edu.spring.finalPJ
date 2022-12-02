@@ -27,6 +27,11 @@ public interface MovieDAO {
 
 	int delete(int mvId);
 
+	// 데이터 변경가능여부 체크를 위한 ImmutableCheck
+	int selectImmutableCheck(int mvId);
+
+	int updateImmutableCheck(int mvId);
+
 	// update rvRating
 	int updateRating(int amount, int rvRating, int mvId);
 

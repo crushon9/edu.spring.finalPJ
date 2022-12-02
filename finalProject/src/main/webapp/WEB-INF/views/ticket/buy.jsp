@@ -81,7 +81,7 @@
 			<input type="hidden" name="scdId" value="${vo.scdId }">
 			<input type="hidden" name="mvId" value="${vo.mvId }">
 			<div id="tkPeopleDiv" >
-				일반&emsp;
+				일반&emsp;&emsp;&emsp;&emsp;&nbsp;
 				<input type="radio" name="adult" value="0" checked>0
 				<input type="radio" name="adult" value="1">1
 				<input type="radio" name="adult" value="2">2
@@ -92,7 +92,7 @@
 				<input type="radio" name="adult" value="7">7
 				<input type="radio" name="adult" value="8">8
 				<br>
-				청소년
+				청소년<div style="font-size: 11px; color: blue; display: inline-block;">*할인3000</div>
 				<input type="radio" name="adolescent" value="0" checked>0
 				<input type="radio" name="adolescent" value="1">1
 				<input type="radio" name="adolescent" value="2">2
@@ -104,10 +104,10 @@
 				<input type="radio" name="adolescent" value="8">8
 				<br>
 				<input type="hidden" name="tkPeopleList" readonly>
-				좌석&emsp;
+				선택좌석&emsp;&emsp;&nbsp;
 				<input type="text" name="tkSeatList" readonly>
 				<br>
-				합계&emsp;
+				결제금액&emsp;&emsp;&nbsp;
 				<input type="text" name="tkPriceTotal" readonly>
 				<input id="submit" type="submit" value="예매하기" disabled>
 			</div>

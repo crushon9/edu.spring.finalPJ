@@ -8,16 +8,18 @@ public interface MemberService {
 	int create(MemberVO vo);
 
 	List<MemberVO> read();
-	
+
 	// updateGET && idCheck && detailGET
 	MemberVO readOne(String mmbId);
-	
+
 	// member admin listGET
 	List<MemberVO> read(String mmbId);
-	
+
 	int update(MemberVO vo);
 	
-	int delete(String mmbId);
-	
+	String idCheck(String mmbId);
+
 	MemberVO login(String mmbId, String mmbPassword);
+
+	int resign(String mmbId);
 }

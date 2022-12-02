@@ -26,6 +26,6 @@
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>
-	
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 package edu.spring.project.domain;
 
 public class MemberVO {
-
+	// DB data
 	private String mmbId;
 	private String mmbPassword;
 	private String mmbEmail;
@@ -9,15 +9,15 @@ public class MemberVO {
 	private String mmbBirthday;
 	private int mmbAdminCheck;
 	private int brcId;
+	private int mmbResignCheck;
 	// Join Data
 	private String brcName;
 
 	public MemberVO() {
-
 	}
 
 	public MemberVO(String mmbId, String mmbPassword, String mmbEmail, String mmbPhone, String mmbBirthday,
-			int mmbAdminCheck, int brcId, String brcName) {
+			int mmbAdminCheck, int brcId, String brcName, int mmbResignCheck) {
 		this.mmbId = mmbId;
 		this.mmbPassword = mmbPassword;
 		this.mmbEmail = mmbEmail;
@@ -25,6 +25,7 @@ public class MemberVO {
 		this.mmbBirthday = mmbBirthday;
 		this.mmbAdminCheck = mmbAdminCheck;
 		this.brcId = brcId;
+		this.mmbResignCheck = mmbResignCheck;
 		this.brcName = brcName;
 	}
 
@@ -84,6 +85,14 @@ public class MemberVO {
 		this.brcId = brcId;
 	}
 
+	public int getMmbResignCheck() {
+		return mmbResignCheck;
+	}
+
+	public void setMmbResignCheck(int mmbResignCheck) {
+		this.mmbResignCheck = mmbResignCheck;
+	}
+
 	public String getBrcName() {
 		return brcName;
 	}
@@ -96,7 +105,7 @@ public class MemberVO {
 	public String toString() {
 		return "MemberVO [mmbId=" + mmbId + ", mmbPassword=" + mmbPassword + ", mmbEmail=" + mmbEmail + ", mmbPhone="
 				+ mmbPhone + ", mmbBirthday=" + mmbBirthday + ", mmbAdminCheck=" + mmbAdminCheck + ", brcId=" + brcId
-				+ ", brcName=" + brcName + "]";
+				+ ", mmbResignCheck=" + mmbResignCheck + ", brcName=" + brcName + "]";
 	}
 
 }

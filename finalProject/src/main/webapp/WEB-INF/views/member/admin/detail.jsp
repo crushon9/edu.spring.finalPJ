@@ -26,6 +26,8 @@
 		${vo.mmbBirthday }
 		<p>선호지점 </p>
 		${vo.brcName }점
+		<p>탈퇴여부</p>
+		${vo.mmbResignCheck }
 		</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>

@@ -51,7 +51,7 @@
 							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
 						</li>
 						<!-- 영화 4개 마다 공백으로 띄우기 -->
-						<c:if test="${(status.count % 4) == 0}">
+						<c:if test="${(status.count % 5) == 0}">
 							<br> 
 				        </c:if>
 					</c:forEach>
@@ -66,6 +66,7 @@
 	<script type="text/javascript">
 		// document가 생성되기 전에 view에서 생성한 sessionStorage를 통해서 targetURL 리다이렉트
 		if (sessionStorage.getItem('targetURL') !== null && $('#mmbId').val() != 'null') {
+			console.log('메인 여기');
 			var targetURL = sessionStorage.getItem('targetURL');
 			sessionStorage.removeItem('targetURL');
 			location.href = targetURL;

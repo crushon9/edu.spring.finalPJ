@@ -50,4 +50,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${brcId} = #{brcId}
 	</delete>
 	
+	<!-- 삭제시 멤버테이블의 선호지점 replace를 위한 쿼리 -->
+	<select id="select_min_brc_id" resultType="int">
+		select MIN(${brcId}) from ${PJ_BRANCH}
+	</select>
+	
+	<!-- brcImmutableCheck 관련 쿼리 ========================================== -->
+	<!-- update, delete를 적용하기 전에 변경가능 여부 검사-->
+	<select id="select_brcImmutableCheck_by_brc_id" resultType="int">
+		select ${brcImmutableCheck}
+		from ${PJ_BRANCH}
+		where ${brcId} = #{brcId}
+	</select>
+	
+	<!-- 스케줄 등록시 brcImmutableCheck 값 -2 변경 -->
+	<update id="update_brcImmutableCheck_by_brc_id">
+		update ${PJ_BRANCH}
+		set ${brcImmutableCheck} = -2
+		where ${brcId} = #{brcId}
+	</update>
+	
 </mapper>

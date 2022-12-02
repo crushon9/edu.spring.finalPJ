@@ -15,7 +15,7 @@
 		<div id="layoutSidenav_content">
 		<h1>회원 탈퇴</h1>
 		<p>탈퇴 이후에는 이용이 제한됩니다. <br> 아래 '탈퇴하기 버튼'을 누르시면 탈퇴가 완료됩니다.</p>
- 		<form action="delete" method="POST">
+ 		<form action="resign" method="POST">
 			<input type="hidden" name="mmbId" value="<%=mmbIdSession %>">
 			<input type="submit" value="탈퇴하기">
 		</form>

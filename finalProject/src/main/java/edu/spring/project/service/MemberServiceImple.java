@@ -33,7 +33,7 @@ public class MemberServiceImple implements MemberService {
 		logger.info("read() call : mmbId = " + mmbId);
 		return dao.selectOne(mmbId);
 	}
-	
+
 	// member admin listGET
 	@Override
 	public List<MemberVO> read(String mmbId) {
@@ -48,15 +48,22 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public int delete(String mmbId) {
-		logger.info("delete() call : mmbId = " + mmbId);
-		return dao.delete(mmbId);
+	public String idCheck(String mmbId) {
+		logger.info("idCheck() call : mmbId = " + mmbId);
+		return dao.idCheck(mmbId);
 	}
-
+	
 	@Override
 	public MemberVO login(String mmbId, String mmbPassword) {
 		logger.info("login call : mmbId = " + mmbId + ", mmbPassword = " + mmbPassword);
 		return dao.login(mmbId, mmbPassword);
 	}
+
+	@Override
+	public int resign(String mmbId) {
+		logger.info("delete() call : mmbId = " + mmbId);
+		return dao.resign(mmbId);
+	}
+
 
 }

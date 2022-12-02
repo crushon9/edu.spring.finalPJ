@@ -3,26 +3,29 @@ package edu.spring.project.domain;
 import java.util.Arrays;
 
 public class BranchVO {
-
+	// DB data
 	private int brcId;
 	private int brcArea;
 	private String brcName;
 	private int brcTheaterNumbers;
 	private String brcTheaterSeats;
 	private String brcInfo;
+	private int brcImmutableCheck;
 	// view에서 보내온 데이터를 가공하기 위한 임시 멤버 변수
 	private int[] arrBrcTheaterSeats;
-	
+
 	public BranchVO() {
 	}
 
-	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, String brcTheaterSeats, String brcInfo) {
+	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, String brcTheaterSeats,
+			String brcInfo, int brcImmutableCheck) {
 		this.brcId = brcId;
 		this.brcArea = brcArea;
 		this.brcName = brcName;
 		this.brcTheaterNumbers = brcTheaterNumbers;
 		this.brcTheaterSeats = brcTheaterSeats;
 		this.brcInfo = brcInfo;
+		this.brcImmutableCheck = brcImmutableCheck;
 	}
 
 	public int getBrcId() {
@@ -82,7 +85,7 @@ public class BranchVO {
 	public void setArrBrcTheaterSeats(int[] arrBrcTheaterSeats) {
 		this.arrBrcTheaterSeats = arrBrcTheaterSeats;
 	}
-	
+
 	public String getBrcInfo() {
 		return brcInfo;
 	}
@@ -90,11 +93,21 @@ public class BranchVO {
 	public void setBrcInfo(String brcInfo) {
 		this.brcInfo = brcInfo;
 	}
-	
+
+	public int getBrcImmutableCheck() {
+		return brcImmutableCheck;
+	}
+
+	public void setBrcImmutableCheck(int brcImmutableCheck) {
+		this.brcImmutableCheck = brcImmutableCheck;
+	}
+
 	@Override
 	public String toString() {
 		return "BranchVO [brcId=" + brcId + ", brcArea=" + brcArea + ", brcName=" + brcName + ", brcTheaterNumbers="
-				+ brcTheaterNumbers + ", brcTheaterSeats=" + brcTheaterSeats + ", arrBrcTheaterSeats="
-				+ Arrays.toString(arrBrcTheaterSeats) + "]" + ", brcInfo=" + brcInfo;
+				+ brcTheaterNumbers + ", brcTheaterSeats=" + brcTheaterSeats + ", brcInfo=" + brcInfo
+				+ ", brcImmutableCheck=" + brcImmutableCheck + ", arrBrcTheaterSeats="
+				+ Arrays.toString(arrBrcTheaterSeats) + "]";
 	}
+
 }

@@ -56,7 +56,7 @@
 		                        <a class="nav-link" href="/project/ticket/list"><i class="fa-solid fa-minus"></i>&emsp;My Ticket</a>
 		                        <a class="nav-link" href="/project/review/list"><i class="fa-solid fa-minus"></i>&emsp;My Review</a>
 		                        <a class="nav-link" href="/project/member/update?mmbId=${ mmbIdSession}"><i class="fa-solid fa-minus"></i>&emsp;My Info</a>
-		                        <a class="nav-link" href="/project/member/delete_confirm"><i class="fa-solid fa-minus"></i>&emsp;Resign</a>
+		                        <a class="nav-link" href="/project/member/resign_confirm"><i class="fa-solid fa-minus"></i>&emsp;Resign</a>
 		                    </nav>
 		                </div>
 					</c:if>
@@ -109,5 +109,4 @@
         </div>
     </nav>
 </div>
-
 <input type="hidden" id="alertMessage" value="${alertMessage}"/>

@@ -11,6 +11,7 @@ public class ScheduleVO {
 	private int scdSeatTotal;
 	private int scdSeatBookedCnt;
 	private int scdPrice;
+	private int scdImmutableCheck;
 	// Join data
 	private String mvTitle;
 	private int mvRunningTime;
@@ -20,7 +21,8 @@ public class ScheduleVO {
 	}
 
 	public ScheduleVO(int scdId, int brcId, int mvId, String scdDate, int scdTime, int scdTheater, int scdSeatTotal,
-			int scdSeatBookedCnt, int scdPrice, String mvTitle, int mvRunningTime, String brcName) {
+			int scdSeatBookedCnt, int scdPrice, int scdImmutableCheck, String mvTitle, int mvRunningTime,
+			String brcName) {
 		this.scdId = scdId;
 		this.brcId = brcId;
 		this.mvId = mvId;
@@ -30,6 +32,7 @@ public class ScheduleVO {
 		this.scdSeatTotal = scdSeatTotal;
 		this.scdSeatBookedCnt = scdSeatBookedCnt;
 		this.scdPrice = scdPrice;
+		this.scdImmutableCheck = scdImmutableCheck;
 		this.mvTitle = mvTitle;
 		this.mvRunningTime = mvRunningTime;
 		this.brcName = brcName;
@@ -131,12 +134,21 @@ public class ScheduleVO {
 		this.brcName = brcName;
 	}
 
+	public int getScdImmutableCheck() {
+		return scdImmutableCheck;
+	}
+
+	public void setScdImmutableCheck(int scdImmutableCheck) {
+		this.scdImmutableCheck = scdImmutableCheck;
+	}
+
 	@Override
 	public String toString() {
 		return "ScheduleVO [scdId=" + scdId + ", brcId=" + brcId + ", mvId=" + mvId + ", scdDate=" + scdDate
 				+ ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal=" + scdSeatTotal
-				+ ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + ", mvTitle=" + mvTitle
-				+ ", mvRunningTime=" + mvRunningTime + ", brcName=" + brcName + "]";
+				+ ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + ", scdImmutableCheck="
+				+ scdImmutableCheck + ", mvTitle=" + mvTitle + ", mvRunningTime=" + mvRunningTime + ", brcName="
+				+ brcName + "]";
 	}
 
 }

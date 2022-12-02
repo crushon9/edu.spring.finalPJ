@@ -34,18 +34,18 @@ public class BranchDAOImple implements BranchDAO {
 		logger.info("selectOne() call : brcId = " + brcId);
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_brc_id", brcId);
 	}
-	
+
 	// search by brcArea
 	@Override
 	public List<BranchVO> selectBrcArea(int brcArea) {
-		logger.info("select() call : brcArea = " + brcArea);
+		logger.info("selectBrcArea() call : brcArea = " + brcArea);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_brc_area", brcArea);
 	}
-	
+
 	// search by brcName
 	@Override
 	public List<BranchVO> selectBrcName(String searchBrcName) {
-		logger.info("select() call : searchBrcName = " + searchBrcName);
+		logger.info("selectBrcName() call : searchBrcName = " + searchBrcName);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_brc_name", searchBrcName);
 	}
 
@@ -59,6 +59,19 @@ public class BranchDAOImple implements BranchDAO {
 	public int delete(int brcId) {
 		logger.info("delete() call");
 		return sqlSession.delete(NAMESPACE + ".delete", brcId);
+	}
+
+	// 데이터 변경가능여부 체크 immutableCheck
+	@Override
+	public int selectImmutableCheck(int brcId) {
+		logger.info("selectImmutableCheck() call");
+		return sqlSession.selectOne(NAMESPACE + ".select_brcImmutableCheck_by_brc_id", brcId);
+	}
+
+	@Override
+	public int updateImmutableCheck(int brcId) {
+		logger.info("updateImmutableCheck() call");
+		return sqlSession.update(NAMESPACE + ".update_brcImmutableCheck_by_brc_id", brcId);
 	}
 
 }

@@ -59,13 +59,10 @@
 		// 아이디 사용 가능 여부 검사	
 		function idCheck(){
 			var mmbId = $('#mmbId').val();
-			// 기본 출력 값 설정
-			var massage = '';
-			var color = 'black';
 			// 'null' 아이디는 가입불가 (추후 세션검사 때문)
 			if (mmbId == 'null') {
-				massage = '사용 불가한 아이디 입니다';
-				color = 'black';
+				$('#idCheckOutput').html('사용 불가한 아이디 입니다');
+				$('#idCheckOutput').css("color", 'black');
 				return;
 			}
 			$.ajax({
@@ -79,16 +76,14 @@
 				success : function(result) {
 					// -1 : 가입불가, 1 : 가입가능
 					if (result == -1) {
-						massage = '중복된 아이디입니다';
-						color = 'red';
+						$('#idCheckOutput').html('중복된 아이디입니다');
+						$('#idCheckOutput').css("color", 'red');
 					} else if (result == 1 && mmbId != '') {
-						massage = '사용가능한 아이디입니다';
-						color = 'blue';
+						$('#idCheckOutput').html('사용가능한 아이디입니다');
+						$('#idCheckOutput').css("color", 'blue');
 					}
 				}	
 			});
-			$('#idCheckOutput').html(massage);
-			$('#idCheckOutput').css("color", color);
 		}
 	</script>
 

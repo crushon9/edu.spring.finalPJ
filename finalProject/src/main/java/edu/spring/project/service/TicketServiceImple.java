@@ -19,27 +19,27 @@ public class TicketServiceImple implements TicketService {
 	private static final Logger logger = LoggerFactory.getLogger(TicketServiceImple.class);
 
 	@Autowired
-	private TicketDAO tkDao;
+	private TicketDAO ticketDao;
 	@Autowired
-	private ScheduleDAO scdDao;
+	private ScheduleDAO scheduleDao;
 	@Autowired
-	private MovieDAO mvDao;
+	private MovieDAO movieDao;
 
 	@Override
 	@Transactional
 	public int create(TicketVO vo) {
 		logger.info("create() call");
 		// insert -> + 1
-		tkDao.insert(vo);
+		ticketDao.insert(vo);
 		logger.info("ticket insert success");
 		// scdSeatBookedCnt(update)
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
 		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
 		int bookedTotal = adult + adolescent;
-		scdDao.updateScdSeatBookedCnt(bookedTotal, vo.getScdId());
+		scheduleDao.updateScdSeatBookedCnt(bookedTotal, vo.getScdId());
 		logger.info("updateScdSeatBookedCnt success");
 		// mvTicketSales
-		mvDao.updateTicketSales(bookedTotal, vo.getMvId());
+		movieDao.updateTicketSales(bookedTotal, vo.getMvId());
 		logger.info("updateTicketSales success");
 		return 1;
 	}
@@ -47,35 +47,35 @@ public class TicketServiceImple implements TicketService {
 	@Override
 	public List<TicketVO> read() {
 		logger.info("read() call");
-		return tkDao.select();
+		return ticketDao.select();
 	}
 
 	@Override
 	public List<TicketVO> read(int scdId) {
 		logger.info("read() call : scdId = " + scdId);
-		return tkDao.select(scdId);
+		return ticketDao.select(scdId);
 	}
 
 	@Override
 	public List<TicketVO> read(String mmbId) {
 		logger.info("read() call : mmbId = " + mmbId);
-		return tkDao.select(mmbId);
+		return ticketDao.select(mmbId);
 	}
 
 	@Transactional
 	@Override
 	public int delete(TicketVO vo) {
 		logger.info("delete() call");
-		tkDao.delete(vo.getTkId());
+		ticketDao.delete(vo.getTkId());
 		logger.info("ticket delete success");
 		// scdSeatBookedCnt
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
 		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
 		int bookedTotal = adult + adolescent;
-		scdDao.updateScdSeatBookedCnt(-bookedTotal, vo.getScdId());
+		scheduleDao.updateScdSeatBookedCnt(-bookedTotal, vo.getScdId());
 		logger.info("updateScdSeatBookedCnt success");
 		// mvTicketSales
-		mvDao.updateTicketSales(-bookedTotal, vo.getMvId());
+		movieDao.updateTicketSales(-bookedTotal, vo.getMvId());
 		logger.info("updateTicketSales success");
 		return 1;
 	}
@@ -84,6 +84,6 @@ public class TicketServiceImple implements TicketService {
 	@Override
 	public List<TicketVO> readSearch(String search) {
 		logger.info("readSearch() call : search = " + search);
-		return tkDao.selectSearch(search);
+		return ticketDao.selectSearch(search);
 	}
 }
