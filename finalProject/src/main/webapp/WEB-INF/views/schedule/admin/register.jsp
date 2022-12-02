@@ -52,6 +52,9 @@
 					</tbody>
 			  	</table>
 			  	<p>스케줄 등록</p>
+			  	<!-- 스케줄 테이블 출력을 위한 히든 데이터  -->
+				<input type="hidden" id="brcTheaterSeats">
+				<input type="hidden" id="brcTheaterNumbers">
 			  	<div id="scheduleTable"></div>
 		  	</div>
 		  	<%@include file="/WEB-INF/views/footer.jsp" %>
@@ -68,11 +71,13 @@
 			$('#inputDate').change(function() {
 				getMvList();
 				setScdPrice($('#inputDate').val());
+				setScheduleTable();
 			});
 			// 선택 지역의 지점 가져오기
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
+			scheduleBtn();
 	   });
 	  
 	  // 평일13000 주말15000 상영가격세팅
@@ -133,19 +138,19 @@
 		$.getJSON(
 			url,
 			function(data) {
-				$(data).each(function() {
-					var brcTheaterNumbers = this.brcTheaterNumbers;
-					var brcTheaterSeats = this.brcTheaterSeats;
-					// 극장 선택시 스케줄 테이블 출력
-					setScheduleTable(brcTheaterNumbers, brcTheaterSeats);
-				});
+				$('#brcTheaterNumbers').val(data.brcTheaterNumbers);
+				$('#brcTheaterSeats').val(data.brcTheaterSeats);
+				// 극장 선택시 스케줄 테이블 출력
+				setScheduleTable();
 			}
 		);
 	  }
 	
 	  // 스케줄 테이블 기본 형태 출력
-	  function setScheduleTable(brcTheaterNumbers, brcTheaterSeats) {
+	  function setScheduleTable() {
 		console.log('setScheduleTable() 호출');
+		var brcTheaterNumbers = $('#brcTheaterNumbers').val();
+		var brcTheaterSeats = $('#brcTheaterSeats').val();
 		var scheduleTable = '<table><thead><tr><th style="width: 50px">시간</th>';
 		// 지점 극장수만큼 반복하여 제목 컬럼 생성 (col == 극장관번호)
 		for (var col = 1; col <= brcTheaterNumbers; col++) {
@@ -167,12 +172,12 @@
 				// 상영가격 설정 조조 3000원 할인 (timeArray[8] == "11:00")
 				if (timeIndex < 8) { 
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
-					scheduleTable += '<div style="color: red; font-size: 12px; display: inline-block;">조조할인_'+ scdPrice + '</div>'
+					scheduleTable += '<div id="scdPrice" style="color: red; font-size: 12px; display: inline-block;">조조할인_'+ scdPrice + '</div>'
 								   +'<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
 								   + '&nbsp;';
 				} else {
 					var scdPrice = $('#scdPrice').val();
-					scheduleTable += '<div style="font-size: 12px; display: inline-block;">상영가격_'+ scdPrice + '</div>'
+					scheduleTable += '<div id="scdPrice" style="font-size: 12px; display: inline-block;">상영가격_'+ scdPrice + '</div>'
 					               + '<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'
 								   + '&nbsp;';
 				}
@@ -219,22 +224,28 @@
 						thisParentTd.children('input[name=mvRunningTime]').val(this.mvRunningTime);
 						thisParentTd.children('input[name=scdId]').val(this.scdId);
 						thisParentTd.children('input[name=scdPrice]').val(this.scdPrice);
+						// 할인가격의 효과 조건문으로 설정
+						if (this.scdTime < 8) {
+							thisParentTd.children('#scdPrice').html('조조할인_' + this.scdPrice);
+							thisParentTd.children('#scdPrice').css({'color':'red'});
+						} else {
+							thisParentTd.children('#scdPrice').html('상영가격_' + this.scdPrice);
+							thisParentTd.children('#scdPrice').css({'color':'black'});
+						}
 						// 중복 등록 방지를 위해 등록 버튼 비활성화 
 						thisParentTd.children('.scdBtnInsert').prop('disabled', true);
 						thisParentTd.children('.scdBtnInsert').css({"border-color":"lightgray"});
-						// 비활성화된 삭제버튼 활성화
+						// 비활성화된 삭제버튼 첫칸만 활성화
 						if (i == 0) {
 							thisParentTd.children('.scdBtnDelete').prop('disabled', false);
 							thisParentTd.children('.scdBtnDelete').css({"border-color":"red"});
 						}
-						// 삭제시 데이터 전송으로 위해 hidden 박스에 데이터 삽입
+						// 삭제시 예매여부 예외처리를 위해 hidden 박스에 scdSeatBookedCnt 데이터 삽입
 						thisParentTd.children('input[name=scdSeatBookedCnt]').val(this.scdSeatBookedCnt);
 					}
 				}); // end data.each
 			}
 		); // end getJSON
-		// 등록과 삭제 버튼 클릭 이벤트 내용을 담은 함수 호출
-		scheduleBtn();
 	  } // end getScheduleList
 	  
 	  // 등록과 삭제 버튼 클릭 이벤트 내용을 담은 함수
@@ -295,8 +306,8 @@
 							}),
 							success : function(result) {
 								console.log("스케줄 등록 결과 : " + result);
-								// 저장성공후 getScheduleList 호출
-								getScheduleList();
+								// 저장 성공 후 테이블 다시 세팅
+								setScheduleTable();
 							}
 						});
 					}
@@ -330,21 +341,8 @@
 				success : function(result) {
 					console.log("스케줄 삭제 결과 : " + result);
 					if (result != -2) {
-						// 데이터 삭제 성공후 해당 스케줄만 view에 반영
-						for (var i = 0; i < mvRunningTime; i++) {
-							var trIndex = Number(scdTime) + Number(i);
-							var parentTd = $('#scheduleTable').children('table').children('tbody').children('tr.' + trIndex).children('td.' + scdTheater);
-							parentTd.children('.scdBtnInsert').prop('disabled', false);
-							parentTd.children('.scdBtnInsert').css({"border-color":"blue"});
-							if (i == 0) {
-								parentTd.children('.scdBtnDelete').prop('disabled', true);
-								parentTd.children('.scdBtnDelete').css({"border-color":"lightgray"});
-							}
-							parentTd.children('input[name=mvTitle]').val('');
-							parentTd.children('input[name=mvTitle]').css({"border-color":"lightgray"});
-							parentTd.children('input[name=mvRunningTime]').val('');
-							parentTd.children('input[name=scdId]').val('');
-						}
+						// 삭제 성공 후 테이블 다시 세팅
+						setScheduleTable();
 					} else if (result == -2) {
 						alert('예매된 좌석이 있어 삭제 불가합니다!');
 					}
