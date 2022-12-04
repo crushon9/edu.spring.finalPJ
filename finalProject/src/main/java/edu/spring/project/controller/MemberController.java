@@ -125,7 +125,7 @@ public class MemberController {
 	}// end idCheckREST()
 
 	@GetMapping("/login")
-	public void loginGET(Model model, String alertSession, String targetURL) {
+	public void loginGET(Model model, String alertSession) {
 		logger.info("loginGET call : alertSession=" + alertSession);
 		model.addAttribute("alertSession", alertSession);
 	}// end loginGET()

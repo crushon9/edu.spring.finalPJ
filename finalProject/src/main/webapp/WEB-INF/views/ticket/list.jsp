@@ -26,14 +26,6 @@
 	  $(document).ready(function() {
 		  // mmbId에 해당하는 티켓 리스트 가져오기
 		  getTicketListByMmbId();
-		  // 티켓 삭제 버튼 클릭시 티켓 내역 삭제
-		  $('#ticketListOutput').on('click', '.btn_delete', function(){
-			  ticketDelete(this);
-		  });
-		  // 리뷰 버튼 클릭시 리뷰 등록 새창
-		  $('#ticketListOutput').on('click', '.btn_review', function(){
-			  reviewRegister(this);
-		  });
 	  });
 	  
 	  function getTicketListByMmbId() {
@@ -99,13 +91,13 @@
 		);
 	  }
 	  
-	  // 예매티켓 삭제
-	  function ticketDelete(btn) {
+	  // 티켓 삭제 버튼 클릭시 티켓 내역 삭제
+	  $('#ticketListOutput').on('click', '.btn_delete', function(){
 		console.log('ticketDelete() call');
-		var tkId = $(btn).prevAll('.tkId').val();
-		var scdId = $(btn).prevAll('.scdId').val();
-		var mvId = $(btn).prevAll('.mvId').val();
-		var tkPeopleList = $(btn).prevAll('.tkPeopleList').val();
+		var tkId = $(this).prevAll('.tkId').val();
+		var scdId = $(this).prevAll('.scdId').val();
+		var mvId = $(this).prevAll('.mvId').val();
+		var tkPeopleList = $(this).prevAll('.tkPeopleList').val();
 		$.ajax({
 			type : 'DELETE',
 			url : '/project/ticket',
@@ -124,15 +116,15 @@
 				getTicketListByMmbId();							
 			}
 		});
-	 }
-	 
-	 // 리뷰 등록 버튼
-	 function reviewRegister(btn) {
+	  });
+	  
+	  // 리뷰 버튼 클릭시 리뷰 등록 새창
+	  $('#ticketListOutput').on('click', '.btn_review', function(){
 		 console.log('reviewRegister() 호출');
 		 var mmbId = $('#mmbId').val();
-		 var mvId = $(btn).prevAll('.mvId').val();
-		 var mvTitle = $(btn).prevAll('.mvTitle').val();
-		 var mvImage = $(btn).prevAll('.mvImage').val();
+		 var mvId = $(this).prevAll('.mvId').val();
+		 var mvTitle = $(this).prevAll('.mvTitle').val();
+		 var mvImage = $(this).prevAll('.mvImage').val();
 		 $.getJSON (		
 			'/project/review/check/' + mmbId + '/' + mvId,
 			function(data) {
@@ -149,7 +141,7 @@
 				}
 			}
 		 );
-	 }
+	  });
   	</script>
 
 </body>

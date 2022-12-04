@@ -174,6 +174,7 @@
 
 	  // 스케줄 삭제
 	  $('#scheduleListOutput').on('click', '.btn_delete', function() {
+		    console.log('.btn_delete 클릭');
 			var scdId = $(this).nextAll('input[name=scdId]').val();
 			$.ajax({
 				type : 'DELETE',

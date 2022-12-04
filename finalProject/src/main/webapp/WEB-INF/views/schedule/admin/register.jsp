@@ -77,7 +77,6 @@
 			$('#brcArea').change(function() {
 				getBrcList();
 			});
-			scheduleBtn();
 	   });
 	  
 	  // 평일13000 주말15000 상영가격세팅
@@ -182,10 +181,10 @@
 								   + '&nbsp;';
 				}
 				// 등록 삭제 버튼 세팅
-				scheduleTable += '<button style="border-color: blue;" class="scdBtnInsert">등록</button>'
+				scheduleTable += '<button style="border-color: blue;" class="btn_Insert">등록</button>'
 							+ '&nbsp;'
 							// 삭제버튼은 비활성화가 기본값
-							+ '<button style="border-color: lightgray;" class="scdBtnDelete" disabled>삭제</button>'
+							+ '<button style="border-color: lightgray;" class="btn_delete" disabled>삭제</button>'
 							+ '<input width="270px" type="text" name="mvTitle" style="border-color: lightgray;" value="" readonly/>'
 							+ '<input type="hidden" name="scdId"/>'
 							+ '<input type="hidden" name="mvRunningTime" value=""/>'
@@ -233,12 +232,12 @@
 							thisParentTd.children('#scdPrice').css({'color':'black'});
 						}
 						// 중복 등록 방지를 위해 등록 버튼 비활성화 
-						thisParentTd.children('.scdBtnInsert').prop('disabled', true);
-						thisParentTd.children('.scdBtnInsert').css({"border-color":"lightgray"});
+						thisParentTd.children('.btn_Insert').prop('disabled', true);
+						thisParentTd.children('.btn_Insert').css({"border-color":"lightgray"});
 						// 비활성화된 삭제버튼 첫칸만 활성화
 						if (i == 0) {
-							thisParentTd.children('.scdBtnDelete').prop('disabled', false);
-							thisParentTd.children('.scdBtnDelete').css({"border-color":"red"});
+							thisParentTd.children('.btn_delete').prop('disabled', false);
+							thisParentTd.children('.btn_delete').css({"border-color":"red"});
 						}
 						// 삭제시 예매여부 예외처리를 위해 hidden 박스에 scdSeatBookedCnt 데이터 삽입
 						thisParentTd.children('input[name=scdSeatBookedCnt]').val(this.scdSeatBookedCnt);
@@ -248,74 +247,71 @@
 		); // end getJSON
 	  } // end getScheduleList
 	  
-	  // 등록과 삭제 버튼 클릭 이벤트 내용을 담은 함수
-	  function scheduleBtn() {
-		 console.log('scheduleBtn() 호출');
-		 // 스케줄 등록
-	     $('#scheduleTable').on('click', '.scdBtnInsert', function() {
-			console.log('scdBtnInsert 클릭');
-			// 스케줄 등록시 가져갈 정보
-	    	var mvSelected = $('#mvId option:selected').text();
-			var brcId = $('#brcId').val();
-			var mvId = $('#mvId').val();
-	    	var mvTitle = mvSelected.split('_')[0];
-			var mvRunningTime = mvSelected.split('_')[1];
-			var scdDate = $('#inputDate').val();
-			var scdTime = $(this).parents().parents().attr('class');
-			var scdTheater = $(this).parents().attr('class');
-		 	var scdSeatTotal = $(this).nextAll('input[name=scdSeatTotal]').val();
-		 	var scdPrice = $(this).prevAll('input[name=scdPrice]').val();
-			// 영화 미선택시 예외처리
-			if (mvSelected == '') {
-				alert('상영 영화를 선택 해주세요');
-			} else {
-				// mvRunningTime길이만큼 스케줄 칸이 되는지 검사
-				var overlapFlag = 0;
-				for (var i = 1; i < mvRunningTime; i++) {
-					var trIndex = Number(scdTime) + Number(i);
-					console.log(trIndex);
-					var loopRow = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=mvTitle]').val();
-					if (loopRow != '') {
-						alert('상영 스케줄 시간을 확인 해주세요');
-						overlapFlag = 1;
-						break;
-					}
-				}
-				// 중복되지 않았을때 데이터만 ajax로 DB에 저장
-				if (overlapFlag == 0) {		
-					$.ajax({
-						type : 'POST',
-						url : '/project/schedule/admin/register',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},
-						data : JSON.stringify({
-							'brcId' : brcId,
-							'mvId' : mvId,
-							'mvTitle' : mvTitle,
-							'mvRunningTime' : mvRunningTime,
-							'scdDate' : scdDate,
-							'scdTime' : scdTime,
-							'scdTheater' : scdTheater,
-							'scdSeatTotal' : scdSeatTotal,
-							'scdPrice' : scdPrice
-						}),
-						success : function(result) {
-							// 저장 성공 후 테이블 다시 세팅
-							setScheduleTable();
-						}
-					});
+	
+     $('#scheduleTable').on('click', '.btn_Insert', function() {
+		console.log('btn_Insert 클릭');
+		// 스케줄 등록시 가져갈 정보
+    	var mvSelected = $('#mvId option:selected').text();
+		var brcId = $('#brcId').val();
+		var mvId = $('#mvId').val();
+    	var mvTitle = mvSelected.split('_')[0];
+		var mvRunningTime = mvSelected.split('_')[1];
+		var scdDate = $('#inputDate').val();
+		var scdTime = $(this).parents().parents().attr('class');
+		var scdTheater = $(this).parents().attr('class');
+	 	var scdSeatTotal = $(this).nextAll('input[name=scdSeatTotal]').val();
+	 	var scdPrice = $(this).prevAll('input[name=scdPrice]').val();
+		// 영화 미선택시 예외처리
+		if (mvSelected == '') {
+			alert('상영 영화를 선택 해주세요');
+		} else {
+			// mvRunningTime길이만큼 스케줄 칸이 되는지 검사
+			var overlapFlag = 0;
+			for (var i = 1; i < mvRunningTime; i++) {
+				var trIndex = Number(scdTime) + Number(i);
+				var loopRow = $(this).parents().parents().nextAll('.' + trIndex).children('.' + scdTheater).children('input[name=mvTitle]').val();
+				if (loopRow != '') {
+					alert('상영 스케줄 시간을 확인 해주세요');
+					overlapFlag = 1;
+					break;
 				}
 			}
-		});
-		// 스케줄 삭제
-	    $('#scheduleTable').on('click', '.scdBtnDelete', function() {
+			// 중복되지 않았을때 데이터만 ajax로 DB에 저장
+			if (overlapFlag == 0) {		
+				$.ajax({
+					type : 'POST',
+					url : '/project/schedule/admin/register',
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-HTTP-Method-Override' : 'POST'
+					},
+					data : JSON.stringify({
+						'brcId' : brcId,
+						'mvId' : mvId,
+						'mvTitle' : mvTitle,
+						'mvRunningTime' : mvRunningTime,
+						'scdDate' : scdDate,
+						'scdTime' : scdTime,
+						'scdTheater' : scdTheater,
+						'scdSeatTotal' : scdSeatTotal,
+						'scdPrice' : scdPrice
+					}),
+					success : function(result) {
+						// 저장 성공 후 테이블 다시 세팅
+						setScheduleTable();
+					}
+				});
+			}
+		}
+	});
+  
+	  // 스케줄 삭제
+	  $('#scheduleTable').on('click', '.btn_delete', function() {
+		    console.log('btn_delete 클릭');
 			var scdId = $(this).nextAll('input[name=scdId]').val();
-			console.log('scdBtnDelete 클릭 : scdId = ' + scdId);
 			$.ajax({
 				type : 'DELETE',
-				url : '/project/schedule/admin/delete',
+				url : '/project/schedule/admin/delete/' + scdId,
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'DELETE'
@@ -330,11 +326,9 @@
 					} else if (result == -2) {
 						alert('티켓 예매내역이 있어 삭제 불가합니다!');
 					}
-				}	
+				}
 			});
 	    });
-	  }
-	  
 	</script>
 	
 </body>
