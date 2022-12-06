@@ -28,7 +28,7 @@
 		    <p>지점 이름</p>
 		    <input type="text" name="brcName" value="${vo.brcName }" required="required">
 			<p>지점 소개</p>
-			<textarea rows="10" cols="100" name="brcInfo" placeholder="지점 정보" required></textarea>
+			<textarea rows="10" cols="100" name="brcInfo" required>${vo.brcInfo }</textarea>
 			
 			<br><br><input type="submit" value="수정">
 		  </form>

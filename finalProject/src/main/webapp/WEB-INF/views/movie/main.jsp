@@ -37,12 +37,17 @@
 							<Strong>NO. ${status.count}</Strong><br>
 							<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
 							<br><Strong>${vo.mvTitle }</Strong>
-							<!-- 예매율 : 해당영화판매/영화전체판매 -->
-							<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
+							<!-- 예매율 : 0이 아니면 해당영화판매/영화전체판매 0이면-->
+							<c:if test="${vo.mvTicketSalesTotal != 0}">
+								<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
+							</c:if>
+							<c:if test="${vo.mvTicketSalesTotal == 0}">
+								<br><Strong>예매율 0.0 %</Strong>
+							</c:if>
+							<!-- 평점이 0이 아니면 계산하고, 0이면 미등록 표기 -->
 							<c:if test="${vo.mvRatingAvg != 0}">
 								<br><Strong>평점 <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
 							</c:if>
-							<!-- 평점이 0이면 미등록 표기 -->
 							<c:if test="${vo.mvRatingAvg == 0}">
 								<br><Strong>평점 미등록</Strong>
 							</c:if>

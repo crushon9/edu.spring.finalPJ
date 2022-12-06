@@ -56,7 +56,6 @@
 							   + '<th>예매인원</th>'
 							   + '<th>예매좌석</th>'
 							   + '<th>결제금액</th>'
-							   + '<th>취소여부</th>'
 							   + '</tr>'
 							   + '</thead>'
 							   + '<tbody>';
@@ -74,7 +73,6 @@
 								+ '<td>' + this.tkPeopleList + '</td>'
 								+ '<td>' + this.tkSeatList + '</td>'
 								+ '<td>' + this.tkPriceTotal + '</td>'
-								+ '<td>' + this.tkCancelCheck + '</td>'
 								+ '</tr>'
 					}); // end data.each
 				ticketList += '</tbody></table>';
