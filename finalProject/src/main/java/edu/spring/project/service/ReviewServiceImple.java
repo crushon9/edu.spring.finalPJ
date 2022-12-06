@@ -58,9 +58,8 @@ public class ReviewServiceImple implements ReviewService {
 		logger.info("update() call: rvId=" + vo.getRvId());
 		reviewDao.update(vo);
 		// same as create
-		movieDao.updateRating(0, -vo.getRvRatingBefore(), vo.getMvId());
-		movieDao.updateRating(0, vo.getRvRating(), vo.getMvId());
-		logger.info("update success");
+		movieDao.updateRating(0, -vo.getRvRatingBefore() + vo.getRvRating(), vo.getMvId());
+		logger.info("movieRating update success");
 		return 1;
 	}
 
