@@ -26,8 +26,6 @@
 				<input type="date" name="mvDateStarted" value="${vo.mvDateStarted }">
 				<p>영화 종료일</p>
 				<input type="date" name="mvDateEnded" value="${vo.mvDateEnded }">
-				<p>영화 러닝타임 (분)</p>
-				<input type="number" name="mvRunningTime" value="${vo.mvRunningTime }" min="1" max="1000" required>
 				<p>영화 장르</p>
 				<select name="mvGenre" required>
 					<option value="SF">SF</option>

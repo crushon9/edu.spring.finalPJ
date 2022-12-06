@@ -61,8 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${mvImage} = #{mvImage},
 		${mvDateStarted} = #{mvDateStarted},
 		${mvDateEnded} = #{mvDateEnded},
-		${mvRunningTime} = #{mvRunningTime},
-		${mvGenre} = #{mvGenre}, ${mvInfo} = #{mvInfo}
+		${mvGenre} = #{mvGenre},
+		${mvInfo} = #{mvInfo}
 		where ${mvId} = #{mvId}
 	</update>
 	
