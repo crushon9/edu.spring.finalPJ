@@ -68,7 +68,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 브랜치 삭제시 해당하는 선호지점을 가져와서 replace -->
 	<update id="replace_brc_id_deleted">
 		update ${PJ_MEMBER}
-		set ${brcId} = REPLACE(${brcId}, #{deleteBrcId}, #{minBrcId});
+		set ${brcId} = #{minBrcId}
+		WHERE ${brcId} = #{deleteBrcId}
 	</update>
 		
 </mapper>

@@ -69,9 +69,9 @@ public class BranchServiceImple implements BranchService {
 	@Override
 	public int delete(int brcId) {
 		logger.info("delete() call : brcId = " + brcId);
+		memberDao.replaceBrcIdDeleted(brcId, branchDao.selectMinBrcId());
+		logger.info("replaceBrcIdDeleted 완료");
 		try {
-			memberDao.replaceBrcIdDeleted(brcId, branchDao.selectMinBrcId());
-			logger.info("replaceBrcIdDeleted 완료");
 			return branchDao.delete(brcId);
 		} catch (DataIntegrityViolationException sqle) {
 			// 변경불가 상태일때 -2반환
