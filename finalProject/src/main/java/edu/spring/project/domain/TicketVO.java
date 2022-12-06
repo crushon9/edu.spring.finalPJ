@@ -9,7 +9,6 @@ public class TicketVO {
 	private String tkPeopleList;
 	private String tkSeatList;
 	private int tkPriceTotal;
-	private int tkCancelCheck;
 	// Join data
 	private String mvTitle;
 	private String mvImage;
@@ -25,8 +24,8 @@ public class TicketVO {
 	}
 
 	public TicketVO(int tkId, String mmbId, int scdId, int mvId, String tkPeopleList, String tkSeatList,
-			int tkPriceTotal, int tkCancelCheck, String mvTitle, String mvImage, String brcName, String scdDate,
-			int scdTime, int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
+			int tkPriceTotal, String mvTitle, String mvImage, String brcName, String scdDate, int scdTime,
+			int scdTheater, int scdSeatTotal, int scdSeatBookedCnt, int scdPrice) {
 		this.tkId = tkId;
 		this.mmbId = mmbId;
 		this.scdId = scdId;
@@ -34,7 +33,6 @@ public class TicketVO {
 		this.tkPeopleList = tkPeopleList;
 		this.tkSeatList = tkSeatList;
 		this.tkPriceTotal = tkPriceTotal;
-		this.tkCancelCheck = tkCancelCheck;
 		this.mvTitle = mvTitle;
 		this.mvImage = mvImage;
 		this.brcName = brcName;
@@ -100,14 +98,6 @@ public class TicketVO {
 
 	public void setTkPriceTotal(int tkPriceTotal) {
 		this.tkPriceTotal = tkPriceTotal;
-	}
-
-	public int getTkCancelCheck() {
-		return tkCancelCheck;
-	}
-
-	public void setTkCancelCheck(int tkCancelCheck) {
-		this.tkCancelCheck = tkCancelCheck;
 	}
 
 	public String getMvTitle() {
@@ -185,10 +175,10 @@ public class TicketVO {
 	@Override
 	public String toString() {
 		return "TicketVO [tkId=" + tkId + ", mmbId=" + mmbId + ", scdId=" + scdId + ", mvId=" + mvId + ", tkPeopleList="
-				+ tkPeopleList + ", tkSeatList=" + tkSeatList + ", tkPriceTotal=" + tkPriceTotal + ", tkCancelCheck="
-				+ tkCancelCheck + ", mvTitle=" + mvTitle + ", mvImage=" + mvImage + ", brcName=" + brcName
-				+ ", scdDate=" + scdDate + ", scdTime=" + scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal="
-				+ scdSeatTotal + ", scdSeatBookedCnt=" + scdSeatBookedCnt + ", scdPrice=" + scdPrice + "]";
+				+ tkPeopleList + ", tkSeatList=" + tkSeatList + ", tkPriceTotal=" + tkPriceTotal + ", mvTitle="
+				+ mvTitle + ", mvImage=" + mvImage + ", brcName=" + brcName + ", scdDate=" + scdDate + ", scdTime="
+				+ scdTime + ", scdTheater=" + scdTheater + ", scdSeatTotal=" + scdSeatTotal + ", scdSeatBookedCnt="
+				+ scdSeatBookedCnt + ", scdPrice=" + scdPrice + "]";
 	}
 
 }

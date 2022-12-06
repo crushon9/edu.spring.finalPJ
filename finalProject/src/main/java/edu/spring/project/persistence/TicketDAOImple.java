@@ -47,7 +47,7 @@ public class TicketDAOImple implements TicketDAO {
 	@Override
 	public int delete(int tkId) {
 		logger.info("delete() call");
-		return sqlSession.insert(NAMESPACE + ".delete", tkId);
+		return sqlSession.delete(NAMESPACE + ".delete", tkId);
 	}
 	
 	@Override
