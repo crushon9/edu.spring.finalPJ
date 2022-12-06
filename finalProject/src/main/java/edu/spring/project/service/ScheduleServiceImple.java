@@ -4,6 +4,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.persistence.ScheduleDAO;
@@ -37,10 +38,12 @@ public class ScheduleServiceImple implements ScheduleService {
 		logger.info("delete() call : scdId = " + scdId);
 		try {
 			return scheduleDao.delete(scdId);
-		} catch (Exception e) {
+		} catch (DataIntegrityViolationException sqle) {
 			// 변경불가 상태일때 -2반환
-			logger.debug(e.getMessage());
+			logger.debug(sqle.getMessage());
 			return -2;
+		} catch (Exception e) {
+			return scheduleDao.delete(scdId);
 		}
 	}
 }

@@ -4,9 +4,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import edu.spring.project.domain.BranchVO;
 import edu.spring.project.persistence.BranchDAO;
 import edu.spring.project.persistence.MemberDAO;
@@ -56,10 +56,12 @@ public class BranchServiceImple implements BranchService {
 		logger.info("update() call");
 		try {
 			return branchDao.update(vo);
-		} catch (Exception e) {
+		} catch (DataIntegrityViolationException sqle) {
 			// 변경불가 상태일때 -2반환
-			logger.debug(e.getMessage());
+			logger.debug(sqle.getMessage());
 			return -2;
+		} catch (Exception e) {
+			return branchDao.update(vo);
 		}
 	}
 
@@ -71,10 +73,12 @@ public class BranchServiceImple implements BranchService {
 			memberDao.replaceBrcIdDeleted(brcId, branchDao.selectMinBrcId());
 			logger.info("replaceBrcIdDeleted 완료");
 			return branchDao.delete(brcId);
-		} catch (Exception e) {
+		} catch (DataIntegrityViolationException sqle) {
 			// 변경불가 상태일때 -2반환
-			logger.debug(e.getMessage());
+			logger.debug(sqle.getMessage());
 			return -2;
+		} catch (Exception e) {
+			return branchDao.delete(brcId);
 		}
 	}
 
