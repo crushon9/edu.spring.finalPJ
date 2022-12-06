@@ -55,7 +55,7 @@
 							<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
 							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
 						</li>
-						<!-- 영화 4개 마다 공백으로 띄우기 -->
+						<!-- 영화 5개 마다 공백으로 띄우기 -->
 						<c:if test="${(status.count % 5) == 0}">
 							<br> 
 				        </c:if>
