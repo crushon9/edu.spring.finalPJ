@@ -54,12 +54,12 @@ public class BranchServiceImple implements BranchService {
 	@Override
 	public int update(BranchVO vo) {
 		logger.info("update() call");
-		// 변경불가 상태일때 -2반환
-		int immutable = branchDao.selectImmutableCheck(vo.getBrcId());
-		if (immutable != -2) {
+		try {
 			return branchDao.update(vo);
-		} else {
-			return immutable;
+		} catch (Exception e) {
+			// 변경불가 상태일때 -2반환
+			logger.debug(e.getMessage());
+			return -2;
 		}
 	}
 
@@ -67,14 +67,14 @@ public class BranchServiceImple implements BranchService {
 	@Override
 	public int delete(int brcId) {
 		logger.info("delete() call : brcId = " + brcId);
-		// 변경불가 상태일때 -2반환
-		int immutable = branchDao.selectImmutableCheck(brcId);
-		if (immutable != -2) {
+		try {
 			memberDao.replaceBrcIdDeleted(brcId, branchDao.selectMinBrcId());
 			logger.info("replaceBrcIdDeleted 완료");
 			return branchDao.delete(brcId);
-		} else {
-			return immutable;
+		} catch (Exception e) {
+			// 변경불가 상태일때 -2반환
+			logger.debug(e.getMessage());
+			return -2;
 		}
 	}
 

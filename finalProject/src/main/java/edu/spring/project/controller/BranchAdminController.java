@@ -69,7 +69,7 @@ public class BranchAdminController {
 		int result = branchService.update(vo);
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
-		} else if (result == -2) { // Immutable 일때 -2 반환
+		} else if (result == -2) { // 변경불가 일때 -2 반환
 			reAttr.addFlashAttribute("alertBranchUpdate", "branchUpdateImmutableFail");
 			return "redirect:/branch/admin/update?brcId=" + vo.getBrcId();
 		} else {
@@ -84,7 +84,7 @@ public class BranchAdminController {
 		int result = branchService.delete(brcId);
 		if (result == 1) {
 			return "redirect:/branch/admin/list";
-		} else if (result == -2) { // Immutable 일때 -2 반환
+		} else if (result == -2) { // 변경불가 일때 -2 반환
 			reAttr.addFlashAttribute("alertBranchDelete", "branchDeleteImmutableFail");
 			return "redirect:/branch/admin/list";
 		} else {

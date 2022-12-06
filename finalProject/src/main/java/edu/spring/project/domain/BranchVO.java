@@ -10,7 +10,6 @@ public class BranchVO {
 	private int brcTheaterNumbers;
 	private String brcTheaterSeats;
 	private String brcInfo;
-	private int brcImmutableCheck;
 	// view에서 보내온 데이터를 가공하기 위한 임시 멤버 변수
 	private int[] arrBrcTheaterSeats;
 
@@ -18,14 +17,13 @@ public class BranchVO {
 	}
 
 	public BranchVO(int brcId, int brcArea, String brcName, int brcTheaterNumbers, String brcTheaterSeats,
-			String brcInfo, int brcImmutableCheck) {
+			String brcInfo) {
 		this.brcId = brcId;
 		this.brcArea = brcArea;
 		this.brcName = brcName;
 		this.brcTheaterNumbers = brcTheaterNumbers;
 		this.brcTheaterSeats = brcTheaterSeats;
 		this.brcInfo = brcInfo;
-		this.brcImmutableCheck = brcImmutableCheck;
 	}
 
 	public int getBrcId() {
@@ -94,20 +92,11 @@ public class BranchVO {
 		this.brcInfo = brcInfo;
 	}
 
-	public int getBrcImmutableCheck() {
-		return brcImmutableCheck;
-	}
-
-	public void setBrcImmutableCheck(int brcImmutableCheck) {
-		this.brcImmutableCheck = brcImmutableCheck;
-	}
-
 	@Override
 	public String toString() {
 		return "BranchVO [brcId=" + brcId + ", brcArea=" + brcArea + ", brcName=" + brcName + ", brcTheaterNumbers="
 				+ brcTheaterNumbers + ", brcTheaterSeats=" + brcTheaterSeats + ", brcInfo=" + brcInfo
-				+ ", brcImmutableCheck=" + brcImmutableCheck + ", arrBrcTheaterSeats="
-				+ Arrays.toString(arrBrcTheaterSeats) + "]";
+				+ ", arrBrcTheaterSeats=" + Arrays.toString(arrBrcTheaterSeats) + "]";
 	}
 
 }

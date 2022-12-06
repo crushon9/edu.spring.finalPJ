@@ -66,24 +66,24 @@ public class MovieServiceImple implements MovieService {
 	@Override
 	public int update(MovieVO vo) {
 		logger.info("update() call");
-		// 변경불가 상태일때 -2반환
-		int immutable = dao.selectImmutableCheck(vo.getMvId());
-		if (immutable != -2) {
+		try {
 			return dao.update(vo);
-		} else {
-			return immutable;
+		} catch (Exception e) {
+			// 변경불가 상태일때 -2반환
+			logger.debug(e.getMessage());
+			return -2;
 		}
 	}
 
 	@Override
 	public int delete(int mvId) {
 		logger.info("delete() call : mvId = " + mvId);
-		// 변경불가 상태일때 -2반환
-		int immutable = dao.selectImmutableCheck(mvId);
-		if (immutable != -2) {
+		try {
 			return dao.delete(mvId);
-		} else {
-			return immutable;
+		} catch (Exception e) {
+			// 변경불가 상태일때 -2반환
+			logger.debug(e.getMessage());
+			return -2;
 		}
 	}
 

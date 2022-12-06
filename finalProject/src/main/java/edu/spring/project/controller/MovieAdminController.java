@@ -80,6 +80,9 @@ public class MovieAdminController {
 		int result = movieService.update(vo);
 		if (result == 1) {
 			return "redirect:/movie/admin/list";
+		} else if (result == -2) { // 변경불가 일때 -2 반환
+			reAttr.addFlashAttribute("alertMovieUpdate", "movieUpdateImmutableFail");
+			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();
 		} else {
 			reAttr.addFlashAttribute("alertMovieUpdate", "movieUpdateFail");
 			return "redirect:/movie/admin/update?mvId=" + vo.getMvId();
@@ -87,12 +90,16 @@ public class MovieAdminController {
 	}// end updatePOST()
 
 	@GetMapping("/delete")
-	public String deleteGET(int mvId) {
+	public String deleteGET(int mvId, RedirectAttributes reAttr) {
 		logger.info("deleteGET() call : boardId = " + mvId);
 		int result = movieService.delete(mvId);
 		if (result == 1) {
 			return "redirect:/movie/admin/list";
+		} else if (result == -2) { // 변경불가 일때 -2 반환
+			reAttr.addFlashAttribute("alertMovieDelete", "movieDeleteImmutableFail");
+			return "redirect:/movie/admin/list";
 		} else {
+			reAttr.addFlashAttribute("alertMovieDelete", "movieDeleteFail");
 			return "redirect:/movie/admin/update?mvId=" + mvId;
 		}
 	}// end deleteGET()

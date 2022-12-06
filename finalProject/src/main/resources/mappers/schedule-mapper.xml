@@ -74,19 +74,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set ${scdSeatBookedCnt} = ${scdSeatBookedCnt} + #{amount}
 		where ${scdId} = #{scdId}
 	</update>
-	
-	<!-- update, delete를 적용하기 전에 변경가능 여부 검사-->
-	<select id="select_scdImmutableCheck_by_scd_id" resultType="int">
-		select ${scdImmutableCheck}
-		from ${PJ_SCHEDULE}
-		where ${scdId} = #{scdId}
-	</select>
-	
-	<!-- 스케줄 등록시 scdImmutableCheck 값 -2 변경 -->
-	<update id="update_scdImmutableCheck_by_scd_id">
-		update ${PJ_SCHEDULE}
-		set ${scdImmutableCheck} = -2
-		where ${scdId} = #{scdId}
-	</update>
 
 </mapper>

@@ -121,17 +121,4 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.selectOne(NAMESPACE + ".select_ticketsales_total");
 	}
 
-	// 데이터 변경가능여부 체크 immutableCheck
-	@Override
-	public int selectImmutableCheck(int mvId) {
-		logger.info("selectImmutableCheck() call");
-		return sqlSession.selectOne(NAMESPACE + ".select_mvImmutableCheck_by_mv_id", mvId);
-	}
-
-	@Override
-	public int updateImmutableCheck(int mvId) {
-		logger.info("updateImmutableCheck() call");
-		return sqlSession.update(NAMESPACE + ".update_mvImmutableCheck_by_mv_id", mvId);
-	}
-
 }

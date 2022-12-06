@@ -71,20 +71,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${mvId} = #{mvId}
 	</delete>
 	
-<!-- mvImmutableCheck 관련 쿼리 ========================================== -->
-	<!-- update, delete를 적용하기 전에 변경가능 여부 검사-->
-	<select id="select_mvImmutableCheck_by_mv_id" resultType="int">
-		select ${mvImmutableCheck} from	${PJ_MOVIE}
-		where ${mvId} = #{mvId}
-	</select>
-	
-	<!-- 스케줄 등록시 mvImmutableCheck 값 -2 변경 -->
-	<update id="update_mvImmutableCheck_by_mv_id">
-		update ${PJ_MOVIE}
-		set ${mvImmutableCheck} = -2
-		where ${mvId} = #{mvId}
-	</update>
-	
 <!-- mvRating 관련 쿼리 ========================================== -->
 	<!-- mvRatingTotal + amount(삭제 -1, 등록 +1), mvRatingCnt + amount(삭제 -1, 등록 +1) -->
 	<update id="update_ratingTC_by_mv_id">

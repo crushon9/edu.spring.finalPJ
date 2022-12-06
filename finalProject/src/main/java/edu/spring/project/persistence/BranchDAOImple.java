@@ -68,17 +68,4 @@ public class BranchDAOImple implements BranchDAO {
 		return sqlSession.selectOne(NAMESPACE + ".select_min_brc_id");
 	}
 
-	// 데이터 변경가능여부 체크 immutableCheck
-	@Override
-	public int selectImmutableCheck(int brcId) {
-		logger.info("selectImmutableCheck() call");
-		return sqlSession.selectOne(NAMESPACE + ".select_brcImmutableCheck_by_brc_id", brcId);
-	}
-
-	@Override
-	public int updateImmutableCheck(int brcId) {
-		logger.info("updateImmutableCheck() call");
-		return sqlSession.update(NAMESPACE + ".update_brcImmutableCheck_by_brc_id", brcId);
-	}
-
 }

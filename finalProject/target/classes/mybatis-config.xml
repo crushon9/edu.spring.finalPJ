@@ -29,7 +29,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="mvRatingTotal" value="MV_RATING_TOTAL" />
 		<property name="mvRatingCnt" value="MV_RATING_CNT" />
 		<property name="mvRatingAvg" value="MV_RATING_AVG" />
-		<property name="mvImmutableCheck" value="MV_IMMUTABLE_CHECK" />
 
 		<property name="PJ_BRANCH" value="PJ_BRANCH" />
 		<property name="brcId" value="BRC_ID" />
@@ -38,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="brcTheaterNumbers" value="BRC_THEATER_NUMBERS" />
 		<property name="brcTheaterSeats" value="BRC_THEATER_SEATS" />
 		<property name="brcInfo" value="BRC_INFO" />
-		<property name="brcImmutableCheck" value="BRC_IMMUTABLE_CHECK" />
 
 		<property name="PJ_SCHEDULE" value="PJ_SCHEDULE" />
 		<property name="scdId" value="SCD_ID" />
@@ -50,7 +48,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="scdSeatTotal" value="SCD_SEAT_TOTAL" />
 		<property name="scdSeatBookedCnt" value="SCD_SEAT_BOOKED_CNT" />
 		<property name="scdPrice" value="SCD_PRICE" />
-		<property name="scdImmutableCheck" value="SCD_IMMUTABLE_CHECK" />
 
 		<property name="PJ_TICKET" value="PJ_TICKET" />
 		<property name="tkId" value="TK_ID" />
@@ -69,7 +66,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="rvContent" value="RV_CONTENT" />
 		<property name="rvRating" value="RV_RATING" />
 		<property name="rvDateCreated" value="RV_DATE_CREATED" />
-
 	</properties>
 
 	<settings>
