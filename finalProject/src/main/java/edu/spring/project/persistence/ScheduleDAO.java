@@ -10,6 +10,8 @@ public interface ScheduleDAO {
 	ScheduleVO select(int scdId);
 
 	List<ScheduleVO> select(int mvId, int brcId, String scdDate);
+	
+	List<ScheduleVO> select(int mvId, int brcId, String scdDate, int scdTime);
 
 	int delete(int scdId);
 

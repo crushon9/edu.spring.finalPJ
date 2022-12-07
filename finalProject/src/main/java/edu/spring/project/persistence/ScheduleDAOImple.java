@@ -41,6 +41,17 @@ public class ScheduleDAOImple implements ScheduleDAO {
 		args.put("scdDate", scdDate);
 		return sqlSession.selectList(NAMESPACE + ".select_list_if", args);
 	}
+	
+	@Override
+	public List<ScheduleVO> select(int mvId, int brcId, String scdDate, int scdTime) {
+		logger.info("select 오늘날짜 () call : mvId=" + mvId + ", brcId=" + brcId + ", scdTime=" + scdTime);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("mvId", mvId);
+		args.put("brcId", brcId);
+		args.put("scdDate", scdDate);
+		args.put("scdTime", scdTime);
+		return sqlSession.selectList(NAMESPACE + ".select_list_if_today", args);
+	}
 
 	@Override
 	public int delete(int scdId) {

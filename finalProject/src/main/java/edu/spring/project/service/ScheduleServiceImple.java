@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import edu.spring.project.domain.ScheduleVO;
 import edu.spring.project.persistence.ScheduleDAO;
+import edu.spring.project.util.TimeCompareUtil;
 
 @Service
 public class ScheduleServiceImple implements ScheduleService {
@@ -29,6 +30,18 @@ public class ScheduleServiceImple implements ScheduleService {
 
 	@Override
 	public List<ScheduleVO> read(int mvId, int brcId, String scdDate) {
+		logger.info("read() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
+		// 오늘 날짜면 시간비교 쿼리로 데이터를 가져오고 아니라면 시간비교 없이 가져옴
+		if (TimeCompareUtil.compareToToday(scdDate).equals("equals")) {
+			logger.info(TimeCompareUtil.compareToToday(scdDate));
+			return scheduleDao.select(mvId, brcId, scdDate, TimeCompareUtil.nowConvertToScdIndex());
+		} else {
+			return scheduleDao.select(mvId, brcId, scdDate);
+		}
+	}
+
+	@Override
+	public List<ScheduleVO> readAdmin(int mvId, int brcId, String scdDate) {
 		logger.info("read() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		return scheduleDao.select(mvId, brcId, scdDate);
 	}

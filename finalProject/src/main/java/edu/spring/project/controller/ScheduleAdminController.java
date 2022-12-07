@@ -1,5 +1,7 @@
 package edu.spring.project.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,14 @@ public class ScheduleAdminController {
 	public void listGET() {
 		logger.info("listGET() call");
 	}// end listGET()
+	
+	@GetMapping("/list/{mvId}&{brcId}&{scdDate}")
+	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("mvId") int mvId, @PathVariable("brcId") int brcId,
+			@PathVariable("scdDate") String scdDate) {
+		logger.info("listREST() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
+		List<ScheduleVO> list = scheduleService.readAdmin(mvId, brcId, scdDate);
+		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
+	}// end listRESRT()
 
 	@DeleteMapping("/delete/{scdId}")
 	public ResponseEntity<Integer> deleteREST(@PathVariable("scdId") int scdId) {

@@ -55,6 +55,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId} and
 			scd.${scdDate} = #{scdDate}
 		</if>
+		order by ${scdTime}
+	</select>
+	
+	<select id="select_list_if_today" resultType="ScheduleVO">
+		select scd.*, mv.${mvTitle}, mv.${mvRunningTime}, brc.${brcName}
+		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
+		left JOIN ${PJ_BRANCH} brc ON scd.${brcId} = brc.${brcId}
+		<if test="mvId == 0 and brcId == 0 and scdDate != 'none'">
+			where scd.${scdDate} = #{scdDate}
+			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
+		</if>
+		<if test="mvId != 0 and brcId == 0 and scdDate != 'none'">
+			where scd.${mvId} = #{mvId} and scd.${scdDate} = #{scdDate}
+			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
+		</if>
+		<if test="mvId == 0 and brcId != 0 and scdDate != 'none'">
+			where scd.${brcId} = #{brcId} and scd.${scdDate} = #{scdDate}
+			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
+		</if>
+		<if test="mvId != 0 and brcId != 0 and scdDate != 'none'">
+			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId} and
+			scd.${scdDate} = #{scdDate}
+			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
+		</if>
+		order by ${scdTime}
 	</select>
 	
 	<delete id="delete_by_scd_id">

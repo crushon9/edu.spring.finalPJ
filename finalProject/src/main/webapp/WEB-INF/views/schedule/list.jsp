@@ -27,7 +27,7 @@
 			<tbody>
 				<tr>
 					<td>
-						<input type="date" id="inputDate" name="inputDate">
+						<input type="date" id="inputDate" min="" name="inputDate">
 					</td>
 					<td>
 						<div id="mvListOutput"></div>
@@ -61,6 +61,7 @@
 	  $(document).ready(function() {
 			// #inputDate를 오늘날짜로 기본값 세팅
 			$('#inputDate').val(new Date().toISOString().substring(0, 10));
+			$('#inputDate').prop('min', new Date().toISOString().substring(0, 10));
 			getMvList();
 			getScheduleList();
 			// 날짜 선택시 비동기로 영화정보 get

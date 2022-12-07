@@ -128,7 +128,7 @@
 		  console.log('mvId : ' + mvId);
 		  console.log('brcId : ' + brcId);
 		  console.log('inputDate : ' + inputDate);
-		  var url = '/project/schedule/list/' + mvId + '&' + brcId + '&' + inputDate;
+		  var url = '/project/schedule/admin/list/' + mvId + '&' + brcId + '&' + inputDate;
 		  console.log(url);
 		  $.getJSON(			
 				url,
