@@ -27,16 +27,16 @@
 				<thead>
 					<tr>
 						<th style="width: 150px">아이디</th>
+						<th>탈퇴여부<div style="color:blue; font-size:12px;" >* 회원:0, 탈퇴:-2</div></th>
 						<th style="width: 100px"></th>
-						<th>탈퇴여부</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="vo" items="${list }">
 						<tr>						
 							<td><Strong> ${vo.mmbId }</Strong></td>
-							<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="상세조회"></a></td>
 							<td>${vo.mmbResignCheck }</td>
+							<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="상세조회"></a></td>
 						</tr>											
 					</c:forEach>
 				</tbody>

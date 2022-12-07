@@ -14,7 +14,7 @@
 
 		<div id="layoutSidenav_content">
 		<h1>회원 가입하기</h1>
-		 
+		
 		<form action="register" method="post">
 			<p>아이디</p>
 			<input type="text" name="mmbId" id="mmbId" placeholder="아이디 입력" required="required">
