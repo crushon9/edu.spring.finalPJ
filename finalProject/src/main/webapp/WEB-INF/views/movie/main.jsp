@@ -93,7 +93,7 @@
 				$('#orderUrl').prop("href", orderUrl);
 			});//end orderChoice_click();
 			
-			// 검색
+			// 키워드 검색
 			$('#searchBtn').click(function() {
 				var searchText = $('#searchText').val();
 				// space 제거

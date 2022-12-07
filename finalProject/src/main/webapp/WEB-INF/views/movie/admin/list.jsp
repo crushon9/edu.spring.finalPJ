@@ -62,13 +62,13 @@
 	
 	<script type="text/javascript">			
 		$(document).ready(function() {
-			// 문자열 검색
+			// 키워드로 검색
 			$('#searchTextBtn').click(function() {
 				var searchText = $('#searchText').val();
 				var searchTextUrl = 'list?searchText=' + searchText;
 				$('#searchTextUrl').prop("href", searchTextUrl);
 			});
-			// 기간 검색
+			// 기간으로 검색
 			$('#searchPeriodBtn').click(function() {
 				var inputDateStarted = $('#inputDateStarted').val();
 				var inputDateEnded = $('#inputDateEnded').val();

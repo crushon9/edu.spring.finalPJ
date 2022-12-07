@@ -22,12 +22,12 @@
 				<p>영화 제목</p>
 				<input type="text" name="mvTitle" placeholder="영화제목 입력" required>
 				<p>영화 개봉일</p>
-				<input type="date" name="mvDateStarted" value="2020-01-01">
+				<input type="date" name="mvDateStarted" value="2022-12-07">
 				<p>영화 종료일</p>
-				<input type="date" name="mvDateEnded" value="2023-12-31">
+				<input type="date" name="mvDateEnded" value="2022-12-31">
 				<p>영화 러닝타임 (분)</p>
 				<input type="number" id="mvRunningTimeTemp" placeholder="상영시간 입력" min="1" max="1000" required>
-				<input type="hidden" id="mvRunningTime" name="mvRunningTime" >
+				<input type="hidden" id="mvRunningTime" name="mvRunningTime">
 				<p>영화 장르</p>
 				<select name="mvGenre" required>
 					<option value="SF">SF</option>
@@ -55,7 +55,6 @@
 			$('.imageDrop').on('drop', function(event) {
 				event.preventDefault();
 				// Ajax를 이용하여 서버로 파일을 업로드
-				// multipart/form-data 타입으로 파일을 업로드 하는 객체
 				var formData = new FormData();
 				
 				// 드래그한 파일 정보를 갖고 있는 객체
@@ -86,6 +85,7 @@
 				}); // .ajax()
 			}); // .imageDrop.on()
 			
+			// (총 영화 상영시간 / 30(분 단위로 변환)) + 1 -> 영화 스케쥴을 'timeTable' 형태로 등록하기 위함
 			$('#mvRunningTimeTemp').change(function() {
 				var originRunTime = $('#mvRunningTimeTemp').val();
 				var resultRunTime = parseInt(originRunTime / 30) + 1;

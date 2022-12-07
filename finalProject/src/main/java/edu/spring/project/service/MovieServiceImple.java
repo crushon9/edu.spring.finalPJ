@@ -35,7 +35,7 @@ public class MovieServiceImple implements MovieService {
 		return dao.selectOrderTicket();
 	}
 
-	// order by ReviewAvg
+	// order by reviewAvg
 	@Override
 	public List<MovieVO> readOrderReview() {
 		logger.info("readOrderReview() call");
@@ -70,7 +70,7 @@ public class MovieServiceImple implements MovieService {
 		try {
 			return dao.update(vo);
 		} catch (DataIntegrityViolationException sqle) {
-			// 변경불가 상태일때 -2반환
+			// 변경불가 상태일때 -2로 리턴
 			logger.debug(sqle.getMessage());
 			return -2;
 		} catch (Exception e) {

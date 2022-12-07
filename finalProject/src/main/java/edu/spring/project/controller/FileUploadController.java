@@ -35,7 +35,7 @@ public class FileUploadController {
 		result = FileUploadUtil.saveUploadedFile(uploadPath, files[0].getOriginalFilename(), files[0].getBytes());
 		// result : DB에 저장될 파일 이름
 		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}// end uploadAjaxPOST()
+	}// end uploadREST()
 
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> displayREST(String fileName) throws Exception {
@@ -51,6 +51,6 @@ public class FileUploadController {
 		// entity : 파일경로, 확장자정보를 모두 담은 객체
 		ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), httpsHeader, HttpStatus.OK);
 		return entity;
-	}// end display()
+	}// end displayREST()
 
 }

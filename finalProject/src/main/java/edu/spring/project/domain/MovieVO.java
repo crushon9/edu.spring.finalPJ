@@ -11,9 +11,9 @@ public class MovieVO {
 	private String mvGenre;
 	private String mvInfo;
 	private int mvTicketSales;
-	private int mvRatingTotal;
-	private int mvRatingCnt;
-	private float mvRatingAvg; // : mvRatingTotal / mvRatingCnt
+	private int mvRatingTotal; // 평점의 총합
+	private int mvRatingCnt; // 평점 시행 횟수
+	private float mvRatingAvg; // == mvRatingTotal / mvRatingCnt
 
 	public MovieVO() {
 	}
