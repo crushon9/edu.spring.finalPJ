@@ -23,10 +23,6 @@ public class MovieAdminController {
 	@Autowired
 	private MovieService movieService;
 
-	// for upload images
-	@Resource(name = "uploadPath")
-	private String uploadPath;
-
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET() call");

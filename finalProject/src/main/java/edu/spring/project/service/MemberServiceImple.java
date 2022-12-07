@@ -51,6 +51,10 @@ public class MemberServiceImple implements MemberService {
 	@Override
 	public int update(MemberVO vo) {
 		logger.info("update() call");
+		// 회원가입 시 brcId 미 선택(0)이면, selectMinBrcId로 자동 할당.
+		if (vo.getBrcId() == 0) {
+			vo.setBrcId(branchDao.selectMinBrcId());
+		}
 		return memberDao.update(vo);
 	}
 

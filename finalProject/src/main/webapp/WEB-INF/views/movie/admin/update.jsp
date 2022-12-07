@@ -13,7 +13,7 @@
 		<%@include file="/WEB-INF/views/sidebar.jsp" %>
 
 		<div id="layoutSidenav_content">
-			<h1>관리자 영화 수정</h1>
+			<h1>영화 수정 (관리자용)</h1>
 			<p>영화 이미지 </p>
 			<div class="imageDrop"></div>
 				

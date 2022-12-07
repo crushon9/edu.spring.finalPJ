@@ -58,10 +58,6 @@ public class MemberController {
 	@PostMapping("/update")
 	public String updatePOST(MemberVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
-		// 정보 수정 시 brcId 미 선택(0)이면, 서울(1)로 자동 할당.
-		if (vo.getBrcId() == 0) {
-			vo.setBrcId(1);
-		}
 		int result = memberService.update(vo);
 		if (result == 1) {
 			reAttr.addFlashAttribute("alertMemberUpdate", "memberUpdateSuccess");

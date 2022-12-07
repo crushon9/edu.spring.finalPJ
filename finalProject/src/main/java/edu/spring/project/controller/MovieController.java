@@ -23,9 +23,6 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 
-	@Resource(name = "uploadPath")
-	private String uploadPath;
-
 	// site main page => movie list show
 	@GetMapping("/main")
 	public void mainGET(Model model, String orderChoice, String searchText) {
@@ -35,11 +32,11 @@ public class MovieController {
 			List<MovieVO> mvList = movieService.readSearch(searchText);
 			model.addAttribute("mvList", mvList);
 		} else if (orderChoice != null) {
-			// order by ticketSales
+			// order by ticketSales(main.jsp의 select value)
 			if (orderChoice.equals("ticketSales")) {
 				List<MovieVO> mvList = movieService.readOrderTicket();
 				model.addAttribute("mvList", mvList);
-			// order by reviewAvg
+			// order by reviewAvg(main.jsp의 select value)
 			} else if (orderChoice.equals("reviewAvg")) {
 				List<MovieVO> mvList = movieService.readOrderReview();
 				model.addAttribute("mvList", mvList);

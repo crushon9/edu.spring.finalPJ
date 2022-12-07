@@ -16,7 +16,7 @@
 			<h1>영화 목록 보기 (관리자용)</h1>
 			<div>
 			<!-- 영화 검색 -->
-			<strong>시작일 </strong><input id="inputDateStarted" type="date">
+			<strong>개봉일 </strong><input id="inputDateStarted" type="date">
 			<strong>종료일 </strong><input id="inputDateEnded" type="date">
 			<a id="searchPeriodUrl" href=""><input id="searchPeriodBtn" type="button" value="Go"></a>
 			&emsp;&emsp;
@@ -33,6 +33,7 @@
 							<th>이미지</th>
 							<th>제목</th>
 							<th>개봉일</th>
+							<th>종료일</th>
 							<th>장르</th>
 							<th></th>
 							<th></th>
@@ -45,6 +46,7 @@
 								<td><img src="/project/img/display?fileName=thumbnail_${vo.mvImage}"/></td>
 								<td>${vo.mvTitle }</td>
 								<td>${vo.mvDateStarted }</td>
+								<td>${vo.mvDateEnded }
 								<td>${vo.mvGenre }</td>
 								<td><a href="update?mvId=${vo.mvId}"><input type="button" value="수정"></a></td>
 								<td><a href="delete?mvId=${vo.mvId}"><input type="button" value="삭제"></a></td>

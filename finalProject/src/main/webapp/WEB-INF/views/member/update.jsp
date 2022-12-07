@@ -49,6 +49,7 @@
 	<script type="text/javascript">
 	    $(document).ready(function() {
 			$('#brcArea').change(function() {
+				// public_static.js에서 '선택 지역의 지점' 호출
 				publicGetBrcList();
 			});
 	    });

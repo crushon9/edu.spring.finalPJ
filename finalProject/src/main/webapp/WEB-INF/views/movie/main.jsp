@@ -37,20 +37,25 @@
 							<Strong>NO. ${status.count}</Strong><br>
 							<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
 							<br><Strong>${vo.mvTitle }</Strong>
-							<!-- 예매율 : 0이 아니면 해당영화판매/영화전체판매 0이면-->
+							
+							<!-- 예매율 : 0이 아니면 해당영화판매/영화전체판매 * 100을 나타태기 -->
 							<c:if test="${mvTicketSalesTotal != 0}">
 								<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
 							</c:if>
+							<!-- 예매율 : 0이면 '예매율 0.0%'로 표기 -->
 							<c:if test="${mvTicketSalesTotal == 0}">
 								<br><Strong>예매율 0.0 %</Strong>
 							</c:if>
-							<!-- 평점이 0이 아니면 계산하고, 0이면 미등록 표기 -->
+							
+							<!-- 평점이 0이 아니면 수치 표기, 0이면 '평점 미등록'으로 표기 -->
 							<c:if test="${vo.mvRatingAvg != 0}">
 								<br><Strong>평점⭐ <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
 							</c:if>
+							
 							<c:if test="${vo.mvRatingAvg == 0}">
 								<br><Strong>평점 미등록</Strong>
 							</c:if>
+							
 							<br>개봉일 ${vo.mvDateStarted }<br>
 							<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
 							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
@@ -68,17 +73,18 @@
 	</div>
 	
 	<input type="hidden" id="mmbId" value="<%=mmbIdSession %>">
+	
 	<script type="text/javascript">
 		// document가 생성되기 전에 view에서 생성한 sessionStorage를 통해서 targetURL 리다이렉트
 		if (sessionStorage.getItem('targetURL') !== null && $('#mmbId').val() != 'null') {
-			console.log('메인 여기');
+			console.log('main.jsp data call');
 			var targetURL = sessionStorage.getItem('targetURL');
 			sessionStorage.removeItem('targetURL');
 			location.href = targetURL;
 		}
 		
 		$(document).ready(function() {
-			// 정렬
+			// 영화 리스트 정렬(예매순 or 평점순)
 			$('#orderChoice, #orderBtn').click(function() {
 				var orderChoice = $('#orderChoice').val();
 				var orderUrl = 'main?orderChoice=' + orderChoice;
@@ -96,7 +102,6 @@
 				}
 				var searchUrl = 'main?searchText=' + searchText;
 				$('#searchUrl').prop("href", searchUrl);
-					
 			});//end searchBtn_click();
 		});
 	</script>

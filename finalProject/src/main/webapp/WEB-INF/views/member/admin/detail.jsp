@@ -15,20 +15,20 @@
 		<div id="layoutSidenav_content">
 	
 		<h1>회원 정보 조회 (관리자용)</h1>
-		<div>
-	    <p>아이디</p>
-	    ${vo.mmbId }
-	    <p>이메일</p>
-	    ${vo.mmbEmail }
-	 	<p>전화번호</p>
-	 	${vo.mmbPhone }
-		<p>생년월일 </p>
-		${vo.mmbBirthday }
-		<p>선호지점 </p>
-		${vo.brcName }점
-		<p>탈퇴여부(회원:0, 탈퇴:-2)</p>
-		${vo.mmbResignCheck }
-		</div>
+			<div>
+		    <p>아이디</p>
+		    ${vo.mmbId }
+		    <p>이메일</p>
+		    ${vo.mmbEmail }
+		 	<p>전화번호</p>
+		 	${vo.mmbPhone }
+			<p>생년월일 </p>
+			${vo.mmbBirthday }
+			<p>선호지점 </p>
+			${vo.brcName }점
+			<p>탈퇴여부(회원:0, 탈퇴:-2)</p>
+			${vo.mmbResignCheck }
+			</div>
 		<%@include file="/WEB-INF/views/footer.jsp" %>
 		</div>
 	</div>

@@ -49,8 +49,10 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#brcArea').change(function() {
+				// public_static.js에서 '선택 지역의 지점' 호출
 				publicGetBrcList();
 			});
+			// blur로 입력하면 즉시 값 나타내기
 			$('#mmbId').blur(function() {
 				idCheck();
 			});
@@ -59,7 +61,7 @@
 		// 아이디 사용 가능 여부 검사	
 		function idCheck(){
 			var mmbId = $('#mmbId').val();
-			// 'null' 아이디는 가입불가 (추후 세션검사 때문)
+			// 'null' 아이디는 가입불가 (추후 세션검사에 오류방지)
 			if (mmbId == 'null') {
 				$('#idCheckOutput').html('사용 불가한 아이디 입니다');
 				$('#idCheckOutput').css("color", 'black');
@@ -74,7 +76,7 @@
 				},
 				data : mmbId,
 				success : function(result) {
-					// -1 : 가입불가, 1 : 가입가능
+					// -1 : 가입불가, 1 : 가입가능으로 Controller에서 제어
 					if (result == -1) {
 						$('#idCheckOutput').html('중복된 아이디입니다');
 						$('#idCheckOutput').css("color", 'red');
