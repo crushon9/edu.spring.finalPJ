@@ -36,12 +36,13 @@
 			<h1>영화 상세 정보</h1>
 			<img class="mvImage" src="/project/img/display?fileName=${vo.mvImage}" />
 			<h2>${vo.mvTitle}</h2>
+			<p>예매율 </p><!-- 예매율 : 해당영화판매/영화전체판매 -->
+			<div style="color:red; font-weight:bolder;"><fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</div>
+			<div id="mvRatingAvgPrint"></div>
 			<p>영화 장르 </p>${vo.mvGenre}
 			<p>상영일</p>${vo.mvDateStarted} ~ ${vo.mvDateEnded}
-			<p>영화 정보</p>${vo.mvInfo}
-			<p>예매율 </p><!-- 예매율 : 해당영화판매/영화전체판매 -->
-			<fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %
-			<div id="mvRatingAvgPrint"></div>
+			<p>영화 정보</p>
+			<textarea rows="10" cols="100" style="border:none; outline:none;" readonly >${vo.mvInfo}</textarea>
 			<hr>
 		
 			<!-- 영화리뷰출력 -->
@@ -259,13 +260,13 @@
 				url,
 				function(data) {
 					console.log(data);
-					var mvRatingAvgText = '<p>영화 평점</p>';
+					var mvRatingAvgText = '<p>영화 평점</p><div style="color:red; font-weight:bolder;">';
 					var mvRatingAvg = (data).toFixed(2); // 소수점 둘째 반올림
 					if (mvRatingAvg != 0) {
-						mvRatingAvgText += mvRatingAvg + ' / 5.00';
+						mvRatingAvgText += mvRatingAvg + ' / 5.00</div>';
 					// 평점이 0이면 리뷰 미등록 표기
 					} else {
-						mvRatingAvgText += '리뷰 등록 전 입니다';
+						mvRatingAvgText += '리뷰 등록 전 입니다</div>';
 					}
 					$('#mvRatingAvgPrint').html(mvRatingAvgText)
 				}

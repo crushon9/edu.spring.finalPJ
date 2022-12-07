@@ -37,7 +37,7 @@
 					<option value="애니메이션">애니메이션</option>
 				</select>
 				<p>영화 소개</p>
-				<textarea rows="4" cols="30" name="mvInfo">${vo.mvInfo }</textarea>
+				<textarea rows="10" cols="100" name="mvInfo">${vo.mvInfo }</textarea>
 				<br><br><input type="submit" value="수정">
 			</form>
 			<%@include file="/WEB-INF/views/footer.jsp" %>
