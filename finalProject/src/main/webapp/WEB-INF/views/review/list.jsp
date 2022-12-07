@@ -85,7 +85,13 @@
 									+ '<td><a href="/project/movie/detail?mvId=' + this.mvId + '"><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></a></td>'
 									+ '<td><strong>' + this.mvTitle + '</strong></td>'
 									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
-									+ '<td class="rvRating"><select class="rvRating" disabled>'                               
+									+ '<td class="rvRating">'
+									+ '<div id="star-rating" style="display: inline-block; width:120px; text-align: left; font-size: 1em;">';
+		                            for (var star = 0; star < this.rvRating; star++) {
+		                            	rvList += '⭐'
+		                            }
+		                            rvList += '</div>'
+									+ '<select class="rvRating" disabled>'                               
 		                            + '<option value="1"' + isSelected1 + '>1</option>'
 		                            + '<option value="2"' + isSelected2 + '>2</option>'
 		                            + '<option value="3"' + isSelected3 + '>3</option>'
@@ -100,37 +106,30 @@
 						rvList += '</tbody></table>';
 					}
 					$('#reviewListOutput').html(rvList);
-					// 리뷰를 가져올때 수정 삭제 이벤트 호출
-				    $('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
-						reviewUpdate(this);
-					});
-					$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
-						reviewDelete(this);
-				    });
 				}
 			); // end getJSON
 		} // end getAll
 		
 		// 후기 수정
-		function reviewUpdate(btn) {
+		$('#reviewListOutput').on('click', '.rvItem .btn_update', function() {
 			console.log('reviewUpdate() call');
 			// 수정버튼을 처음누르면 readonly 속성제거, 수정확인을 누르면 ajax로 데이터 변경
-			var isReadOnly = $(btn).parent().prevAll('.rvContent').children('.rvContent').prop('readonly');
+			var isReadOnly = $(this).parent().prevAll('.rvContent').children('.rvContent').prop('readonly');
 			if (isReadOnly == true) { // readonly가 true면
-				var rvRating = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();
-				$(btn).parent().prevAll('.rvRatingBefore').val(rvRating);
-				$(btn).parent().prevAll('.rvContent').children('.rvContent').removeAttr('readonly');
-				$(btn).parent().prevAll('.rvContent').children('.rvContent').css({"border-color":"red"});
-				$(btn).parent().prevAll('.rvRating').children('.rvRating').removeAttr('disabled');
-				$(btn).parent().prevAll('.rvRating').children('.rvRating').css({"border-color":"red"});
-				$(btn).val("수정확인");
-				$(btn).parent().nextAll('.delete').children('.btn_delete').hide();
+				var rvRating = $(this).parent().prevAll('.rvRating').children('.rvRating').val();
+				$(this).parent().prevAll('.rvRatingBefore').val(rvRating);
+				$(this).parent().prevAll('.rvContent').children('.rvContent').removeAttr('readonly');
+				$(this).parent().prevAll('.rvContent').children('.rvContent').css({"border-color":"red"});
+				$(this).parent().prevAll('.rvRating').children('.rvRating').removeAttr('disabled');
+				$(this).parent().prevAll('.rvRating').children('.rvRating').css({"border-color":"red"});
+				$(this).val("수정확인");
+				$(this).parent().nextAll('.delete').children('.btn_delete').hide();
 			} else { // 아니라면 댓글 수정
-				var rvId = $(btn).parent().prevAll('.rvId').val();
-				var mvId = $(btn).parent().prevAll('.mvId').val();
-				var rvRatingBefore = $(btn).parent().prevAll('.rvRatingBefore').val();
-				var rvContent = $(btn).parent().prevAll('.rvContent').children('.rvContent').val();
-				var rvRatingAfter = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();
+				var rvId = $(this).parent().prevAll('.rvId').val();
+				var mvId = $(this).parent().prevAll('.mvId').val();
+				var rvRatingBefore = $(this).parent().prevAll('.rvRatingBefore').val();
+				var rvContent = $(this).parent().prevAll('.rvContent').children('.rvContent').val();
+				var rvRatingAfter = $(this).parent().prevAll('.rvRating').children('.rvRating').val();
 				$.ajax({
 					type : 'PUT',
 					url : '/project/review',
@@ -150,14 +149,14 @@
 					}
 				});
 			}
-		}
+		});
 		
 		// 후기 삭제
-		function reviewDelete(btn) {
+		$('#reviewListOutput').on('click', '.rvItem .btn_delete', function() {
 			console.log('reviewDelete() call');
-			var rvId = $(btn).parent().prevAll('.rvId').val();
-			var mvId = $(btn).parent().prevAll('.mvId').val();
-			var rvRating = $(btn).parent().prevAll('.rvRating').children('.rvRating').val();
+			var rvId = $(this).parent().prevAll('.rvId').val();
+			var mvId = $(this).parent().prevAll('.mvId').val();
+			var rvRating = $(this).parent().prevAll('.rvRating').children('.rvRating').val();
 			$.ajax({
 				type : 'DELETE',
 				url : '/project/review',
@@ -174,7 +173,7 @@
 					getUserReviewList();							
 				}
 			});
-		}
+		});
 	</script>
 </body>
 </html>

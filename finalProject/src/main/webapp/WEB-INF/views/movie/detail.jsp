@@ -125,6 +125,11 @@
 									+ '<p style="width: 70px; display: inline-block">' + this.mmbId + '</p>'
 									+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/>'
 									+ '&nbsp;&nbsp;'
+		                            + '<div id="star-rating" style="display: inline-block; width: 120px; font-size: 1em;">';
+		                            for (var star = 0; star < this.rvRating; star++) {
+		                            	rvList += '⭐'
+		                            }
+		                            rvList += '</div>'
 									+ '<select class="rvRating" disabled>'                               
 		                            + '<option value="1"' + isSelected1 + '>1</option>'
 		                            + '<option value="2"' + isSelected2 + '>2</option>'
@@ -147,13 +152,6 @@
 					$('#reviewListOutput').html(rvList);
 					// 리뷰를 가져올때마다 영화 평균 평점도 새로 계산하여 출력
 					mvRatingRefresh();
-					// 리뷰를 가져올때 수정 삭제 이벤트 호출
-					$('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
-						reviewUpdate(this);
-					});
-					$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
-						reviewDelete(this);
-					});
 				}
 			); // end getJSON
 		}
@@ -185,26 +183,26 @@
 		 }
 		 
 		// 후기 수정
-		function reviewUpdate(btn) {
+		$('#reviewListOutput').on('click', '.rvItem .btn_update', function(){
 			console.log('reviewUpdate() call');
 			// 수정버튼을 처음누르면 readonly 속성제거, 수정확인을 누르면 ajax로 데이터 변경
-			var isReadOnly = $(btn).prevAll('.rvContent').prop('readonly');
+			var isReadOnly = $(this).prevAll('.rvContent').prop('readonly');
 			if (isReadOnly == true) { // readonly가 true면 readonly 속성제거
-				$(btn).prevAll('.rvRatingBefore').val($(btn).prevAll('.rvRating').val());
-				$(btn).prevAll('.rvContent').removeAttr('readonly');
-				$(btn).prevAll('.rvContent').css({"border-color":"red"});
-				$(btn).prevAll('.rvRating').removeAttr('disabled');
-				$(btn).prevAll('.rvRating').css({"border-color":"red"});
-				$(btn).val("수정확인");
-				$(btn).nextAll('.btn_delete').hide();
+				$(this).prevAll('.rvRatingBefore').val($(this).prevAll('.rvRating').val());
+				$(this).prevAll('.rvContent').removeAttr('readonly');
+				$(this).prevAll('.rvContent').css({"border-color":"red"});
+				$(this).prevAll('.rvRating').removeAttr('disabled');
+				$(this).prevAll('.rvRating').css({"border-color":"red"});
+				$(this).val("수정확인");
+				$(this).nextAll('.btn_delete').hide();
 			} else { // 아니라면(수정확인을 누르면) ajax로 데이터 변경
-				var rvId = $(btn).prevAll('.rvId').val();
+				var rvId = $(this).prevAll('.rvId').val();
 				var mvId = $('#mvId').val();
-				var rvContent = $(btn).prevAll('.rvContent').val();
+				var rvContent = $(this).prevAll('.rvContent').val();
 				// rvRatingAfter : 변경 후 평점
-				var rvRatingAfter = $(btn).prevAll('.rvRating').val();
+				var rvRatingAfter = $(this).prevAll('.rvRating').val();
 				// rvRatingBefore : 변경 전 평점
-				var rvRatingBefore = $(btn).prevAll('.rvRatingBefore').val();
+				var rvRatingBefore = $(this).prevAll('.rvRatingBefore').val();
 				$.ajax({
 					type : 'PUT',
 					url : '/project/review',
@@ -225,14 +223,14 @@
 					}
 				});
 			}
-		}
+		});
 		
 		// 후기 삭제
-		function reviewDelete(btn) {
+		$('#reviewListOutput').on('click', '.rvItem .btn_delete', function(){
 			console.log('reviewDelete() call');
-			var rvId = $(btn).prevAll('.rvId').val();
+			var rvId = $(this).prevAll('.rvId').val();
 			var mvId = $('#mvId').val();
-			var rvRating = $(btn).prevAll('.rvRating').val();
+			var rvRating = $(this).prevAll('.rvRating').val();
 			$.ajax({
 				type : 'DELETE',
 				url : '/project/review',
@@ -250,7 +248,7 @@
 					getReviewList();							
 				}
 			});
-		}
+		});
 		
 		// 영화 평균 평점 새로고침
 		function mvRatingRefresh() {
