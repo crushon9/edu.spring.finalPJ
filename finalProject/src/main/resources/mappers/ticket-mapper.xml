@@ -56,6 +56,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select tk.${tkId}, scd.${scdDate}, scd.${scdTime}
 		from ${PJ_TICKET} tk JOIN ${PJ_SCHEDULE} scd ON tk.${scdId} = scd.${scdId}
 		where tk.${mmbId} = #{mmbId} and tk.${mvId} = #{mvId}
-		order by scd.${scdDate} desc, scd.${scdTime} desc
+		order by scd.${scdDate}, scd.${scdTime}
 	</select>
 </mapper>
