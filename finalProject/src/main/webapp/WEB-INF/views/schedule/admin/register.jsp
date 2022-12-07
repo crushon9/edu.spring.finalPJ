@@ -169,7 +169,7 @@
 				// 추후 데이터 컨트롤을 위하여 td class = 극장번호로 지정
 				scheduleTable += '<td class="' + (col + 1) + '">';
 				// 상영가격 설정 조조 3000원 할인 (timeArray[4]="07:00", timeArray[13]="11:00")
-				if (4 < this.scdTime && this.scdTime < 13) { 
+				if (4 < timeIndex && timeIndex < 13) { 
 					var scdPrice = Number($('#scdPrice').val()) - Number(3000);
 					scheduleTable += '<div id="scdPrice" style="color: red; font-size: 12px; display: inline-block;">조조할인_'+ scdPrice + '</div>'
 								   +'<input type="hidden" name="scdPrice" value="'+ scdPrice +'"/>'

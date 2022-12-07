@@ -19,9 +19,34 @@ public class TimeCompareUtil {
 					"20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "24:00"));
 	// "23:30", "24:00" - js publicScdTimeArray에는 없지만 현재시간과 비교를 위해 추가
 
+	// 시간 포함 비교
+	public static String compareToNow(String inputDate, int scdTime) {
+		logger.info("compareToNow() 호출 scdTime=" + scdTime);
+		// 현재 날짜 시간 변수 now 생성
+		LocalDateTime now = LocalDateTime.now();
+		// 전달된 date와 scdTime를 LocalDateTime 타입으로 변환
+		String inputStr = inputDate + "T" + scdTimeArray.get(scdTime) + ":00.000";
+		LocalDateTime input = LocalDateTime.parse(inputStr);
+		// input 값과 now 비교
+		String result = "";
+		if (input.isBefore(now)) {
+			result = "before";
+		}
+		if (input.isAfter(now)) {
+			result = "after";
+		}
+		if (input.isEqual(now)) {
+			result = "equals";
+		}
+		logger.info("시간 비교 결과:" + result);
+		return result;
+	}
+
 	// 날짜 비교
 	public static String compareToToday(String inputDate) {
 		logger.info("compareToToday() 호출 inputDate=" + inputDate);
+		// 오늘 날짜 변수 today 생성
+		LocalDate today = LocalDate.now();
 		// inputDate를 split 년 월 일로 분할
 		String[] split = inputDate.split("-");
 		int year = Integer.parseInt(split[0]);
@@ -29,8 +54,6 @@ public class TimeCompareUtil {
 		int dayOfMonth = Integer.parseInt(split[2]);
 		// LocalDate 타입으로 변환
 		LocalDate inputDay = LocalDate.of(year, month, dayOfMonth);
-		// 오늘 날짜 변수 생성
-		LocalDate today = LocalDate.now();
 		// inputDay 와 today 비교
 		String result = "";
 		if (inputDay.isEqual(today)) {
@@ -43,29 +66,6 @@ public class TimeCompareUtil {
 			result = "after";
 		}
 		logger.info("날짜 비교 결과:" + result);
-		return result;
-	}
-
-	// 시간 포함 비교
-	public static String compareToNow(String inputDate, int scdTime) {
-		logger.info("compareToNow() 호출 scdTime=" + scdTime);
-		String inputStr = inputDate + "T" + scdTimeArray.get(scdTime) + ":00.000";
-		LocalDateTime input = LocalDateTime.parse(inputStr);
-		LocalDateTime now = LocalDateTime.now();
-
-		String result = "";
-		if (input.isBefore(now)) {
-			result = "before";
-		}
-
-		if (input.isAfter(now)) {
-			result = "after";
-		}
-
-		if (input.isEqual(now)) {
-			result = "equals";
-		}
-		logger.info("시간 비교 결과:" + result);
 		return result;
 	}
 

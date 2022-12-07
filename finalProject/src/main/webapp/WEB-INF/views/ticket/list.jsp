@@ -77,6 +77,8 @@
 								+ '<input class="scdId" type="hidden" value="' + this.scdId + '">'
 								+ '<input class="mvId" type="hidden" value="' + this.mvId + '">'
 								+ '<input class="tkPeopleList" type="hidden" value="' + this.tkPeopleList + '">'
+								+ '<input class="scdDate" type="hidden" value="' + this.scdDate + '">'
+								+ '<input class="scdTime" type="hidden" value="' + this.scdTime + '">'
 								+ '<input class="btn_delete" type="button" value="예매취소"></td>'
 								+ '<td><input class="mvId" type="hidden" value="' + this.mvId + '">'
 								+ '<input class="mvTitle" type="hidden" value="' + this.mvTitle + '">'
@@ -98,6 +100,8 @@
 		var scdId = $(this).prevAll('.scdId').val();
 		var mvId = $(this).prevAll('.mvId').val();
 		var tkPeopleList = $(this).prevAll('.tkPeopleList').val();
+		var scdDate = $(this).prevAll('.scdDate').val();
+		var scdTime = $(this).prevAll('.scdTime').val();
 		$.ajax({
 			type : 'DELETE',
 			url : '/project/ticket',
@@ -110,8 +114,14 @@
 				'scdId' : scdId,
 				'mvId' : mvId,
 				'tkPeopleList' : tkPeopleList,
+				'scdDate' : scdDate,
+				'scdTime' : scdTime
 			}),
 			success : function(result) {
+				// 티켓이 상영시간이 지나서 예매취소하지 못할때
+				if (result == -2) {
+					alert('영화 상영 시작전 예매취소 가능합니다. 다시 확인해주세요!');
+				}
 				// 삭제 후 유저 티켓 리스트 다시 들고오기
 				getTicketListByMmbId();							
 			}
@@ -128,16 +138,18 @@
 		 $.getJSON (		
 			'/project/review/check/' + mmbId + '/' + mvId,
 			function(data) {
-				// 0:리뷰등록가능, -1:영화미관람, -2:리뷰기등록
+				// 0:리뷰등록가능, -2:영화미관람, -3:리뷰기등록, -4:티켓구매했으나영화상영전
 				if (data == 0) {
 					// 리뷰 등록 새창 띄우기 
 					var popUrl = '/project/review/register?mmbId=' + mmbId + '&mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
 				    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
 					window.open(popUrl, '_blank', popOption);
 				} else if (data == -2) {
-					alert("이미 리뷰 등록하신 영화 입니다");
-				} else if (data == -1) {
 					alert("관람 후 리뷰 등록 가능합니다");
+				} else if (data == -3) {
+					alert("이미 리뷰 등록하신 영화 입니다");
+				} else if (data == -4) {
+					alert("영화 상영시간 이후 리뷰 등록 가능합니다");
 				}
 			}
 		 );

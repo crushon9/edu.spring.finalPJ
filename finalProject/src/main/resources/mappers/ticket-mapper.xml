@@ -51,9 +51,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${tkId} = #{tkId}
 	</delete>
 	
-	<!-- 리뷰 등록 위해서 계정&영화로 티켓구입여부 체크 -->
-	<select id="buy_check" resultType="int">
-		select ${tkId} from	${PJ_TICKET}
-		where ${mmbId} = #{mmbId} and ${mvId} = #{mvId}
+	<!-- 리뷰 등록 위해서 계정&영화로 티켓구입여부 체크하며 시간 값 반환 -->
+	<select id="buy_check" resultType="TicketVO">
+		select tk.${tkId}, scd.${scdDate}, scd.${scdTime}
+		from ${PJ_TICKET} tk JOIN ${PJ_SCHEDULE} scd ON tk.${scdId} = scd.${scdId}
+		where tk.${mmbId} = #{mmbId} and tk.${mvId} = #{mvId}
+		order by scd.${scdDate} desc, scd.${scdTime} desc
 	</select>
 </mapper>

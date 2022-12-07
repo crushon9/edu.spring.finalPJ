@@ -25,7 +25,7 @@ public class TicketDAOImple implements TicketDAO {
 		logger.info("insert() call");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
-	
+
 	@Override
 	public List<TicketVO> select() {
 		logger.info("select() call");
@@ -49,9 +49,9 @@ public class TicketDAOImple implements TicketDAO {
 		logger.info("delete() call");
 		return sqlSession.delete(NAMESPACE + ".delete", tkId);
 	}
-	
+
 	@Override
-	public List<Integer> buyCheck(String mmbId, int mvId) {
+	public List<TicketVO> buyCheck(String mmbId, int mvId) {
 		logger.info("buyCheck() call : mmbId=" + mmbId + ", mvId=" + mvId);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("mmbId", mmbId);

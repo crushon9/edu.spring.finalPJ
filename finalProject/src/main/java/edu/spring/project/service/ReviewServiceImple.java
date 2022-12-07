@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.spring.project.domain.ReviewVO;
+import edu.spring.project.domain.TicketVO;
 import edu.spring.project.persistence.MovieDAO;
 import edu.spring.project.persistence.ReviewDAO;
 import edu.spring.project.persistence.TicketDAO;
+import edu.spring.project.util.TimeCompareUtil;
 
 @Service
 public class ReviewServiceImple implements ReviewService {
@@ -76,17 +78,23 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public Integer check(String mmbId, int mvId) {
 		logger.info("check() call");
-		Integer result = 0; // 등록가능
-		List<Integer> isBuy = ticketDao.buyCheck(mmbId, mvId);
-		if (isBuy.isEmpty()) { // 구입 안했을때
-			result = -1;
-		} else {
-			Integer isRegister = reviewDao.registerCheck(mmbId, mvId);
-			if (isRegister != null) { // 등록 되어있을때
-				result = -2;
+		// 구입 내역 확인 리스트의 첫번째 값에 상영날짜시간 최신값이 정렬되어 들어감
+		List<TicketVO> isBuy = ticketDao.buyCheck(mmbId, mvId);
+		// 구입 안했을때 -2 반환
+		if (isBuy.isEmpty()) {
+			return -2;
+		} else { // 구입했을때
+			// 동일한 영화와 계정으로 리뷰 등록되어 있으면 리뷰 등록 불가 -3 반환
+			if (reviewDao.registerCheck(mmbId, mvId) != null) {
+				return -3;
+			}
+			// 티켓시간이 현재시간보다 before일때 리뷰 등록가능 0 반환
+			if (TimeCompareUtil.compareToNow(isBuy.get(0).getScdDate(), isBuy.get(0).getScdTime()).equals("before")) {
+				return 0;
+			} else { // 현재시간과 같거나 아직 상영전 영화라면 리뷰 등록 불가 -4 반환
+				return -4;
 			}
 		}
-		return result;
 	}
 
 }

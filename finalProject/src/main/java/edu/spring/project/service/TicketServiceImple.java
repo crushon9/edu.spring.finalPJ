@@ -12,6 +12,7 @@ import edu.spring.project.domain.TicketVO;
 import edu.spring.project.persistence.MovieDAO;
 import edu.spring.project.persistence.ScheduleDAO;
 import edu.spring.project.persistence.TicketDAO;
+import edu.spring.project.util.TimeCompareUtil;
 
 @Service
 public class TicketServiceImple implements TicketService {
@@ -66,8 +67,14 @@ public class TicketServiceImple implements TicketService {
 	@Override
 	public int delete(TicketVO vo) {
 		logger.info("delete() call");
-		ticketDao.delete(vo.getTkId());
-		logger.info("ticket delete success");
+		// 현재시간보다 영화 상영 시간이 after 일때 삭제
+		if (TimeCompareUtil.compareToNow(vo.getScdDate(), vo.getScdTime()).equals("after")) {
+			logger.info(TimeCompareUtil.compareToNow(vo.getScdDate(), vo.getScdTime()));
+			ticketDao.delete(vo.getTkId());
+			logger.info("ticket delete 성공");
+		} else {
+			return -2;
+		}
 		// scdSeatBookedCnt
 		int adult = Integer.parseInt(vo.getTkPeopleList().split("&")[0].split("=")[1]);
 		int adolescent = Integer.parseInt(vo.getTkPeopleList().split("&")[1].split("=")[1]);
