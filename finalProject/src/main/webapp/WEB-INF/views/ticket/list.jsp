@@ -145,9 +145,9 @@
 				    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
 					window.open(popUrl, '_blank', popOption);
 				} else if (data == -2) {
-					alert("관람 후 리뷰 등록 가능합니다");
-				} else if (data == -3) {
 					alert("이미 리뷰 등록하신 영화 입니다");
+				} else if (data == -3) {
+					alert("관람 후 리뷰 등록 가능합니다");
 				} else if (data == -4) {
 					alert("영화 상영시간 이후 리뷰 등록 가능합니다");
 				}
