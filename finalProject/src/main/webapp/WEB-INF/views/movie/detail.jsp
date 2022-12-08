@@ -125,11 +125,13 @@
 									+ '<p style="width: 70px; display: inline-block">' + this.mmbId + '</p>'
 									+ '<input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/>'
 									+ '&nbsp;&nbsp;'
+									// 이모지 별 모양 출력 공간
 		                            + '<div id="star-rating" style="display: inline-block; width: 120px; font-size: 1em;">';
 		                            for (var star = 0; star < this.rvRating; star++) {
 		                            	rvList += '⭐'
 		                            }
 		                            rvList += '</div>'
+		                            
 									+ '<select class="rvRating" disabled>'                               
 		                            + '<option value="1"' + isSelected1 + '>1</option>'
 		                            + '<option value="2"' + isSelected2 + '>2</option>'

@@ -111,9 +111,9 @@ public class MemberController {
 	public ResponseEntity<Integer> idCheckREST(@RequestBody String mmbId) {
 		logger.info("idCheckREST() call : mmbId = " + mmbId);
 		String idCheck = memberService.idCheck(mmbId);
-		// 가입불가 : -1, 기본값으로 설정
+		// 기본값으로 -1(가입 불가) 할당
 		int result = -1;
-		// vo에 데이터가 비어있다면, 가입가능 : 1
+		// 아이디가 비어있으면, 가입가능 : 1로 할당
 		if (idCheck == null) {
 			result = 1;
 		}
