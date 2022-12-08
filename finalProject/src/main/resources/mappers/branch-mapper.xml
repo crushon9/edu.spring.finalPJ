@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_list_all" resultType="BranchVO">
 		select * from
 		${PJ_BRANCH}
-		order by ${brcId} DESC
+		order by ${brcId}
 	</select>
 	
 	<!-- selectOne data -->
@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from
 		${PJ_BRANCH}
 		where ${brcArea} = #{brcArea}
+		order by ${brcId}
 	</select>
 	
 	<!-- search by brcName -->
@@ -36,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from
 		${PJ_BRANCH}
 		where ${brcName} like '%' || #{searchBrcName} || '%'
+		order by ${brcName}
 	</select>
 	
 	<update id="update">

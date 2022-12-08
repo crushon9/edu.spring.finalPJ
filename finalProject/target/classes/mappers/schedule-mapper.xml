@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId} and
 			scd.${scdDate} = #{scdDate}
 		</if>
-		order by ${scdTime}
+		order by scd.${scdDate} desc, scd.${scdTime}
 	</select>
 	
 	<select id="select_list_if_today" resultType="ScheduleVO">
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			scd.${scdDate} = #{scdDate}
 			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
 		</if>
-		order by ${scdTime}
+		order by scd.${scdDate} desc, scd.${scdTime}
 	</select>
 	
 	<delete id="delete_by_scd_id">

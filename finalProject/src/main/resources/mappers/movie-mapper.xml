@@ -37,14 +37,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${PJ_MOVIE}
 		where ${mvDateStarted} <![CDATA[<=]]> #{inputDateStarted} 
 		and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
+		order by ${mvDateStarted} desc
 	</select>
 
 	<!-- search by date -->
 	<select id="select_list_by_date" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
-		where #{inputDate} BETWEEN ${mvDateStarted} and
-		${mvDateEnded}
+		where #{inputDate} BETWEEN ${mvDateStarted} and	${mvDateEnded}
+		order by ${mvDateStarted} desc
 	</select>
 
 	<!-- search by String / keyword-->
