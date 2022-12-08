@@ -127,9 +127,10 @@ public class MovieDAOImple implements MovieDAO {
 	@Override
 	public int updateTicketSales(int amount, int mvId) {
 		logger.info("updateTicketSales() call : mvId = " + mvId);
-		Map<String, Integer> args = new HashMap<String, Integer>();
+		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("amount", amount);
 		args.put("mvId", mvId);
+		args.put("today", TimeCompareUtil.today());
 		return sqlSession.update(NAMESPACE + ".update_ticketsales_by_mv_id", args);
 	}
 
@@ -137,7 +138,7 @@ public class MovieDAOImple implements MovieDAO {
 	@Override
 	public int selectTicketSalesTotal() {
 		logger.info("selectTicketSalesTotal() call");
-		return sqlSession.selectOne(NAMESPACE + ".select_ticketsales_total");
+		return sqlSession.selectOne(NAMESPACE + ".select_ticketsales_total", TimeCompareUtil.today());
 	}
 
 }
