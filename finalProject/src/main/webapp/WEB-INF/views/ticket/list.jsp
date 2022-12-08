@@ -128,31 +128,32 @@
 		});
 	  });
 	  
-	  // 리뷰 버튼 클릭시 리뷰 등록 새창
+	  // 리뷰 등록
 	  $('#ticketListOutput').on('click', '.btn_review', function(){
 		 console.log('reviewRegister() 호출');
 		 var mmbId = $('#mmbId').val();
 		 var mvId = $(this).prevAll('.mvId').val();
 		 var mvTitle = $(this).prevAll('.mvTitle').val();
 		 var mvImage = $(this).prevAll('.mvImage').val();
-		 $.getJSON (		
-			'/project/review/check/' + mmbId + '/' + mvId,
-			function(data) {
-				// 0:리뷰등록가능, -2:영화미관람, -3:리뷰기등록, -4:티켓구매했으나영화상영전
-				if (data == 0) {
-					// 리뷰 등록 새창 띄우기 
+		 $.ajax({
+			type : 'GET',
+			url : '/project/review/check/' + mmbId + '/' + mvId,
+			success : function(data) {
+				console.log(data);
+				if (data == 'possible') {
+					// 리뷰 등록 가능할때 리뷰등록 새창
 					var popUrl = '/project/review/register?mmbId=' + mmbId + '&mvId=' + mvId + '&mvTitle=' + mvTitle + '&mvImage=' + mvImage;
 				    var popOption = 'status=no, menubar=no, toolbar=no, resizable=no';
 					window.open(popUrl, '_blank', popOption);
-				} else if (data == -2) {
+				} else if (data == 'impossible_existed') {
 					alert("이미 리뷰 등록하신 영화 입니다");
-				} else if (data == -3) {
+				} else if (data == 'impossible_noTicket') {
 					alert("관람 후 리뷰 등록 가능합니다");
-				} else if (data == -4) {
+				} else if (data == 'impossible_time') {
 					alert("영화 상영시간 이후 리뷰 등록 가능합니다");
 				}
 			}
-		 );
+		}); // .ajax()
 	  });
   	</script>
 

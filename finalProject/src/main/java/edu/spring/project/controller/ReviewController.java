@@ -81,11 +81,11 @@ public class ReviewController {
 	}// end deleteREST()
 
 	@GetMapping("/check/{mmbId}/{mvId}") // (GET)/review/check/mmbId/mvId
-	public ResponseEntity<Integer> checkREST(@PathVariable("mmbId") String mmbId, @PathVariable("mvId") int mvId) {
+	public ResponseEntity<String> checkREST(@PathVariable("mmbId") String mmbId, @PathVariable("mvId") int mvId) {
 		logger.info("checkREST() call" + mmbId + mvId);
-		Integer result = reviewService.check(mmbId, mvId);
+		String result = reviewService.check(mmbId, mvId);
 		logger.info(result.toString());
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}// end checkREST()
 
 }

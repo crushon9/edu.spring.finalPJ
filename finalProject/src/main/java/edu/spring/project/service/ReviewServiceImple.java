@@ -77,26 +77,26 @@ public class ReviewServiceImple implements ReviewService {
 	}
 
 	@Override
-	public Integer check(String mmbId, int mvId) {
+	public String check(String mmbId, int mvId) {
 		logger.info("check() call");
-		// 동일한 영화와 계정으로 리뷰 등록되어 있으면 -2(리뷰 등록 불가) 반환
+		// 동일한 영화와 계정으로 리뷰 등록되어 있으면
 		if (reviewDao.registerCheck(mmbId, mvId) != null) {
-			return -2;
+			return "impossible_existed";
 		}
 		// 구입 내역 확인 리스트의 첫번째 값에 상영날짜시간 가장 빠른 값 순서로 정렬되어있음
 		List<TicketVO> buyTicketList = ticketDao.buyCheck(mmbId, mvId);
-		// 구입 안했을때 buyTicketListrk 비어있으면 -3 반환
+		// 구입 안했을때 buyTicketListrk 비어있으면
 		if (buyTicketList.isEmpty()) {
-			return -3;
+			return "impossible_noTicket";
 		} else { // 구입했을때
 			// buyTicketList에 상영날짜시간이 빠른순서대로 정렬되어 있음 (index 0 가장 빠른값)
 			String earliestDate = buyTicketList.get(0).getScdDate();
 			int earliestTime = buyTicketList.get(0).getScdTime();
-			// 티켓시간이 현재시간보다 before일때 0(리뷰 등록 가능) 반환
+			// 티켓시간이 현재시간보다 before일때 리뷰등록가능
 			if (TimeCompareUtil.compareToNow(earliestDate, earliestTime).equals("before")) {
-				return 0;
-			} else { // 현재시간과 같거나 아직 상영전 영화라면 -4(리뷰 등록 불가) 반환
-				return -4;
+				return "possible";
+			} else { // 현재시간과 같거나 아직 상영전 영화라면
+				return "impossible_time";
 			}
 		}
 	}
