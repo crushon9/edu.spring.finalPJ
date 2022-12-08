@@ -41,19 +41,19 @@ public class MovieAdminController {
 		}
 	} // end registerPOST()
 
-	@GetMapping("/list") 
+	@GetMapping("/list")
 	public void listGET(Model model, String searchText, String inputDateStarted, String inputDateEnded) {
 		logger.info("listGET() call");
 		// searchText : keyword search
 		if (searchText != null) {
-			List<MovieVO> mvList = movieService.readSearch(searchText);
+			List<MovieVO> mvList = movieService.readAdminSearch(searchText);
 			model.addAttribute("mvList", mvList);
 		} else if (inputDateStarted != null && inputDateEnded != null) {
-			List<MovieVO> mvList = movieService.readPeriod(inputDateStarted, inputDateEnded);
+			List<MovieVO> mvList = movieService.readAdminPeriod(inputDateStarted, inputDateEnded);
 			model.addAttribute("mvList", mvList);
-		// default : order by ticketSales
-		} else { 
-			List<MovieVO> mvList = movieService.readOrderTicket();
+			// default : order by ticketSales
+		} else {
+			List<MovieVO> mvList = movieService.readAdmin();
 			model.addAttribute("mvList", mvList);
 		}
 		// 각 영화마다 예매율을 구하기 위해 영화 전체 판매수를 DB에서 가져옴
@@ -69,7 +69,7 @@ public class MovieAdminController {
 		model.addAttribute("vo", vo);
 	}// end updateGET()
 
-	@PostMapping("/update") 
+	@PostMapping("/update")
 	public String updatePOST(MovieVO vo, RedirectAttributes reAttr) {
 		logger.info("updatePOST() call : vo = " + vo.toString());
 		int result = movieService.update(vo);

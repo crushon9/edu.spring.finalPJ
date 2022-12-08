@@ -102,4 +102,12 @@ public class TimeCompareUtil {
 		logger.info("현재시간변환String=" + result + ", scdTime=" + scdTime);
 		return scdTime;
 	}
+
+	// 오늘날짜 스트링으로 반환
+	public static String today() {
+		LocalDate today = LocalDate.now();
+		String result = today.toString();
+		logger.info("today() 호출 :" + result);
+		return result;
+	}
 }

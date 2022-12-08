@@ -10,20 +10,26 @@ public interface MovieService {
 
 	MovieVO read(int mvId);
 
-	// order by ticketSales
-	List<MovieVO> readOrderTicket();
+	// 관리자 기본검색
+	List<MovieVO> readAdmin();
 
-	// order by ReviewAvg
-	List<MovieVO> readOrderReview();
+	// 관리자 search by String(keyword)
+	List<MovieVO> readAdminSearch(String search);
 
-	// search by period
-	List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded);
+	// 관리자 search by period
+	List<MovieVO> readAdminPeriod(String inputDateStarted, String inputDateEnded);
+
+	// 유저  OrderTicket
+	List<MovieVO> readUserOrderTicket();
+
+	// 유저 OrderReview
+	List<MovieVO> readUserOrderReview();
+
+	// 유저 search by String(keyword)
+	List<MovieVO> readUserSearch(String search);
 
 	// search by date
 	List<MovieVO> readDate(String inputDate);
-
-	// search by String(keyword)
-	List<MovieVO> readSearch(String search);
 
 	int update(MovieVO vo);
 
@@ -31,7 +37,7 @@ public interface MovieService {
 
 	float readRatingAvg(int mvId);
 
-	// 각 영화마다 예매율을 구하기 위함 
+	// 각 영화마다 예매율을 구하기 위함
 	int readMvTicketSalesTotal();
 
 }

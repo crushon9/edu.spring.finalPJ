@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import edu.spring.project.domain.MovieVO;
+import edu.spring.project.util.TimeCompareUtil;
 
 @Repository
 public class MovieDAOImple implements MovieDAO {
@@ -30,21 +31,14 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.selectOne(NAMESPACE + ".select_one_by_mv_id", mvId);
 	}
 
-	// order by ticketSales
+	// 관리자 기본검색
 	@Override
-	public List<MovieVO> selectOrderTicket() {
-		logger.info("selectOrderTicket() call");
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_ticket");
+	public List<MovieVO> selectAll() {
+		logger.info("selectAll() call");
+		return sqlSession.selectList(NAMESPACE + ".select_list_all");
 	}
 
-	// order by ReviewAvg
-	@Override
-	public List<MovieVO> selectOrderReview() {
-		logger.info("selectOrderReview() call");
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_review");
-	}
-
-	// search by period
+	// 관리자 search by period
 	@Override
 	public List<MovieVO> selectPeriod(String inputDateStarted, String inputDateEnded) {
 		logger.info("selectPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = "
@@ -55,18 +49,42 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_period", args);
 	}
 
+	// 관리자 search by String(keyword)
+	@Override
+	public List<MovieVO> selectSearch(String search) {
+		logger.info("selectSearch() call : search = " + search);
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mv_title", search);
+	}
+
+	// 유저 order by ticketSales
+	@Override
+	public List<MovieVO> selectOrderTicketToday() {
+		logger.info("selectOrderTicketToday() call");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_ticket_today", TimeCompareUtil.today());
+	}
+
+	// 유저 order by ReviewAvg
+	@Override
+	public List<MovieVO> selectOrderReviewToday() {
+		logger.info("selectOrderReviewToday() call");
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_mv_order_review_today", TimeCompareUtil.today());
+	}
+
+	// 유저 search by String(keyword)
+	@Override
+	public List<MovieVO> selectSearchToday(String search) {
+		logger.info("selectSearchToday() call : search = " + search);
+		Map<String, String> args = new HashMap<String, String>();
+		args.put("searchMvTitle", search);
+		args.put("today", TimeCompareUtil.today());
+		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mv_title_today", args);
+	}
+
 	// search by date
 	@Override
 	public List<MovieVO> selectDate(String inputDate) {
 		logger.info("selectDate() call : inputDate = " + inputDate);
 		return sqlSession.selectList(NAMESPACE + ".select_list_by_date", inputDate);
-	}
-
-	// search by String(keyword)
-	@Override
-	public List<MovieVO> selectSearch(String search) {
-		logger.info("selectSearch() call : search = " + search);
-		return sqlSession.selectList(NAMESPACE + ".select_list_by_search_mv_title", search);
 	}
 
 	@Override

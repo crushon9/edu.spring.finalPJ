@@ -7,21 +7,27 @@ public interface MovieDAO {
 	int insert(MovieVO vo);
 
 	MovieVO select(int mvId);
+	
+	// 관리자 기본검색
+	List<MovieVO> selectAll();
 
-	// order by ticketSales
-	List<MovieVO> selectOrderTicket();
-
-	// order by ReviewAvg
-	List<MovieVO> selectOrderReview();
-
-	// search by period
+	// 관리자 search by period
 	List<MovieVO> selectPeriod(String inputDateStarted, String inputDateEnded);
+	
+	// 관리자 search by String(keyword)
+	List<MovieVO> selectSearch(String search);
+	
+	// 유저 order by ticketSales
+	List<MovieVO> selectOrderTicketToday();
+
+	// 유저 order by ReviewAvg
+	List<MovieVO> selectOrderReviewToday();
+	
+	// 유저 search by String(keyword)
+	List<MovieVO> selectSearchToday(String search);
 
 	// search by date
 	List<MovieVO> selectDate(String inputDate);
-
-	// search by String(keyword)
-	List<MovieVO> selectSearch(String search);
 
 	int update(MovieVO vo);
 

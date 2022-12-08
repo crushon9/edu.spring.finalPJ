@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
 import edu.spring.project.domain.MovieVO;
 import edu.spring.project.persistence.MovieDAO;
 
@@ -28,26 +27,47 @@ public class MovieServiceImple implements MovieService {
 		return dao.select(mvId);
 	}
 
-	// order by ticketSales
+	// 관리자 기본검색
 	@Override
-	public List<MovieVO> readOrderTicket() {
-		logger.info("readOrderTicket() call");
-		return dao.selectOrderTicket();
+	public List<MovieVO> readAdmin() {
+		logger.info("readAdmin() call");
+		return dao.selectAll();
 	}
 
-	// order by reviewAvg
+	// 관리자 search by String(keyword)
 	@Override
-	public List<MovieVO> readOrderReview() {
-		logger.info("readOrderReview() call");
-		return dao.selectOrderReview();
+	public List<MovieVO> readAdminSearch(String search) {
+		logger.info("readAdminSearch() call : search = " + search);
+		return dao.selectSearch(search);
 	}
 
-	// search by period
+	// 관리자 search by period
 	@Override
-	public List<MovieVO> readPeriod(String inputDateStarted, String inputDateEnded) {
-		logger.info(
-				"readPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
+	public List<MovieVO> readAdminPeriod(String inputDateStarted, String inputDateEnded) {
+		logger.info("readAdminPeriod() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = "
+				+ inputDateEnded);
 		return dao.selectPeriod(inputDateStarted, inputDateEnded);
+	}
+
+	// 유저 OrderTicket
+	@Override
+	public List<MovieVO> readUserOrderTicket() {
+		logger.info("readUserOrderTicket() call");
+		return dao.selectOrderTicketToday();
+	}
+
+	// 유저 OrderReview
+	@Override
+	public List<MovieVO> readUserOrderReview() {
+		logger.info("readUserOrderReview() call");
+		return dao.selectOrderReviewToday();
+	}
+
+	// 유저 search by String(keyword)
+	@Override
+	public List<MovieVO> readUserSearch(String search) {
+		logger.info("readUserSearch() call : search = " + search);
+		return dao.selectSearchToday(search);
 	}
 
 	// search by date
@@ -55,13 +75,6 @@ public class MovieServiceImple implements MovieService {
 	public List<MovieVO> readDate(String inputDate) {
 		logger.info("readDate() call : inputDate = " + inputDate);
 		return dao.selectDate(inputDate);
-	}
-
-	// search by String(keyword)
-	@Override
-	public List<MovieVO> readSearch(String search) {
-		logger.info("readSearch() call : search = " + search);
-		return dao.selectSearch(search);
 	}
 
 	@Override

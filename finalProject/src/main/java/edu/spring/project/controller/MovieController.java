@@ -28,21 +28,21 @@ public class MovieController {
 		logger.info("mainGET() call");
 		// searchText : keyword search
 		if (searchText != null) {
-			List<MovieVO> mvList = movieService.readSearch(searchText);
+			List<MovieVO> mvList = movieService.readUserSearch(searchText);
 			model.addAttribute("mvList", mvList);
 		} else if (orderChoice != null) {
 			// order by ticketSales(main.jsp의 select value)
 			if (orderChoice.equals("ticketSales")) {
-				List<MovieVO> mvList = movieService.readOrderTicket();
+				List<MovieVO> mvList = movieService.readUserOrderTicket();
 				model.addAttribute("mvList", mvList);
-			// order by reviewAvg(main.jsp의 select value)
+				// order by reviewAvg(main.jsp의 select value)
 			} else if (orderChoice.equals("reviewAvg")) {
-				List<MovieVO> mvList = movieService.readOrderReview();
+				List<MovieVO> mvList = movieService.readUserOrderReview();
 				model.addAttribute("mvList", mvList);
 			}
-		// default : order by ticketSales
-		} else { 
-			List<MovieVO> mvList = movieService.readOrderTicket();
+			// default : order by ticketSales
+		} else {
+			List<MovieVO> mvList = movieService.readUserOrderTicket();
 			model.addAttribute("mvList", mvList);
 		}
 		// 각 영화마다 예매율을 구하기 위해 영화 전체 판매수를 DB에서 가져옴
@@ -67,15 +67,6 @@ public class MovieController {
 		float mvRatingAvg = movieService.readRatingAvg(mvId);
 		return new ResponseEntity<Float>(mvRatingAvg, HttpStatus.OK);
 	}// end mvRatingAvgREST()
-
-	// Asynchronous : for schedule table
-	@GetMapping("/list/{inputDateStarted}/{inputDateEnded}")
-	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDateStarted") String inputDateStarted,
-			@PathVariable("inputDateEnded") String inputDateEnded) {
-		logger.info("listREST() call : inputDateStarted = " + inputDateStarted + ", inputDateEnded = " + inputDateEnded);
-		List<MovieVO> list = movieService.readPeriod(inputDateStarted, inputDateEnded);
-		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
-	}// end listREST()
 
 	// Asynchronous : for schedule table
 	@GetMapping("/list/{inputDate}")

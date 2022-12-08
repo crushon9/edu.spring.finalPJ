@@ -16,22 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from ${PJ_MOVIE}
 		where ${mvId} = #{mvId}
 	</select>
-
-	<!-- order by ticketSales -->
-	<select id="select_list_by_mv_order_ticket" resultType="MovieVO">
-		select * from
-		${PJ_MOVIE}
-		order by ${mvTicketSales} desc
+	
+	<!-- 관리자 기본 검색 -->
+	<select id="select_list_all" resultType="MovieVO">
+		select * from ${PJ_MOVIE}
 	</select>
-
-	<!-- order by ReviewAvg -->
-	<select id="select_list_by_mv_order_review" resultType="MovieVO">
-		select * from
-		${PJ_MOVIE}
-		order by ${mvRatingAvg} desc
-	</select>
-
-	<!-- search by period -->
+	
+	<!-- 관리자 search by period -->
 	<select id="select_list_by_period" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
@@ -39,21 +30,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
 		order by ${mvDateStarted} desc
 	</select>
+	
+	<!-- 관리자 search by String / keyword-->
+	<select id="select_list_by_search_mv_title" resultType="MovieVO">
+		select * from
+		${PJ_MOVIE}
+		where ${mvTitle} like '%' || #{searchMvTitle} || '%'
+		order by ${mvTitle}
+	</select>
+	
+	<!-- 유저 order by ticketSales -->
+	<select id="select_list_by_mv_order_ticket_today" resultType="MovieVO">
+		select * from ${PJ_MOVIE}
+		where ${mvDateStarted} <![CDATA[<=]]> #{today} 
+		and #{today} <![CDATA[<=]]> ${mvDateEnded}
+		order by ${mvTicketSales} desc
+	</select>
 
-	<!-- search by date -->
+	<!-- 유저 order by ReviewAvg -->
+	<select id="select_list_by_mv_order_review_today" resultType="MovieVO">
+		select * from ${PJ_MOVIE}
+		where ${mvDateStarted} <![CDATA[<=]]> #{today} 
+		and #{today} <![CDATA[<=]]> ${mvDateEnded}
+		order by ${mvRatingAvg} desc
+	</select>
+
+	<!-- 유저 search by String / keyword-->
+	<select id="select_list_by_search_mv_title_today" resultType="MovieVO">
+		select * from ${PJ_MOVIE}
+		where ${mvTitle} like '%' || #{searchMvTitle} || '%'
+		and ${mvDateStarted} <![CDATA[<=]]> #{today} 
+		and #{today} <![CDATA[<=]]> ${mvDateEnded}
+		order by ${mvTitle}
+	</select>
+	
+	<!-- 스케줄검색시 search by date -->
 	<select id="select_list_by_date" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
 		where #{inputDate} BETWEEN ${mvDateStarted} and	${mvDateEnded}
 		order by ${mvDateStarted} desc
-	</select>
-
-	<!-- search by String / keyword-->
-	<select id="select_list_by_search_mv_title" resultType="MovieVO">
-		select * from
-		${PJ_MOVIE}
-		where ${mvTitle} like '%' || #{searchMvTitle} || '%'
-		order by ${mvTicketSales} desc
 	</select>
 
 	<update id="update">
