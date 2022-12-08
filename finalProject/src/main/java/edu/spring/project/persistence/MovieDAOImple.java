@@ -81,6 +81,7 @@ public class MovieDAOImple implements MovieDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", mvId);
 	}
 
+	// review 등록 시, 평점 total도 변경
 	@Override
 	public int updateRating(int amount, int rvRating, int mvId) {
 		logger.info("updateRating() : mvId = " + mvId);
