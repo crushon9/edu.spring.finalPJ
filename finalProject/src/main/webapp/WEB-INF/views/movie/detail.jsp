@@ -81,7 +81,6 @@
 			var mvId = $('#mvId').val();
 			var url = '/project/review/' + mvId; // REST API 방식 적용
 			var mmbId = $('#mmbId').val(); // 수정권한 확인용 세션 검사
-			// $.getJSON 방식이므로 JSON.stringify하지 않아도 되고, header도 없어도됨
 			$.getJSON(			
 				url,
 				function(data) {// 서버에서 온 data가 저장되어있음

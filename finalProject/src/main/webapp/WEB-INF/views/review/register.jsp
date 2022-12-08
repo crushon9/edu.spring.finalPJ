@@ -60,7 +60,9 @@
 		var alertReviewRegister = $('#alertReviewRegister').val();
 		if (alertReviewRegister == 'reviewRegisterSuccess'){
 			alert("리뷰 등록 성공");
+			// 부모창 새로고침 적용
 			opener.document.location.reload();
+			// 자식창은 셀프 닫기 적용
 			self.close();
 		} else if (alertReviewRegister == 'reviewRegisterFail'){
 			alert("리뷰 등록 실패");

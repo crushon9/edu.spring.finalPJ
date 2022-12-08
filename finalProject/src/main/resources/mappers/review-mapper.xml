@@ -10,14 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{mvId}, #{mmbId}, #{rvContent}, #{rvRating})
 	</insert>
 	
-	<!-- select list mvId로 가져오기 --> 
+	<!-- select list mvId로 가져오기, movie/detail에서 사용--> 
 	<select id="select_list_by_mv_id" resultType="ReviewVO">
 		select * from ${PJ_REVIEW}
 		where ${mvId} = #{mvId}
 		order by ${rvDateCreated} desc
 	</select>
 	
-	<!-- select list mmbId로 가져오기 --> 
+	<!-- select list mmbId로 가져오기, mypage에서 사용 --> 
 	<select id="select_list_by_mmb_id" resultType="ReviewVO">
 		select rv.*, mv.${mvTitle}, mv.${mvImage}
 		from ${PJ_REVIEW} rv JOIN ${PJ_MOVIE} mv ON rv.${mvId} = mv.${mvId}
@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${rvDateCreated} desc
 	</select>	
 		
-	<!-- selectOne rvId로 가져오기 --> 
+	<!-- selectOne rvId로 가져오기, 수정/삭제 시 사용 --> 
 	<select id="select_one_by_rv_id" resultType="ReviewVO">
 		select * from
 		${PJ_REVIEW}

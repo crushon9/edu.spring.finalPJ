@@ -43,8 +43,8 @@
 							   + '<th>관람평</th>'
 							   + '<th>평점</th>'
 							   + '<th>등록일</th>'
-							   + '<th>수정</th>'
-							   + '<th>삭제</th>'
+							   + '<th></th>'
+							   + '<th></th>'
 							   + '</tr>'
 							   + '</thead>'
 							   + '<tbody>';
@@ -77,15 +77,17 @@
 							if (mmbId == this.mmbId) {
 								isDisabled = '';
 							}
-							rvList += '<tr class="rvItem">' // 여러개가 생성될거니깐 class를 부여했고, 댓글 한줄마다 호출시 구분해주는 역할
+							// 여러 댓글이 생성되기에 각 접근을 위해 class를 부여, 각 댓글 한줄마다 호출시 구분
+							rvList += '<tr class="rvItem">' 
 									+ '<input type="hidden" class="mmbId" value="' + this.mmbId + '"/>'
 									+ '<input type="hidden" class="rvId" value="' + this.rvId + '"/>'
 									+ '<input type="hidden" class="mvId" value="' + this.mvId + '"/>'
 		                            + '<input type="hidden" class="rvRatingBefore"/>'
 									+ '<td><a href="/project/movie/detail?mvId=' + this.mvId + '"><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></a></td>'
 									+ '<td><strong>' + this.mvTitle + '</strong></td>'
-									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/></td>'
+									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
 									+ '<td class="rvRating">'
+									// 이모지 별 모양 출력 공간
 									+ '<div id="star-rating" style="display: inline-block; width:120px; text-align: left; font-size: 1em;">';
 		                            for (var star = 0; star < this.rvRating; star++) {
 		                            	rvList += '⭐'
@@ -123,6 +125,7 @@
 				$(this).parent().prevAll('.rvRating').children('.rvRating').removeAttr('disabled');
 				$(this).parent().prevAll('.rvRating').children('.rvRating').css({"border-color":"red"});
 				$(this).val("수정확인");
+				// 수정 버튼 옆 생성하고 숨겨둔다.
 				$(this).parent().nextAll('.delete').children('.btn_delete').hide();
 			} else { // 아니라면 댓글 수정
 				var rvId = $(this).parent().prevAll('.rvId').val();
