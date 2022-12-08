@@ -30,7 +30,8 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public int create(ReviewVO vo) {
 		logger.info("create() call");
-		reviewDao.insert(vo); // both data sh be changed
+		// 리뷰 내역은 삽입/등록되고, 평점은 업데이트된다
+		reviewDao.insert(vo);
 		movieDao.updateRating(1, vo.getRvRating(), vo.getMvId());
 		logger.info("reivew create success");
 		return 1;
@@ -59,7 +60,7 @@ public class ReviewServiceImple implements ReviewService {
 	public int update(ReviewVO vo) {
 		logger.info("update() call: rvId=" + vo.getRvId());
 		reviewDao.update(vo);
-		// same as create
+		// 평점 변경 내역 반영하기 위함
 		movieDao.updateRating(0, -vo.getRvRatingBefore() + vo.getRvRating(), vo.getMvId());
 		logger.info("movieRating update success");
 		return 1;
@@ -78,7 +79,7 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public Integer check(String mmbId, int mvId) {
 		logger.info("check() call");
-		// 동일한 영화와 계정으로 리뷰 등록되어 있으면 리뷰 등록 불가 -2 반환
+		// 동일한 영화와 계정으로 리뷰 등록되어 있으면 -2(리뷰 등록 불가) 반환
 		if (reviewDao.registerCheck(mmbId, mvId) != null) {
 			return -2;
 		}
@@ -90,11 +91,11 @@ public class ReviewServiceImple implements ReviewService {
 		} else { // 구입했을때
 			// buyTicketList에 상영날짜시간이 빠른순서대로 정렬되어 있음 (index 0 가장 빠른값)
 			String earliestDate = buyTicketList.get(0).getScdDate();
-			int earliesTime = buyTicketList.get(0).getScdTime();
-			// 티켓시간이 현재시간보다 before일때 리뷰 등록가능하며 0 반환
-			if (TimeCompareUtil.compareToNow(earliestDate, earliesTime).equals("before")) {
+			int earliestTime = buyTicketList.get(0).getScdTime();
+			// 티켓시간이 현재시간보다 before일때 0(리뷰 등록 가능) 반환
+			if (TimeCompareUtil.compareToNow(earliestDate, earliestTime).equals("before")) {
 				return 0;
-			} else { // 현재시간과 같거나 아직 상영전 영화라면 리뷰 등록 불가 -4 반환
+			} else { // 현재시간과 같거나 아직 상영전 영화라면 -4(리뷰 등록 불가) 반환
 				return -4;
 			}
 		}

@@ -32,7 +32,7 @@ public class ReviewController {
 		model.addAttribute("mvId", mvId);
 		model.addAttribute("mvTitle", mvTitle);
 		model.addAttribute("mvImage", mvImage);
-	}// end listGET()
+	}// end registerGET()
 
 	@PostMapping("/register")
 	public void registerPOST(ReviewVO vo, Model model) {
