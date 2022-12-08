@@ -185,6 +185,7 @@
 		 }
 		 $('#seatBtnsDiv').html(seatBtns);
 		 $('input[name=tkSeatList]').val('');
+		 $('#submit').prop('disabled', true);
 		 // 기본틀 출력 후 DB에서 예매된 좌석 정보 가져오기
 		 getBookedList();
 	 }
@@ -226,7 +227,13 @@
 		 var seatBtnSelectedTotal = seatBtnSelectedArray.length;
 		 // 선택인원과 현재 선택된 좌석 수 비교
 		 console.log('현재선택버튼수=' + seatBtnSelectedTotal + '인원수=' + peopleTotal);
-		// 선택된 좌석 버튼수가 총인원보다 작거나 같을때
+		 // 선택인원이 0이라면
+		 if (peopleTotal == 0) {
+			$(btn).prop('class', 'seatBtnUnselected');
+			alert('인원을 선택해주세요');
+			return;
+		 }
+		 // 선택된 좌석 버튼수가 총인원보다 작거나 같을때
 		 if (seatBtnSelectedTotal <= peopleTotal) { 
 			 // 선택한 좌석을 String 정보로 변환
 			 var tkSeatList = '';

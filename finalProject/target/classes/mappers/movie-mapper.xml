@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_list_by_period" resultType="MovieVO">
 		select * from
 		${PJ_MOVIE}
-		where ${mvDateStarted} <![CDATA[<=]]> #{inputDateStarted} 
-		and #{inputDateEnded} <![CDATA[<=]]> ${mvDateEnded}
+		where #{inputDateStarted} <![CDATA[<=]]> ${mvDateStarted}
+		and  ${mvDateEnded} <![CDATA[<=]]> #{inputDateEnded}
 		order by ${mvDateStarted} desc
 	</select>
 	
