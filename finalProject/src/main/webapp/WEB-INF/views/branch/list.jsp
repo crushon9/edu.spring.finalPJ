@@ -42,7 +42,7 @@
 					<tr>
 						<th>지역</th>
 						<th>지점</th>
-						<th></th>
+						<th>상세정보</th>
 					</tr>
 				</thead>
 				<tbody>						
@@ -52,7 +52,7 @@
 						<!-- 지역ID를 이름으로 변환하여 출력  -->
 						<div style="display: inline-block;" class="brcAreaName"></div>(${vo.brcArea })</td>
 						<td><Strong>${vo.brcName }점</Strong></td>
-						<td><a href="detail?brcId=${vo.brcId}"><input type="button" value="상세보기"></a></td>
+						<td><a href="detail?brcId=${vo.brcId}"><input type="button" value="조회"></a></td>
 					</tr>				
 				</c:forEach>
 				</tbody>

@@ -28,7 +28,7 @@
 					<tr>
 						<th style="width: 150px">아이디</th>
 						<th>탈퇴여부<div style="color:blue; font-size:12px;" >* 회원:0, 탈퇴:-2</div></th>
-						<th style="width: 100px"></th>
+						<th style="width: 100px">상세정보</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,7 +36,7 @@
 						<tr>						
 							<td><Strong> ${vo.mmbId }</Strong></td>
 							<td>${vo.mmbResignCheck }</td>
-							<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="상세조회"></a></td>
+							<td><a href="detail?mmbId=${vo.mmbId }"><input type="button" value="조회"></a></td>
 						</tr>											
 					</c:forEach>
 				</tbody>

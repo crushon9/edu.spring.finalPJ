@@ -35,8 +35,8 @@
 							<th>개봉일</th>
 							<th>종료일</th>
 							<th>장르</th>
-							<th></th>
-							<th></th>
+							<th>수정</th>
+							<th>삭제</th>
 						</tr>
 					</thead>
 				

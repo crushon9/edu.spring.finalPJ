@@ -43,8 +43,8 @@
 							   + '<th>관람평</th>'
 							   + '<th>평점</th>'
 							   + '<th>등록일</th>'
-							   + '<th></th>'
-							   + '<th></th>'
+							   + '<th>수정</th>'
+							   + '<th>삭제</th>'
 							   + '</tr>'
 							   + '</thead>'
 							   + '<tbody>';
@@ -84,7 +84,7 @@
 		                            + '<input type="hidden" class="rvRatingBefore"/>'
 									+ '<td><a href="/project/movie/detail?mvId=' + this.mvId + '"><img src="/project/img/display?fileName=thumbnail_' + this.mvImage + '"/></a></td>'
 									+ '<td><strong>' + this.mvTitle + '</strong></td>'
-									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly/></td>'
+									+ '<td class="rvContent"><input type="text" class="rvContent" value="' + this.rvContent + '" readonly style="width: 400px;"/></td>'
 									+ '<td class="rvRating">'
 									+ '<div id="star-rating" style="display: inline-block; width:120px; text-align: left; font-size: 1em;">';
 		                            for (var star = 0; star < this.rvRating; star++) {

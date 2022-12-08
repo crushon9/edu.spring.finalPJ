@@ -312,10 +312,6 @@ svg {
   vertical-align: middle;
 }
 
-thead, tbody, tr, td, th {
-	border: solid gray 1px !important;
-}
-
 caption {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

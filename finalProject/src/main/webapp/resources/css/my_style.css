@@ -12,14 +12,14 @@
 }
 
 table{
-	border: solid gray 1px;
+	border: solid gray 2px;
 	border-collapse: collapse;
 	padding: 0px;
 	margin: 10px;
 }
 
 td, th {
-	border: solid gray 1px;
+	border: solid gray 2px;
 	border-collapse: collapse;
 	text-align: center;
 	padding: 6px;

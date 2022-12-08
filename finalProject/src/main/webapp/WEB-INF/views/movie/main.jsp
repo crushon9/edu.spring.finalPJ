@@ -31,39 +31,35 @@
 				검색 결과가 없습니다
 			</c:if>
 			<c:if test="${not empty mvList}">
-				<ul>						
+				<ul style="margin-left: 40px; margin-right: 120px;">						
 					<c:forEach var="vo" items="${mvList }" varStatus="status">
-						<li style="list-style-type: none; display: inline-block; text-align: center; margin: 20px; border: solid gray 1px;">
+						<li style="list-style-type: none; display: inline-block; text-align: center; margin: 30px; border: solid black 2px;">
 							<Strong>NO. ${status.count}</Strong><br>
 							<a href="detail?mvId=${vo.mvId}"><img class="imageSpace" src="/project/img/display?fileName=${vo.mvImage}"/></a>
 							<br><Strong>${vo.mvTitle }</Strong>
 							
 							<!-- 예매율 : 0이 아니면 해당영화판매/영화전체판매 * 100을 나타태기 -->
 							<c:if test="${mvTicketSalesTotal != 0}">
-								<br><Strong>예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
+								<br><Strong>🎫 예매율 <fmt:formatNumber value="${vo.mvTicketSales / mvTicketSalesTotal * 100}" pattern="0.0"/> %</Strong>
 							</c:if>
 							<!-- 예매율 : 0이면 '예매율 0.0%'로 표기 -->
 							<c:if test="${mvTicketSalesTotal == 0}">
-								<br><Strong>예매율 0.0 %</Strong>
+								<br><Strong>🎫 예매율 0.0 %</Strong>
 							</c:if>
 							
 							<!-- 평점이 0이 아니면 수치 표기, 0이면 '평점 미등록'으로 표기 -->
 							<c:if test="${vo.mvRatingAvg != 0}">
-								<br><Strong>평점⭐ <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
+								<br><Strong>⭐평점 <fmt:formatNumber value="${vo.mvRatingAvg }" pattern="0.00"/> / 5.00</Strong>
 							</c:if>
 							
 							<c:if test="${vo.mvRatingAvg == 0}">
-								<br><Strong>평점 미등록</Strong>
+								<br><Strong>⭐평점 미등록</Strong>
 							</c:if>
 							
 							<br>개봉일 ${vo.mvDateStarted }<br>
 							<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
 							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
 						</li>
-						<!-- 영화 5개 마다 공백으로 띄우기 -->
-						<c:if test="${(status.count % 5) == 0}">
-							<br> 
-				        </c:if>
 					</c:forEach>
 				</ul>
 			</c:if>										

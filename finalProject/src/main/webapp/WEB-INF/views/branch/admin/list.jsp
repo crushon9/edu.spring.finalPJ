@@ -47,8 +47,8 @@
 							<th>지역</th>
 							<th>극장수</th>
 							<th>좌석수</th>
-							<th></th>
-							<th></th>
+							<th>수정</th>
+							<th>삭제</th>
 						</tr>
 					</thead>
 					<tbody>
