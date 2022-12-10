@@ -9,9 +9,9 @@ public interface ScheduleDAO {
 
 	ScheduleVO select(int scdId);
 
-	List<ScheduleVO> select(int mvId, int brcId, String scdDate);
-	
-	List<ScheduleVO> select(int mvId, int brcId, String scdDate, int scdTime);
+	List<ScheduleVO> selectAdmin(int mvId, int brcId, String scdDate);
+
+	List<ScheduleVO> selectUser(int mvId, int brcId, String scdDate, String isToday, String today, int now);
 
 	int delete(int scdId);
 

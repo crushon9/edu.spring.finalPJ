@@ -16,8 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into ${PJ_SCHEDULE}
-		(${brcId}, ${mvId}, ${scdDate}, ${scdTime}, ${scdTheater}, ${scdSeatTotal}, ${scdPrice})
-		values (#{brcId}, #{mvId}, #{scdDate}, #{scdTime}, #{scdTheater}, #{scdSeatTotal}, #{scdPrice})
+		(${brcId}, ${mvId},
+		${scdDate}, ${scdTime}, ${scdTheater}, ${scdSeatTotal}, ${scdPrice})
+		values (#{brcId}, #{mvId}, #{scdDate}, #{scdTime}, #{scdTheater},
+		#{scdSeatTotal}, #{scdPrice})
 	</insert>
 
 	<select id="select_one_by_scd_id" resultType="ScheduleVO">
@@ -26,62 +28,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${scdId} = #{scdId}
 	</select>
 
-	<!-- select(2*2*2 = 8가지) : m:mvId , b:brcId, d:scdDate -->
-	<select id="select_list_if" resultType="ScheduleVO">
+	<!-- select(동적 쿼리) : m:mvId , b:brcId, d:scdDate -->
+	<select id="select_list_admin" resultType="ScheduleVO">
 		select scd.*, mv.${mvTitle}, mv.${mvRunningTime}, brc.${brcName}
-		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
+		from
+		${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
 		left JOIN ${PJ_BRANCH} brc ON scd.${brcId} = brc.${brcId}
-		<if test="mvId == 0 and brcId == 0 and scdDate == 'none'">
-		</if>
-		<if test="mvId != 0 and brcId == 0 and scdDate == 'none'">
-			where scd.${mvId} = #{mvId}
-		</if>
-		<if test="mvId == 0 and brcId != 0 and scdDate == 'none'">
-			where scd.${brcId} = #{brcId}
-		</if>
-		<if test="mvId == 0 and brcId == 0 and scdDate != 'none'">
-			where scd.${scdDate} = #{scdDate}
-		</if>
-		<if test="mvId != 0 and brcId != 0 and scdDate == 'none'">
-			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId}
-		</if>
-		<if test="mvId != 0 and brcId == 0 and scdDate != 'none'">
-			where scd.${mvId} = #{mvId} and scd.${scdDate} = #{scdDate}
-		</if>
-		<if test="mvId == 0 and brcId != 0 and scdDate != 'none'">
-			where scd.${brcId} = #{brcId} and scd.${scdDate} = #{scdDate}
-		</if>
-		<if test="mvId != 0 and brcId != 0 and scdDate != 'none'">
-			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId} and
-			scd.${scdDate} = #{scdDate}
-		</if>
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="mvId != 0"> AND scd.${mvId} = #{mvId}	</if>
+			<if test="brcId != 0"> AND scd.${brcId} = #{brcId} </if>
+			<if test="scdDate != 'unselected'"> AND scd.${scdDate} = #{scdDate} </if>
+		</trim>
 		order by scd.${scdDate} desc, scd.${scdTime}
 	</select>
-	
-	<select id="select_list_if_today" resultType="ScheduleVO">
+
+	<select id="select_list_user" resultType="ScheduleVO">
 		select scd.*, mv.${mvTitle}, mv.${mvRunningTime}, brc.${brcName}
-		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
+		from
+		${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
 		left JOIN ${PJ_BRANCH} brc ON scd.${brcId} = brc.${brcId}
-		<if test="mvId == 0 and brcId == 0 and scdDate != 'none'">
-			where scd.${scdDate} = #{scdDate}
-			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
-		</if>
-		<if test="mvId != 0 and brcId == 0 and scdDate != 'none'">
-			where scd.${mvId} = #{mvId} and scd.${scdDate} = #{scdDate}
-			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
-		</if>
-		<if test="mvId == 0 and brcId != 0 and scdDate != 'none'">
-			where scd.${brcId} = #{brcId} and scd.${scdDate} = #{scdDate}
-			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
-		</if>
-		<if test="mvId != 0 and brcId != 0 and scdDate != 'none'">
-			where scd.${mvId} = #{mvId} and scd.${brcId} = #{brcId} and
-			scd.${scdDate} = #{scdDate}
-			and scd.${scdTime} <![CDATA[>=]]> #{scdTime}
-		</if>
-		order by scd.${scdDate} desc, scd.${scdTime}
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="mvId != 0"> AND scd.${mvId} = #{mvId}	</if>
+			<if test="brcId != 0"> AND scd.${brcId} = #{brcId} </if>
+			<if test="scdDate != 'unselected' and isToday == 'no'"> AND scd.${scdDate} = #{scdDate} </if>
+			<if test="scdDate != 'unselected' and isToday == 'yes'"> AND scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]> #{now} </if>
+			<if test="scdDate == 'unselected'"> AND scd.${scdDate} <![CDATA[>]]> #{today}
+			OR (scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]>	#{now})</if>
+		</trim>
+		order by scd.${scdDate}, scd.${scdTime}
 	</select>
-	
+
 	<delete id="delete_by_scd_id">
 		delete from ${PJ_SCHEDULE}
 		where ${scdId} = #{scdId}
@@ -92,11 +68,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${PJ_SCHEDULE}
 		where ${mvId} = #{mvId}
 	</delete>
-	
+
 	<!-- if ticketSales changed -> scdSeatBookedCnt + #{amount} -->
 	<update id="update_scdSeatBookedCnt">
 		update ${PJ_SCHEDULE}
-		set ${scdSeatBookedCnt} = ${scdSeatBookedCnt} + #{amount}
+		set ${scdSeatBookedCnt} =
+		${scdSeatBookedCnt} + #{amount}
 		where ${scdId} = #{scdId}
 	</update>
 

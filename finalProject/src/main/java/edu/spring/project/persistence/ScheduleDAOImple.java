@@ -33,24 +33,26 @@ public class ScheduleDAOImple implements ScheduleDAO {
 	}
 
 	@Override
-	public List<ScheduleVO> select(int mvId, int brcId, String scdDate) {
+	public List<ScheduleVO> selectAdmin(int mvId, int brcId, String scdDate) {
 		logger.info("select() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("mvId", mvId);
 		args.put("brcId", brcId);
 		args.put("scdDate", scdDate);
-		return sqlSession.selectList(NAMESPACE + ".select_list_if", args);
+		return sqlSession.selectList(NAMESPACE + ".select_list_admin", args);
 	}
-	
+
 	@Override
-	public List<ScheduleVO> select(int mvId, int brcId, String scdDate, int scdTime) {
-		logger.info("select 오늘날짜 () call : mvId=" + mvId + ", brcId=" + brcId + ", scdTime=" + scdTime);
+	public List<ScheduleVO> selectUser(int mvId, int brcId, String scdDate, String isToday, String today, int now) {
+		logger.info("select() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("mvId", mvId);
 		args.put("brcId", brcId);
 		args.put("scdDate", scdDate);
-		args.put("scdTime", scdTime);
-		return sqlSession.selectList(NAMESPACE + ".select_list_if_today", args);
+		args.put("isToday", isToday);
+		args.put("today", today);
+		args.put("now", now);
+		return sqlSession.selectList(NAMESPACE + ".select_list_user", args);
 	}
 
 	@Override

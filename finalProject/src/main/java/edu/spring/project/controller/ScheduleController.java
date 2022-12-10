@@ -34,7 +34,7 @@ public class ScheduleController {
 	public ResponseEntity<List<ScheduleVO>> listREST(@PathVariable("mvId") int mvId, @PathVariable("brcId") int brcId,
 			@PathVariable("scdDate") String scdDate) {
 		logger.info("listREST() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
-		List<ScheduleVO> list = scheduleService.read(mvId, brcId, scdDate);
+		List<ScheduleVO> list = scheduleService.readUser(mvId, brcId, scdDate);
 		return new ResponseEntity<List<ScheduleVO>>(list, HttpStatus.OK);
 	}// end listRESRT()
 

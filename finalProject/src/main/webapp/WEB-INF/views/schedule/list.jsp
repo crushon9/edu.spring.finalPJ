@@ -122,7 +122,7 @@
 		  var mvId = $("#mvId").val();
  		  var brcId = $("#brcId").val();
 		  var inputDate = $("#inputDate").val();
-		  // 선택하지 않았을때 기본값 0과 none으로 세팅
+		  // 선택하지 않았을때 기본값 0과 unselected으로 세팅
 		  if (mvId == null) {
 			  mvId = 0;
 		  }
@@ -130,7 +130,7 @@
 			  brcId = 0;
 		  }
 		  if (inputDate == '') {
-			  inputDate = 'none';
+			  inputDate = 'unselected';
 		  }
 		  console.log('mvId : ' + mvId);
 		  console.log('brcId : ' + brcId);

@@ -29,25 +29,27 @@ public class ScheduleServiceImple implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleVO> read(int mvId, int brcId, String scdDate) {
+	public List<ScheduleVO> readUser(int mvId, int brcId, String scdDate) {
 		logger.info("read() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
-		if (!scdDate.equals("none")) {
+		int now = TimeCompareUtil.nowConvertToScdIndex();
+		String today = TimeCompareUtil.today();
+		if (!scdDate.equals("unselected")) {
 			// 오늘 날짜면 시간비교 쿼리로 데이터를 가져오고 아니라면 시간비교 없이 가져옴
 			if (TimeCompareUtil.compareToToday(scdDate).equals("equals")) {
 				logger.info(TimeCompareUtil.compareToToday(scdDate));
-				return scheduleDao.select(mvId, brcId, scdDate, TimeCompareUtil.nowConvertToScdIndex());
+				return scheduleDao.selectUser(mvId, brcId, scdDate, "yes", today, now);
 			} else {
-				return scheduleDao.select(mvId, brcId, scdDate);
+				return scheduleDao.selectUser(mvId, brcId, scdDate, "no", today, now);
 			}
 		} else {
-			return scheduleDao.select(mvId, brcId, scdDate);
+			return scheduleDao.selectUser(mvId, brcId, scdDate, "no", today, now);
 		}
 	}
 
 	@Override
 	public List<ScheduleVO> readAdmin(int mvId, int brcId, String scdDate) {
 		logger.info("read() call : mvId = " + mvId + ", brcId = " + brcId + ", scdDate = " + scdDate);
-		return scheduleDao.select(mvId, brcId, scdDate);
+		return scheduleDao.selectAdmin(mvId, brcId, scdDate);
 	}
 
 	@Override

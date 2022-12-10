@@ -58,7 +58,7 @@
 							
 							<br>개봉일 ${vo.mvDateStarted }<br>
 							<a href="detail?mvId=${vo.mvId}"><input id="mvDetail" type="button" value="상세정보"></a>
-							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=none"><input id="mvTicket" type="button" value="상영스케줄"></a>							
+							<a href="/project/schedule/list?mvId=${vo.mvId }&brcId=0&scdDate=unselected"><input id="mvTicket" type="button" value="상영스케줄"></a>							
 						</li>
 					</c:forEach>
 				</ul>

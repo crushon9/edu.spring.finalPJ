@@ -241,6 +241,9 @@
 						}
 						// 삭제시 예매여부 예외처리를 위해 hidden 박스에 scdSeatBookedCnt 데이터 삽입
 						thisParentTd.children('input[name=scdSeatBookedCnt]').val(this.scdSeatBookedCnt);
+						// scdTime == 4 (02:00)이면 한칸만 출력
+						if (trIndex == 4)
+							break;
 					}
 				}); // end data.each
 			}
