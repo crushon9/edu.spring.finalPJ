@@ -39,6 +39,7 @@ public class ScheduleServiceImple implements ScheduleService {
 		if (!scdDate.equals("unselected")) {
 			// 선택된 날짜가 오늘날짜인지 비교
 			if (TimeCompareUtil.compareToToday(scdDate).equals("equals")) {
+				logger.info(TimeCompareUtil.compareToToday(scdDate));
 				return scheduleDao.selectUser(mvId, brcId, scdDate, today, now);
 			} else {
 			// 선택된 날짜가 오늘이 아니라면 notToday
