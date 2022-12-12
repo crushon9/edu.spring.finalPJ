@@ -60,7 +60,7 @@ public class ReviewServiceImple implements ReviewService {
 	public int update(ReviewVO vo) {
 		logger.info("update() call: rvId=" + vo.getRvId());
 		reviewDao.update(vo);
-		// 평점 변경 내역 반영하기 위함
+		// 영화의 평균평점 변경 반영 updateRating(변경갯수, 변경점수, 영화아이디)
 		movieDao.updateRating(0, -vo.getRvRatingBefore() + vo.getRvRating(), vo.getMvId());
 		logger.info("movieRating update success");
 		return 1;

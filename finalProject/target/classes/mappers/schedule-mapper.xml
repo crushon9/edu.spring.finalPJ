@@ -44,14 +44,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="select_list_user" resultType="ScheduleVO">
 		select scd.*, mv.${mvTitle}, mv.${mvRunningTime}, brc.${brcName}
-		from
-		${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
+		from ${PJ_SCHEDULE} scd JOIN ${PJ_MOVIE} mv ON scd.${mvId} = mv.${mvId}
 		left JOIN ${PJ_BRANCH} brc ON scd.${brcId} = brc.${brcId}
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="mvId != 0"> AND scd.${mvId} = #{mvId}	</if>
 			<if test="brcId != 0"> AND scd.${brcId} = #{brcId} </if>
 			<if test="scdDate != 'unselected' and today == 'notToday'"> AND scd.${scdDate} = #{scdDate} </if>
-			<if test="scdDate != 'unselected' and today != 'notToday'"> AND scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]> #{now} </if>
+			<if test="scdDate != 'unselected' and today != 'notToday'"> AND scd.${scdDate} = #{scdDate} AND scd.${scdTime} <![CDATA[>=]]> #{now} </if>
 			<if test="scdDate == 'unselected'"> AND scd.${scdDate} <![CDATA[>]]> #{today}
 			OR (scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]>	#{now})</if>
 		</trim>
