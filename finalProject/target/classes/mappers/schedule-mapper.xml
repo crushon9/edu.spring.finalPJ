@@ -50,8 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="mvId != 0"> AND scd.${mvId} = #{mvId}	</if>
 			<if test="brcId != 0"> AND scd.${brcId} = #{brcId} </if>
-			<if test="scdDate != 'unselected' and isToday == 'no'"> AND scd.${scdDate} = #{scdDate} </if>
-			<if test="scdDate != 'unselected' and isToday == 'yes'"> AND scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]> #{now} </if>
+			<if test="scdDate != 'unselected' and today == 'notToday'"> AND scd.${scdDate} = #{scdDate} </if>
+			<if test="scdDate != 'unselected' and today != 'notToday'"> AND scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]> #{now} </if>
 			<if test="scdDate == 'unselected'"> AND scd.${scdDate} <![CDATA[>]]> #{today}
 			OR (scd.${scdDate} = #{today} AND scd.${scdTime} <![CDATA[>=]]>	#{now})</if>
 		</trim>

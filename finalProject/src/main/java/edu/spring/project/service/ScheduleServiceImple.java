@@ -37,12 +37,12 @@ public class ScheduleServiceImple implements ScheduleService {
 			// 오늘 날짜면 시간비교 쿼리로 데이터를 가져오고 아니라면 시간비교 없이 가져옴
 			if (TimeCompareUtil.compareToToday(scdDate).equals("equals")) {
 				logger.info(TimeCompareUtil.compareToToday(scdDate));
-				return scheduleDao.selectUser(mvId, brcId, scdDate, "yes", today, now);
+				return scheduleDao.selectUser(mvId, brcId, scdDate, today, now);
 			} else {
-				return scheduleDao.selectUser(mvId, brcId, scdDate, "no", today, now);
+				return scheduleDao.selectUser(mvId, brcId, scdDate, "notToday", now);
 			}
 		} else {
-			return scheduleDao.selectUser(mvId, brcId, scdDate, "no", today, now);
+			return scheduleDao.selectUser(mvId, brcId, scdDate, today, now);
 		}
 	}
 
