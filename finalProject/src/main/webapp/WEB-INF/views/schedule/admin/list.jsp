@@ -73,6 +73,9 @@
 	  // 선택 날짜에 상영중인 영화 목록 가져오기
 	  function getMvList() {
 		var inputDate = $('#inputDate').val();
+		if (inputDate == '') {
+			inputDate = 'unselected';
+		}
 		var url = '/project/movie/list/' + inputDate;
 		$.getJSON(
 			url,

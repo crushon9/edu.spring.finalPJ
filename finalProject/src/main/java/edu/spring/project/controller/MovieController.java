@@ -72,7 +72,12 @@ public class MovieController {
 	@GetMapping("/list/{inputDate}")
 	public ResponseEntity<List<MovieVO>> listREST(@PathVariable("inputDate") String inputDate) {
 		logger.info("listREST() call : inputDate = " + inputDate);
-		List<MovieVO> list = movieService.readDate(inputDate);
+		List<MovieVO> list;
+		if (!inputDate.equals("unselected")) {
+			list = movieService.readDate(inputDate);
+		} else {
+			list = movieService.readAdmin();
+		}
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}// end listREST()
 
